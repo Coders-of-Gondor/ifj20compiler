@@ -6,7 +6,8 @@
 public_sources = \
 	main.c
 
-public_headers =
+public_headers = \
+	token.h
 
 private_sources =
 
