@@ -11,7 +11,8 @@ public_headers = \
 	scanner.h \
 	token.h
 
-private_sources =
+private_sources = \
+	scanner-private.c
 
 private_headers = \
 	scanner-private.h \
