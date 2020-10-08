@@ -4,14 +4,17 @@
 # 24/09/2020
 
 public_sources = \
-	main.c
+	main.c \
+	scanner.c
 
 public_headers = \
+	scanner.h \
 	token.h
 
 private_sources =
 
-private_headers =
+private_headers = \
+	scanner-private.h \
 
 compiler_sources = \
 	$(public_sources) \
