@@ -65,6 +65,9 @@ int scanner_scan(scanner_t *s, token_t *t, char *l) {
   t->type = INVALID;
   t->attribute = NULL;
 
+  // Skip comments and whitespace characters
+  scanner_skip_whitespace_comments(s);
+
   // Token State Machine
   // TODO: Actually implement the state machine :)
   do {
