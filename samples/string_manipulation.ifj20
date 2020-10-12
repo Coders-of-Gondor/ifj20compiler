@@ -1,7 +1,7 @@
 // Program 3: Prace s ěretzci a vestavenymi funkcemi
 package main
 
-11func main() {
+func main() {
   s1 := "Toto je nejaky text"
   s2 := s1 + ", ktery jeste trochu obohatime"
   print(s1, "\n", s2)
