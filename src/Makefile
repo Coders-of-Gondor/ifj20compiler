@@ -37,7 +37,7 @@ compiler_objects = $(compiler_sources:%.c=objects/%.o)
 
 all: dirs $(target)
 $(target): $(compiler_objects)
-	$(CC) -o $(target) $^ $(LDFLAGS)
+	$(CC) $(LDFLAGS) $(LDLIBS) -o $(target) $^
 $(compiler_objects): objects/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 dirs:
