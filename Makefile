@@ -8,14 +8,16 @@ export CC = /usr/bin/env gcc
 export CFLAGS = -std=c99 -g -pedantic -Wall -Wextra
 export NAME = ifj20compiler
 
-export SOURCE_DIR := $(shell pwd)/src
-export BUILD_DIR := $(shell pwd)/build
+export PROJECT_DIR := $(shell pwd)
+export BUILD_DIR := $(PROJECT_DIR)/build
 
-.PHONY: all install run zip clean help
+export BIN_DIR := $(BUILD_DIR)/bin
+
+.PHONY: all run zip clean help
 
 all:
-	@mkdir -p $(BUILD_DIR)
-	$(MAKE) -C $(SOURCE_DIR)
+	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
+	$(MAKE) -C src
 
 run:
 	src/$(NAME)
@@ -26,6 +28,7 @@ zip:
 clean:
 	@rm -f *.zip
 	@rm -f -r $(BUILD_DIR)
+	@$(MAKE) -s -C src clean
 
 help:
 	@echo "make"
