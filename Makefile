@@ -15,7 +15,7 @@ export BIN_DIR := $(BUILD_DIR)/bin
 export OBJECTS_DIR := $(BUILD_DIR)/objects
 export TARGET:= $(BIN_DIR)/$(NAME)
 
-.PHONY: all run zip clean help
+.PHONY: all run test zip clean help
 
 all:
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJECTS_DIR)
@@ -23,6 +23,10 @@ all:
 
 run:
 	@$(TARGET)
+
+test: all
+	$(MAKE) -C tests
+	@./build/bin/ifj20compiler-tests
 
 zip:
 	@zip xcoders69.zip Makefile src/*.c src/*.h src/Makefile
@@ -38,6 +42,8 @@ help:
 	@echo "    Build the project."
 	@echo "make run"
 	@echo "    Run the program."
+	@echo "make test"
+	@echo "    Build and test the project."
 	@echo "make zip"
 	@echo "    Create a zip file with the project."
 	@echo "make clean"
