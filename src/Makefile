@@ -3,6 +3,10 @@
 # FIT BUT
 # 24/09/2020
 
+ifeq (0, ${MAKELEVEL})
+$(error invoke "make" from the root build directory)
+endif
+
 public_sources = \
 	main.c \
 	scanner.c
