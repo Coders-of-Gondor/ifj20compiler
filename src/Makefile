@@ -38,7 +38,7 @@ compiler_objects = $(compiler_sources:%.c=objects/%.o)
 all: dirs $(target)
 $(target): $(compiler_objects)
 	$(CC) -o $(target) $^ $(LDFLAGS)
-$(compiler_objects): objects/%.o: $(compiler_sources)
+$(compiler_objects): objects/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 dirs:
 	@mkdir -p ./objects
