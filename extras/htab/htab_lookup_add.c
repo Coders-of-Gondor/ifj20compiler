@@ -32,6 +32,8 @@ htab_iterator_t htab_lookup_add(htab_t *t, htab_key_t key) {
   if (htab_iterator_valid(it))
     return it;
 
+  size_t i = htab_hash_fun(key) % htab_bucket_count(t);
+
   struct htab_item *new_item = malloc(sizeof(struct htab_item));
   if (new_item == NULL)
     return htab_end(t);
@@ -42,25 +44,27 @@ htab_iterator_t htab_lookup_add(htab_t *t, htab_key_t key) {
   strcpy(new_key, key);
 
   new_item->key = new_key;
-  new_item->data = 0;
+  new_item->data = NULL;
   new_item->next = NULL;
 
-  size_t i = htab_hash_fun(key) % htab_bucket_count(t);
-  if (t->item_list[i] == NULL)
-    t->item_list[i] = new_item;
+  if (t->table->item_list[i] == NULL) {
+    t->table->item_list[i] = new_item;
+  } else {
+    it.ptr = t->table->item_list[i];
+    if (strcmp(it.ptr->key, key) != 0) {
+      while (it.ptr->next != NULL) {
+        it.ptr = it.ptr->next;
+      }
 
-  it.ptr = t->item_list[i];
-  if (strcmp(it.ptr->key, key) != 0) {
-    while (it.ptr->next != NULL) {
+      new_item->prev = it.ptr;
+
+      it.ptr->next = new_item;
       it.ptr = it.ptr->next;
     }
-
-    it.ptr->next = new_item;
-    it.ptr = it.ptr->next;
   }
 
-  it.idx = i;
-  t->size++;
+  it.idb = i;
+  t->table->size++;
 
   return it;
 }

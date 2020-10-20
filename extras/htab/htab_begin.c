@@ -16,20 +16,24 @@
 */
 
 #include "htab_private.h"
+#include <stdio.h>
 
 /**
  * @brief htab_begin returns a new iterator aiming at the first object in a hashtable
+ *
+ * @details htab_begins looks for the first object in a hashtable. If it's not
+ * found, it returns htab_end(t).
  *
  * @param t pointer to an instance of hashtable
  *
  * @return hashtable iterator
  */
 htab_iterator_t htab_begin(const htab_t *t) {
-  htab_iterator_t it = { t->item_list[0], t, 0 };
+  htab_iterator_t it = { t->table->item_list[0], t, 0, 0 };
 
-  while(!htab_iterator_valid(it) && it.idx < htab_bucket_count(t)) {
-    it.idx++;
-    it.ptr = it.t->item_list[it.idx];
+  while(!htab_iterator_valid(it) && it.idb < htab_bucket_count(t)) {
+    it.ptr = t->table->item_list[it.idb];
+    it.idb++;
   }
 
   if (!htab_iterator_valid(it))

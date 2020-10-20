@@ -18,12 +18,37 @@
 #include "htab_private.h"
 
 /**
- * @brief htab_size returns the number of records in a hashtable
+ * @brief htab_iterator_prev returns an iterator pointing to a previous record
  *
- * @param t pointer to an instance of hashtable
+ * @param it hashtable iterator
  *
- * @return number of records
+ * @return hashtable iterator
  */
-size_t htab_size(const htab_t * t) {
-  return t->table->size;
+htab_iterator_t htab_iterator_prev(htab_iterator_t it) {
+  if (it.ptr != NULL) {
+    if (it.ptr->prev != NULL) {
+      it.ptr = it.ptr->prev;
+      it.ide--;
+      return it;
+    }
+  }
+
+  for (--it.idb /* start in previous bucket */; ; it.idb--) {
+    if (it.t->table->item_list[it.idb] != NULL) {
+      it.t = it.t->table->item_list[it.idb];
+      it.ide = 0;
+
+      while (it.ptr->next != NULL) {
+        it.ptr = it.ptr->next;
+        it.ide++;
+      }
+
+      return it;
+    }
+
+    if (it.idb == 0)
+      break;
+  }
+
+  return htab_end(it.t);
 }

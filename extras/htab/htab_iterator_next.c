@@ -28,18 +28,19 @@ htab_iterator_t htab_iterator_next(htab_iterator_t it) {
   if (it.ptr != NULL) {
     if (it.ptr->next != NULL) {
       it.ptr = it.ptr->next;
+      it.ide++;
       return it;
     }
   }
 
-  for (++it.idx; it.idx < htab_bucket_count(it.t); it.idx++) {
-    if (it.t->item_list[it.idx] != NULL) {
-      it.ptr = it.t->item_list[it.idx];
-      it.idx = it.idx;
+  for (++it.idb; it.idb < htab_bucket_count(it.t); it.idb++) {
+    if (it.t->table->item_list[it.idb] != NULL) {
+      it.ptr = it.t->table->item_list[it.idb];
+      it.ide = 0;
 
       return it;
     }
   }
-
   return htab_end(it.t);
+
 }

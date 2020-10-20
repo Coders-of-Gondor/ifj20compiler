@@ -25,5 +25,5 @@
  * @return number of "buckets" in a hashtable
  */
 size_t htab_bucket_count(const htab_t *t) {
-  return t->arr_size;
+  return t->table->arr_size;
 }

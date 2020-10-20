@@ -25,11 +25,7 @@
  * @return hashtable iterator
  */
 htab_iterator_t htab_end(const htab_t *t) {
-  htab_iterator_t it = {
-    NULL,
-    t,
-    htab_bucket_count(t)
-  };
+  htab_iterator_t it = { NULL, t, htab_bucket_count(t), htab_bucket_cap(t) };
 
   return it;
 }

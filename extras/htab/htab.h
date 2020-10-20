@@ -25,33 +25,37 @@ struct htab;
 typedef struct htab htab_t;
 
 typedef const char * htab_key_t;
-typedef int htab_value_t;
+typedef void * htab_value_t;
 
 struct htab_item;
 
 typedef struct htab_iterator {
     struct htab_item *ptr; /**< pointer to a record */
     const htab_t *t; /**< pointer to a hashtable on which the iterator operates */
-    size_t idx; /**< id of a bucket where the iterator is */
+    size_t idb; /**< id of a bucket where the iterator is */
+    size_t ide; /**< id of an entry in a bucket */
 } htab_iterator_t;
 
 size_t htab_hash_fun(htab_key_t str);
 
-htab_t *htab_init(size_t n);
-void htab_free(htab_t * t);
+htab_t *htab_init(void (*value_deconstructor) (htab_value_t value));
+void htab_free(htab_t *t);
 
 size_t htab_size(const htab_t * t);
 size_t htab_bucket_count(const htab_t * t);
+size_t htab_bucket_cap(const htab_t * t);
 
 htab_iterator_t htab_find(htab_t * t, htab_key_t key);
 htab_iterator_t htab_lookup_add(htab_t * t, htab_key_t key);
+htab_iterator_t htab_add(htab_t * t, htab_iterator_t it, htab_key_t key);
 
-void htab_erase(htab_t * t, htab_iterator_t it);
-void htab_clear(htab_t * t);
+void htab_erase(htab_t *t, htab_iterator_t it);
+void htab_clear(htab_t *t);
 
 htab_iterator_t htab_begin(const htab_t * t);
 htab_iterator_t htab_end(const htab_t * t);
 htab_iterator_t htab_iterator_next(htab_iterator_t it);
+htab_iterator_t htab_iterator_prev(htab_iterator_t it);
 
 htab_key_t htab_iterator_get_key(htab_iterator_t it);
 htab_value_t htab_iterator_get_value(htab_iterator_t it);

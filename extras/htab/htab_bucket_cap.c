@@ -18,12 +18,12 @@
 #include "htab_private.h"
 
 /**
- * @brief htab_size returns the number of records in a hashtable
+ * @brief htab_bucket_cap returns the number of "buckets" in a hashtable
  *
  * @param t pointer to an instance of hashtable
  *
- * @return number of records
+ * @return number of "buckets" in a hashtable
  */
-size_t htab_size(const htab_t * t) {
-  return t->table->size;
+size_t htab_bucket_cap(const htab_t *t) {
+  return t->table->bucket_cap;
 }

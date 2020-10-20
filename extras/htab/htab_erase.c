@@ -28,30 +28,28 @@ void htab_erase(htab_t *t, htab_iterator_t it) {
     return;
 
   htab_iterator_t next_it = htab_iterator_next(it);
-  htab_iterator_t prev_it = {
-    t->item_list[it.idx],
-    t,
-    it.idx
-  };
-
-  free((char *) it.ptr->key);
-  free(it.ptr);
+  htab_iterator_t prev_it = { t->table->item_list[it.idb], t, it.idb, 0 };
 
   // Iterator is at the beginning of a bucket
   if (htab_iterator_equal(prev_it, it)) {
-    if (htab_iterator_valid(next_it) && it.idx == next_it.idx)
-      t->item_list[it.idx] = next_it.ptr;
+    if (htab_iterator_valid(next_it) && it.idb == next_it.idb)
+      t->table->item_list[it.idb] = next_it.ptr;
     else
-      t->item_list[it.idx] = NULL;
+      t->table->item_list[it.idb] = NULL;
   } else {
     // Find the entry right behind the erased one
     while (prev_it.ptr->next != it.ptr) {
       prev_it.ptr = prev_it.ptr->next;
     }
 
-    if (htab_iterator_valid(next_it) && it.idx == next_it.idx)
+    if (htab_iterator_valid(next_it) && it.idb == next_it.idb)
       prev_it.ptr->next = next_it.ptr;
     else
       prev_it.ptr->next = NULL;
   }
+
+  free((char *) it.ptr->key);
+  if (it.ptr->data != NULL)
+    (*t->value_deconstructor) (it.ptr->data);
+  free(it.ptr);
 }

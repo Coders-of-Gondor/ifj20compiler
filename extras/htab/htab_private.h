@@ -21,10 +21,18 @@ struct htab_item {
   htab_key_t key;
   htab_value_t data;
   struct htab_item *next;
+  struct htab_item *prev;
+};
+
+struct htab_table {
+  size_t size;
+  size_t arr_size;
+  size_t bucket_cap;
+  void *item_list[];
 };
 
 struct htab {
-  size_t size;
-  size_t arr_size;
-  struct htab_item *item_list[];
+  void (*value_deconstructor) (htab_value_t value);
+  struct htab_table *table;
 };
+

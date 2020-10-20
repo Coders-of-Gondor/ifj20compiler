@@ -31,13 +31,15 @@
  */
 htab_iterator_t htab_find(htab_t *t, htab_key_t key) {
   size_t i = htab_hash_fun(key) % htab_bucket_count(t);
-  struct htab_item *item = t->item_list[i];
+  struct htab_item *item = t->table->item_list[i];
 
   if (item == NULL)
     return htab_end(t);
 
-  while(item != NULL) {
-    if (strcmp(item->key, key) == 0) {
+  htab_iterator_t it = { item, t, i, 0 };
+
+  while(htab_iterator_valid(it)) {
+    if (strcmp(it.ptr->key, key) == 0) {
       break;
     }
 
@@ -45,13 +47,8 @@ htab_iterator_t htab_find(htab_t *t, htab_key_t key) {
       return htab_end(t);
     }
 
-    item = item->next;
+    it = htab_iterator_next(it);
   }
-
-  htab_iterator_t it = {item, t, i};
-
-  if (!htab_iterator_valid(it))
-    return htab_end(t);
 
   return it;
 }
