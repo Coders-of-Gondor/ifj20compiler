@@ -11,17 +11,21 @@ target := $(BIN_DIR)/$(NAME)
 
 public_sources = \
 	main.c \
-	scanner.c
+	scanner.c \
+	symtable.c
 
 public_headers = \
 	scanner.h \
-	token.h
+	token.h \
+	symtable.h
 
 private_sources = \
-	scanner-private.c
+	scanner-private.c \
+	symtable-private.c
 
 private_headers = \
 	scanner-private.h \
+	symtable-private.h
 
 compiler_sources = \
 	$(public_sources) \
