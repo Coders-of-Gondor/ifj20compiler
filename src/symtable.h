@@ -66,4 +66,26 @@ static inline int symtable_iterator_equal(symtable_iterator_t it1, symtable_iter
   return it1.ptr == it2.ptr && it1.st == it2.st;
 }
 
+struct symtable_manager;
+typedef struct symtable_manager symtable_manager_t;
+
+symtable_manager_t *symtable_manager_new();
+void symtable_manager_free(symtable_manager_t *stm);
+
+size_t symtable_manager_stack_size(const symtable_manager_t *stm);
+size_t symtable_manager_max_stack_size(const symtable_manager_t *stm);
+
+void symtable_manager_push(symtable_manager_t *stm);
+void symtable_manager_pop(symtable_manager_t *stm);
+
+symtable_t *symtable_manager_get_top(symtable_manager_t *stm);
+
+symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_t key);
+symtable_iterator_t symtable_manager_lookup_add(symtable_manager_t *stm, symtable_key_t key);
+symtable_iterator_t symtable_manager_add(symtable_manager_t *stm, symtable_key_t key);
+
+int symtable_manager_has(symtable_manager_t *stm, symtable_key_t key);
+
+void symtable_manager_remove(symtable_manager_t *stm, symtable_key_t key);
+
 #endif // __SYMTABLE_H__
