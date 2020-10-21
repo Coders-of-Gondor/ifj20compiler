@@ -23,7 +23,8 @@
 #include "token.h"
 
 #define ST_INIT_NUM_OF_BUCKETS 65536
-#define ST_INIT_NUM_IN_BUCKET 256
+#define ST_INIT_NUM_IN_BUCKET 16
+#define STM_INIT_STACK_MAX 256
 
 /**
  * @brief symtable_hash_fun returns a hash for a hashtable key
@@ -387,3 +388,213 @@ symtable_value_t symtable_iterator_set_value(symtable_iterator_t it, symtable_va
   return it.ptr->data;
 }
 
+/**
+ * @brief symtable_manager_new initializes an instance symtable manager
+ *
+ * @details symtable_manager_new allocates space for a set number of stacks. If
+ * more space is needed, symtable_manager_push_stack will reallocate the
+ * manager. Manager starts with 1 stack. Initial maximum number of stacks is 4.
+ *
+ * @return pointer to an instance of symtable manager
+ *
+ * @retval NULL error
+ * @retval pointer success
+ */
+symtable_manager_t *symtable_manager_new() {
+  symtable_manager_t *stm = malloc(sizeof(struct symtable_manager));
+  if (stm == NULL)
+    return NULL;
+
+  stm->stmb = malloc(sizeof(struct symtable_manager_body) + STM_INIT_STACK_MAX * sizeof(struct symtable));
+  if (stm->stmb == NULL)
+    return NULL;
+
+  stm->stmb->stack_count = 1;
+  stm->stmb->max_stack_count = STM_INIT_STACK_MAX;
+
+  symtable_t *st = symtable_new();
+  if (st == NULL)
+    return NULL;
+
+  for (size_t i = 0; i < symtable_manager_max_stack_size(stm); i++)
+    stm->stmb->symtables[i] = NULL;
+
+  stm->stmb->symtables[0] = st;
+
+  return stm;
+}
+
+/**
+ * @brief symtable_manager_free destroys an instance of symtable manager
+ *
+ * @param stm pointer to an instance of symtable manager
+ */
+void symtable_manager_free(symtable_manager_t *stm) {
+  if (stm != NULL) {
+    for (size_t i = 0; i < stm->stmb->stack_count; i++)
+      symtable_free(stm->stmb->symtables[i]);
+    free(stm->stmb);
+    free(stm);
+  }
+}
+
+size_t symtable_manager_stack_size(const symtable_manager_t *stm) {
+  return stm->stmb->stack_count;
+}
+
+size_t symtable_manager_max_stack_size(const symtable_manager_t *stm) {
+  return stm->stmb->max_stack_count;
+}
+
+/**
+ * @brief symtable_manager_push adds a new symtable to its stack
+ *
+ * @details symtable_manager_push checks before adding a stack if there's
+ * enough space for it. If there is not, it reallocates the manager to
+ * accomodate twice as many symtable stacks.
+ *
+ * @param stm pointer to an instance of symtable manager
+ */
+void symtable_manager_push(symtable_manager_t *stm) {
+  if (stm == NULL)
+    return;
+
+  symtable_t *st = symtable_new();
+  if (st == NULL)
+    return;
+
+  if (stm->stmb->stack_count == stm->stmb->max_stack_count) {
+    size_t max_stack_size = symtable_manager_max_stack_size(stm);
+    size_t new_max_stack_size = max_stack_size * 2;
+    struct symtable_manager_body *tmp_stmb = realloc(stm->stmb, sizeof(struct symtable_manager_body) + new_max_stack_size * sizeof(struct symtable));
+    if (tmp_stmb == NULL)
+      return;
+
+    stm->stmb = tmp_stmb;
+
+    for (size_t i = max_stack_size; i < new_max_stack_size; i++)
+      stm->stmb->symtables[i] = NULL;
+
+    stm->stmb->max_stack_count = new_max_stack_size;
+  }
+
+  stm->stmb->symtables[symtable_manager_stack_size(stm)] = st;
+  stm->stmb->stack_count++;
+}
+
+/**
+ * @brief symtable_manager_pop removes the topmost symtable in its stack
+ *
+ * @details symtable_manager_pop pops a stack only if there's more than
+ * one stack in the manager. The popped symtable is not kept in memory.
+ *
+ * @param stm pointer to an instance of symtable manager
+ */
+void symtable_manager_pop(symtable_manager_t *stm) {
+  if (stm == NULL)
+    return;
+
+  if (stm->stmb->stack_count > 1) {
+    symtable_t *st = symtable_manager_get_top(stm);
+    symtable_free(st);
+    stm->stmb->stack_count--;
+  }
+}
+
+/**
+ * @brief symtable_manager_get_top returns the topmost symtable in the stack
+ *
+ * @return pointer to an instance of symtable
+ *
+ * @retval NULL error
+ * @retval pointer success
+ */
+symtable_t *symtable_manager_get_top(symtable_manager_t *stm) {
+  if (stm == NULL)
+    return NULL;
+
+  return stm->stmb->symtables[symtable_manager_stack_size(stm) - 1];
+}
+
+/**
+ * @brief symtable_manager_find looks for a key in a stack of symtables
+ *
+ * @details symtable_manager_find_symbol traverses the stacks from top to bottom
+ * while looking for a key.
+ *
+ * @param stm pointer to an instance of symtable manager
+ * @param key symbol identificator
+ *
+ * @return symtable_iterator
+ *
+ * @retval symtable_end(st) searched key does not exist
+ * @retval symtable_iterator iterator aiming at the key
+ */
+symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_t key) {
+  symtable_t *st = symtable_manager_get_top(stm);
+  symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
+
+  for (int i = stm->stmb->stack_count - 1; i > 0 && !symtable_iterator_valid(it); i--) {
+    it = symtable_find(stm->stmb->symtables[i], key);
+  }
+
+  return it;
+}
+
+/**
+ * @brief symtable_manager_lookup_add adds a symbol to the topmost symtable
+ *
+ * @details symtable_manager_add_symbol firstly searches for a key in all stacks
+ * of symtables. If a key is found, an iterator aiming at the entry is returned.
+ * If a key is not found, it is added to the topmost symtable and iterator
+ * aiming at it is returned.
+ *
+ * @param stm pointer to an instance of symtable manager
+ * @param key symbol identificator
+ *
+ * @return symtable_iterator
+ */
+symtable_iterator_t symtable_manager_lookup_add(symtable_manager_t *stm, symtable_key_t key) {
+  symtable_t *st = symtable_manager_get_top(stm);
+  symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
+
+  it = symtable_manager_find(stm, key);
+  if (symtable_iterator_valid(it))
+    return it;
+
+  it = symtable_lookup_add(st, key);
+
+  return it;
+}
+
+/**
+ * @brief symtable_manager_has checks if a symbol is in a stack of symtables
+ *
+ * @details symtable_manager_has traverses the stacks from top to bottom while
+ * looking for a symbol. It reports if the stack contains the symbol or not.
+ *
+ * @param stm pointer to an instance of symtable manager
+ * @param key symbol identificator
+ */
+int symtable_manager_has(symtable_manager_t *stm, symtable_key_t key) {
+  symtable_iterator_t it = symtable_manager_find(stm, key);
+  if (!symtable_iterator_valid(it))
+    return 1;
+
+  return 0;
+}
+
+/**
+ * @brief symtable_manager_remove removes a symbol from the topmost symtable
+ *
+ * @param stm pointer to an instane of symtable manager
+ * @param key symbol identificator
+ */
+void symtable_manager_remove(symtable_manager_t *stm, symtable_key_t key) {
+  if (stm == NULL)
+    return;
+
+  symtable_t *st = symtable_manager_get_top(stm);
+
+  symtable_remove(st, key);
+}

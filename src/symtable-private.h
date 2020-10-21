@@ -34,3 +34,14 @@ struct symtable {
   struct symtable_body *stb;
 };
 
+struct symtable_manager_body {
+  size_t stack_count;
+  size_t max_stack_count;
+
+  symtable_t *symtables[];
+};
+
+struct symtable_manager {
+  struct symtable_manager_body *stmb;
+};
+
