@@ -12,15 +12,17 @@ export PROJECT_DIR := $(shell pwd)
 export BUILD_DIR := $(PROJECT_DIR)/build
 
 export BIN_DIR := $(BUILD_DIR)/bin
+export OBJECTS_DIR := $(BUILD_DIR)/objects
+export TARGET:= $(BIN_DIR)/$(NAME)
 
 .PHONY: all run zip clean help
 
 all:
-	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
+	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJECTS_DIR)
 	$(MAKE) -C src
 
 run:
-	src/$(NAME)
+	@$(TARGET)
 
 zip:
 	@zip xcoders69.zip Makefile src/*.c src/*.h src/Makefile
@@ -28,18 +30,17 @@ zip:
 clean:
 	@rm -f *.zip
 	@rm -f -r $(BUILD_DIR)
-	@$(MAKE) -s -C src clean
 
 help:
 	@echo "make"
-	@echo "    Executes 'make all' command"
+	@echo "    Execute 'make all' command."
 	@echo "make all"
-	@echo "    Builds the project"
+	@echo "    Build the project."
 	@echo "make run"
-	@echo "    Runs the program"
+	@echo "    Run the program."
 	@echo "make zip"
-	@echo "    Create a zip file with the project"
+	@echo "    Create a zip file with the project."
 	@echo "make clean"
-	@echo "    Remove all unneeded files"
+	@echo "    Remove all unneeded files."
 	@echo "make help"
-	@echo "    Show this screen"
+	@echo "    Show this screen."
