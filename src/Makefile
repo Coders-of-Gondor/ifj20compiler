@@ -7,8 +7,6 @@ ifeq (0, ${MAKELEVEL})
 $(error invoke "make" from the root build directory)
 endif
 
-target := $(BIN_DIR)/$(NAME)
-
 public_sources = \
 	main.c \
 	scanner.c
@@ -31,17 +29,12 @@ compiler_headers = \
 	$(public_headers) \
 	$(private_headers)
 
-compiler_objects = $(compiler_sources:%.c=objects/%.o)
+compiler_objects = $(compiler_sources:%.c=$(OBJECTS_DIR)/%.o)
 
-.PHONY: all dirs clean
+.PHONY: all
 
-all: dirs $(target)
-$(target): $(compiler_objects)
-	$(CC) -o $(target) $^ $(LDFLAGS)
-$(compiler_objects): objects/%.o: %.c
+all: $(TARGET)
+$(TARGET): $(compiler_objects)
+	$(CC) -o $(TARGET) $^ $(LDFLAGS)
+$(compiler_objects): $(OBJECTS_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-dirs:
-	@mkdir -p ./objects
-
-clean:
-	@rm -f -r ./objects
