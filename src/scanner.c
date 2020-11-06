@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "debug.h"
 #include "token.h"
 #include "scanner-private.h"
 
@@ -19,6 +20,7 @@
  * @return an instance of scanner (or NULL on error)
  */
 scanner_t *scanner_new(FILE *f) {
+  debug_entry();
   scanner_t *s = malloc(sizeof(struct scanner));
   if (s == NULL)
     return NULL;
@@ -35,6 +37,7 @@ scanner_t *scanner_new(FILE *f) {
  * @param s an instance of scanner
  */
 void scanner_free(scanner_t *s) {
+  debug_entry();
   if (s != NULL)
     free(s);
 }
@@ -58,6 +61,7 @@ void scanner_free(scanner_t *s) {
  * @retval EOF end of file
  */
 int scanner_scan(scanner_t *s, token_t *t, char *l) {
+  debug_entry();
   int i = 0;
   char literal[BUFSIZ];
 

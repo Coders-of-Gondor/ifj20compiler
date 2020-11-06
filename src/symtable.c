@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "debug.h"
 #include "symtable-private.h"
 #include "token.h"
 
@@ -53,6 +54,7 @@ size_t symtable_hash_fun(symtable_key_t key) {
  * @retval pointer success
  */
 symtable_t *symtable_new() {
+  debug_entry();
   symtable_t *st = malloc(sizeof(struct symtable));
   if (st == NULL)
     return NULL;
@@ -77,6 +79,7 @@ symtable_t *symtable_new() {
  * @param st pointer to an instance of symtable
  */
 void symtable_free(symtable_t *st) {
+  debug_entry();
   if (st != NULL) {
     symtable_clear(st);
     free(st->stb);
@@ -130,6 +133,7 @@ size_t symtable_bucket_cap(const symtable_t *st) {
  * @return symtable iterator
  */
 symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
+  debug_entry();
   size_t i = symtable_hash_fun(key) % symtable_bucket_count(st);
   struct symtable_item *item = st->stb->item_list[i];
 
@@ -162,6 +166,7 @@ symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
  * @return symtable iterator
  */
 symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key) {
+  debug_entry();
   symtable_iterator_t it = symtable_find(st, key);
   if (symtable_iterator_valid(it))
     return it;
@@ -234,6 +239,7 @@ symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key) {
  * @param t pointer to an instance of symtable
  */
 void symtable_clear(symtable_t *st) {
+  debug_entry();
   if (st == NULL)
     return;
 
@@ -254,6 +260,7 @@ void symtable_clear(symtable_t *st) {
  * @param key text
  */
 void symtable_remove(symtable_t *st, symtable_key_t key) {
+  debug_entry();
   if (st == NULL)
     return;
 
@@ -269,6 +276,7 @@ void symtable_remove(symtable_t *st, symtable_key_t key) {
  * @param it symtable iterator
  */
 void symtable_erase(symtable_t *st, symtable_iterator_t it) {
+  debug_entry();
   if (st == NULL)
     return;
 
@@ -401,6 +409,7 @@ symtable_value_t symtable_iterator_set_value(symtable_iterator_t it, symtable_va
  * @retval pointer success
  */
 symtable_manager_t *symtable_manager_new() {
+  debug_entry();
   symtable_manager_t *stm = malloc(sizeof(struct symtable_manager));
   if (stm == NULL)
     return NULL;
@@ -430,6 +439,7 @@ symtable_manager_t *symtable_manager_new() {
  * @param stm pointer to an instance of symtable manager
  */
 void symtable_manager_free(symtable_manager_t *stm) {
+  debug_entry();
   if (stm != NULL) {
     for (size_t i = 0; i < stm->stmb->stack_count; i++)
       symtable_free(stm->stmb->symtables[i]);
@@ -456,6 +466,7 @@ size_t symtable_manager_max_stack_size(const symtable_manager_t *stm) {
  * @param stm pointer to an instance of symtable manager
  */
 void symtable_manager_push(symtable_manager_t *stm) {
+  debug_entry();
   if (stm == NULL)
     return;
 
@@ -491,6 +502,7 @@ void symtable_manager_push(symtable_manager_t *stm) {
  * @param stm pointer to an instance of symtable manager
  */
 void symtable_manager_pop(symtable_manager_t *stm) {
+  debug_entry();
   if (stm == NULL)
     return;
 
@@ -531,6 +543,7 @@ symtable_t *symtable_manager_get_top(symtable_manager_t *stm) {
  * @retval symtable_iterator iterator aiming at the key
  */
 symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_t key) {
+  debug_entry();
   symtable_t *st = symtable_manager_get_top(stm);
   symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
 
@@ -555,6 +568,7 @@ symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_
  * @return symtable_iterator
  */
 symtable_iterator_t symtable_manager_lookup_add(symtable_manager_t *stm, symtable_key_t key) {
+  debug_entry();
   symtable_t *st = symtable_manager_get_top(stm);
   symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
 
