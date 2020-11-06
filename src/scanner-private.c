@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "debug.h"
 #include "scanner-private.h"
 
 /**
@@ -15,6 +16,7 @@
  * @param s an instance of scanner
  */
 void scanner_skip_whitespace_comments(scanner_t *s) {
+  debug_entry();
   comment_state state = CLEAN;
 
   do {
