@@ -1,0 +1,39 @@
+name: Test ifj20compiler
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build ifj20compiler
+      run: make
+
+  unit-tests:                                                                                                 
+    runs-on: ubuntu-latest                                                                                    
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt install libgtest-dev
+        pushd /usr/src/googletest
+        sudo mkdir build
+        pushd build
+        sudo cmake -DCMAKE_CXX_COMPILER=g++-10 ..
+        sudo make install -j
+        popd
+        sudo rm -r build
+        popd
+
+    - name: Build & Run unit tests
+      run: make test CXX=g++-10
