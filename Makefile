@@ -5,7 +5,7 @@
 
 export SHELL := /usr/bin/env sh
 export CC = /usr/bin/env gcc
-export CFLAGS = -std=c99 -g -pedantic -Wall -Wextra
+export CFLAGS = -std=c99 -g -Wall -Wextra
 export NAME = ifj20compiler
 
 export PROJECT_DIR := $(shell pwd)
