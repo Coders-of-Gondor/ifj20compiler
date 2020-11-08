@@ -67,7 +67,7 @@ int scanner_scan(scanner_t *s, token_t *t, char *l) {
 
   // Get the passed token to its initial state
   t->type = INVALID;
-  t->attribute = NULL;
+  t->int_val = 0;
 
   // Skip comments and whitespace characters
   scanner_skip_whitespace_comments(s);
