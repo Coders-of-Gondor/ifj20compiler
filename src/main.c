@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "error.h"
 
 const char *program_name = "ifj20compiler";
 
@@ -23,7 +24,7 @@ void print_help() {
   printf("Options:\n");
   printf("\t-h, --help\t\tshow help screen\n");
 
-  exit(EXIT_SUCCESS);
+  exit(SUCCESS);
 }
 
 void handle_args(int argc, char *argv[], args_t *args) {
@@ -35,7 +36,7 @@ void handle_args(int argc, char *argv[], args_t *args) {
       // Handle unrecognized options
       fprintf(stderr, "%s: unrecognized option %s\n", program_name, argv[i]);
       print_usage_hint();
-      exit(EXIT_FAILURE);
+      exit(ERROR_INTERNAL);
     }
     else {
       if (args->input_file == NULL)
@@ -43,7 +44,7 @@ void handle_args(int argc, char *argv[], args_t *args) {
       else {
         fprintf(stderr, "%s: only one input file is accepted\n", program_name);
         print_usage_hint();
-        exit(EXIT_FAILURE);
+        exit(ERROR_INTERNAL);
       }
     }
   }
@@ -51,7 +52,7 @@ void handle_args(int argc, char *argv[], args_t *args) {
   if (args->input_file == NULL) {
     fprintf(stderr, "%s: no input file was specified\n", program_name);
     print_usage_hint();
-    exit(EXIT_FAILURE);
+    exit(ERROR_INTERNAL);
   }
 }
 
@@ -63,8 +64,8 @@ int main(int argc, char *argv[]) {
   if (f == NULL) {
     fprintf(stderr, "%s: there was an error while opening file \"%s\"\n", program_name, args.input_file);
     print_usage_hint();
-    return EXIT_FAILURE;
+    return ERROR_INTERNAL;
   }
 
-  return EXIT_SUCCESS;
+  return SUCCESS;
 }
