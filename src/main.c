@@ -9,6 +9,10 @@
 #include "error.h"
 #include "global.h"
 
+#include "global.h"
+#include "scanner.h"
+#include "parser.h"
+
 const char *program_name = "ifj20compiler";
 
 typedef struct args {
@@ -78,6 +82,9 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "%s: there was an error during compiler's inicialization\n", program_name);
     return ERROR_INTERNAL;
   }
+
+  scanner = scanner_new(f);
+  parser_start();
 
   fclose(f);
 
