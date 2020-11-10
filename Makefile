@@ -15,7 +15,7 @@ export BIN_DIR := $(BUILD_DIR)/bin
 export OBJECTS_DIR := $(BUILD_DIR)/objects
 export TARGET:= $(BIN_DIR)/$(NAME)
 
-.PHONY: all run testunit zip clean help
+.PHONY: all run testunit test2e2 zip clean help
 
 all:
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJECTS_DIR)
@@ -27,6 +27,9 @@ run:
 testunit: all
 	$(MAKE) -C tests/unit
 	@./build/bin/ifj20compiler-tests
+
+teste2e: all
+	@bats ./tests/e2e
 
 zip:
 	@zip xcoders69.zip Makefile src/*.c src/*.h src/Makefile
