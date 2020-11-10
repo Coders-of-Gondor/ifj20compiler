@@ -1,0 +1,3 @@
+Zadej retezec: STRING=  ahoj \n +xxxx+\t svete. CHYBA=0
+Zadej cislo: INT=10. CHYBA=0
+Zadej desetinne cislo: FLOAT64=0x1.921cac083126fp+01. CHYBA=0

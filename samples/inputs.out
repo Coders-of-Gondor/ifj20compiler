@@ -1,0 +1,6 @@
+Zadej pocet radku k nacteni: Nacitame 5 radku...
+Zadej retezec c. 1: STRING1= jeden radek. CHYBA=0
+Zadej retezec c. 2: STRING2=druhy radek ale dalsi chybi. CHYBA=0
+Zadej retezec c. 3: STRING3=. CHYBA=1
+Zadej retezec c. 4: STRING4=. CHYBA=1
+Zadej retezec c. 5: STRING5=. CHYBA=1
