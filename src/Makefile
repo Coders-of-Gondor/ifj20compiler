@@ -23,14 +23,17 @@ public_sources = \
 	symtable.c \
 	str.c \
 	token.c
+	parser.c
 
 public_headers = \
 	global.h \
 	token.h \
+	global.h \
 	symtable.h \
 	error.h \
 	scanner.h \
 	str.h
+	paser.h
 
 private_sources = \
 	scanner-private.c
