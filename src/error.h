@@ -1,7 +1,8 @@
 /* error.h
  * Vojtech Fiala <xfiala61>
+ * Marek Filip <xfilip46>
  * FIT BUT
- * 26/10/2020
+ * 10/11/2020
  */
 
 #ifndef __ERROR_H__
@@ -17,6 +18,23 @@
 #define ERROR_SEM 7                 // Other semantic errors
 #define ERROR_ZERO 9                // Semantic error - dividing by zero
 #define ERROR_INTERNAL 99           // Internal error - memory errors...
+
+/**
+ * @brief Function for exiting the program.
+ * @description Make sure the deallocation of resources is sufficient.
+ *
+ */
+void error_exit(unsigned error_code, const char* fmt, ...);
+
+/**
+ * @brief Function to call when a syntax error is encountered.
+ */
+void throw_syntax_error();
+
+/**
+ * @brief Function to call when a lexical error is encountered.
+ */
+void throw_lex_error();
 
 #endif  //__ERROR_H__
 

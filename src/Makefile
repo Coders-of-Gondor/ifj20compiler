@@ -9,13 +9,15 @@ endif
 
 public_sources = \
 	main.c \
-	scanner.c \
-	symtable.c
+	symtable.c \
+	error.c \
+	scanner.c
 
 public_headers = \
-	scanner.h \
 	token.h \
-	symtable.h
+	symtable.h \
+	error.h \
+	scanner.h
 
 private_sources = \
 	scanner-private.c
