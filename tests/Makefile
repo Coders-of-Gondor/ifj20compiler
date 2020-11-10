@@ -19,12 +19,10 @@ tests_sources = \
 	symtable_tests.cpp \
 	token_tests.cpp
 
-tested_sources = \
-	scanner.c \
-	scanner-private.c
-
 tests_objects = $(tests_sources:%.cpp=$(OBJECTS_DIR)/%.o)
-tested_objects = $(tested_sources:%.c=$(OBJECTS_DIR)/%.o)
+
+all_objects = $(wildcard $(OBJECTS_DIR)/*.o)
+tested_objects = $(filter-out $(tests_objects) $(OBJECTS_DIR)/main.o,$(all_objects))
 
 .PHONY: all
 
