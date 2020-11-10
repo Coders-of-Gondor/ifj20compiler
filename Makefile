@@ -15,7 +15,7 @@ export BIN_DIR := $(BUILD_DIR)/bin
 export OBJECTS_DIR := $(BUILD_DIR)/objects
 export TARGET:= $(BIN_DIR)/$(NAME)
 
-.PHONY: all run test zip clean help
+.PHONY: all run testunit zip clean help
 
 all:
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJECTS_DIR)
@@ -24,8 +24,8 @@ all:
 run:
 	@$(TARGET)
 
-test: all
-	$(MAKE) -C tests
+testunit: all
+	$(MAKE) -C tests/unit
 	@./build/bin/ifj20compiler-tests
 
 zip:

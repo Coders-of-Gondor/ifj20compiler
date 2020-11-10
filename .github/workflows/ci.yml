@@ -36,4 +36,4 @@ jobs:
         popd
 
     - name: Build & Run unit tests
-      run: make test CXX=g++-10
+      run: make testunit CXX=g++-10
