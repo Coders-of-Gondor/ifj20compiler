@@ -303,8 +303,6 @@ void symtable_erase(symtable_t *st, symtable_iterator_t it) {
   }
 
   free((char *) it.ptr->key);
-  // TODO: Tokens are not finalized. When they are, put here a token destructor
-  // token_free(it.ptr->value);
   free(it.ptr);
 }
 
