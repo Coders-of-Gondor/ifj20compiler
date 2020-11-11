@@ -1,5 +1,8 @@
 /* token.h
- * Ondřej Míchal <xmicha80>, Marek Filip <xfilip46>
+ * Ondřej Míchal <xmicha80>
+ * Marek Filip <xfilip46>
+ * Vojtěch Fiala <xfiala61>
+ * Vojtěch Bůbela <xbubel08>
  * FIT BUT
  * 09/11/2020
  */
@@ -11,15 +14,21 @@
 #include "str.h"
 
 typedef enum token_type {
-  INVALID,
-  EOL, 	 // End of line
-  EOF_T, // Enf of file
+  // General
+  INVALID,  // Invalid token (Lexical error)
+  EOL, 		// End of line
+  EOF_T, 	// End of file
+  IDENT,    // temp_value
 
-  // Types
-  INT, 	   // 42
-  FLOAT64, // 42.42
-  STRING,  // "fourtytwo"
-  IDENT,   // temp_malue
+  // Literals
+  INT_LIT, 	   // 42
+  FLOAT64_LIT, // 42.42
+  STRING_LIT,  // "fourtytwo"
+
+  // Data types
+  INT, 		   // int
+  FLOAT64, 	   // float64
+  STRING,  	   // string
 
   // Control
   IF,   // if
@@ -47,6 +56,7 @@ typedef enum token_type {
   AND, // &&
   OR,  // ||
   EQL, // ==
+  NEQ, // !=
   LSS, // <
   LEQ, // <=
   GTR, // >
@@ -54,27 +64,24 @@ typedef enum token_type {
 
   //  Other
   LPAREN, 	// (
-  LBRACK,	// [
   LBRACE, 	// {
   RPAREN, 	// )
-  RBRACK, 	// ]
   RBRACE, 	// }
   COMMA,  	// ,
   SEMICOLON // ;
 } token_type;
 
-// FIXME: attribute is quite questionable member of the token struct.
 /**
- * Token holds information about a scanned lexem
+ * @brief Token holds information about a scanned lexem
  */
 typedef struct token {
   token_type type; /**< Type of the token */
-  union {
+  union Attribute {
 	int64_t int_val;
 	double float_val;
-	string string_val;
+	string str_val;
 	char *sym_key;	
-  }; /**< Token's attribute (e.g., symtable key, value of int,..). */
+  } attribute; /**< Token's attribute (e.g., symtable key, value of int,..). */
 } token_t;
 
 #endif // __TOKEN_H__
