@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "parser.h"
 #include "scanner.h"
@@ -164,6 +165,18 @@ void parser_block() {
   parser_match(LBRACE);
   parser_stmts();
   parser_match(RBRACE);
+}
+
+bool is_lit(token_type type) {
+  // is token type a literal?
+  switch (type) {
+    case INT_LIT:
+    case FLOAT64_LIT:
+    case STRING_LIT:
+      return true;
+    default:
+      return false;
+  }
 }
 
 /* ------------------------------------------------------------------------ */
@@ -347,10 +360,10 @@ void parser_optexprs() {
     case FLOAT64_LIT:
     case STRING_LIT:
     case IDENT:
-    case RBRACE:
       parser_exprs();
       break;
     default:
+      // apply eps-rule
       break;
   }
 }
@@ -359,6 +372,149 @@ void parser_optexprs() {
 /* EXPRESSION RULES                                                         */
 /* ------------------------------------------------------------------------ */
 
-// TODO
 void parser_expr() {
+  // This parsing is only used for the 0th submission
+  parser_rel();
+}
+
+/* THIS WILL BE LEFT OUT IN THE FINAL PARSER */
+
+/* Helper functions */
+bool is_relop(token_type type) {
+  // Does token type represent relation operations?
+  switch (type) {
+    case LSS:
+    case LEQ:
+    case GTR:
+    case GEQ:
+    case EQL:
+    case NEQ:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool is_addop(token_type type) {
+  // Does token type represent plus/minus opperations?
+  switch (type) {
+    case ADD:
+    case SUB:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool is_mulop(token_type type) {
+  // Does token type represent multiply/divide operations?
+  switch (type) {
+    case MUL:
+    case DIV:
+      return true;
+    default:
+      return false;
+  }
+}
+
+void parser_relop() {
+  if (is_relop(lookahead.type)) {
+    // we can call 'match' like that because of the check in the if 
+    parser_match(lookahead.type);
+  } else {
+    // operator not found, syntax error
+    throw_syntax_error();
+  }
+}
+
+void parser_addop() {
+  if (is_addop(lookahead.type)) {
+    // we can call 'match' like that because of the check in the if 
+    parser_match(lookahead.type);
+  } else {
+    // operator not found, syntax error
+    throw_syntax_error();
+  }
+}
+
+void parser_mulop() {
+  if (is_mulop(lookahead.type)) {
+    // we can call 'match' like that because of the check in the if 
+    parser_match(lookahead.type);
+  } else {
+    // operator not found, syntax error
+    throw_syntax_error();
+  }
+}
+
+void parser_rel() {
+  parser_add();
+  parser_rel_n();
+}
+
+void parser_rel_n() {
+  // if token type is not relation operator, apply eps-rule
+  if (is_relop(lookahead.type)) {
+      // expand the relation operator
+      parser_relop();
+      parser_add();
+      parser_rel_n();
+  }
+  // apply eps-rule
+}
+
+void parser_add() {
+  parser_term();
+  parser_add_n();
+}
+
+void parser_add_n() {
+  // if token type is not add/sub perator, apply eps-rule
+  if (is_addop(lookahead.type)) {
+    parser_addop();
+    parser_term();
+    parser_add_n();
+  }
+  // apply eps-rule
+}
+
+void parser_term() {
+  parser_factor();
+  parser_term_n();
+}
+
+void parser_term_n() {
+  // if token type is not mul/div operator, apply eps-rule
+  if (is_mulop(lookahead.type)) {
+    parser_mulop();
+    parser_factor();
+    parser_term_n();
+  }
+  // apply eps-rule
+}
+
+void parser_factor() {
+  token_type t = lookahead.type;
+
+  if (t == LPAREN) {
+    parser_match(LPAREN);
+    parser_expr();
+    parser_match(RPAREN);
+  } else if (is_lit(t)) {
+    // can only match INT, FLOAT64, STRING due to is_lit()
+    parser_match(t);
+  } else if (t == IDENT) {
+    parser_match(IDENT);
+    parser_funexp();
+  } else {
+    throw_syntax_error();
+  }
+}
+
+void parser_funexp() {
+  // if lookahead is '(', apply eps-rule
+  if (lookahead.type == LPAREN) {
+    parser_params();
+  }
+  // apply eps-rule
 }
