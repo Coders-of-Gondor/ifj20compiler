@@ -17,9 +17,6 @@
  * 
  * @param number amount by how much we want to move
  */
-void file_move(FILE *f, int number) {
-    fseek(f, number, SEEK_CUR);
-}
 
 /**
  * @brief scanner_skip_whitespace_comments skips all whitespace characters and
@@ -27,7 +24,7 @@ void file_move(FILE *f, int number) {
  *
  * @param s an instance of scanner
  */
-void scanner_skip_whitespace_comments(scanner_t *s, bool eol_encountered) {
+void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered) {
   // debug_entry();
   comment_state state = CLEAN;
 
@@ -36,8 +33,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool eol_encountered) {
     s->position++;
     switch (s->character) {
       case '\n':
-      if (eol_encountered == false) 
-        eol_encountered = true;
+        *eol_encountered = true;
 
         if (state & INLINE_COMMENT)
           state = CLEAN;
@@ -64,7 +60,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool eol_encountered) {
     }
   } while(isspace(s->character) || !(state & CLEAN));
 
-  fseek(s->file, -1, SEEK_CUR);
+  ungetc(s->character, s->file);
   s->position--;
 }
 
@@ -178,16 +174,6 @@ int innit_scan(scanner_t *s, token_t *t) {
 
         case ')':
           t->type = RPAREN;
-          return 2;
-          break;
-
-        case '[':
-          t->type = LBRACK;
-          return 2;
-          break;
-
-        case ']':
-          t->type = RBRACK;
           return 2;
           break;
 

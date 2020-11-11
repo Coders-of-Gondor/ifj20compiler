@@ -36,7 +36,13 @@ function run_compiler() {
 
     echo ""
     echo "\$ $IFJ20COMPILER $*"
-    run timeout --foreground --kill=10 30 $IFJ20COMPILER "$@" 3>/dev/null
+
+    # helper function to get the compiler rid of stderr
+    compiler_without_stderr() {
+      timeout --foreground --kill=10 30 $IFJ20COMPILER "$@" 2>/dev/null
+      # $IFJ20COMPILER "$@" 2>/dev/null
+    }
+    run compiler_without_stderr "$@" 3>/dev/null
 
     if [ -n "$output" ]; then
       echo "$output"

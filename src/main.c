@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "error.h"
+#include "global.h"
 
 const char *program_name = "ifj20compiler";
 
@@ -67,6 +68,11 @@ int main(int argc, char *argv[]) {
     return ERROR_INTERNAL;
   }
 
+  if (global_init() != 0) {
+    fprintf(stderr, "%s: there was an error during compiler's inicialization\n", program_name);
+    return ERROR_INTERNAL;
+  }
+  
   fclose(f);
 
   return SUCCESS;

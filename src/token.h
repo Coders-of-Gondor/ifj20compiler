@@ -30,10 +30,6 @@ typedef enum token_type {
   FLOAT64, 	   // float64
   STRING,  	   // string
 
-  INT_LIT,        // 42
-  FLOAT64_LIT, // 42.42
-  STRING_LIT,  // "fourtytwo"
-
   // Control
   IF,   // if
   ELSE, // else
@@ -68,7 +64,6 @@ typedef enum token_type {
 
   //  Other
   LPAREN, 	// (
-  LBRACK,	  // [
   LBRACE, 	// {
   RPAREN, 	// )
   RBRACE, 	// }
@@ -82,10 +77,10 @@ typedef enum token_type {
 typedef struct token {
   token_type type; /**< Type of the token */
   union Attribute {
-	  int64_t int_val;
-	  double float_val;
-	  string str_val;
-	  char *sym_key;	
+	int64_t int_val;
+	double float_val;
+	string str_val;
+	char *sym_key;	
   } attribute; /**< Token's attribute (e.g., symtable key, value of int,..). */
 } token_t;
 
@@ -94,5 +89,9 @@ void token_free(token_t *t);
 
 void token_set_attribute(token_t *t, string str);
 void token_set_type(token_t *t, token_type type);
+
+int ident_is_keyword(string str);
+
+token_type get_keyword_type(string str);
 
 #endif // __TOKEN_H__

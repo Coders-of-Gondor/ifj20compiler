@@ -8,6 +8,7 @@ $(error invoke "make" from the root build directory)
 endif
 
 public_sources = \
+	global.c \
 	main.c \
 	error.c \
 	scanner.c \
@@ -16,6 +17,7 @@ public_sources = \
 	token.c
 
 public_headers = \
+	global.h \
 	token.h \
 	symtable.h \
 	error.h \
