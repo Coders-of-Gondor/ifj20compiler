@@ -190,6 +190,7 @@ symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key) {
   // No magic is needed if the new item is in a bucket all alone
   if (st->stb->item_list[it.idb] == NULL) {
     st->stb->item_list[it.idb] = new_item;
+    it.ptr = st->stb->item_list[it.idb];
   } else {
     it.ptr = st->stb->item_list[it.idb];
     if (strcmp(it.ptr->key, key) != 0) {
