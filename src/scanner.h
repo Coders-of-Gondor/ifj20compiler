@@ -8,6 +8,7 @@
 #define __SCANNER_H__
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "token.h"
 
 struct scanner;
@@ -16,6 +17,6 @@ typedef struct scanner scanner_t;
 scanner_t *scanner_new(FILE *f);
 void scanner_free(scanner_t *s);
 
-int scanner_scan(scanner_t *s, token_t *t, char *literal);
+int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered);
 
 #endif // __SCANNER_H__

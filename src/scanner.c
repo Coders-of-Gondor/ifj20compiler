@@ -1,16 +1,22 @@
 /*
  * scanner.c
  * Ondřej Míchal <xmicha80>
- * 03/10/2020
+ * Vojtěch Bůbela <xbubelXY>
+ * Vojtěch Fiala <xfiala61>
+ * 08/11/2020
  */
 
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "debug.h"
 #include "token.h"
 #include "scanner-private.h"
+#include "str.h"
+#include "error.h"
+
 
 /**
  * @brief scanner_init initializes an instance of scanner
@@ -27,6 +33,7 @@ scanner_t *scanner_new(FILE *f) {
 
   s->file = f;
   s->position = 0;
+  s->state = INIT;
 
   return s;
 }
@@ -51,66 +58,276 @@ void scanner_free(scanner_t *s) {
  * 
  * @param s an instance of scanner
  * @param t a pointer to token
- * @param l char array holding the literal string representation of the token.
- * Should be at least of size BUFSIZ.
+ * @param eol_flag can have 3 values. 0 -> EOL is optional, 1 -> EOL is required
+ * 2 -> EOL is forbidenn
  * 
  * @return success or EOF
  *
  * @retval 0 success
  * @retval 1 lexical analysis error
+ * @retval 99 internal error, failed to allocate memory
  * @retval EOF end of file
  */
-int scanner_scan(scanner_t *s, token_t *t, char *l) {
+int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
   debug_entry();
-  int i = 0;
-  char literal[BUFSIZ];
+  int return_val;
+  string str;
 
-  // Get the passed token to its initial state
-  t->type = INVALID;
-  t->attribute.int_val = 0;
+  if (s == NULL)
+    return ERROR_INTERNAL;
+
+  if (s->file == NULL)
+    return ERROR_INTERNAL;
+
+  if (t == NULL)
+    return ERROR_INTERNAL;
+
+  strInit(&str);
+
+  token_init(t);
 
   // Skip comments and whitespace characters
-  scanner_skip_whitespace_comments(s);
+  scanner_skip_whitespace_comments(s, eol_encountered);
 
   // Token State Machine
   // TODO: Actually implement the state machine :)
   do {
     // Get the next character
-    s->character = fgetc(s->file);
+    if (s->state != STOP && s->state != EXIT) {
+        s->character = fgetc(s->file);
 
-    if (s->character == EOF)
-      break;
-
-    literal[i] = s->character;
-
+        if (s->character == EOF)
+          break;
+    }    
     switch (s->state) {
-    case INIT:
-      switch(s->character) {
-      case '+':
-      case '-':
-      case '/':
-      case '*':
-      case '<':
-      case '>':
-      case '=':
-      case ':':
-      case '&':
-      case '|':
-      case '_':
-      case '0' ... '9':
-      case 'a' ... 'z':
+     
+      /*
+      * initial scan solves all branches of DKA apart from
+      * numerical literal, decimal literal, identifier and
+      * string literal 
+      */
+
+      //-----beggining of initial scan------
+
+      case INIT:
+        return_val = innit_scan(s, t);
+        if (return_val == 1) {
+          s->state = LEX_ERROR;
+        } else if (return_val == 2) {
+          s->state = STOP;
+        }
+
         break;
-      }
-      break;
+      
+      //-----end of initial scan-----
+
+      /*
+      * this part of code is for numerical literal 
+      */
+
+      //-----beggining of numerical literal scan------
+      
+      case f14:
+        if (scan_num_lit(s, t) == 1) {
+          file_move(s->file, -1);
+          s->state = STOP;
+        }
+
+        break;
+
+       case f15:
+        if ((s->character == 'e') || (s->character == 'E')) {
+          t->type = FLOAT64;
+          s->state = q8;
+        } else if (s->character == '.') {   //0.X
+          t->type = FLOAT64;
+          s->state = q7;
+        } else {
+          file_move(s->file, -1);
+          t->type = INT;
+          s->state = STOP;
+        }
+
+        break;
+
+      //-----end of numerical literal scan------
+
+      /*
+      * this part of code is for deciaml literal 
+      */
+
+      //-----beggining of decimal literal scan-----
+
+      case q7:
+        if (s->character >= 48 && s->character <= 57) {
+          s->state = f16;
+        } else {
+          file_move(s->file, -1);
+          s->state = LEX_ERROR;
+        }
+        break;
+
+      case q8:
+        if (s->character == '+' || s->character == '-') {
+          s->state = q9;
+        } else if (s->character >= 48 && s->character <= 57) {
+          s->state = f17;
+        } else {
+          s->state = LEX_ERROR;
+        }
+
+        break;
+
+      case q9:
+        if (s->character >= 48 && s->character <= 57) {
+          s->state = f17;
+        } else {
+          file_move(s->file, -1);   // is this necessary? 
+          s->state = LEX_ERROR;
+        }
+
+        break;
+
+      case f16:
+        if ((s->character == 'e') || (s->character == 'E')) {
+          s->state = q8;
+        } 
+        
+        else if (s->character >= 48 && s->character <= 57) {    
+          s->state = f16;       // If after X.Y we have another number, keep on looping
+        }
+
+        else {                  // Else we found another token, so return to its beginning and stop
+            s->state = STOP;
+            file_move(s->file, -1);
+        }
+
+        break;
+
+      case f17:
+        if (!(s->character >= 48 && s->character <= 57)) {
+          s->state = STOP;
+          file_move(s->file, -1);
+        }
+
+        break;
+
+      //----end of decimal literal scan-----
+
+      /*
+      * this part of code is for string literal 
+      */
+
+      //-----beggining of string literal scan-----
+
+      case q3:
+        return_val = scan_string_lit(s);
+        if (return_val == 1) {
+          s->state = LEX_ERROR;
+        } else if (return_val == 2) {
+            s->state = STOP;
+            if ((strAddChar(&str, s->character)) == 1) {
+                return ERROR_INTERNAL;
+            }
+        }
+        break;
+
+      case q4:
+          if ((s->character == 'x')) {
+            s->state = q5;
+            } else if (s->character == 'n' ||
+                       s->character == 't' ||
+                       s->character == 92  ||
+                       s->character == '"') {
+                         s->state = q3;
+            } else {
+                s->state = ERROR;
+            }
+
+            break;
+
+      case q5:
+        if (!(s->character >= 48 && s->character <= 57) ||
+            !(s->character >= 65 && s->character <= 90) ||
+            !(s->character >= 97 && s->character <= 122)) {
+              s->state = LEX_ERROR;
+            } else {
+              s->state = q6;
+            }      
+
+        break;
+
+      case q6:
+        if (!(s->character >= 48 && s->character <= 57) ||
+            !(s->character >= 65 && s->character <= 90) ||
+            !(s->character >= 97 && s->character <= 122)) {
+              s->state = LEX_ERROR;
+            } else {
+              s->state = q3;
+            }   
+
+        break;
+
+      //----end of string literal scan-----
+
+      /*
+      * this part of code is for identifiers
+      */
+
+      //-----beggining of identifier scan-----
+         
+
+      case f10:
+        if (isspace(s->character)){
+          s->state = STOP;
+          break;
+        } else if ( (s->character != '_') &&
+             !(s->character >= 48 && s->character <= 57) &&
+             !(s->character >= 65 && s->character <= 90) &&
+             !(s->character >= 97 && s->character <= 122)) {
+
+               s->state = STOP;
+               file_move(s->file,-1);
+             }
+        break;
+
+      case STOP:
+            token_set_attribute(t, str);
+            s->state = EXIT;
+        break;
+
+      case ERROR:
+        strFree(&str);
+        return ERROR_INTERNAL;
+        break;
+
+      case LEX_ERROR:
+        strFree(&str);
+        return ERROR_LEXICAL;
+        break;
+
+      case EXIT:
+
+        break;
+      //-----end of identifier scan-----
+      
+      default:
+        break;
     }
-  } while (!isspace(s->character));
 
-  // The owner of literal should handle its lifetime
-  if (i < BUFSIZ)
-    strcpy(l, literal);
+    if(s->state != STOP && s->state != EXIT) {
+      if ((strAddChar(&str, s->character)) == 1) {
+          return 99;
+        }
+    }    
 
+  } while (s->state != EXIT);
+ 
+  strFree(&str);
   if (s->character == EOF)
     return EOF;
 
+  s->state = INIT;
   return 0;
 }
+ 
