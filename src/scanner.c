@@ -1,7 +1,7 @@
 /*
  * scanner.c
  * Ondřej Míchal <xmicha80>
- * Vojtěch Bůbela <xbubelXY>
+ * Vojtěch Bůbela <xbubel08>
  * Vojtěch Fiala <xfiala61>
  * 08/11/2020
  */
@@ -58,9 +58,8 @@ void scanner_free(scanner_t *s) {
  * 
  * @param s an instance of scanner
  * @param t a pointer to token
- * @param eol_flag can have 3 values. 0 -> EOL is optional, 1 -> EOL is required
- * 2 -> EOL is forbidenn
- * 
+ * @param eol_encountered is a bool that stores information that EOL - '\n'
+ * been read
  * @return success or EOF
  *
  * @retval 0 success
@@ -68,7 +67,7 @@ void scanner_free(scanner_t *s) {
  * @retval 99 internal error, failed to allocate memory
  * @retval EOF end of file
  */
-int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
+int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered) {
   debug_entry();
   int return_val;
   string str;
@@ -129,7 +128,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
       
       case f14:
         if (scan_num_lit(s, t) == 1) {
-          file_move(s->file, -1);
+          ungetc(s->character, s->file);
           s->state = STOP;
         }
 
@@ -143,7 +142,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
           t->type = FLOAT64;
           s->state = q7;
         } else {
-          file_move(s->file, -1);
+          ungetc(s->character, s->file);
           t->type = INT;
           s->state = STOP;
         }
@@ -162,7 +161,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
         if (s->character >= 48 && s->character <= 57) {
           s->state = f16;
         } else {
-          file_move(s->file, -1);
+          ungetc(s->character, s->file);
           s->state = LEX_ERROR;
         }
         break;
@@ -182,7 +181,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
         if (s->character >= 48 && s->character <= 57) {
           s->state = f17;
         } else {
-          file_move(s->file, -1);   // is this necessary? 
+          ungetc(s->character, s->file);   // is this necessary? 
           s->state = LEX_ERROR;
         }
 
@@ -199,7 +198,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
 
         else {                  // Else we found another token, so return to its beginning and stop
             s->state = STOP;
-            file_move(s->file, -1);
+            ungetc(s->character, s->file);
         }
 
         break;
@@ -207,7 +206,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
       case f17:
         if (!(s->character >= 48 && s->character <= 57)) {
           s->state = STOP;
-          file_move(s->file, -1);
+          ungetc(s->character, s->file);
         }
 
         break;
@@ -287,7 +286,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
              !(s->character >= 97 && s->character <= 122)) {
 
                s->state = STOP;
-               file_move(s->file,-1);
+               ungetc(s->character, s->file);
              }
         break;
 
@@ -317,7 +316,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool eol_encountered) {
 
     if(s->state != STOP && s->state != EXIT) {
       if ((strAddChar(&str, s->character)) == 1) {
-          return 99;
+          return ERROR_INTERNAL;
         }
     }    
 

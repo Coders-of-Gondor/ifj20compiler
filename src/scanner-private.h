@@ -1,5 +1,6 @@
 /* scanner-private.h
  * Ondřej Míchal <xmicha80>
+ * Vojtech Fiala <xfiala61>
  * 03/10/2020
  */
 
@@ -36,8 +37,9 @@ typedef enum scanner_state
   f16,  //TODO
   f17,  //TODO
 
-  STOP,  //finite state machine is in final step
+  STOP,   //finite state machine is in final step
   ERROR,  //
+  LEX_ERROR,
   EXIT
 } scanner_state;
 
@@ -59,9 +61,7 @@ typedef enum comment_state
   BLOCK_COMMENT = 0x8, /**< the next character is a part of a block comment */
 } comment_state;
 
-void scanner_skip_whitespace_comments(scanner_t *s, bool eol_encountered);
-
-void file_move(FILE *f, int number);
+void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered);
 
 int innit_scan(scanner_t *s, token_t *t);
 int scan_num_lit(scanner_t *s, token_t *t);
