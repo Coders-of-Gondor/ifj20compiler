@@ -67,5 +67,7 @@ int main(int argc, char *argv[]) {
     return ERROR_INTERNAL;
   }
 
+  fclose(f);
+
   return SUCCESS;
 }
