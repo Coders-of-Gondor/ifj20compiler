@@ -53,6 +53,11 @@ void parser_id_first();
 void parser_type(); 
 void parser_block(); 
 
+/**
+ * @brief Return a true/false value depending on the token's type being a literal.
+ */
+bool is_lit(token_type type);
+
 /* ------------------------------------------------------------------------ */
 /* PARAMETERS OF FUNCTION RULES                                             */
 /* ------------------------------------------------------------------------ */
@@ -103,5 +108,23 @@ void parser_optexprs();
 
 void parser_expr();
 
+// is token type relational operator
+bool is_relop(token_type type); 
+// is token type add/sub operator
+bool is_addop(token_type type); 
+// is token type mul/div operator
+bool is_mulop(token_type type); 
+
+void parser_rel(); 
+void parser_rel_n(); 
+
+void parser_add(); 
+void parser_add_n(); 
+
+void parser_term(); 
+void parser_term_n(); 
+
+void parser_factor(); 
+void parser_funexp(); 
 
 #endif // __PARSER_H__
