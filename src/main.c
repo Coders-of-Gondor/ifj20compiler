@@ -24,6 +24,8 @@ void print_help() {
   printf("\n");
   printf("Options:\n");
   printf("\t-h, --help\t\tshow help screen\n");
+  printf("\n");
+  printf("With no file, read standard input.\n");
 
   exit(SUCCESS);
 }
@@ -50,29 +52,33 @@ void handle_args(int argc, char *argv[], args_t *args) {
     }
   }
 
-  if (args->input_file == NULL) {
-    fprintf(stderr, "%s: no input file was specified\n", program_name);
-    print_usage_hint();
-    exit(ERROR_INTERNAL);
-  }
+  if (args->input_file == NULL)
+    args->input_file = "-";
 }
 
 int main(int argc, char *argv[]) {
   args_t args = { NULL, };
   handle_args(argc, argv, &args);
 
-  FILE *f = fopen(args.input_file, "r");
-  if (f == NULL) {
-    fprintf(stderr, "%s: there was an error while opening file \"%s\"\n", program_name, args.input_file);
-    print_usage_hint();
-    return ERROR_INTERNAL;
+  FILE *f;
+
+  if (strcmp(args.input_file, "-") == 0)
+    f = stdin;
+  else {
+    f = fopen(args.input_file, "r");
+
+    if (f == NULL) {
+      fprintf(stderr, "%s: there was an error while opening file \"%s\"\n", program_name, args.input_file);
+      print_usage_hint();
+      return ERROR_INTERNAL;
+    }
   }
 
   if (global_init() != 0) {
     fprintf(stderr, "%s: there was an error during compiler's inicialization\n", program_name);
     return ERROR_INTERNAL;
   }
-  
+
   fclose(f);
 
   return SUCCESS;
