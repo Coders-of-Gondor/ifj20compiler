@@ -136,14 +136,14 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered) {
 
        case f15:
         if ((s->character == 'e') || (s->character == 'E')) {
-          t->type = FLOAT64;
+          t->type = FLOAT64_LIT;
           s->state = q8;
         } else if (s->character == '.') {   //0.X
-          t->type = FLOAT64;
+          t->type = FLOAT64_LIT;
           s->state = q7;
         } else {
           ungetc(s->character, s->file);
-          t->type = INT;
+          t->type = INT_LIT;
           s->state = STOP;
         }
 
