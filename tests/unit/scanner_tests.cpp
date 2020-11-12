@@ -12,6 +12,7 @@ class scanner_basic_tests : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        int line;
         
         void SetUp() override {
           s = scanner_new(NULL);
@@ -29,9 +30,7 @@ TEST_F(scanner_basic_tests, initialize) {
 }
 
 TEST_F(scanner_basic_tests, call_scan_with_no_file_set) {
-    bool eol_encountered = false;
-    int line = 0;
-    int ret = scanner_scan(s, &t, &eol_encountered, &line);
+    int ret = scanner_scan(s, &t, 0, &line);
     ASSERT_EQ(ret, 99);
 }
 
@@ -85,6 +84,28 @@ TEST_F(scanner_component_testing, scan_num_lit_decimal2) {
     }
 }
 
+TEST_F(scanner_component_testing, scan_num_lit_decimal_exponent_zero) {
+    char literal[] = "123e000000";
+    int num_of_chars = 10;
+
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        int ret = scan_num_lit(s, &t);
+        ASSERT_EQ(ret, 0);
+    }
+}
+
+TEST_F(scanner_component_testing, scan_num_lit_float_exponent_zero) {
+    char literal[] = "12.3e000000";
+    int num_of_chars = 11;
+
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        int ret = scan_num_lit(s, &t);
+        ASSERT_EQ(ret, 0);
+    }
+}
+
 TEST_F(scanner_component_testing, scan_num_lit_float1) {
     char literal[] = "123.321";
     int num_of_chars = 7;
@@ -96,8 +117,30 @@ TEST_F(scanner_component_testing, scan_num_lit_float1) {
     }
 }
 
+TEST_F(scanner_component_testing, scan_num_lit_float1_5) {
+    char literal[] = "0.0";
+    int num_of_chars = 3;
+    
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        int ret = scan_num_lit(s, &t);
+        ASSERT_EQ(ret, 0);
+    }
+}
+
+TEST_F(scanner_component_testing, scan_invalid_decimal_zero) {
+    char literal[] = "00.0";        // SHOULD FAIL
+    int num_of_chars = 4;
+    
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        int ret = scan_num_lit(s, &t);
+        ASSERT_NE(ret, 0);
+    }
+}
+
 TEST_F(scanner_component_testing, scan_num_lit_float2) {
-    char literal[] = "123.321e21";
+    char literal[] = "123.321e20";
     int num_of_chars = 10;
 
     for (int i = 0; i < num_of_chars; i++) {
@@ -118,10 +161,22 @@ TEST_F(scanner_component_testing, scan_num_lit_float3) {
     }
 }
 
+TEST_F(scanner_component_testing, scan_num_lit_float4) {
+    char literal[] = "20";
+    int num_of_chars = 2;
+
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        int ret = scan_num_lit(s, &t);
+        ASSERT_EQ(ret, 0);
+    }
+}
+
 class scanner_scanning_valid_sourcefile : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        int line;
 
         void SetUp() override {
             global_init();
@@ -136,14 +191,12 @@ class scanner_scanning_valid_sourcefile : public ::testing::Test {
 
 TEST_F(scanner_scanning_valid_sourcefile, single_scan_call) {
     bool eol_encountered = false;
-    int line = 0;
     int ret = scanner_scan(s, &t, &eol_encountered, &line);
     ASSERT_EQ(ret, 0);
 }
 
 TEST_F(scanner_scanning_valid_sourcefile, scan_until_eof) {
     int ret;
-    int line = 0;
     bool eol_encountered = false;
     do {
         ret = scanner_scan(s, &t, &eol_encountered, &line);
@@ -237,3 +290,50 @@ TEST_F(scanner_scan_tokens_commentary, divide_or_comment) {
             ASSERT_EQ(token_type, INT);
     }
 }
+
+class scanner_scan_tokens_zero_end : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            FILE *f = fopen("./samples/scope.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+        }
+};
+
+TEST_F(scanner_scan_tokens_zero_end, number_ends_with_zero) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 11; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 0)                 // 1st token is 'PACKAGE'
+            ASSERT_EQ(token_type, PACKAGE);
+        else if (i == 1)            // 2nd token should be 'main' (identifier)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 2)            // 3rd token should be 'FUNC'
+            ASSERT_EQ(token_type, FUNC);
+        else if (i == 3)            // 4th token should be 'add' (ident)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 4)        // 5th token is '('
+            ASSERT_EQ(token_type, LPAREN);
+        else if (i == 5)        // 6th token is 'i', so should be IDENT
+            ASSERT_EQ(token_type, RPAREN);
+        else if (i == 8)
+            ASSERT_EQ(token_type, DEFINE);
+        else if (i == 9)
+            ASSERT_EQ(token_type, INT_LIT);
+        else if (i == 10)
+            ASSERT_EQ(token_type, IF);
+    }
+}
+
+
