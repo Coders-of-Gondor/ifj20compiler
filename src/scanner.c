@@ -67,7 +67,7 @@ void scanner_free(scanner_t *s) {
  * @retval 99 internal error, failed to allocate memory
  * @retval EOF end of file
  */
-int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered) {
+int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int line) {
   debug_entry();
   int return_val;
   string str;
@@ -86,7 +86,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered) {
   token_init(t);
 
   // Skip comments and whitespace characters
-  scanner_skip_whitespace_comments(s, eol_encountered);
+  scanner_skip_whitespace_comments(s, eol_encountered, line);
 
   // Token State Machine
   // TODO: Actually implement the state machine :)
