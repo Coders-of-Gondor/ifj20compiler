@@ -61,7 +61,7 @@ typedef enum comment_state
   BLOCK_COMMENT = 0x8, /**< the next character is a part of a block comment */
 } comment_state;
 
-void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int line);
+void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line);
 
 int innit_scan(scanner_t *s, token_t *t);
 int scan_num_lit(scanner_t *s, token_t *t);
