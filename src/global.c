@@ -29,7 +29,7 @@ int global_init() {
     { "return", RETURN },
     { "string", STRING }
   };
-  int num_of_keywords = 4;
+  int num_of_keywords = 9;
 
   keywords_symtable = symtable_new();
   if (keywords_symtable == NULL)
