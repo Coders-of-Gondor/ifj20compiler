@@ -151,3 +151,89 @@ TEST_F(scanner_scanning_valid_sourcefile, scan_until_eof) {
             ASSERT_EQ(ret, 0);
     } while (ret != EOF);
 }
+
+class scanner_scan_tokens : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            FILE *f = fopen("./samples/string_manipulation.ifj20", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+        }
+};
+
+TEST_F(scanner_scan_tokens, get_first_token) {
+    bool eol_encounter = false;
+    int result = scanner_scan(s, &t, &eol_encounter, &line);
+    int token_type = t.type;
+    ASSERT_EQ(result, 0);
+    ASSERT_EQ(token_type, PACKAGE);
+}
+
+TEST_F(scanner_scan_tokens, get_more_tokens) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 10; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (eol_encounter == true)
+            break;
+        if (i == 2 || i == 1)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 2)
+            ASSERT_EQ(token_type, FUNC);
+        else if (i == 8)
+            ASSERT_EQ(token_type, DEFINE);
+        else if (i == 9)
+            ASSERT_EQ(token_type, STRING_LIT);
+    }
+}
+
+class scanner_scan_tokens_commentary : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            FILE *f = fopen("./samples/eols.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+        }
+};
+
+TEST_F(scanner_scan_tokens_commentary, divide_or_comment) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 10; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 0)                 // 1st token is 'PACKAGE'
+            ASSERT_EQ(token_type, PACKAGE);
+        else if (i == 1)            // 2nd token should be 'main' (identifier)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 2)            // 3rd token should be 'FUNC'
+            ASSERT_EQ(token_type, FUNC);
+        else if (i == 3)            // 4th token should be 'add' (ident)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 4)        // 5th token is '('
+            ASSERT_EQ(token_type, LPAREN);
+        else if (i == 5)        // 6th token is 'i', so should be IDENT
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 6)
+            ASSERT_EQ(token_type, INT);
+    }
+}
