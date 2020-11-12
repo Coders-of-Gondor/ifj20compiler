@@ -4,9 +4,8 @@
 # 24/09/2020
 
 export SHELL := /usr/bin/env sh
-export CC = /usr/bin/env gcc
-export CFLAGS = -std=c99 -g -Wall -Wextra
 export NAME = ifj20compiler
+export ZIPNAME = xfilip46.zip
 
 export PROJECT_DIR := $(shell pwd)
 export BUILD_DIR := $(PROJECT_DIR)/build
@@ -32,11 +31,13 @@ teste2e: all
 	@bats ./tests/e2e
 
 zip:
-	@zip xcoders69.zip Makefile src/*.c src/*.h src/Makefile
+	@mkdir -p $(BUILD_DIR)
+	@cd src; zip $(ZIPNAME) ./*.c ./*.h ./Makefile; mv $(ZIPNAME) ../
 
 clean:
-	@rm -f *.zip
+	@rm -f $(ZIPNAME)
 	@rm -f -r $(BUILD_DIR)
+	@rm -f src/$(NAME) src/*.o
 
 help:
 	@echo "make"

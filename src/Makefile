@@ -3,8 +3,16 @@
 # FIT BUT
 # 24/09/2020
 
+export CC = /usr/bin/env gcc
+export CFLAGS = -std=c99 -g -Wall -Wextra
+
 ifeq (0, ${MAKELEVEL})
-$(error invoke "make" from the root build directory)
+export SHELL := /usr/bin/env sh
+export NAME = ifj20compiler
+
+export TARGET := $(NAME)
+export OBJECTS_DIR := $(shell pwd)
+CFLAGS += -DNDEBUG
 endif
 
 public_sources = \
