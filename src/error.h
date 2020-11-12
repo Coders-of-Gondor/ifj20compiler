@@ -36,5 +36,16 @@ void throw_syntax_error();
  */
 void throw_lex_error();
 
+/**
+ * @brief Function to call when an internal error is encountered.
+ */
+void throw_internal_error();
+
+/**
+ * @brief Function to call when we succesfully compiled the program.
+ */
+void success_exit();
+
+
 #endif  //__ERROR_H__
 

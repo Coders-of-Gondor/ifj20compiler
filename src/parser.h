@@ -11,9 +11,6 @@
 
 #include "token.h"
 
-// Var for tracking the line number.
-int line;
-
 /**
  * @brief Move the lookahead token.
  */
@@ -56,11 +53,6 @@ void parser_id_first();
 
 void parser_type(); 
 void parser_block(); 
-
-/**
- * @brief Return a true/false value depending on the token's type being a literal.
- */
-bool is_lit(token_type type);
 
 /* ------------------------------------------------------------------------ */
 /* PARAMETERS OF FUNCTION RULES                                             */

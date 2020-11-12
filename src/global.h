@@ -10,7 +10,10 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
+#include <stdbool.h>
+
 #include "symtable.h"
+#include "scanner.h"
 
 /**
  * @brief Decleration of a global variable tracking symbol table holding keywords.
@@ -23,9 +26,14 @@ extern symtable_t *keywords_symtable;
 extern token_t lookahead;
 
 /**
+ * Global tracker of the eol encountered flag.
+ */
+extern bool eol_encountered;
+
+/**
  * Global tracker of the scanner struct.
  */
-extern scanner_t scanner;
+extern scanner_t *scanner;
 
 struct keyword {
   char lit[20];

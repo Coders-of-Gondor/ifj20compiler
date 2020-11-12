@@ -11,6 +11,7 @@
 #define __TOKEN_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "str.h"
 
 typedef enum token_type {
@@ -93,5 +94,12 @@ void token_set_type(token_t *t, token_type type);
 int ident_is_keyword(string str);
 
 token_type get_keyword_type(string str);
+
+const char* token_get_type_string(token_type type);
+
+/**
+ * @brief Return a true/false value depending on the token's type being a literal.
+ */
+bool token_is_lit(token_type type);
 
 #endif // __TOKEN_H__
