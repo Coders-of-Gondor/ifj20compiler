@@ -31,6 +31,10 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
   do {
     s->character = getc(s->file);
     s->position++;
+
+    if (state & BLOCK_EXITED)
+      state = CLEAN;
+
     switch (s->character) {
       case '\n':
         *eol_encountered = true;
@@ -43,7 +47,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
         if (state & CLEAN)
           state = COMMENT_CHANGE;
         else if (state & COMMENT_CHANGE && state & BLOCK_COMMENT)
-          state = CLEAN;
+          state = BLOCK_EXITED;
         else if (state & COMMENT_CHANGE && !(state & BLOCK_COMMENT))
           state = INLINE_COMMENT;
         break;
