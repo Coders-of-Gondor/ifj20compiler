@@ -16,6 +16,7 @@ CFLAGS += -DNDEBUG
 endif
 
 public_sources = \
+	debug.c \
 	main.c \
 	global.c \
 	error.c \
@@ -26,6 +27,7 @@ public_sources = \
 	parser.c
 
 public_headers = \
+	debug.h \
 	global.h \
 	error.h \
 	token.h \

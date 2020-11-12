@@ -11,6 +11,7 @@
 #include "global.h"      
 #include "str.h"
 #include "symtable.h"
+#include "debug.h"
 
 /**
  * @brief token_set_attribute sets token attribute according to the token type
@@ -86,3 +87,79 @@ token_type get_keyword_type(string str) {
   symtable_value_t val = symtable_iterator_get_value(it);
   return val.type;
 }
+
+const char* token_get_type_string(token_type type) {
+  switch (type) {
+    case INVALID: return "INVALID";
+    case EOL: return "EOL";
+    case EOF_T: return "EOF_T";
+    case IDENT: return "IDENT";
+
+    // Literals
+    case INT_LIT: return "INT_LIT";
+    case FLOAT64_LIT: return "FLOAT64_LIT";
+    case STRING_LIT: return "STRING_LIT";
+
+    // Data types
+    case INT: return "INT";
+    case FLOAT64: return "FLOAT64";
+    case STRING: return "STRING";
+
+    // Control
+    case IF: return "IF";
+    case ELSE: return "ELSE";
+    case FOR: return "FOR";
+
+    // Functions
+    case FUNC: return "FUNC";
+    case RETURN: return "RETURN";
+
+    // Package declaration
+    case PACKAGE: return "PACKAGE";
+
+    // Assignment
+    case DEFINE: return "DEFINE";
+    case ASSIGN: return "ASSIGN";
+
+    // Operators
+    case ADD: return "ADD";
+    case SUB: return "SUB";
+    case MUL: return "MUL";
+    case DIV: return "DIV";
+
+    // Comparators
+    case AND: return "AND";
+    case OR: return "OR";
+    case EQL: return "EQL";
+    case NEQ: return "NEQ";
+    case LSS: return "LSS";
+    case LEQ: return "LEQ";
+    case GTR: return "GTR";
+    case GEQ: return "GEQ";
+
+    //  Other
+    case LPAREN: return "LPAREN";
+    case LBRACE: return "LBRACE";
+    case RPAREN: return "RPAREN";
+    case RBRACE: return "RBRACE";
+    case COMMA: return "COMMA";
+    case SEMICOLON: return "SEMICOLON";
+    default:
+      break;
+  }
+  return NULL;
+}
+
+bool token_is_lit(token_type type) {
+  debug_entry();
+  // is token type a literal?
+  switch (type) {
+    case INT_LIT:
+    case FLOAT64_LIT:
+    case STRING_LIT:
+      return true;
+    default:
+      return false;
+  }
+}
+

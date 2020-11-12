@@ -16,6 +16,7 @@
 #include "error.h"
 #include "global.h"
 #include "debug.h"
+#include "str.h"
 
 
 int line = 1;
@@ -52,10 +53,13 @@ void parser_match(token_type t) {
   debug_entry();
   if (lookahead.type == t) {
     debug("Matched type: %s", token_get_type_string(t));
+    debug_lit_value(lookahead);
     parser_move();
   } else {
     debug("Expected type: %s", token_get_type_string(t));
     debug("Got type: %s", token_get_type_string(lookahead.type));
+    debug_lit_value(lookahead);
+
     throw_syntax_error(t, line);
   }
 }
@@ -214,19 +218,6 @@ void parser_block() {
   parser_match(LBRACE);
   parser_stmts();
   parser_match(RBRACE);
-}
-
-bool is_lit(token_type type) {
-  debug_entry();
-  // is token type a literal?
-  switch (type) {
-    case INT_LIT:
-    case FLOAT64_LIT:
-    case STRING_LIT:
-      return true;
-    default:
-      return false;
-  }
 }
 
 /* ------------------------------------------------------------------------ */
@@ -607,7 +598,7 @@ void parser_factor() {
     parser_match(LPAREN);
     parser_expr();
     parser_match(RPAREN);
-  } else if (is_lit(t)) {
+  } else if (token_is_lit(t)) {
     // can only match INT, FLOAT64, STRING due to is_lit()
     parser_match(t);
   } else if (t == IDENT) {

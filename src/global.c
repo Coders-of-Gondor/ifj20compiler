@@ -10,9 +10,12 @@
 #include "token.h"
 
 /**
- * @brief Global definition of the variable keywords_symtable.
+ * @brief Definitions of the global variables of global.h
  */
 symtable_t *keywords_symtable;
+token_t lookahead;
+scanner_t *scanner;
+bool eol_encountered;
 
 int global_init() {
   debug_entry();
@@ -29,13 +32,13 @@ int global_init() {
     { "return", RETURN },
     { "string", STRING }
   };
-  int num_of_keywords = 9;
+  const int NUM_OF_KEYWORDS = sizeof(keywords) / sizeof(struct keyword);
 
   keywords_symtable = symtable_new();
   if (keywords_symtable == NULL)
     return 1;
 
-  for (int i = 0; i < num_of_keywords; i++) {
+  for (int i = 0; i < NUM_OF_KEYWORDS; i++) {
     struct keyword keyword = keywords[i];
     // Add keyword to symtable (only key)
     symtable_iterator_t it = symtable_lookup_add(keywords_symtable, keyword.lit);

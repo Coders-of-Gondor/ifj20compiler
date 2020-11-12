@@ -6,9 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "error.h"
-#include "global.h"
 
+#include "error.h"
 #include "global.h"
 #include "scanner.h"
 #include "parser.h"
@@ -86,6 +85,7 @@ int main(int argc, char *argv[]) {
   scanner = scanner_new(f);
   parser_start();
 
+  scanner_free(&scanner);
   fclose(f);
 
   return SUCCESS;

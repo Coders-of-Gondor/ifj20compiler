@@ -18,6 +18,7 @@
 #define __DEBUG_H__
 
 #include <stdio.h>
+#include "token.h"
 
 #ifdef NDEBUG
 #define debug(M, ...)
@@ -28,6 +29,11 @@
 
 #define debug_entry() fprintf(stderr, "[DEBUG] ENTRY: %s():%d\n" ,\
         __FUNCTION__, __LINE__)
+
+/**
+ * @brief Debug the literal value of a literal.
+ */
+void debug_lit_value(token_t t);
 #endif
 
 #endif // __DEBUG_H__
