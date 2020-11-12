@@ -112,8 +112,7 @@ int scan_num_lit(scanner_t *s, token_t *t) {
   debug_entry();
   switch (s->character) {
 
-  case '1': case '2': case '3': case '4': case '5': 
-  case '6': case '7': case '8': case '9':
+  case '0' ... '9':
 
     return 0;
     break;
@@ -220,7 +219,7 @@ int innit_scan(scanner_t *s, token_t *t) {
             s->character = peek;
             t->type = LEQ;
           } else {
-            //set file pointer one char back
+            ungetc(peek, s->file);
           }
 
           return 2;
@@ -234,7 +233,7 @@ int innit_scan(scanner_t *s, token_t *t) {
             s->character = peek;
             t->type = GEQ;
           } else {
-            //set file pointer one char back
+            ungetc(peek, s->file);
           }
 
           return 2;
@@ -248,7 +247,7 @@ int innit_scan(scanner_t *s, token_t *t) {
             s->character = peek;
             t->type = EQL;
           } else {
-            //set file pointer one char back
+            ungetc(peek, s->file);
           }
 
           return 2;
@@ -262,7 +261,7 @@ int innit_scan(scanner_t *s, token_t *t) {
             s->character = peek;
             t->type = DEFINE;
           } else {
-            //set file pointer one char back
+            ungetc(peek, s->file);
             return 1;
           }
 
@@ -277,7 +276,7 @@ int innit_scan(scanner_t *s, token_t *t) {
             s->character = peek;
             t->type = NEQ;
           } else {
-            //set file pointer one char back
+            ungetc(peek, s->file);
             return 1;
           }
 
