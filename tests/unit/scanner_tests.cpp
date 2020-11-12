@@ -134,15 +134,17 @@ class scanner_scanning_valid_sourcefile : public ::testing::Test {
 
 TEST_F(scanner_scanning_valid_sourcefile, single_scan_call) {
     bool eol_encountered = false;
-    int ret = scanner_scan(s, &t, &eol_encountered);
+    int line = 0;
+    int ret = scanner_scan(s, &t, &eol_encountered, line);
     ASSERT_EQ(ret, 0);
 }
 
 TEST_F(scanner_scanning_valid_sourcefile, scan_until_eof) {
     int ret;
+    int line = 0;
     bool eol_encountered = false;
     do {
-        ret = scanner_scan(s, &t, &eol_encountered);
+        ret = scanner_scan(s, &t, &eol_encountered, line);
         if (ret != EOF)
             ASSERT_EQ(ret, 0);
     } while (ret != EOF);

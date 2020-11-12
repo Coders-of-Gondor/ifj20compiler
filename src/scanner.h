@@ -1,5 +1,6 @@
 /* scanner.h
  * Ondřej Míchal <xmicha80>
+ * Vojtěch Bůbela <xbubel08>
  * FIT BUT
  * 03/10/2020
  */
@@ -17,6 +18,6 @@ typedef struct scanner scanner_t;
 scanner_t *scanner_new(FILE *f);
 void scanner_free(scanner_t *s);
 
-int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered);
+int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int line);
 
 #endif // __SCANNER_H__
