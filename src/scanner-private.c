@@ -24,7 +24,7 @@
  *
  * @param s an instance of scanner
  */
-void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int line) {
+void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
   // debug_entry();
   comment_state state = CLEAN;
 
@@ -34,7 +34,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int l
     switch (s->character) {
       case '\n':
         *eol_encountered = true;
-        line++;
+        (*line)++;
 
         if (state & INLINE_COMMENT)
           state = CLEAN;

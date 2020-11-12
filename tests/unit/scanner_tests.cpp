@@ -29,7 +29,9 @@ TEST_F(scanner_basic_tests, initialize) {
 }
 
 TEST_F(scanner_basic_tests, call_scan_with_no_file_set) {
-    int ret = scanner_scan(s, &t, 0);
+    bool eol_encountered = false;
+    int line = 0;
+    int ret = scanner_scan(s, &t, &eol_encountered, &line);
     ASSERT_EQ(ret, 99);
 }
 
@@ -135,7 +137,7 @@ class scanner_scanning_valid_sourcefile : public ::testing::Test {
 TEST_F(scanner_scanning_valid_sourcefile, single_scan_call) {
     bool eol_encountered = false;
     int line = 0;
-    int ret = scanner_scan(s, &t, &eol_encountered, line);
+    int ret = scanner_scan(s, &t, &eol_encountered, &line);
     ASSERT_EQ(ret, 0);
 }
 
@@ -144,7 +146,7 @@ TEST_F(scanner_scanning_valid_sourcefile, scan_until_eof) {
     int line = 0;
     bool eol_encountered = false;
     do {
-        ret = scanner_scan(s, &t, &eol_encountered, line);
+        ret = scanner_scan(s, &t, &eol_encountered, &line);
         if (ret != EOF)
             ASSERT_EQ(ret, 0);
     } while (ret != EOF);
