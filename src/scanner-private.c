@@ -114,19 +114,19 @@ int scan_num_lit(scanner_t *s, token_t *t) {
     break;
 
   case '.':
-    t->type = FLOAT64;
+    t->type = FLOAT64_LIT;
     s->state = q7;
     return 0;
     break;
 
   case 'e':
-    t->type = FLOAT64;
+    t->type = FLOAT64_LIT;
     s->state = q8;
     return 0;
     break;
 
   case 'E':
-    t->type = FLOAT64;
+    t->type = FLOAT64_LIT;
     s->state = q8;
     return 0;
     break;
@@ -286,7 +286,7 @@ int innit_scan(scanner_t *s, token_t *t) {
 
         case '1': case '2': case '3': case '4': case '5': 
         case '6': case '7': case '8': case '9':
-          t->type = INT;
+          t->type = INT_LIT;
           s->state = f14;
           break;
 
@@ -300,7 +300,7 @@ int innit_scan(scanner_t *s, token_t *t) {
           break;
 
         case '"':
-          t->type = STRING;
+          t->type = STRING_LIT;
           s->state = q3;
 
           break;

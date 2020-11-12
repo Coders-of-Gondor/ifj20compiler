@@ -20,14 +20,14 @@ int global_init() {
   // Inicialize global hashtable (resp. symtable) of keywords
   struct keyword keywords[] = { 
     { "else", ELSE },
-    { "float64", FLOAT64_LIT },
+    { "float64", FLOAT64 },
     { "for", FOR },
     { "func", FUNC },
     { "if", IF },
-    { "int" , INT_LIT },
+    { "int" , INT },
     { "package", PACKAGE },
     { "return", RETURN },
-    { "string", STRING_LIT }
+    { "string", STRING }
   };
   int num_of_keywords = 4;
 
