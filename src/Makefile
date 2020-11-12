@@ -16,23 +16,22 @@ CFLAGS += -DNDEBUG
 endif
 
 public_sources = \
-	global.c \
 	main.c \
+	global.c \
 	error.c \
-	scanner.c \
+	token.c \
 	symtable.c \
 	str.c \
-	token.c
+	scanner.c \
 	parser.c
 
 public_headers = \
 	global.h \
-	token.h \
-	global.h \
-	symtable.h \
 	error.h \
+	token.h \
+	symtable.h \
+	str.h \
 	scanner.h \
-	str.h
 	paser.h
 
 private_sources = \

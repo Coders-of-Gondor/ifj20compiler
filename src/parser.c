@@ -15,35 +15,63 @@
 #include "token.h"
 #include "error.h"
 #include "global.h"
+#include "debug.h"
 
+
+int line = 1;
+
+// TODO: make eol rules
 
 void parser_move() {
+  debug_entry();
   // move the lookahead
-  scanner_scan(scanner, &lookahead);
+  int return_code = scanner_scan(scanner, &lookahead, &eol_encountered, &line);
 
-  // TODO: depending on the return code of scanner_scan, terminate the program
+  // TODO: make sure all return cases are handled here
+
+  if (return_code == ERROR_LEXICAL) {
+    throw_lex_error(line);
+  } else if (return_code == ERROR_INTERNAL) {
+    throw_internal_error(line);
+  } else if (return_code == EOF) {
+    // TODO: handle this correctly
+    fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
+    success_exit();
+  }
 
   if (lookahead.type == INVALID) {
-    throw_lex_error();
-  }
-  if (lookahead.type == EOF_T) {
-    printf("EOF encountered, stopping syntax analysis...");
+    throw_lex_error(line);
+  } else if (lookahead.type == EOF_T) {
+    // TODO: handle this correctly
+    fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
+    success_exit();
   }
 }
 
 void parser_match(token_type t) {
+  debug_entry();
   if (lookahead.type == t) {
+    debug("Matched type: %s", token_get_type_string(t));
     parser_move();
   } else {
-    throw_syntax_error();
+    debug("Expected type: %s", token_get_type_string(t));
+    debug("Got type: %s", token_get_type_string(lookahead.type));
+    throw_syntax_error(t, line);
   }
 }
 
 void parser_match_ident(char *ident_name) {
-  if (lookahead.type == IDENT && strcmp(lookahead.sym_key, ident_name)) {
+  debug_entry();
+  if (lookahead.type == IDENT && strcmp(lookahead.attribute.sym_key, ident_name) == 0) {
+    debug("Matched type and string: %s, %s",
+        token_get_type_string(IDENT), ident_name);
     parser_move();
   } else {
-    throw_syntax_error();
+    debug("Expected type and ident name: %s, %s",
+        token_get_type_string(IDENT), ident_name);
+    debug("Got type and ident name: %s, %s",
+        token_get_type_string(IDENT), lookahead.attribute.sym_key);
+    throw_syntax_error(lookahead.type, line);
   }
 }
 
@@ -52,21 +80,44 @@ void parser_match_ident(char *ident_name) {
 /* ------------------------------------------------------------------------ */
 
 void parser_start() {
+  debug_entry();
+
+  // move the lookahead to the first lexeme
+  parser_move();
+
   parser_prolog();  
-  parser_stmts();
+  parser_funcs();
+  // parser_stmts(); // old
 }
 
 void parser_prolog() {
+  debug_entry();
   parser_match(PACKAGE);
   parser_match_ident("main"); 
 }
 
+void parser_funcs() {
+  debug_entry();
+  // if FUNC not found, apply eps-rule
+  if (lookahead.type == FUNC) {
+      // function decleration
+      parser_match(FUNC);
+      parser_match(IDENT);
+      parser_params();
+      parser_r_params();
+      parser_block();
+      parser_funcs();
+  }
+  // apply eps-rule
+}
+
 void parser_stmts() {
+  debug_entry();
   switch (lookahead.type) {
     case IDENT:
     case IF:
     case FOR:
-    case FUNC:
+    case RETURN:
       parser_stmt();
       parser_stmts();
       break;
@@ -77,6 +128,7 @@ void parser_stmts() {
 }
 
 void parser_stmt() {
+  debug_entry();
   switch (lookahead.type) {
     case IDENT:
       // identifier found
@@ -99,25 +151,21 @@ void parser_stmt() {
       parser_expr();
       parser_match(SEMICOLON);
       parser_optassign();
-      parser_match(SEMICOLON);
       parser_block();
       break;
-    case FUNC:
-      // function decleration
-      parser_match(FUNC);
-      parser_match(IDENT);
-      parser_params();
-      parser_r_params();
-      parser_funblock();
+    case RETURN:
+      // return statement
+      parser_return();
       break;
     default:
       // no eps-rule -> throw syntax error
-      throw_syntax_error();
+      throw_syntax_error(lookahead.type, line);
       break;
   }
 }
 
 void parser_id_first() {
+  debug_entry();
   switch (lookahead.type) {
     case DEFINE:
       // variable definition
@@ -130,11 +178,11 @@ void parser_id_first() {
       break;
     case LPAREN:
       // function call
-      parser_params();
+      parser_c_params();
       break;
     default:
       // no eps-rule -> throw syntax error
-      throw_syntax_error();
+      throw_syntax_error(lookahead.type, line);
       break;
   }
 }
@@ -144,11 +192,11 @@ void parser_id_first() {
 /* ------------------------------------------------------------------------ */
 
 void parser_type() {
+  debug_entry();
   switch (lookahead.type) {
     case INT:
       parser_match(INT);
-      break;
-    case FLOAT64:
+      break; case FLOAT64:
       parser_match(FLOAT64);
       break;
     case STRING:
@@ -156,18 +204,20 @@ void parser_type() {
       break;
     default:
       // no eps-rule -> throw syntax error
-      throw_syntax_error();
+      throw_syntax_error(lookahead.type, line);
       break;
   }
 }
 
 void parser_block() {
+  debug_entry();
   parser_match(LBRACE);
   parser_stmts();
   parser_match(RBRACE);
 }
 
 bool is_lit(token_type type) {
+  debug_entry();
   // is token type a literal?
   switch (type) {
     case INT_LIT:
@@ -184,11 +234,13 @@ bool is_lit(token_type type) {
 /* ------------------------------------------------------------------------ */
 
 void parser_params() {
+  debug_entry();
   parser_match(LPAREN);
   parser_params_n();
 }
 
 void parser_params_n() {
+  debug_entry();
   switch (lookahead.type) {
     case IDENT:
       parser_param();
@@ -199,18 +251,20 @@ void parser_params_n() {
       break;
     default:
       // no eps-rule -> throw syntax error
-      throw_syntax_error();
+      throw_syntax_error(line);
       break;
   } 
 }
 
 void parser_param() {
+  debug_entry();
   parser_match(IDENT);
   parser_type();
   parser_param_n();
 }
 
 void parser_param_n() {
+  debug_entry();
   // if COMMA not found, apply eps-rule
   if (lookahead.type == COMMA) {
     parser_match(COMMA);
@@ -222,6 +276,7 @@ void parser_param_n() {
 }
 
 void parser_r_params() {
+  debug_entry();
   // if '(' not found, apply eps-rule
   if (lookahead.type == LPAREN) {
     parser_match(LPAREN);
@@ -231,6 +286,7 @@ void parser_r_params() {
 }
 
 void parser_r_params_n() {
+  debug_entry();
   switch (lookahead.type) {
     // depending on the case either put ')' or continue with params
     case INT:
@@ -244,36 +300,68 @@ void parser_r_params_n() {
       break;
     default:
       // no eps-rule -> throw syntax error
-      throw_syntax_error();
+      throw_syntax_error(lookahead.type, line);
       break;
   }
 }
 
 void parser_r_param() {
+  debug_entry();
   parser_type();
   parser_r_param_n();
 }
 
 void parser_r_param_n() {
+  debug_entry();
   // if COMMA not found, apply eps-rule
   if (lookahead.type == COMMA) {
+    parser_match(COMMA);
     parser_type();
     parser_r_param_n();
   }
   // apply eps-rule
 }
 
-void parser_funblock() {
-  parser_match(LBRACE);
-  parser_stmts();
-  parser_optreturn();
-  parser_match(RBRACE);
+void parser_c_params() {
+  debug_entry();
+  parser_match(LPAREN);
+  parser_c_params_n();
 }
 
-void parser_optreturn() {
-  // if RETURN not found, apply eps-rule
-  if (lookahead.type == RETURN) {
-    parser_return();
+void parser_c_params_n() {
+  debug_entry();
+  switch (lookahead.type) {
+    case LPAREN:
+    case INT_LIT:
+    case FLOAT64_LIT:
+    case STRING_LIT:
+    case IDENT:
+      parser_c_param();
+      parser_match(RPAREN);
+      break;
+    case RPAREN:
+      parser_match(RPAREN);
+      break;
+    default:
+      // no eps-rule -> throw syntax error
+      throw_syntax_error(lookahead.type, line);
+      break;
+  }
+}
+
+void parser_c_param() {
+  debug_entry();
+  parser_expr();
+  parser_c_param_n();
+}
+
+void parser_c_param_n() {
+  debug_entry();
+  // if COMMA not found, apply eps-rule
+  if (lookahead.type == COMMA) {
+    parser_match(COMMA);
+    parser_expr();
+    parser_c_param_n();
   }
   // apply eps-rule
 }
@@ -283,17 +371,20 @@ void parser_optreturn() {
 /* ------------------------------------------------------------------------ */
 
 void parser_vardef() {
+  debug_entry();
   parser_match(DEFINE);
   parser_expr();
 }
 
 void parser_assign() {
+  debug_entry();
   parser_id_n();
   parser_match(ASSIGN);
   parser_exprs();
 }
 
 void parser_id_n() {
+  debug_entry();
   // if COMMA not found, apply eps-rule
   if (lookahead.type == COMMA) {
     parser_match(COMMA);
@@ -304,11 +395,13 @@ void parser_id_n() {
 }
 
 void parser_exprs() {
+  debug_entry();
   parser_expr();
   parser_expr_n();
 }
 
 void parser_expr_n() {
+  debug_entry();
   // if COMMA not found, apply eps-rule
   if (lookahead.type == COMMA) {
     parser_match(COMMA);
@@ -323,6 +416,7 @@ void parser_expr_n() {
 /* ------------------------------------------------------------------------ */
 
 void parser_optdef() {
+  debug_entry();
   // if IDENT not found, apply eps-rule
   if (lookahead.type == IDENT) {
     parser_match(IDENT);
@@ -332,6 +426,7 @@ void parser_optdef() {
 }
 
 void parser_optassign() {
+  debug_entry();
   // if IDENT not found, apply eps-rule
   if (lookahead.type == IDENT) {
     parser_match(IDENT);
@@ -348,11 +443,13 @@ void parser_optassign() {
 // return
 // eps
 void parser_return() {
+  debug_entry();
   parser_match(RETURN);  
   parser_optexprs();
 }
 
 void parser_optexprs() {
+  debug_entry();
   // optional expression depending on the type read
   switch (lookahead.type) {
     case LPAREN:
@@ -418,41 +515,46 @@ bool is_mulop(token_type type) {
 }
 
 void parser_relop() {
+  debug_entry();
   if (is_relop(lookahead.type)) {
     // we can call 'match' like that because of the check in the if 
     parser_match(lookahead.type);
   } else {
     // operator not found, syntax error
-    throw_syntax_error();
+    throw_syntax_error(lookahead.type, line);
   }
 }
 
 void parser_addop() {
+  debug_entry();
   if (is_addop(lookahead.type)) {
     // we can call 'match' like that because of the check in the if 
     parser_match(lookahead.type);
   } else {
     // operator not found, syntax error
-    throw_syntax_error();
+    throw_syntax_error(lookahead.type, line);
   }
 }
 
 void parser_mulop() {
+  debug_entry();
   if (is_mulop(lookahead.type)) {
     // we can call 'match' like that because of the check in the if 
     parser_match(lookahead.type);
   } else {
     // operator not found, syntax error
-    throw_syntax_error();
+    throw_syntax_error(lookahead.type, line);
   }
 }
 
 void parser_rel() {
+  debug_entry();
   parser_add();
   parser_rel_n();
 }
 
 void parser_rel_n() {
+  debug_entry();
   // if token type is not relation operator, apply eps-rule
   if (is_relop(lookahead.type)) {
       // expand the relation operator
@@ -464,11 +566,13 @@ void parser_rel_n() {
 }
 
 void parser_add() {
+  debug_entry();
   parser_term();
   parser_add_n();
 }
 
 void parser_add_n() {
+  debug_entry();
   // if token type is not add/sub perator, apply eps-rule
   if (is_addop(lookahead.type)) {
     parser_addop();
@@ -479,11 +583,13 @@ void parser_add_n() {
 }
 
 void parser_term() {
+  debug_entry();
   parser_factor();
   parser_term_n();
 }
 
 void parser_term_n() {
+  debug_entry();
   // if token type is not mul/div operator, apply eps-rule
   if (is_mulop(lookahead.type)) {
     parser_mulop();
@@ -494,6 +600,7 @@ void parser_term_n() {
 }
 
 void parser_factor() {
+  debug_entry();
   token_type t = lookahead.type;
 
   if (t == LPAREN) {
@@ -507,14 +614,15 @@ void parser_factor() {
     parser_match(IDENT);
     parser_funexp();
   } else {
-    throw_syntax_error();
+    throw_syntax_error(lookahead.type, line);
   }
 }
 
 void parser_funexp() {
+  debug_entry();
   // if lookahead is '(', apply eps-rule
   if (lookahead.type == LPAREN) {
-    parser_params();
+    parser_c_params();
   }
   // apply eps-rule
 }

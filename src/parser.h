@@ -11,6 +11,9 @@
 
 #include "token.h"
 
+// Var for tracking the line number.
+int line;
+
 /**
  * @brief Move the lookahead token.
  */
@@ -42,6 +45,7 @@ void parser_start();
 /* ------------------------------------------------------------------------ */
 
 void parser_prolog(); 
+void parser_funcs();
 void parser_stmts(); 
 void parser_stmt(); 
 void parser_id_first(); 
@@ -62,18 +66,23 @@ bool is_lit(token_type type);
 /* PARAMETERS OF FUNCTION RULES                                             */
 /* ------------------------------------------------------------------------ */
 
+// function parameters
 void parser_params(); 
 void parser_params_n(); 
 void parser_param(); 
 void parser_param_n(); 
 
+// return types
 void parser_r_params();
 void parser_r_params_n();
 void parser_r_param();
 void parser_r_param_n();
 
-void parser_funblock(); 
-void parser_optreturn(); 
+// function call arguments
+void parser_c_params();
+void parser_c_params_n();
+void parser_c_param();
+void parser_c_param_n();
 
 /* ------------------------------------------------------------------------ */
 /* VAR DEFINITION AND ASSIGN                                                */
