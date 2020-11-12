@@ -23,15 +23,15 @@ void token_set_attribute(token_t *t, string str) {
     double tmp_d;
 
     switch (t->type) {
-        case STRING:
+        case STRING_LIT:
             strInit(&t->attribute.str_val);       
             strCopyString(&t->attribute.str_val, &str);
             break;
-        case INT:
+        case INT_LIT:
             tmp_int = atol((&str)->str);
             t->attribute.int_val = tmp_int;
             break;
-        case FLOAT64:
+        case FLOAT64_LIT:
             tmp_d = atof((&str)->str);
             t->attribute.float_val = tmp_d;
             break;
