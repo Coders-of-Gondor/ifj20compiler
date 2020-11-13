@@ -60,3 +60,7 @@ $(TARGET): $(compiler_objects)
 	$(CC) -o $(TARGET) $^ $(LDFLAGS)
 $(compiler_objects): $(OBJECTS_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	# remove the bin and object files
+	rm -f $(NAME) *.o

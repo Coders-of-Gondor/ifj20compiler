@@ -1,5 +1,7 @@
 # Ignore the build folder
 build/
+# Ignore the binary file in /src (needs to be changed if filename changes)
+src/ifj20compiler
 
 # Prerequisites
 *.d
