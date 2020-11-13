@@ -19,6 +19,15 @@
 #include "str.h"
 
 
+// scanner local to the parser
+scanner_t *scanner;
+
+// next token to look at
+token_t lookahead;
+
+// tracker to tell us if an eol was scanned
+bool eol_encountered;
+
 // track the current line number
 int line = 1;
 
@@ -107,8 +116,10 @@ void parser_match_ident(char *ident_name) {
 /* MAIN RULES                                                               */
 /* ------------------------------------------------------------------------ */
 
-void parser_start() {
+void parser_start(scanner_t *scanner_main) {
   debug_entry();
+
+  scanner = scanner_main;
 
   // move the lookahead to the first lexeme
   parser_move();

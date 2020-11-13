@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
     return ERROR_INTERNAL;
   }
 
-  scanner = scanner_new(f);
-  parser_start();
+  scanner_t *scanner = scanner_new(f);
+  parser_start(scanner);
 
   scanner_free(scanner);
   fclose(f);
