@@ -19,7 +19,11 @@
 #include "str.h"
 
 
+// track the current line number
 int line = 1;
+
+// track if the eol has been found, terminate the analysis correctly
+bool eof_found = false;
 
 // TODO: make eol rules
 
@@ -35,17 +39,12 @@ void parser_move() {
   } else if (return_code == ERROR_INTERNAL) {
     throw_internal_error(line);
   } else if (return_code == EOF) {
-    // TODO: handle this correctly
-    fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
-    success_exit();
+    eof_found = true;
   }
 
-  if (lookahead.type == INVALID) {
+  if (lookahead.type == INVALID && return_code != EOF) {
+    fprintf(stderr, "!!! INVALID TOKEN !!!\n");
     throw_lex_error(line);
-  } else if (lookahead.type == EOF_T) {
-    // TODO: handle this correctly
-    fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
-    success_exit();
   }
 }
 
@@ -91,7 +90,6 @@ void parser_start() {
 
   parser_prolog();  
   parser_funcs();
-  // parser_stmts(); // old
 }
 
 void parser_prolog() {
@@ -102,6 +100,12 @@ void parser_prolog() {
 
 void parser_funcs() {
   debug_entry();
+
+  if (eof_found) {
+    fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
+    success_exit();
+  }
+
   // if FUNC not found, apply eps-rule
   if (lookahead.type == FUNC) {
       // function decleration
@@ -113,6 +117,11 @@ void parser_funcs() {
       parser_funcs();
   }
   // apply eps-rule
+
+  if (!eof_found) {
+    // if EOF not found, throw syntax error, program should not end here.
+    throw_syntax_error();
+  }
 }
 
 void parser_stmts() {
