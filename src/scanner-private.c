@@ -29,7 +29,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
   comment_state state = CLEAN;
 
   do {
-    s->character = getc(s->file);
+    s->character = fgetc(s->file);
     s->position++;
 
     if (state & BLOCK_EXITED)
