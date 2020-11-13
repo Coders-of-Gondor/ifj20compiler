@@ -29,6 +29,9 @@ void error_exit(unsigned error_code, const char* fmt, ...) {
 }
 
 void throw_syntax_error(token_type type, int line) {
+  #ifdef NDEBUG
+  unused(type);  // silence the unused-parameter warning
+  #endif
   debug("Token got: %s\n", token_get_type_string(type));
   error_exit(ERROR_SYNTAX, "Syntax error at line %d!\n", line);
 }
