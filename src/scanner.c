@@ -279,6 +279,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       case f10:
         if (isspace(s->character)){
           s->state = STOP;
+          ungetc(s->character, s->file);
           break;
         } else if ( (s->character != '_') &&
              !(s->character >= 48 && s->character <= 57) &&

@@ -22,15 +22,26 @@
 // track the current line number
 int line = 1;
 
-// track if the eol has been found, terminate the analysis correctly
+// track if the eof has been found, terminate the analysis correctly
 bool eof_found = false;
+
+// track if the eol could have been inserted before the token
+bool no_eol = false;
+
+// track if the eol should be required here
+bool required_eol = false;
+
+// track the return code for the eol checking
+int return_code = 0;
 
 // TODO: make eol rules
 
 void parser_move() {
   debug_entry();
+
+  eol_encountered = false;
   // move the lookahead
-  int return_code = scanner_scan(scanner, &lookahead, &eol_encountered, &line);
+  return_code = scanner_scan(scanner, &lookahead, &eol_encountered, &line);
 
   // TODO: make sure all return cases are handled here
 
@@ -46,6 +57,8 @@ void parser_move() {
     fprintf(stderr, "!!! INVALID TOKEN !!!\n");
     throw_lex_error(line);
   }
+
+  required_eol = false;
 }
 
 void parser_match(token_type t) {
@@ -53,6 +66,18 @@ void parser_match(token_type t) {
   if (lookahead.type == t) {
     debug("Matched type: %s", token_get_type_string(t));
     debug_lit_value(lookahead);
+
+    // EOL CHECKING
+    debug("got eol? %d no_eol? %d required_eol? %d", eol_encountered, no_eol, required_eol);
+    if (eol_encountered && no_eol) {
+      fprintf(stderr, "Wrong EOL placement!\n");
+      throw_syntax_error(lookahead.type, line);
+    } 
+    else if (!eol_encountered && required_eol) {
+      fprintf(stderr, "EOL should be here!\n");
+      throw_syntax_error(lookahead.type, line);
+    }
+
     parser_move();
   } else {
     debug("Expected type: %s", token_get_type_string(t));
@@ -103,6 +128,7 @@ void parser_funcs() {
 
   if (eof_found) {
     fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
+    fprintf(stderr, "line: %d\n", line);
     success_exit();
   }
 
@@ -110,6 +136,7 @@ void parser_funcs() {
   if (lookahead.type == FUNC) {
       // function decleration
       parser_match(FUNC);
+      no_eol = true;
       parser_match(IDENT);
       parser_params();
       parser_r_params();
@@ -151,24 +178,30 @@ void parser_stmt() {
     case IF:
       // if statement
       parser_match(IF);
+      no_eol = true;
       parser_expr();
       parser_block();
       parser_match(ELSE);
+      no_eol = true;
       parser_block();
+      required_eol = true;
       break;
     case FOR:
       // for loop
       parser_match(FOR);
+      no_eol = true;
       parser_optdef();
       parser_match(SEMICOLON);
       parser_expr();
       parser_match(SEMICOLON);
       parser_optassign();
       parser_block();
+      required_eol = true;
       break;
     case RETURN:
       // return statement
       parser_return();
+      required_eol = true;
       break;
     default:
       // no eps-rule -> throw syntax error
@@ -183,15 +216,18 @@ void parser_id_first() {
     case DEFINE:
       // variable definition
       parser_vardef();
+      required_eol = true;
       break;
     case ASSIGN:
     case COMMA:
       // variable assign
       parser_assign();
+      required_eol = true;
       break;
     case LPAREN:
       // function call
       parser_c_params();
+      required_eol = true;
       break;
     default:
       // no eps-rule -> throw syntax error
@@ -225,6 +261,7 @@ void parser_type() {
 void parser_block() {
   debug_entry();
   parser_match(LBRACE);
+  no_eol = false;
   parser_stmts();
   parser_match(RBRACE);
 }
