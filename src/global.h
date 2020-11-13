@@ -20,21 +20,6 @@
  */
 extern symtable_t *keywords_symtable;
 
-/**
- * Global tracker of the lookahead token.
- */
-extern token_t lookahead;
-
-/**
- * Global tracker of the eol encountered flag.
- */
-extern bool eol_encountered;
-
-/**
- * Global tracker of the scanner struct.
- */
-extern scanner_t *scanner;
-
 struct keyword {
   char lit[20];
   token_type type;

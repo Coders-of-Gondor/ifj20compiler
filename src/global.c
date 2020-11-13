@@ -13,9 +13,6 @@
  * @brief Definitions of the global variables of global.h
  */
 symtable_t *keywords_symtable;
-token_t lookahead;
-scanner_t *scanner;
-bool eol_encountered;
 
 int global_init() {
   debug_entry();
