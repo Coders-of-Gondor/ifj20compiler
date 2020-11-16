@@ -18,24 +18,12 @@ load helpers
   run_compiler $samples/example3.go
 }
 
-@test "Success analysis - factorial_iterative.ifj20" {
-  run_compiler $samples/factorial_iterative.ifj20
-}
-
-@test "Success analysis - factorial_recursive.ifj20" {
-  run_compiler $samples/factorial_recursive.ifj20
-}
-
 @test "Success analysis - hello.go" {
   run_compiler $samples/hello.go
 }
 
 @test "Success analysis - scope.go" {
   run_compiler $samples/scope.go
-}
-
-@test "Success analysis - string_manipulation.ifj20" {
-  run_compiler $samples/string_manipulation.ifj20
 }
 
 @test "Success analysis - two-pass.go" {
