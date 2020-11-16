@@ -144,7 +144,7 @@ int scan_num_lit(scanner_t *s, token_t *t) {
 }
 
 /**
- * @brief innit_scan determines what happens after reading first character of new token
+ * @brief innit_scan determines what happens after reading the first character of a new token
  * 
  * @param s is an instance of scanner
  * @param t is a pointer to token
@@ -153,7 +153,6 @@ int scan_num_lit(scanner_t *s, token_t *t) {
  * 
  * @retval 0 on success
  * @retval 1 on error
- * @retval 2 is sign to stop scanner and return token
  */
 
 int innit_scan(scanner_t *s, token_t *t) {
@@ -163,127 +162,126 @@ int innit_scan(scanner_t *s, token_t *t) {
   switch(s->character) {
         case ',':
           t->type = COMMA;
-          return 2;
+          s->state = STOP;
           break;
 
         case ';':
           t->type = SEMICOLON;
-          return 2;
+          s->state = STOP;
           break;
 
         case '(':
           t->type = LPAREN;
-          return 2;
+          s->state = STOP;
           break;
 
         case ')':
           t->type = RPAREN;
-          return 2;
+          s->state = STOP;
           break;
 
         case '{':
           t->type = LBRACE;
-          return 2;
+          s->state = STOP;
           break;
 
         case '}':
           t->type = RBRACE;
-          return 2;
+          s->state = STOP;
           break;
        
         case '+':
-          t->type = ADD; //set token type
-          return 2;
+          t->type = ADD;
+          s->state = STOP;
           break;
 
         case '-':
           t->type = SUB;
-          return 2;
+          s->state = STOP;
           break;
 
         case '/':
           t->type = DIV;
-          return 2;
+          s->state = STOP;
           break;
 
         case '*':
           t->type = MUL;
-          return 2;
+          s->state = STOP;
           break;
 
         case '<':
           t->type = LSS;
+          s->state = STOP;
+
           peek = fgetc(s->file);
 
           if (peek == '=') {
             s->character = peek;
             t->type = LEQ;
-          } else {
+          } else
             ungetc(peek, s->file);
-          }
 
-          return 2;
           break;
 
         case '>':
           t->type = GTR;
+          s->state = STOP;
+
           peek = fgetc(s->file);
 
           if (peek == '=') {
             s->character = peek;
             t->type = GEQ;
-          } else {
+          } else
             ungetc(peek, s->file);
-          }
 
-          return 2;
           break;
 
         case '=':
           t->type = ASSIGN;
+          s->state = STOP;
+
           peek = fgetc(s->file);
 
           if (peek == '=') {
             s->character = peek;
             t->type = EQL;
-          } else {
+          } else
             ungetc(peek, s->file);
-          }
 
-          return 2;
           break;
 
         case ':':
-          
           peek = fgetc(s->file);
 
           if (peek == '=') {
             s->character = peek;
             t->type = DEFINE;
+            s->state = STOP;
           } else {
             ungetc(peek, s->file);
-            return 1;
+            s->state = LEX_ERROR;
           }
 
-          return 2;
           break;
 
         case '!':
-          
           peek = fgetc(s->file);
 
           if (peek == '=') {
             s->character = peek;
             t->type = NEQ;
+            s->state = STOP;
           } else {
             ungetc(peek, s->file);
-            return 1;
+            s->state = LEX_ERROR;
           }
 
-          return 2;
           break;
 
         case '_':
+        case 'a' ... 'z':
           t->type = IDENT;
           s->state = f10;
           break;
@@ -295,25 +293,23 @@ int innit_scan(scanner_t *s, token_t *t) {
           break;
 
         case '0':
+          t->type = INT_LIT;
           s->state = f15;
-          break;
-
-        case 'a' ... 'z':
-          t->type = IDENT;
-          s->state = f10;
           break;
 
         case '"':
           t->type = STRING_LIT;
           s->state = q3;
-
           break;
 
         default:
-            s->state = LEX_ERROR;
-            break;
-
+          s->state = LEX_ERROR;
+          break;
       }
+
+      if (s->state == LEX_ERROR)
+        return 1;
+
       return 0;
 }
 

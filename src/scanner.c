@@ -111,11 +111,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
 
       //-----beggining of initial scan------
       case INIT:
-        return_val = innit_scan(s, t);
-        if (return_val == 1)
-          s->state = LEX_ERROR;
-        else if (return_val == 2)
-          s->state = STOP;
+        innit_scan(s, t);
         break;
       //-----end of initial scan-----
 
