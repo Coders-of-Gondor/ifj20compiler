@@ -257,7 +257,7 @@ class scanner_scanning_valid_sourcefile : public ::testing::Test {
 
         void SetUp() override {
             global_init();
-            f = fopen("./samples/string_manipulation.ifj20", "r");
+            f = fopen("./samples/example3.go", "r");
             s = scanner_new(f);
         }
 
@@ -292,7 +292,7 @@ class scanner_scan_tokens : public ::testing::Test {
 
         void SetUp() override {
             global_init();
-            f = fopen("./samples/string_manipulation.ifj20", "r");
+            f = fopen("./samples/example3.go", "r");
             s = scanner_new(f);
         }
 
