@@ -12,6 +12,34 @@ lexical_samples="$samples/lexical-tests"
   run_compiler $ERROR_LEXICAL $lexical_samples/excl_mark.go
 }
 
+@test "Lexical analysis - integer1" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer1.go
+}
+
+@test "Lexical analysis - integer2" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer2.go
+}
+
+@test "Lexical analysis - integer3" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer3.go
+}
+
+@test "Lexical analysis - integer4" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer4.go
+}
+
+@test "Lexical analysis - integer5" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer5.go
+}
+
+@test "Lexical analysis - integer6" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer6.go
+}
+
+@test "Lexical analysis - integer7" {
+	run_compiler $ERROR_LEXICAL $lexical_samples/integer7.go
+}
+
 @test "Lexical analysis - float1" {
   run_compiler $ERROR_LEXICAL $lexical_samples/float1.go
 }
@@ -42,6 +70,18 @@ lexical_samples="$samples/lexical-tests"
 
 @test "Lexical analysis - float8" {
   run_compiler $ERROR_LEXICAL $lexical_samples/float8.go
+}
+
+@test "Lexical analysis - float9" {
+  run_compiler $ERROR_LEXICAL $lexical_samples/float9.go
+}
+
+@test "Lexical analysis - float10" {
+  run_compiler $ERROR_LEXICAL $lexical_samples/float10.go
+}
+
+@test "Lexical analysis - float11" {
+  run_compiler $ERROR_LEXICAL $lexical_samples/float11.go
 }
 
 @test "Lexical analysis - string1" {
