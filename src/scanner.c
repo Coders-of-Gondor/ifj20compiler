@@ -69,7 +69,6 @@ void scanner_free(scanner_t *s) {
  */
 int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
   debug_entry();
-  int return_val;
   string str;
 
   if (s == NULL)
@@ -81,9 +80,11 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
   if (t == NULL)
     return ERROR_INTERNAL;
 
-  strInit(&str);
-
+  // Scan initialization
+  s->state = INIT;
   token_init(t);
+  if (strInit(&str) == 1)
+    return ERROR_INTERNAL;
 
   // Skip comments and whitespace characters
   scanner_skip_whitespace_comments(s, eol_encountered, line);
@@ -91,15 +92,17 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
   // Token State Machine
   // TODO: Actually implement the state machine :)
   do {
-    // Get the next character
-    if (s->state != STOP && s->state != EXIT) {
-        s->character = fgetc(s->file);
+    int return_val;
 
-        if (s->character == EOF)
-          break;
-    }    
+    // Get the next character
+    s->character = fgetc(s->file);
+
+    if (s->character == EOF) {
+      s->state = STOP;
+      t->type = EOF_T;
+    }
+
     switch (s->state) {
-     
       /*
       * initial scan solves all branches of DKA apart from
       * numerical literal, decimal literal, identifier and
@@ -107,17 +110,13 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       */
 
       //-----beggining of initial scan------
-
       case INIT:
         return_val = innit_scan(s, t);
-        if (return_val == 1) {
+        if (return_val == 1)
           s->state = LEX_ERROR;
-        } else if (return_val == 2) {
+        else if (return_val == 2)
           s->state = STOP;
-        }
-
         break;
-      
       //-----end of initial scan-----
 
       /*
@@ -125,7 +124,6 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       */
 
       //-----beggining of numerical literal scan------
-      
       case f14:
         if (scan_num_lit(s, t) == 1) {
           ungetc(s->character, s->file);
@@ -148,7 +146,6 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
         }
 
         break;
-
       //-----end of numerical literal scan------
 
       /*
@@ -156,7 +153,6 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       */
 
       //-----beggining of decimal literal scan-----
-
       case q7:
         if (s->character >= 48 && s->character <= 57) {
           s->state = f16;
@@ -210,7 +206,6 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
         }
 
         break;
-
       //----end of decimal literal scan-----
 
       /*
@@ -218,12 +213,11 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       */
 
       //-----beggining of string literal scan-----
-
       case q3:
         return_val = scan_string_lit(s);
-        if (return_val == 1) {
+        if (return_val == 1)
           s->state = LEX_ERROR;
-        } else if (return_val == 2) {
+        else if (return_val == 2) {
             s->state = STOP;
             if ((strAddChar(&str, s->character)) == 1) {
                 return ERROR_INTERNAL;
@@ -232,7 +226,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
         break;
 
       case q4:
-          if ((s->character == 'x')) {
+          if (s->character == 'x') {
             s->state = q5;
             } else if (s->character == 'n' ||
                        s->character == 't' ||
@@ -240,7 +234,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                        s->character == '"') {
                          s->state = q3;
             } else {
-                s->state = ERROR;
+                s->state = LEX_ERROR;
             }
 
             break;
@@ -266,7 +260,6 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             }   
 
         break;
-
       //----end of string literal scan-----
 
       /*
@@ -274,60 +267,47 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
       */
 
       //-----beggining of identifier scan-----
-         
-
       case f10:
-        if (isspace(s->character)){
+        if (isspace(s->character)) {
           s->state = STOP;
           ungetc(s->character, s->file);
           break;
-        } else if ( (s->character != '_') &&
-             !(s->character >= 48 && s->character <= 57) &&
-             !(s->character >= 65 && s->character <= 90) &&
-             !(s->character >= 97 && s->character <= 122)) {
+        } else if ((s->character != '_') &&
+                  !(s->character >= 48 && s->character <= 57) &&
+                  !(s->character >= 65 && s->character <= 90) &&
+                  !(s->character >= 97 && s->character <= 122)) {
 
                s->state = STOP;
                ungetc(s->character, s->file);
              }
         break;
+      //-----end of identifier scan-----
 
       case STOP:
-            token_set_attribute(t, str);
-            s->state = EXIT;
         break;
 
-      case ERROR:
-        strFree(&str);
-        return ERROR_INTERNAL;
-        break;
-
-      case LEX_ERROR:
-        strFree(&str);
-        return ERROR_LEXICAL;
-        break;
-
-      case EXIT:
-
-        break;
-      //-----end of identifier scan-----
-      
       default:
+        s->state = LEX_ERROR;
+        t->type = INVALID;
         break;
     }
 
-    if(s->state != STOP && s->state != EXIT) {
+    if (s->state != STOP && s->state != LEX_ERROR) {
       if ((strAddChar(&str, s->character)) == 1) {
-          return ERROR_INTERNAL;
-        }
-    }    
-
-  } while (s->state != EXIT);
+        return ERROR_INTERNAL;
+      }
+    }
+  } while (s->state != STOP && s->state != LEX_ERROR);
  
+  token_set_attribute(t, str);
   strFree(&str);
+
   if (s->character == EOF)
     return EOF;
 
-  s->state = INIT;
+  if (s->state == LEX_ERROR)
+    return ERROR_LEXICAL;
+
   return 0;
 }
  

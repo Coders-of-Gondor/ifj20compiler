@@ -310,7 +310,7 @@ int innit_scan(scanner_t *s, token_t *t) {
           break;
 
         default:
-            s->state = ERROR;
+            s->state = LEX_ERROR;
             break;
 
       }
