@@ -14,7 +14,7 @@ export BIN_DIR := $(BUILD_DIR)/bin
 export OBJECTS_DIR := $(BUILD_DIR)/objects
 export TARGET:= $(BIN_DIR)/$(NAME)
 
-.PHONY: all run testunit test2e2 zip clean help
+.PHONY: all run testunit test2e2 docs zip clean help
 
 all:
 	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJECTS_DIR)
@@ -30,6 +30,9 @@ testunit: all
 teste2e: all
 	@bats ./tests/e2e
 
+docs:
+	@cd docs; doxygen ./Doxyfile
+
 zip:
 	@mkdir -p $(BUILD_DIR)
 	@cd src; zip $(ZIPNAME) ./*.c ./*.h ./Makefile; mv $(ZIPNAME) ../
@@ -38,6 +41,7 @@ clean:
 	@rm -f $(ZIPNAME)
 	@rm -f -r $(BUILD_DIR)
 	@rm -f src/$(NAME) src/*.o
+	@rm -f docs/html docs/latex
 
 help:
 	@echo "make"
@@ -48,6 +52,8 @@ help:
 	@echo "    Run the program."
 	@echo "make test"
 	@echo "    Build and test the project."
+	@echo "make docs"
+	@echo "    Generate documentation using doxygen"
 	@echo "make zip"
 	@echo "    Create a zip file with the project."
 	@echo "make clean"
