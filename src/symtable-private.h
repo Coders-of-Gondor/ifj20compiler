@@ -15,6 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file symtable-private.h
+ * @author Ondřej Míchal <xmicha80> 
+ * @date 20/10/2020
+ */
+
 #include "symtable.h"
 
 struct symtable_item {

@@ -1,7 +1,8 @@
-/* scanner-private.h
- * Ondřej Míchal <xmicha80>
- * Vojtech Fiala <xfiala61>
- * 03/10/2020
+/**
+ * @file scanner-private.h
+ * @author Ondřej Míchal <xmicha80>
+ * @author Vojtech Fiala <xfiala61>
+ * @date 03/10/2020
  */
 
 #include <stdio.h>

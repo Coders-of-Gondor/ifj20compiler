@@ -1,8 +1,8 @@
-/* scanner.h
- * Ondřej Míchal <xmicha80>
- * Vojtěch Bůbela <xbubel08>
- * FIT BUT
- * 03/10/2020
+/**
+ * @file scanner.h
+ * @author Ondřej Míchal <xmicha80>
+ * @author Vojtěch Bůbela <xbubel08>
+ * @date 03/10/2020
  */
 
 #ifndef __SCANNER_H__

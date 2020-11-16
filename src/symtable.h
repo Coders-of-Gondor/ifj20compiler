@@ -15,6 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file symtable.h
+ * @author Ondřej Míchal <xmicha80> 
+ * @date 20/10/2020
+ */
+
 #ifndef __SYMTABLE_H__
 #define __SYMTABLE_H__
 
