@@ -128,17 +128,6 @@ TEST_F(scanner_component_testing, scan_num_lit_float1_5) {
     }
 }
 
-TEST_F(scanner_component_testing, scan_invalid_decimal_zero) {
-    char literal[] = "00.0";        // SHOULD FAIL
-    int num_of_chars = 4;
-    
-    for (int i = 0; i < num_of_chars; i++) {
-        s->character = literal[i];
-        int ret = scan_num_lit(s, &t);
-        ASSERT_NE(ret, 0);
-    }
-}
-
 TEST_F(scanner_component_testing, scan_num_lit_float2) {
     char literal[] = "123.321e20";
     int num_of_chars = 10;
