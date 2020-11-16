@@ -172,6 +172,82 @@ TEST_F(scanner_component_testing, scan_num_lit_float4) {
     }
 }
 
+TEST_F(scanner_component_testing, innit_scan_single_char_tokens) {
+    char literals[][2] = { ",", ";", "(", ")", "{", "}", "+", "-", "/", "*", };
+    int num_of_literals = sizeof(literals) / sizeof(literals[0]);
+
+    for (int i = 0; i < num_of_literals; i++) {
+        s->character = literals[i][0];
+        s->state = INIT;
+
+        int ret = innit_scan(s, &t);
+        ASSERT_EQ(ret, 0);
+        ASSERT_EQ(s->state, STOP);
+    }
+}
+
+TEST_F(scanner_component_testing, innit_scan_double_char_tokens) {
+    char literals[][3] = { "==", "<=", ">=", ":=", "!="};
+    int num_of_literals = sizeof(literals) / sizeof(literals[0]);
+
+    for (int i = 0; i < num_of_literals; i++) {
+        s->file = tmpfile();
+        fprintf(s->file, "%s", literals[i]);
+        rewind(s->file);
+
+        s->character = fgetc(s->file);
+        s->state = INIT;
+
+        int ret = innit_scan(s, &t);
+        ASSERT_EQ(ret, 0);
+        ASSERT_EQ(s->state, STOP);
+
+        fclose(s->file);
+    }
+}
+
+TEST_F(scanner_component_testing, innit_scan_number) {
+    // This is tested per-character, not as a whole string
+    char literal[] = "0123456789";
+    int num_of_chars = 10;
+
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        s->state = INIT;
+
+        int ret = innit_scan(s, &t);
+        ASSERT_EQ(ret, 0);
+        if (i == 0)
+            ASSERT_EQ(s->state, f15);
+        else
+            ASSERT_EQ(s->state, f14);
+    }
+}
+
+TEST_F(scanner_component_testing, innit_scan_identifier) {
+    // This is tested per-character, not as a whole string
+    char literal[] = "_abcd";
+    int num_of_chars = 5;
+
+    for (int i = 0; i < num_of_chars; i++) {
+        s->character = literal[i];
+        s->state = INIT;
+
+        int ret = innit_scan(s, &t);
+        ASSERT_EQ(ret, 0);
+        ASSERT_EQ(s->state, f10);
+    }
+}
+
+TEST_F(scanner_component_testing, innit_scan_string_literal) {
+    s->character = '"';
+    s->state = INIT;
+
+    int ret = innit_scan(s, &t);
+    ASSERT_EQ(ret, 0);
+    ASSERT_EQ(s->state, q3);
+}
+
 class scanner_scanning_valid_sourcefile : public ::testing::Test {
     protected:
         scanner_t *s;
