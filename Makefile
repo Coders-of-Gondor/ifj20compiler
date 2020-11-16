@@ -41,7 +41,7 @@ clean:
 	@rm -f $(ZIPNAME)
 	@rm -f -r $(BUILD_DIR)
 	@rm -f src/$(NAME) src/*.o
-	@rm -f docs/html docs/latex
+	@rm -rf docs/html docs/latex
 
 help:
 	@echo "make"

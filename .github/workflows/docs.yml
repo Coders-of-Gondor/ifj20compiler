@@ -1,0 +1,24 @@
+name: Generate & Deploy ifj20compiler Documentation
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate Documentation
+      uses: mattnotmitt/doxygen-action@v1
+      with:
+        working-directory: 'docs/'
+        doxyfile-path: './Doxyfile'
+
+    - name: Deploy Documentation
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html
