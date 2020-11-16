@@ -1,10 +1,10 @@
-/* token.h
- * Ondřej Míchal <xmicha80>
- * Marek Filip <xfilip46>
- * Vojtěch Fiala <xfiala61>
- * Vojtěch Bůbela <xbubel08>
- * FIT BUT
- * 09/11/2020
+/**
+ * @file token.h
+ * @author Ondřej Míchal <xmicha80>
+ * @author Marek Filip <xfilip46>
+ * @author Vojtěch Fiala <xfiala61>
+ * @author Vojtěch Bůbela <xbubel08>
+ * @date 09/11/2020
  */
 
 #ifndef __TOKEN_H__
@@ -16,60 +16,60 @@
 
 typedef enum token_type {
   // General
-  INVALID,  // Invalid token (Lexical error)
-  EOL, 		// End of line
-  EOF_T, 	// End of file
-  IDENT,    // temp_value
+  INVALID,  /**< Invalid token (Lexical error) */
+  EOL, 		/**< End of line */
+  EOF_T, 	/**< End of file */
+  IDENT,    /**< temp_value */
 
   // Literals
-  INT_LIT, 	   // 42
-  FLOAT64_LIT, // 42.42
-  STRING_LIT,  // "fourtytwo"
+  INT_LIT, 	   /**< 42 */
+  FLOAT64_LIT, /**< 42.42 */
+  STRING_LIT,  /**< "fourtytwo" */
 
   // Data types
-  INT, 		   // int
-  FLOAT64, 	   // float64
-  STRING,  	   // string
+  INT, 		   /**< int */
+  FLOAT64, 	   /**< float64 */
+  STRING,  	   /**< string */
 
   // Control
-  IF,   // if
-  ELSE, // else
-  FOR,  // for
+  IF,   /**< if */
+  ELSE, /**< else */
+  FOR,  /**< for */
 
   // Functions
-  FUNC,   // func
-  RETURN, // return
+  FUNC,   /**< func */
+  RETURN, /**<return */
 
   // Package declaration
-  PACKAGE, // package
+  PACKAGE, /**< package */
 
   // Assignment
-  DEFINE, // :=
-  ASSIGN, // =
+  DEFINE, /**< := */
+  ASSIGN, /**< = */
 
   // Operators
-  ADD, // +
-  SUB, // -
-  MUL, // *
-  DIV, // /
+  ADD, /**< "+" */
+  SUB, /**< "-" */
+  MUL, /**< "*" */
+  DIV, /**< "/" */
 
   // Comparators
-  AND, // &&
-  OR,  // ||
-  EQL, // ==
-  NEQ, // !=
-  LSS, // <
-  LEQ, // <=
-  GTR, // >
-  GEQ, // >=
+  AND, /**< && */
+  OR,  /**< || */
+  EQL, /**< == */
+  NEQ, /**< != */
+  LSS, /**< < */
+  LEQ, /**< <= */
+  GTR, /**< \> */
+  GEQ, /**< >= */
 
   //  Other
-  LPAREN, 	// (
-  LBRACE, 	// {
-  RPAREN, 	// )
-  RBRACE, 	// }
-  COMMA,  	// ,
-  SEMICOLON // ;
+  LPAREN, 	/**< ( */
+  LBRACE, 	/**< { */
+  RPAREN, 	/**< ) */
+  RBRACE, 	/**< } */
+  COMMA,  	/**< , */
+  SEMICOLON /**< ; */
 } token_type;
 
 /**

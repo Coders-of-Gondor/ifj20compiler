@@ -8,10 +8,12 @@
  * SOFTWARE.
  */
 
-/* debug.h
- * Zed A. Shaw, Ondřej Míchal <xmicha80>, Marek Filip <xfilip46>
- * FIT BUT
- * 13/11/2020
+/**
+ * @file debug.h
+ * @author Zed A. Shaw
+ * @author Ondřej Míchal <xmicha80>
+ * @author Marek Filip <xfilip46>
+ * @date 13/11/2020
  */
 
 #ifndef __DEBUG_H__

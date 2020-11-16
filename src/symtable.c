@@ -15,6 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file symtable.c
+ * @author Ondřej Míchal <xmicha80> 
+ * @date 20/10/2020
+ * @brief Symbol table based on hashtable.
+ */
+
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,9 +1,9 @@
 /**
- * Library included from "jednoduchy_interpret.zip" located at the project's
+ * @file str.h
+ * @brief hlavickovy soubor pro praci s nekonecne dlouhymi retezci
+ * @details Library included from "jednoduchy_interpret.zip" located at the project's
  * website. We do not own anything from this file.
  */
-
-//hlavickovy soubor pro praci s nekonecne dlouhymi retezci
 
 #ifndef __STR_H__
 #define __STR_H__
