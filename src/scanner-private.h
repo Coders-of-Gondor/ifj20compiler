@@ -38,9 +38,7 @@ typedef enum scanner_state
   f17,  //TODO
 
   STOP,   //finite state machine is in final step
-  ERROR,  //
   LEX_ERROR,
-  EXIT
 } scanner_state;
 
 struct scanner
