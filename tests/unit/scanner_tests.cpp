@@ -176,16 +176,18 @@ class scanner_scanning_valid_sourcefile : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        FILE *f;
         int line;
 
         void SetUp() override {
             global_init();
-            FILE *f = fopen("./samples/string_manipulation.ifj20", "r");
+            f = fopen("./samples/string_manipulation.ifj20", "r");
             s = scanner_new(f);
         }
 
         void TearDown() override {
             scanner_free(s);
+            fclose(f);
         }
 };
 
@@ -209,16 +211,18 @@ class scanner_scan_tokens : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        FILE *f;
         int line;
 
         void SetUp() override {
             global_init();
-            FILE *f = fopen("./samples/string_manipulation.ifj20", "r");
+            f = fopen("./samples/string_manipulation.ifj20", "r");
             s = scanner_new(f);
         }
 
         void TearDown() override {
             scanner_free(s);
+            fclose(f);
         }
 };
 
@@ -254,16 +258,18 @@ class scanner_scan_tokens_commentary : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        FILE *f;
         int line;
 
         void SetUp() override {
             global_init();
-            FILE *f = fopen("./samples/eols.go", "r");
+            f = fopen("./samples/eols.go", "r");
             s = scanner_new(f);
         }
 
         void TearDown() override {
             scanner_free(s);
+            fclose(f);
         }
 };
 
@@ -295,16 +301,18 @@ class scanner_scan_tokens_zero_end : public ::testing::Test {
     protected:
         scanner_t *s;
         token_t t;
+        FILE *f;
         int line;
 
         void SetUp() override {
             global_init();
-            FILE *f = fopen("./samples/scope.go", "r");
+            f = fopen("./samples/scope.go", "r");
             s = scanner_new(f);
         }
 
         void TearDown() override {
             scanner_free(s);
+            fclose(f);
         }
 };
 
@@ -335,5 +343,4 @@ TEST_F(scanner_scan_tokens_zero_end, number_ends_with_zero) {
             ASSERT_EQ(token_type, IF);
     }
 }
-
 
