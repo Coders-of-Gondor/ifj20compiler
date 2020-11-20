@@ -75,8 +75,8 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
         }
       } while(isspace(s->character) || state != CLEAN);
 
-  ungetc(s->character, s->file);
-  s->position--;
+    ungetc(s->character, s->file);
+    s->position--;
 }
 
 /**
