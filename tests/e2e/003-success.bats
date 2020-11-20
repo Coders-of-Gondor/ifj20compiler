@@ -46,3 +46,6 @@ load helpers
   run_compiler $samples/varfun.go
 }
 
+@test "Success analysis - math-operations.go" {
+  run_compiler $samples/math-operations.go
+}

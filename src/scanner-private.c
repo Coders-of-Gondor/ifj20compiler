@@ -27,8 +27,10 @@
 void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
   // debug_entry();
   comment_state state = CLEAN;
+  char prev_char;
 
   do {
+    prev_char = s->character;
     s->character = fgetc(s->file);
     s->position++;
 
@@ -58,9 +60,11 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
           state = BLOCK_COMMENT_LEAVING;
         break;
       default:
-        // FIXME: I think this needs to be more specific so that a needed character is not lost.
-        if (state == COMMENT_CHANGE)
+        if (state == COMMENT_CHANGE) {
+          ungetc(s->character, s->file);
+          s->character = prev_char;
           state = CLEAN;
+        }
         break;
     }
   } while(isspace(s->character) || state != CLEAN);
