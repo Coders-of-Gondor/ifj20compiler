@@ -53,11 +53,12 @@ struct scanner
 
 typedef enum comment_state
 {
-  CLEAN = 0x1, /**< the reader is not in a comment (or may not become) */
-  COMMENT_CHANGE = 0x2, /**< the next character could open/close a comment */
-  INLINE_COMMENT = 0x4, /**< the next character is a part of an inline comment */
-  BLOCK_COMMENT = 0x8, /**< the next character is a part of a block comment */
-  BLOCK_EXITED = 0x10 /**< current character closed a block comment */
+  CLEAN, /**< the reader is not in a comment (or may not become) */
+  COMMENT_CHANGE, /**< the next character could open/close a comment */
+  INLINE_COMMENT, /**< the next character is a part of an inline comment */
+  BLOCK_COMMENT, /**< the next character is a part of a block comment */
+  BLOCK_COMMENT_LEAVING, /**< the next character may end a block comment */
+  BLOCK_EXITED /**< current character closed a block comment */
 } comment_state;
 
 void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line);

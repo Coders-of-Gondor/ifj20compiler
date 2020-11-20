@@ -32,7 +32,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
     s->character = fgetc(s->file);
     s->position++;
 
-    if (state & BLOCK_EXITED)
+    if (state == BLOCK_EXITED)
       state = CLEAN;
 
     switch (s->character) {
@@ -40,30 +40,30 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
         *eol_encountered = true;
         (*line)++;
 
-        if (state & INLINE_COMMENT)
+        if (state == INLINE_COMMENT)
           state = CLEAN;
         break;
       case '/':
-        if (state & CLEAN)
+        if (state == CLEAN)
           state = COMMENT_CHANGE;
-        else if (state & COMMENT_CHANGE && state & BLOCK_COMMENT)
+        else if (state == BLOCK_COMMENT_LEAVING)
           state = BLOCK_EXITED;
-        else if (state & COMMENT_CHANGE && !(state & BLOCK_COMMENT))
+        else if (state == COMMENT_CHANGE)
           state = INLINE_COMMENT;
         break;
       case '*':
-        if (state & COMMENT_CHANGE)
+        if (state == COMMENT_CHANGE)
           state = BLOCK_COMMENT;
-        else if (state & BLOCK_COMMENT)
-          state = COMMENT_CHANGE | BLOCK_COMMENT;
+        else if (state == BLOCK_COMMENT)
+          state = BLOCK_COMMENT_LEAVING;
         break;
       default:
         // FIXME: I think this needs to be more specific so that a needed character is not lost.
-        if (state & COMMENT_CHANGE)
+        if (state == COMMENT_CHANGE)
           state = CLEAN;
         break;
     }
-  } while(isspace(s->character) || !(state & CLEAN));
+  } while(isspace(s->character) || state != CLEAN);
 
   ungetc(s->character, s->file);
   s->position--;
