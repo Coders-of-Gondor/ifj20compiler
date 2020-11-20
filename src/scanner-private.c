@@ -2,6 +2,7 @@
  * @file scanner-private.c
  * @author Ondřej Míchal <xmicha80>
  * @author Vojtěch Bůbela <xbubel08>
+ * @author Vojtěch Fiala <xfiala61>
  * @brief File with private scanner functions.
  * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 03/10/2020
@@ -200,21 +201,57 @@ int innit_scan(scanner_t *s, token_t *t) {
         case '+':
             t->type = ADD;
             s->state = STOP;
+
+            peek = fgetc(s->file);
+
+            if (peek == '=') {
+                s->character = peek;
+                t->type = ADD_ASSIGN;
+            } else {
+                ungetc(peek, s->file);
+            }
             break;
 
         case '-':
             t->type = SUB;
             s->state = STOP;
+
+            peek = fgetc(s->file);
+
+            if (peek == '=') {
+                s->character = peek;
+                t->type = SUB_ASSIGN;
+            } else {
+                ungetc(peek, s->file);
+            }
             break;
 
         case '/':
             t->type = DIV;
             s->state = STOP;
+
+            peek = fgetc(s->file);
+
+            if (peek == '=') {
+                s->character = peek;
+                t->type = DIV_ASSIGN;
+            } else {
+                ungetc(peek, s->file);
+            }            
             break;
 
         case '*':
             t->type = MUL;
             s->state = STOP;
+
+            peek = fgetc(s->file);
+
+            if (peek == '=') {
+                s->character = peek;
+                t->type = MUL_ASSIGN;
+            } else {
+                ungetc(peek, s->file);
+            }            
             break;
 
         case '<':

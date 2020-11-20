@@ -130,6 +130,12 @@ const char* token_get_type_string(token_type type) {
         case MUL: return "MUL";
         case DIV: return "DIV";
 
+        // Unary Operators
+        case ADD_ASSIGN: return "ADD_ASSIGN";
+        case SUB_ASSIGN: return "SUB_ASSIGN";
+        case MUL_ASSIGN: return "MUL_ASSIGN";
+        case DIV_ASSIGN: return "DIV_ASSIGN";
+
         // Comparators
         case AND: return "AND";
         case OR: return "OR";

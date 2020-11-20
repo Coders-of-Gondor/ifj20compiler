@@ -162,7 +162,7 @@ TEST_F(scanner_component_testing, scan_num_lit_float4) {
 }
 
 TEST_F(scanner_component_testing, innit_scan_single_char_tokens) {
-    char literals[][2] = { ",", ";", "(", ")", "{", "}", "+", "-", "/", "*", };
+    char literals[][2] = { ",", ";", "(", ")", "{", "}", };
     int num_of_literals = sizeof(literals) / sizeof(literals[0]);
 
     for (int i = 0; i < num_of_literals; i++) {
@@ -409,3 +409,104 @@ TEST_F(scanner_scan_tokens_zero_end, number_ends_with_zero) {
     }
 }
 
+class scanner_scan_token_unary : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        FILE *f;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            f = fopen("./samples/unary.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+            fclose(f);
+        }
+};
+
+TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 8)        // 9th is ':=' (DEFINE)
+            ASSERT_EQ(token_type, DEFINE);
+        else if (i == 9)        // 10th is 'INT_LIT'
+            ASSERT_EQ(token_type, INT_LIT);
+        else if (i == 11)       // 12th is '+=' (ADD_ASSIGN)
+            ASSERT_EQ(token_type, ADD_ASSIGN);
+    }
+}
+
+TEST_F(scanner_scan_token_unary, SUB_ASSIGN) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 14)        // 14th is '-=' (SUB_ASSIGN)
+            ASSERT_EQ(token_type, SUB_ASSIGN);
+    }
+}
+
+TEST_F(scanner_scan_token_unary, MUL_ASSIGN) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 17)        // 17th is '*=' (MUL_ASSIGN)
+            ASSERT_EQ(token_type, MUL_ASSIGN);
+    }
+}
+
+TEST_F(scanner_scan_token_unary, DIV_ASSIGN) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 20)        // 20th is '/=' (DIV_ASSIGN)
+            ASSERT_EQ(token_type, DIV_ASSIGN);
+    }
+}
+
+class scanner_scan_divide : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        FILE *f;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            f = fopen("./samples/divide.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+            fclose(f);
+        }
+};
+
+TEST_F(scanner_scan_divide, scan_divide) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 15; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 13)        // 13th is '/' (DIV)
+            ASSERT_EQ(token_type, DIV);
+    }
+}
