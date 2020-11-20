@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['idb_215',['idb',['../structsymtable__iterator__t.html#ae2fa09b674e1d450b1f51036d52cf83c',1,'symtable_iterator_t']]],
-  ['ide_216',['ide',['../structsymtable__iterator__t.html#ad332f169aba19b27a28f0de94260bcac',1,'symtable_iterator_t']]]
+  ['keywords_5fsymtable_215',['keywords_symtable',['../global_8h.html#a397596f327bec1a9d83e7c1514f257c5',1,'global.c']]]
 ];

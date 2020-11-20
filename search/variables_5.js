@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keywords_5fsymtable_217',['keywords_symtable',['../global_8h.html#a397596f327bec1a9d83e7c1514f257c5',1,'global.c']]]
+  ['position_216',['position',['../structscanner.html#adba007194ba9db412eeb501de6242f60',1,'scanner']]],
+  ['ptr_217',['ptr',['../structsymtable__iterator__t.html#a3d5ba96e62e1037a93303f3f7305c290',1,'symtable_iterator_t']]]
 ];

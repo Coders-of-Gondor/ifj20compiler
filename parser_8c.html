@@ -98,9 +98,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa3c7e1321fa936707c04048fce387c67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a> (char *ident_name)</td></tr>
 <tr class="memdesc:aa3c7e1321fa936707c04048fce387c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match the lookahead token against IDENT type and match the ident name.  <a href="parser_8c.html#aa3c7e1321fa936707c04048fce387c67">More...</a><br /></td></tr>
 <tr class="separator:aa3c7e1321fa936707c04048fce387c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71466a88cec3911e600c9b48cbd4b935"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a71466a88cec3911e600c9b48cbd4b935">parser_start</a> ()</td></tr>
-<tr class="memdesc:a71466a88cec3911e600c9b48cbd4b935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the parser.  <a href="parser_8c.html#a71466a88cec3911e600c9b48cbd4b935">More...</a><br /></td></tr>
-<tr class="separator:a71466a88cec3911e600c9b48cbd4b935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ec2ec63d189bf8816896b67901a6a2"><td class="memItemLeft" align="right" valign="top"><a id="a33ec2ec63d189bf8816896b67901a6a2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_start</b> (scanner_t *scanner_main)</td></tr>
+<tr class="separator:a33ec2ec63d189bf8816896b67901a6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5adfb9b790a748f0343199e0b8c65edb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a> ()</td></tr>
 <tr class="memdesc:a5adfb9b790a748f0343199e0b8c65edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Below can be found the parsing functions deduced from the LL(1) table.  <a href="parser_8c.html#a5adfb9b790a748f0343199e0b8c65edb">More...</a><br /></td></tr>
 <tr class="separator:a5adfb9b790a748f0343199e0b8c65edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,9 +233,30 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="memItemLeft" align="right" valign="top"><a id="a635b917ff2a1e9eb28245cdb8dee4cec"></a>
+scanner_t *&#160;</td><td class="memItemRight" valign="bottom"><b>scanner</b></td></tr>
+<tr class="separator:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdbbc682dcd0f4a7f07607c38f261517"><td class="memItemLeft" align="right" valign="top"><a id="afdbbc682dcd0f4a7f07607c38f261517"></a>
+<a class="el" href="structtoken__t.html">token_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lookahead</b></td></tr>
+<tr class="separator:afdbbc682dcd0f4a7f07607c38f261517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54f319b221ae296289c05eac5dda73c2"><td class="memItemLeft" align="right" valign="top"><a id="a54f319b221ae296289c05eac5dda73c2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>eol_encountered</b></td></tr>
+<tr class="separator:a54f319b221ae296289c05eac5dda73c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="memItemLeft" align="right" valign="top"><a id="a41ebd28ef1d7c6ade45642cb6acc1039"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>line</b> = 1</td></tr>
 <tr class="separator:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e69df32e4407dbf966699aa3aaefba0"><td class="memItemLeft" align="right" valign="top"><a id="a7e69df32e4407dbf966699aa3aaefba0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>eof_found</b> = false</td></tr>
+<tr class="separator:a7e69df32e4407dbf966699aa3aaefba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2455fa6fe5b74e41c4d37250737963a"><td class="memItemLeft" align="right" valign="top"><a id="ad2455fa6fe5b74e41c4d37250737963a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>no_eol</b> = false</td></tr>
+<tr class="separator:ad2455fa6fe5b74e41c4d37250737963a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a861ba280c3f833800c5828e15453a7ab"><td class="memItemLeft" align="right" valign="top"><a id="a861ba280c3f833800c5828e15453a7ab"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>required_eol</b> = false</td></tr>
+<tr class="separator:a861ba280c3f833800c5828e15453a7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a934c111b1421c6aa91507fabd5c96deb"><td class="memItemLeft" align="right" valign="top"><a id="a934c111b1421c6aa91507fabd5c96deb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>return_code</b> = 0</td></tr>
+<tr class="separator:a934c111b1421c6aa91507fabd5c96deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parser part of ifj20 compiler. </p>
@@ -322,30 +343,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>line</b> = 1</td></tr>
 
 </div>
 </div>
-<a id="a71466a88cec3911e600c9b48cbd4b935"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71466a88cec3911e600c9b48cbd4b935">&#9670;&nbsp;</a></span>parser_start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void parser_start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start the parser. </p>
-<p>This is the starting rule of the LL(1) grammar. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 16 2020 14:01:29 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Fri Nov 20 2020 21:53:29 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

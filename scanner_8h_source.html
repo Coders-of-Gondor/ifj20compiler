@@ -84,20 +84,19 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;scanner_t *<a class="code" href="scanner_8h.html#a6dfe5dae17aa33dcbbe86a94ea808226">scanner_new</a>(FILE *f);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="scanner_8h.html#a086f9316fbc85bfa85d26825cde85ac0">scanner_free</a>(scanner_t *s);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="scanner_8h.html#a47360bc9eb405ac407dc33a7e5f613b4">scanner_scan</a>(scanner_t *s, <a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">bool</span> *<a class="code" href="global_8h.html#a54f319b221ae296289c05eac5dda73c2">eol_encountered</a>, <span class="keywordtype">int</span> *line);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="scanner_8h.html#a47360bc9eb405ac407dc33a7e5f613b4">scanner_scan</a>(scanner_t *s, <a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">bool</span> *eol_encountered, <span class="keywordtype">int</span> *line);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif // __SCANNER_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="ascanner_8h_html_a086f9316fbc85bfa85d26825cde85ac0"><div class="ttname"><a href="scanner_8h.html#a086f9316fbc85bfa85d26825cde85ac0">scanner_free</a></div><div class="ttdeci">void scanner_free(scanner_t *s)</div><div class="ttdoc">scanner_free destroys an instance of scanner</div><div class="ttdef"><b>Definition:</b> scanner.c:46</div></div>
 <div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:78</div></div>
-<div class="ttc" id="aglobal_8h_html_a54f319b221ae296289c05eac5dda73c2"><div class="ttname"><a href="global_8h.html#a54f319b221ae296289c05eac5dda73c2">eol_encountered</a></div><div class="ttdeci">bool eol_encountered</div><div class="ttdoc">Global tracker of the eol encountered flag.</div><div class="ttdef"><b>Definition:</b> global.c:18</div></div>
 <div class="ttc" id="ascanner_8h_html_a47360bc9eb405ac407dc33a7e5f613b4"><div class="ttname"><a href="scanner_8h.html#a47360bc9eb405ac407dc33a7e5f613b4">scanner_scan</a></div><div class="ttdeci">int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line)</div><div class="ttdoc">scanner_scan reads a source file and returns a single token.</div><div class="ttdef"><b>Definition:</b> scanner.c:70</div></div>
 <div class="ttc" id="ascanner_8h_html_a6dfe5dae17aa33dcbbe86a94ea808226"><div class="ttname"><a href="scanner_8h.html#a6dfe5dae17aa33dcbbe86a94ea808226">scanner_new</a></div><div class="ttdeci">scanner_t * scanner_new(FILE *f)</div><div class="ttdoc">scanner_init initializes an instance of scanner</div><div class="ttdef"><b>Definition:</b> scanner.c:28</div></div>
-<div class="ttc" id="astructscanner_html"><div class="ttname"><a href="structscanner.html">scanner</a></div><div class="ttdef"><b>Definition:</b> scanner-private.h:48</div></div>
+<div class="ttc" id="astructscanner_html"><div class="ttname"><a href="structscanner.html">scanner</a></div><div class="ttdef"><b>Definition:</b> scanner-private.h:46</div></div>
 <div class="ttc" id="atoken_8h_html"><div class="ttname"><a href="token_8h.html">token.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 16 2020 14:01:29 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Fri Nov 20 2020 21:53:29 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
