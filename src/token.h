@@ -55,6 +55,12 @@ typedef enum token_type {
     MUL, // *
     DIV, // /
 
+    // UNARY Extension operators
+    ADD_ASSIGN, // +=
+    SUB_ASSIGN, // -=
+    MUL_ASSIGN, // *=
+    DIV_ASSIGN, // /=
+
     // Comparators
     AND, // &&
     OR,  // ||
