@@ -1,10 +1,10 @@
 /**
  * @file global.h 
- * @author Marek Filip <xfilip46, Wecros>
+ * @author Marek Filip <xfilip46>
  * @author Ondřej Míchal <xmicha80>
- * FIT BUT 
- * @date 10/11/2020
  * @brief Header file for global variable definitions.
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 10/11/2020
  */
 
 #ifndef __GLOBAL_H__
@@ -21,8 +21,8 @@
 extern symtable_t *keywords_symtable;
 
 struct keyword {
-  char lit[20];
-  token_type type;
+    char lit[20];
+    token_type type;
 };
 
 /**

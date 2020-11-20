@@ -1,8 +1,9 @@
 /**
  * @file debug.c
- * @author Marek Filip (xfilip46, Wecros), FIT BUT 
- * @date 13/11/2020
+ * @author Marek Filip <xfilip46>
  * @brief File holding debug function definitions.
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 13/11/2020
  */
 
 #include "debug.h"

@@ -1,7 +1,9 @@
-/**
+/** 
  * @file error.h
- * @author Vojtech Fiala <xfiala61>
+ * @author Vojtěch Fiala <xfiala61>
  * @author Marek Filip <xfilip46>
+ * @brief Error codes and function declarations
+ * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 10/11/2020
  */
 

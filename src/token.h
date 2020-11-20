@@ -4,6 +4,8 @@
  * @author Marek Filip <xfilip46>
  * @author Vojtěch Fiala <xfiala61>
  * @author Vojtěch Bůbela <xbubel08>
+ * @brief File with token type and functions definitons
+ * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 09/11/2020
  */
 
@@ -15,74 +17,74 @@
 #include "str.h"
 
 typedef enum token_type {
-  // General
-  INVALID,  /**< Invalid token (Lexical error) */
-  EOL, 		/**< End of line */
-  EOF_T, 	/**< End of file */
-  IDENT,    /**< temp_value */
+    // General
+    INVALID,  // Invalid token (Lexical error)
+    EOL, 		// End of line
+    EOF_T, 	// End of file
+    IDENT,    // temp_value
 
-  // Literals
-  INT_LIT, 	   /**< 42 */
-  FLOAT64_LIT, /**< 42.42 */
-  STRING_LIT,  /**< "fourtytwo" */
+    // Literals
+    INT_LIT, 	   // 42
+    FLOAT64_LIT, // 42.42
+    STRING_LIT,  // "fourtytwo"
 
-  // Data types
-  INT, 		   /**< int */
-  FLOAT64, 	   /**< float64 */
-  STRING,  	   /**< string */
+    // Data types
+    INT, 		   // int
+    FLOAT64, 	   // float64
+    STRING,  	   // string
 
-  // Control
-  IF,   /**< if */
-  ELSE, /**< else */
-  FOR,  /**< for */
+    // Control
+    IF,   // if
+    ELSE, // else
+    FOR,  // for
 
-  // Functions
-  FUNC,   /**< func */
-  RETURN, /**<return */
+    // Functions
+    FUNC,   // func
+    RETURN, // return
 
-  // Package declaration
-  PACKAGE, /**< package */
+    // Package declaration
+    PACKAGE, // package
 
-  // Assignment
-  DEFINE, /**< := */
-  ASSIGN, /**< = */
+    // Assignment
+    DEFINE, // :=
+    ASSIGN, // =
 
-  // Operators
-  ADD, /**< "+" */
-  SUB, /**< "-" */
-  MUL, /**< "*" */
-  DIV, /**< "/" */
+    // Operators
+    ADD, // +
+    SUB, // -
+    MUL, // *
+    DIV, // /
 
-  // Comparators
-  AND, /**< && */
-  OR,  /**< || */
-  EQL, /**< == */
-  NEQ, /**< != */
-  LSS, /**< < */
-  LEQ, /**< <= */
-  GTR, /**< \> */
-  GEQ, /**< >= */
+    // Comparators
+    AND, // &&
+    OR,  // ||
+    EQL, // ==
+    NEQ, // !=
+    LSS, // <
+    LEQ, // <=
+    GTR, // >
+    GEQ, // >=
 
-  //  Other
-  LPAREN, 	/**< ( */
-  LBRACE, 	/**< { */
-  RPAREN, 	/**< ) */
-  RBRACE, 	/**< } */
-  COMMA,  	/**< , */
-  SEMICOLON /**< ; */
+    //  Other
+    LPAREN, 	// (
+    LBRACE, 	// {
+    RPAREN, 	// )
+    RBRACE, 	// }
+    COMMA,  	// ,
+    SEMICOLON // ;
 } token_type;
 
 /**
  * @brief Token holds information about a scanned lexem
  */
 typedef struct token {
-  token_type type; /**< Type of the token */
-  union Attribute {
-	int64_t int_val;
-	double float_val;
-	string str_val;
-	char *sym_key;	
-  } attribute; /**< Token's attribute (e.g., symtable key, value of int,..). */
+    token_type type; /**< Type of the token */
+    union Attribute {
+        int64_t int_val;
+        double float_val;
+        string str_val;
+        char *sym_key;	
+    } attribute; /**< Token's attribute (e.g., symtable key, value of int,..). */
 } token_t;
 
 void token_init(token_t *t);

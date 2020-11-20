@@ -1,6 +1,6 @@
 # Makefile
 # Ondřej Míchal <xmicha80>
-# FIT BUT
+# Implementace překladače imperativního jazyka IFJ20.
 # 24/09/2020
 
 export CC = /usr/bin/env gcc
