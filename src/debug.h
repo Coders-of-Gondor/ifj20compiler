@@ -13,6 +13,8 @@
  * @author Zed A. Shaw
  * @author Ondřej Míchal <xmicha80>
  * @author Marek Filip <xfilip46>
+ * @brief File holding debug functions
+ * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 13/11/2020
  */
 
@@ -29,7 +31,7 @@
 #define debug(M, ...)
 #define debug_entry()
 inline void debug_lit_value(token_t t) {
-  unused(t);
+    unused(t);
 }
 
 #else
@@ -44,21 +46,21 @@ inline void debug_lit_value(token_t t) {
  * @description Inline debugging function.
  */
 inline void debug_lit_value(token_t t) {
-  if (token_is_lit(t.type)) {
-    switch (t.type) {
-      case STRING_LIT:
-        debug("Got VALUE: %s", strGetStr(&t.attribute.str_val));
-        break;
-      case FLOAT64_LIT:
-        debug("Got VALUE: %g", t.attribute.float_val);
-        break;
-      case INT_LIT:
-        debug("Got VALUE: %ld", t.attribute.int_val);
-        break;
-      default:
-        break;
+    if (token_is_lit(t.type)) {
+        switch (t.type) {
+            case STRING_LIT:
+                debug("Got VALUE: %s", strGetStr(&t.attribute.str_val));
+                break;
+            case FLOAT64_LIT:
+                debug("Got VALUE: %g", t.attribute.float_val);
+                break;
+            case INT_LIT:
+                debug("Got VALUE: %ld", t.attribute.int_val);
+                break;
+            default:
+                break;
+        }
     }
-  }
 }
 #endif
 

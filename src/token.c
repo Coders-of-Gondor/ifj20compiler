@@ -1,8 +1,11 @@
-/*
- * token.c
- * Vojtěch Bůbela <xbubel08>
- * Vojtech Fiala <xfiala61>
- * 09/11/2020
+/**
+ * @file token.c
+ * @author Vojtěch Bůbela <xbubel08>
+ * @author Vojtěch Fiala <xfiala61>
+ * @author Ondřej Míchal <xmicha80>
+ * @brief File containing token-related functions
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 09/11/2020
  */
 
 #include "token.h"
@@ -41,7 +44,7 @@ void token_set_attribute(token_t *t, string str) {
             strCopyString(&t->attribute.str_val, &str);
             // Set token type matching the keyword
             if (ident_is_keyword(str) == 0)
-              t->type = get_keyword_type(str);
+                t->type = get_keyword_type(str);
             break;
         default: 
             return;
@@ -58,9 +61,8 @@ void token_init(token_t *t) {
 }
 
 void token_free(token_t *t) {
-  if (t != NULL) {
-    free(t);
-  }
+    if (t != NULL)
+        free(t);
 }
 
 /**
@@ -75,91 +77,92 @@ void token_set_type(token_t *t, token_type type) {
 }
 
 int ident_is_keyword(string str) {
-  symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
-  if (symtable_iterator_valid(it))
-    return 0;
-  else
-    return 1;
+    symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
+    if (symtable_iterator_valid(it)) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 token_type get_keyword_type(string str) {
-  symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
-  symtable_value_t val = symtable_iterator_get_value(it);
-  return val.type;
+    symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
+    symtable_value_t val = symtable_iterator_get_value(it);
+    return val.type;
 }
 
 const char* token_get_type_string(token_type type) {
-  switch (type) {
-    case INVALID: return "INVALID";
-    case EOL: return "EOL";
-    case EOF_T: return "EOF_T";
-    case IDENT: return "IDENT";
+    switch (type) {
+        case INVALID: return "INVALID";
+        case EOL: return "EOL";
+        case EOF_T: return "EOF_T";
+        case IDENT: return "IDENT";
 
-    // Literals
-    case INT_LIT: return "INT_LIT";
-    case FLOAT64_LIT: return "FLOAT64_LIT";
-    case STRING_LIT: return "STRING_LIT";
+        // Literals
+        case INT_LIT: return "INT_LIT";
+        case FLOAT64_LIT: return "FLOAT64_LIT";
+        case STRING_LIT: return "STRING_LIT";
 
-    // Data types
-    case INT: return "INT";
-    case FLOAT64: return "FLOAT64";
-    case STRING: return "STRING";
+        // Data types
+        case INT: return "INT";
+        case FLOAT64: return "FLOAT64";
+        case STRING: return "STRING";
 
-    // Control
-    case IF: return "IF";
-    case ELSE: return "ELSE";
-    case FOR: return "FOR";
+        // Control
+        case IF: return "IF";
+        case ELSE: return "ELSE";
+        case FOR: return "FOR";
 
-    // Functions
-    case FUNC: return "FUNC";
-    case RETURN: return "RETURN";
+        // Functions
+        case FUNC: return "FUNC";
+        case RETURN: return "RETURN";
 
-    // Package declaration
-    case PACKAGE: return "PACKAGE";
+        // Package declaration
+        case PACKAGE: return "PACKAGE";
 
-    // Assignment
-    case DEFINE: return "DEFINE";
-    case ASSIGN: return "ASSIGN";
+        // Assignment
+        case DEFINE: return "DEFINE";
+        case ASSIGN: return "ASSIGN";
 
-    // Operators
-    case ADD: return "ADD";
-    case SUB: return "SUB";
-    case MUL: return "MUL";
-    case DIV: return "DIV";
+        // Operators
+        case ADD: return "ADD";
+        case SUB: return "SUB";
+        case MUL: return "MUL";
+        case DIV: return "DIV";
 
-    // Comparators
-    case AND: return "AND";
-    case OR: return "OR";
-    case EQL: return "EQL";
-    case NEQ: return "NEQ";
-    case LSS: return "LSS";
-    case LEQ: return "LEQ";
-    case GTR: return "GTR";
-    case GEQ: return "GEQ";
+        // Comparators
+        case AND: return "AND";
+        case OR: return "OR";
+        case EQL: return "EQL";
+        case NEQ: return "NEQ";
+        case LSS: return "LSS";
+        case LEQ: return "LEQ";
+        case GTR: return "GTR";
+        case GEQ: return "GEQ";
 
-    //  Other
-    case LPAREN: return "LPAREN";
-    case LBRACE: return "LBRACE";
-    case RPAREN: return "RPAREN";
-    case RBRACE: return "RBRACE";
-    case COMMA: return "COMMA";
-    case SEMICOLON: return "SEMICOLON";
-    default:
-      break;
-  }
-  return NULL;
+        //  Other
+        case LPAREN: return "LPAREN";
+        case LBRACE: return "LBRACE";
+        case RPAREN: return "RPAREN";
+        case RBRACE: return "RBRACE";
+        case COMMA: return "COMMA";
+        case SEMICOLON: return "SEMICOLON";
+        default:
+            break;
+    }
+    return NULL;
 }
 
 bool token_is_lit(token_type type) {
-  debug_entry();
-  // is token type a literal?
-  switch (type) {
-    case INT_LIT:
-    case FLOAT64_LIT:
-    case STRING_LIT:
-      return true;
-    default:
-      return false;
-  }
+    debug_entry();
+    // is token type a literal?
+    switch (type) {
+        case INT_LIT:
+        case FLOAT64_LIT:
+        case STRING_LIT:
+            return true;
+        default:
+            return false;
+    }
 }
 

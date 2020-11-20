@@ -1,7 +1,10 @@
-/* scanner-private.c
- * Ondřej Míchal <xmicha80>
- * Vojtěch Bůbela <xbubel08>
- * 03/10/2020
+/**
+ * @file scanner-private.c
+ * @author Ondřej Míchal <xmicha80>
+ * @author Vojtěch Bůbela <xbubel08>
+ * @brief File with private scanner functions.
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 03/10/2020
  */
 
 #include <ctype.h>
@@ -25,49 +28,51 @@
  * @param s an instance of scanner
  */
 void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
-  // debug_entry();
-  comment_state state = CLEAN;
-  char prev_char;
+      // debug_entry();
+      comment_state state = CLEAN;
+      char prev_char;
 
-  do {
-    prev_char = s->character;
-    s->character = fgetc(s->file);
-    s->position++;
+      do {
+        prev_char = s->character;
+        s->character = fgetc(s->file);
+        s->position++;
 
-    if (state == BLOCK_EXITED)
-      state = CLEAN;
+        if (state == BLOCK_EXITED)
+              state = CLEAN;
 
-    switch (s->character) {
-      case '\n':
-        *eol_encountered = true;
-        (*line)++;
+        switch (s->character) {
+              case '\n':
+                *eol_encountered = true;
+                (*line)++;
 
-        if (state == INLINE_COMMENT)
-          state = CLEAN;
-        break;
-      case '/':
-        if (state == CLEAN)
-          state = COMMENT_CHANGE;
-        else if (state == BLOCK_COMMENT_LEAVING)
-          state = BLOCK_EXITED;
-        else if (state == COMMENT_CHANGE)
-          state = INLINE_COMMENT;
-        break;
-      case '*':
-        if (state == COMMENT_CHANGE)
-          state = BLOCK_COMMENT;
-        else if (state == BLOCK_COMMENT)
-          state = BLOCK_COMMENT_LEAVING;
-        break;
-      default:
-        if (state == COMMENT_CHANGE) {
-          ungetc(s->character, s->file);
-          s->character = prev_char;
-          state = CLEAN;
+                if (state == INLINE_COMMENT)
+                      state = CLEAN;
+                break;
+              case '/':
+                if (state == CLEAN) {
+                      state = COMMENT_CHANGE;
+                } else if (state == BLOCK_COMMENT_LEAVING) {
+                      state = BLOCK_EXITED;
+                } else if (state == COMMENT_CHANGE) {
+                      state = INLINE_COMMENT;
+                }
+                break;
+              case '*':
+                if (state == COMMENT_CHANGE) {
+                      state = BLOCK_COMMENT;
+                } else if (state == BLOCK_COMMENT) {
+                     state = BLOCK_COMMENT_LEAVING;
+                }
+                break;
+              default:
+                if (state == COMMENT_CHANGE) {
+                      ungetc(s->character, s->file);
+                      s->character = prev_char;
+                      state = CLEAN;
+                }
+                break;
         }
-        break;
-    }
-  } while(isspace(s->character) || state != CLEAN);
+      } while(isspace(s->character) || state != CLEAN);
 
   ungetc(s->character, s->file);
   s->position--;
@@ -86,20 +91,20 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
  * @retval 2 is sign to stop scanner and return token
  */
 int scan_string_lit(scanner_t *s) {
-  debug_entry();
-  if (s->character == '"') {
-    s->state = STOP;
-    return 2;
-  } else if ((s->character >= 32 && s->character <= 33) ||
-             (s->character >= 35 && s->character <= 91) ||
-             (s->character >= 93 && s->character <= 126)) {
-               return 0;
-  } else if (s->character == 92) {
-    s->state = q4;
-    return 0;
-  }
+    debug_entry();
+    if (s->character == '"') {
+        s->state = STOP;
+        return 2;
+    } else if ((s->character >= 32 && s->character <= 33) ||
+               (s->character >= 35 && s->character <= 91) ||
+               (s->character >= 93 && s->character <= 126)) {
+                    return 0;
+    } else if (s->character == 92) {
+        s->state = q4;
+        return 0;
+    }
 
-  return 1;
+    return 1;
 }
  
 /**
@@ -113,36 +118,34 @@ int scan_string_lit(scanner_t *s) {
  * @retval 1 on error
  */
 int scan_num_lit(scanner_t *s, token_t *t) {
-  debug_entry();
-  switch (s->character) {
+    debug_entry();
+    switch (s->character) {
 
-  case '0' ... '9':
+        case '0' ... '9':
+            return 0;
+            break;
 
-    return 0;
-    break;
+        case '.':
+            t->type = FLOAT64_LIT;
+            s->state = q7;
+            return 0;
+            break;
 
-  case '.':
-    t->type = FLOAT64_LIT;
-    s->state = q7;
-    return 0;
-    break;
+        case 'e':
+            t->type = FLOAT64_LIT;
+            s->state = q8;
+            return 0;
+            break;
 
-  case 'e':
-    t->type = FLOAT64_LIT;
-    s->state = q8;
-    return 0;
-    break;
+        case 'E':
+            t->type = FLOAT64_LIT;
+            s->state = q8;
+            return 0;
+            break;
 
-  case 'E':
-    t->type = FLOAT64_LIT;
-    s->state = q8;
-    return 0;
-    break;
-
-  
-  default:
-    break;
-  }
+        default:
+            break;
+    }
 
   return 1;
 }
@@ -160,160 +163,158 @@ int scan_num_lit(scanner_t *s, token_t *t) {
  */
 
 int innit_scan(scanner_t *s, token_t *t) {
-  debug_entry();
-  char peek;
+    debug_entry();
+    char peek;
   
-  switch(s->character) {
+    switch(s->character) {
         case ',':
-          t->type = COMMA;
-          s->state = STOP;
-          break;
+            t->type = COMMA;
+            s->state = STOP;
+            break;
 
         case ';':
-          t->type = SEMICOLON;
-          s->state = STOP;
-          break;
+            t->type = SEMICOLON;
+            s->state = STOP;
+            break;
 
         case '(':
-          t->type = LPAREN;
-          s->state = STOP;
-          break;
+            t->type = LPAREN;
+            s->state = STOP;
+             break;
 
         case ')':
-          t->type = RPAREN;
-          s->state = STOP;
-          break;
+            t->type = RPAREN;
+            s->state = STOP;
+            break;
 
         case '{':
-          t->type = LBRACE;
-          s->state = STOP;
-          break;
+            t->type = LBRACE;
+            s->state = STOP;
+            break;
 
         case '}':
-          t->type = RBRACE;
-          s->state = STOP;
-          break;
-       
+            t->type = RBRACE;
+            s->state = STOP;
+            break;
+
         case '+':
-          t->type = ADD;
-          s->state = STOP;
-          break;
+            t->type = ADD;
+            s->state = STOP;
+            break;
 
         case '-':
-          t->type = SUB;
-          s->state = STOP;
-          break;
+            t->type = SUB;
+            s->state = STOP;
+            break;
 
         case '/':
-          t->type = DIV;
-          s->state = STOP;
-          break;
+            t->type = DIV;
+            s->state = STOP;
+            break;
 
         case '*':
-          t->type = MUL;
-          s->state = STOP;
-          break;
+            t->type = MUL;
+            s->state = STOP;
+            break;
 
         case '<':
-          t->type = LSS;
-          s->state = STOP;
+            t->type = LSS;
+            s->state = STOP;
 
-          peek = fgetc(s->file);
+            peek = fgetc(s->file);
 
-          if (peek == '=') {
-            s->character = peek;
-            t->type = LEQ;
-          } else
-            ungetc(peek, s->file);
-
-          break;
+            if (peek == '=') {
+                s->character = peek;
+                t->type = LEQ;
+            } else {
+                ungetc(peek, s->file);
+            }
+            break;
 
         case '>':
-          t->type = GTR;
-          s->state = STOP;
+            t->type = GTR;
+            s->state = STOP;
 
-          peek = fgetc(s->file);
+            peek = fgetc(s->file);
 
-          if (peek == '=') {
-            s->character = peek;
-            t->type = GEQ;
-          } else
-            ungetc(peek, s->file);
-
-          break;
+            if (peek == '=') {
+                s->character = peek;
+                t->type = GEQ;
+            } else {
+                ungetc(peek, s->file);
+            }
+            break;
 
         case '=':
-          t->type = ASSIGN;
-          s->state = STOP;
+            t->type = ASSIGN;
+            s->state = STOP;
 
-          peek = fgetc(s->file);
+            peek = fgetc(s->file);
 
-          if (peek == '=') {
-            s->character = peek;
-            t->type = EQL;
-          } else
-            ungetc(peek, s->file);
-
-          break;
+            if (peek == '=') {
+                s->character = peek;
+                t->type = EQL;
+            } else {
+                ungetc(peek, s->file);
+            }
+            break;
 
         case ':':
-          peek = fgetc(s->file);
+            peek = fgetc(s->file);
 
-          if (peek == '=') {
-            s->character = peek;
-            t->type = DEFINE;
-            s->state = STOP;
-          } else {
-            ungetc(peek, s->file);
-            s->state = LEX_ERROR;
-          }
-
-          break;
+            if (peek == '=') {
+                s->character = peek;
+                t->type = DEFINE;
+                s->state = STOP;
+            } else {
+                ungetc(peek, s->file);
+                s->state = LEX_ERROR;
+            }
+            break;
 
         case '!':
-          peek = fgetc(s->file);
+            peek = fgetc(s->file);
 
-          if (peek == '=') {
-            s->character = peek;
-            t->type = NEQ;
-            s->state = STOP;
-          } else {
-            ungetc(peek, s->file);
-            s->state = LEX_ERROR;
-          }
-
-          break;
+            if (peek == '=') {
+                s->character = peek;
+                t->type = NEQ;
+                s->state = STOP;
+            } else {
+                ungetc(peek, s->file);
+                s->state = LEX_ERROR;
+            }
+            break;
 
         case '_':
         case 'a' ... 'z':
-          t->type = IDENT;
-          s->state = f10;
-          break;
+            t->type = IDENT;
+            s->state = f10;
+            break;
 
         case '1': case '2': case '3': case '4': case '5': 
         case '6': case '7': case '8': case '9':
-          t->type = INT_LIT;
-          s->state = f14;
-          break;
+            t->type = INT_LIT;
+            s->state = f14;
+            break;
 
         case '0':
-          t->type = INT_LIT;
-          s->state = f15;
-          break;
+            t->type = INT_LIT;
+            s->state = f15;
+            break;
 
         case '"':
-          t->type = STRING_LIT;
-          s->state = q3;
-          break;
+            t->type = STRING_LIT;
+            s->state = q3;
+            break;
 
         default:
-          s->state = LEX_ERROR;
-          break;
-      }
+            s->state = LEX_ERROR;
+            break;
+        }
 
-      if (s->state == LEX_ERROR)
+    if (s->state == LEX_ERROR)
         return 1;
 
-      return 0;
+    return 0;
 }
 

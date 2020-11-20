@@ -1,7 +1,9 @@
-/**
+/** 
  * @file scanner.h
  * @author Ondřej Míchal <xmicha80>
  * @author Vojtěch Bůbela <xbubel08>
+ * @brief File with scanner function declarations
+ * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 03/10/2020
  */
 

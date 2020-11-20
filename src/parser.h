@@ -1,9 +1,9 @@
 /**
  * @file parser.h
- * @author Marek Filip (xfilip46, Wecros), FIT BUT 
- * @date 10/11/2020
+ * @author Marek Filip <xfilip46>
  * @brief Header file for the parser.c
- * @details Parser is the heart of the compiler and its most difficult part.
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 10/11/2020
  */
 
 #ifndef __PARSER_H__
