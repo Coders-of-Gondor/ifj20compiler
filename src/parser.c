@@ -175,26 +175,11 @@ void parser_stmt() {
             break;
         case IF:
             // if statement
-            parser_match(IF);
-            no_eol = true;
-            parser_expr();
-            parser_block();
-            parser_match(ELSE);
-            no_eol = true;
-            parser_block();
-            required_eol = true;
+            parser_stmt_if();
             break;
         case FOR:
             // for loop
-            parser_match(FOR);
-            no_eol = true;
-            parser_optdef();
-            parser_match(SEMICOLON);
-            parser_expr();
-            parser_match(SEMICOLON);
-            parser_optassign();
-            parser_block();
-            required_eol = true;
+            parser_stmt_for();
             break;
         case RETURN:
             // return statement
@@ -263,6 +248,37 @@ void parser_block() {
     no_eol = false;
     parser_stmts();
     parser_match(RBRACE);
+}
+
+/* ------------------------------------------------------------------------ */
+/* STATEMENT RULES                                                          */
+/* ------------------------------------------------------------------------ */
+
+void parser_stmt_if() {
+    debug_entry();
+
+    parser_match(IF);
+    no_eol = true;
+    parser_expr();
+    parser_block();
+    parser_match(ELSE);
+    no_eol = true;
+    parser_block();
+    required_eol = true;
+}
+
+void parser_stmt_for() {
+    debug_entry();
+
+    parser_match(FOR);
+    no_eol = true;
+    parser_optdef();
+    parser_match(SEMICOLON);
+    parser_expr();
+    parser_match(SEMICOLON);
+    parser_optassign();
+    parser_block();
+    required_eol = true;
 }
 
 /* ------------------------------------------------------------------------ */
