@@ -6,42 +6,29 @@
  * @date 10/11/2020
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-#include "parser.h"
-#include "scanner.h"
-#include "token.h"
+#include "debug.h"
 #include "error.h"
 #include "global.h"
-#include "debug.h"
+#include "parser.h"
+#include "scanner.h"
 #include "str.h"
+#include "token.h"
 
+scanner_t *scanner; /**< scanner local to the parser */
+bool eol_encountered; /**< tracker to tell us if an eol was scanned */
+int line = 1; /**< track the current line number */
 
-// scanner local to the parser
-scanner_t *scanner;
+token_t lookahead; /**< next token to look at */
 
-// next token to look at
-token_t lookahead;
+bool eof_found = false; /**< track if the eof has been found, terminate the analysis correctly */
+bool no_eol = false; /**< track if the eol could have been inserted before the token */
+bool required_eol = false; /**< track if the eol should be required here */
 
-// tracker to tell us if an eol was scanned
-bool eol_encountered;
-
-// track the current line number
-int line = 1;
-
-// track if the eof has been found, terminate the analysis correctly
-bool eof_found = false;
-
-// track if the eol could have been inserted before the token
-bool no_eol = false;
-
-// track if the eol should be required here
-bool required_eol = false;
-
-// track the return code for the eol checking
-int return_code = 0;
+int return_code = 0; /**< track the return code for the eol checking */
 
 // TODO: make eol rules
 
@@ -256,7 +243,8 @@ void parser_type() {
     switch (lookahead.type) {
         case INT:
             parser_match(INT);
-            break; case FLOAT64:
+            break;
+        case FLOAT64:
             parser_match(FLOAT64);
             break;
         case STRING:
