@@ -39,16 +39,19 @@ int global_init() {
 
     for (int i = 0; i < NUM_OF_KEYWORDS; i++) {
         struct keyword keyword = keywords[i];
+
         // Add keyword to symtable (only key)
-        symtable_iterator_t it = symtable_lookup_add(keywords_symtable, keyword.lit);
-        if (!symtable_iterator_valid(it))
+        symtable_symbol_t *symbol = symtable_add_symbol(keywords_symtable, keyword.lit);
+        if (symbol == NULL)
             return 1;
 
         // Create a new token for a keyword and add it to the key in symtable
         token_t t;
         t.type = keyword.type;
         t.attribute.sym_key = keyword.lit;
-        symtable_iterator_set_value(it, t);
+
+        symbol->type = IDENT;
+        symbol->token = t;
     }
 
     return 0;
