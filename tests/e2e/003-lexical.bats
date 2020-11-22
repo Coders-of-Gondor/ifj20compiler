@@ -99,4 +99,3 @@ lexical_samples="$samples/lexical-tests"
 @test "Lexical analysis - string4" {
   run_compiler $ERROR_LEXICAL $lexical_samples/string4.go
 }
-

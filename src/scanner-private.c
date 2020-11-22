@@ -29,51 +29,51 @@
  * @param s an instance of scanner
  */
 void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
-      // debug_entry();
-      comment_state state = CLEAN;
-      char prev_char;
+    // debug_entry();
+    comment_state state = CLEAN;
+    char prev_char;
 
-      do {
+    do {
         prev_char = s->character;
         s->character = fgetc(s->file);
         s->position++;
 
         if (state == BLOCK_EXITED)
-              state = CLEAN;
+            state = CLEAN;
 
         switch (s->character) {
-              case '\n':
+            case '\n':
                 *eol_encountered = true;
                 (*line)++;
 
                 if (state == INLINE_COMMENT)
-                      state = CLEAN;
+                    state = CLEAN;
                 break;
-              case '/':
+            case '/':
                 if (state == CLEAN) {
-                      state = COMMENT_CHANGE;
+                    state = COMMENT_CHANGE;
                 } else if (state == BLOCK_COMMENT_LEAVING) {
-                      state = BLOCK_EXITED;
+                    state = BLOCK_EXITED;
                 } else if (state == COMMENT_CHANGE) {
-                      state = INLINE_COMMENT;
+                    state = INLINE_COMMENT;
                 }
                 break;
-              case '*':
+            case '*':
                 if (state == COMMENT_CHANGE) {
-                      state = BLOCK_COMMENT;
+                    state = BLOCK_COMMENT;
                 } else if (state == BLOCK_COMMENT) {
-                     state = BLOCK_COMMENT_LEAVING;
+                    state = BLOCK_COMMENT_LEAVING;
                 }
                 break;
-              default:
+            default:
                 if (state == COMMENT_CHANGE) {
-                      ungetc(s->character, s->file);
-                      s->character = prev_char;
-                      state = CLEAN;
+                    ungetc(s->character, s->file);
+                    s->character = prev_char;
+                    state = CLEAN;
                 }
                 break;
         }
-      } while(isspace(s->character) || state != CLEAN);
+    } while(isspace(s->character) || state != CLEAN);
 
     ungetc(s->character, s->file);
     s->position--;
@@ -324,6 +324,7 @@ int innit_scan(scanner_t *s, token_t *t) {
 
         case '_':
         case 'a' ... 'z':
+        case 'A' ... 'Z':
             t->type = IDENT;
             s->state = f10;
             break;

@@ -136,6 +136,9 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                 } else if (s->character == '.') {   //0.X
                     t->type = FLOAT64_LIT;
                     s->state = q7;
+                } else if (s->character >= 48 && s->character <= 57) {
+                    t->type = INVALID;
+                    s->state = LEX_ERROR;
                 } else {
                     ungetc(s->character, s->file);
                     t->type = INT_LIT;
@@ -231,9 +234,9 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                 break;
 
             case q5:
-                if (!(s->character >= 48 && s->character <= 57) ||
-                    !(s->character >= 65 && s->character <= 90) ||
-                    !(s->character >= 97 && s->character <= 122)) {
+                if (!(s->character >= 48 && s->character <= 57) &&
+                    !(s->character >= 65 && s->character <= 70) &&
+                    !(s->character >= 97 && s->character <= 102)) {
                         s->state = LEX_ERROR;
                 } else {
                     s->state = q6;
@@ -241,9 +244,9 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                 break;
 
             case q6:
-                if (!(s->character >= 48 && s->character <= 57) ||
-                    !(s->character >= 65 && s->character <= 90) ||
-                    !(s->character >= 97 && s->character <= 122)) {
+                if (!(s->character >= 48 && s->character <= 57) &&
+                    !(s->character >= 65 && s->character <= 70) &&
+                    !(s->character >= 97 && s->character <= 102)) {
                         s->state = LEX_ERROR;
                 } else {
                     s->state = q3;
