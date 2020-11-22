@@ -506,7 +506,15 @@ TEST_F(scanner_scan_divide, scan_divide) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 13)        // 13th is '/' (DIV)
+        if (i == 10) 
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 13)        // 13th is '/' (DIV)
             ASSERT_EQ(token_type, DIV);
+        else if (i == 11)
+            ASSERT_EQ(token_type, DEFINE);
+        else if (i == 12)
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 14)
+            ASSERT_EQ(token_type, IDENT);
     }
 }
