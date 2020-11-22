@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ifj20compiler: debug.c File Reference</title>
+<title>ifj20compiler: global.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,53 +67,79 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">debug.c File Reference</div>  </div>
+<div class="title">global.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>File holding debug function definitions.  
+<p>Global variable declarations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4e165d7e7f48374234aa44ca5d6e75a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8c.html#a4e165d7e7f48374234aa44ca5d6e75a8">debug_lit_value</a> (<a class="el" href="structtoken__t.html">token_t</a> t)</td></tr>
-<tr class="memdesc:a4e165d7e7f48374234aa44ca5d6e75a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug the literal value of a literal.  <a href="debug_8c.html#a4e165d7e7f48374234aa44ca5d6e75a8">More...</a><br /></td></tr>
-<tr class="separator:a4e165d7e7f48374234aa44ca5d6e75a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05a181061c42a8ef4950ad6b35135b3b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8c.html#a05a181061c42a8ef4950ad6b35135b3b">global_init</a> ()</td></tr>
+<tr class="memdesc:a05a181061c42a8ef4950ad6b35135b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global initialization function for various things.  <a href="global_8c.html#a05a181061c42a8ef4950ad6b35135b3b">More...</a><br /></td></tr>
+<tr class="separator:a05a181061c42a8ef4950ad6b35135b3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a397596f327bec1a9d83e7c1514f257c5"><td class="memItemLeft" align="right" valign="top">symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8c.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a></td></tr>
+<tr class="memdesc:a397596f327bec1a9d83e7c1514f257c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions of the global variables of <a class="el" href="global_8h.html" title="Header file for global variable definitions.">global.h</a>.  <a href="global_8c.html#a397596f327bec1a9d83e7c1514f257c5">More...</a><br /></td></tr>
+<tr class="separator:a397596f327bec1a9d83e7c1514f257c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>File holding debug function definitions. </p>
-<dl class="section author"><dt>Author</dt><dd>Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>13/11/2020 </dd></dl>
+<div class="textblock"><p>Global variable declarations. </p>
+<dl class="section author"><dt>Author</dt><dd>Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>11/11/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a4e165d7e7f48374234aa44ca5d6e75a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e165d7e7f48374234aa44ca5d6e75a8">&#9670;&nbsp;</a></span>debug_lit_value()</h2>
+<a id="a05a181061c42a8ef4950ad6b35135b3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05a181061c42a8ef4950ad6b35135b3b">&#9670;&nbsp;</a></span>global_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void debug_lit_value </td>
+          <td class="memname">int global_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td>
-          <td class="paramname"><em>t</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Debug the literal value of a literal. </p>
-<p>@description Inline debugging function. </p>
+<p>Global initialization function for various things. </p>
+<p>@description Set up the symbol table holding keywords.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Succesful initialization. </td></tr>
+    <tr><td class="paramname">1</td><td>Failed to initialize. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a397596f327bec1a9d83e7c1514f257c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a397596f327bec1a9d83e7c1514f257c5">&#9670;&nbsp;</a></span>keywords_symtable</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">symtable_t* keywords_symtable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definitions of the global variables of <a class="el" href="global_8h.html" title="Header file for global variable definitions.">global.h</a>. </p>
+<p>Decleration of a global variable tracking symbol table holding keywords. </p>
 
 </div>
 </div>

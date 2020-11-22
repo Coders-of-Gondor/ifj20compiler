@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ifj20compiler: token.h File Reference</title>
+<title>ifj20compiler: token.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,94 +67,35 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">token.h File Reference</div>  </div>
+<div class="title">token.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>File with token type and functions definitons.  
+<p>File containing token-related functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="str_8h_source.html">str.h</a>&quot;</code><br />
-</div>
-<p><a href="token_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtoken__t.html">token_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token holds information about a scanned lexem.  <a href="structtoken__t.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniontoken__t_1_1Attribute.html">token_t::Attribute</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:afe5ef662303b6b710ea6ee1a944bad0d"><td class="memItemLeft" align="right" valign="top"><a id="afe5ef662303b6b710ea6ee1a944bad0d"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>token_type</b> { <br />
-&#160;&#160;<b>INVALID</b>, 
-<b>EOL</b>, 
-<b>EOF_T</b>, 
-<b>IDENT</b>, 
-<br />
-&#160;&#160;<b>INT_LIT</b>, 
-<b>FLOAT64_LIT</b>, 
-<b>STRING_LIT</b>, 
-<b>INT</b>, 
-<br />
-&#160;&#160;<b>FLOAT64</b>, 
-<b>STRING</b>, 
-<b>IF</b>, 
-<b>ELSE</b>, 
-<br />
-&#160;&#160;<b>FOR</b>, 
-<b>FUNC</b>, 
-<b>RETURN</b>, 
-<b>PACKAGE</b>, 
-<br />
-&#160;&#160;<b>DEFINE</b>, 
-<b>ASSIGN</b>, 
-<b>ADD</b>, 
-<b>SUB</b>, 
-<br />
-&#160;&#160;<b>MUL</b>, 
-<b>DIV</b>, 
-<b>AND</b>, 
-<b>OR</b>, 
-<br />
-&#160;&#160;<b>EQL</b>, 
-<b>NEQ</b>, 
-<b>LSS</b>, 
-<b>LEQ</b>, 
-<br />
-&#160;&#160;<b>GTR</b>, 
-<b>GEQ</b>, 
-<b>LPAREN</b>, 
-<b>LBRACE</b>, 
-<br />
-&#160;&#160;<b>RPAREN</b>, 
-<b>RBRACE</b>, 
-<b>COMMA</b>, 
-<b>SEMICOLON</b>
-<br />
- }</td></tr>
-<tr class="separator:afe5ef662303b6b710ea6ee1a944bad0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a77ae74478f8f921566716cdc5086b52d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a> (<a class="el" href="structtoken__t.html">token_t</a> *t)</td></tr>
-<tr class="memdesc:a77ae74478f8f921566716cdc5086b52d"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_init initializes an instance of token  <a href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">More...</a><br /></td></tr>
+<tr class="memitem:aff7ac769bb81d9d254eeef4edc90feae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a> (<a class="el" href="structtoken__t.html">token_t</a> *t, <a class="el" href="structstring.html">string</a> str)</td></tr>
+<tr class="memdesc:aff7ac769bb81d9d254eeef4edc90feae"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_set_attribute sets token attribute according to the token type  <a href="token_8c.html#aff7ac769bb81d9d254eeef4edc90feae">More...</a><br /></td></tr>
+<tr class="separator:aff7ac769bb81d9d254eeef4edc90feae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ae74478f8f921566716cdc5086b52d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#a77ae74478f8f921566716cdc5086b52d">token_init</a> (<a class="el" href="structtoken__t.html">token_t</a> *t)</td></tr>
+<tr class="memdesc:a77ae74478f8f921566716cdc5086b52d"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_init initializes an instance of token  <a href="token_8c.html#a77ae74478f8f921566716cdc5086b52d">More...</a><br /></td></tr>
 <tr class="separator:a77ae74478f8f921566716cdc5086b52d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e9e37340bd29ce26186314f4b9e98f0"><td class="memItemLeft" align="right" valign="top"><a id="a1e9e37340bd29ce26186314f4b9e98f0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>token_free</b> (<a class="el" href="structtoken__t.html">token_t</a> *t)</td></tr>
 <tr class="separator:a1e9e37340bd29ce26186314f4b9e98f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff7ac769bb81d9d254eeef4edc90feae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a> (<a class="el" href="structtoken__t.html">token_t</a> *t, <a class="el" href="structstring.html">string</a> str)</td></tr>
-<tr class="memdesc:aff7ac769bb81d9d254eeef4edc90feae"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_set_attribute sets token attribute according to the token type  <a href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">More...</a><br /></td></tr>
-<tr class="separator:aff7ac769bb81d9d254eeef4edc90feae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27fe9f8d6cced49e9de2a02a3bcc1013"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a> (<a class="el" href="structtoken__t.html">token_t</a> *t, token_type type)</td></tr>
-<tr class="memdesc:a27fe9f8d6cced49e9de2a02a3bcc1013"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_set_type sets type for <a class="el" href="structtoken__t.html" title="Token holds information about a scanned lexem.">token_t</a> *t  <a href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">More...</a><br /></td></tr>
+<tr class="memitem:a27fe9f8d6cced49e9de2a02a3bcc1013"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a> (<a class="el" href="structtoken__t.html">token_t</a> *t, token_type type)</td></tr>
+<tr class="memdesc:a27fe9f8d6cced49e9de2a02a3bcc1013"><td class="mdescLeft">&#160;</td><td class="mdescRight">token_set_type sets type for <a class="el" href="structtoken__t.html" title="Token holds information about a scanned lexem.">token_t</a> *t  <a href="token_8c.html#a27fe9f8d6cced49e9de2a02a3bcc1013">More...</a><br /></td></tr>
 <tr class="separator:a27fe9f8d6cced49e9de2a02a3bcc1013"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73265ae3b17c31b84a884faed842a588"><td class="memItemLeft" align="right" valign="top"><a id="a73265ae3b17c31b84a884faed842a588"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>ident_is_keyword</b> (<a class="el" href="structstring.html">string</a> str)</td></tr>
@@ -165,19 +106,17 @@ token_type&#160;</td><td class="memItemRight" valign="bottom"><b>get_keyword_typ
 <tr class="memitem:a7a3614329e4916bda572dfb5b8275d75"><td class="memItemLeft" align="right" valign="top"><a id="a7a3614329e4916bda572dfb5b8275d75"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>token_get_type_string</b> (token_type type)</td></tr>
 <tr class="separator:a7a3614329e4916bda572dfb5b8275d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a> (token_type type)</td></tr>
-<tr class="memdesc:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a true/false value depending on the token's type being a literal.  <a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">More...</a><br /></td></tr>
+<tr class="memitem:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a> (token_type type)</td></tr>
+<tr class="memdesc:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a true/false value depending on the token's type being a literal.  <a href="token_8c.html#adbd1a25ddaea72c6e03813b2cfb0c765">More...</a><br /></td></tr>
 <tr class="separator:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>File with token type and functions definitons. </p>
-<dl class="section author"><dt>Author</dt><dd>Ondřej Míchal &lt;xmicha80&gt; </dd>
-<dd>
-Marek Filip &lt;xfilip46&gt; </dd>
+<div class="textblock"><p>File containing token-related functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Vojtěch Bůbela &lt;xbubel08&gt; </dd>
 <dd>
 Vojtěch Fiala &lt;xfiala61&gt; </dd>
 <dd>
-Vojtěch Bůbela &lt;xbubel08&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
+Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>09/11/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a77ae74478f8f921566716cdc5086b52d"></a>

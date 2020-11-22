@@ -78,7 +78,7 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a>();</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a>(<a class="code" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> t);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a>(token_type t);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a>(<span class="keywordtype">char</span> *ident_name);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
@@ -157,11 +157,11 @@ $(function() {
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> parser_expr();</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">// is token type relational operator</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">bool</span> is_relop(<a class="code" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type); </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">bool</span> is_relop(token_type type); </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">// is token type add/sub operator</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keywordtype">bool</span> is_addop(<a class="code" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type); </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keywordtype">bool</span> is_addop(token_type type); </div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">// is token type mul/div operator</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">bool</span> is_mulop(<a class="code" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type); </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">bool</span> is_mulop(token_type type); </div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">void</span> parser_rel(); </div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keywordtype">void</span> parser_rel_n(); </div>
@@ -178,15 +178,14 @@ $(function() {
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif // __PARSER_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aparser_8h_html_ae0e258eded8f8653f8cc4189d005e800"><div class="ttname"><a href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a></div><div class="ttdeci">void parser_move()</div><div class="ttdoc">Move the lookahead token.</div><div class="ttdef"><b>Definition:</b> parser.c:48</div></div>
-<div class="ttc" id="atoken_8h_html_afe5ef662303b6b710ea6ee1a944bad0d"><div class="ttname"><a href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a></div><div class="ttdeci">token_type</div><div class="ttdef"><b>Definition:</b> token.h:17</div></div>
 <div class="ttc" id="aparser_8h_html_aa3c7e1321fa936707c04048fce387c67"><div class="ttname"><a href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a></div><div class="ttdeci">void parser_match_ident(char *ident_name)</div><div class="ttdoc">Match the lookahead token against IDENT type and match the ident name.</div><div class="ttdef"><b>Definition:</b> parser.c:100</div></div>
 <div class="ttc" id="aparser_8h_html_a71466a88cec3911e600c9b48cbd4b935"><div class="ttname"><a href="parser_8h.html#a71466a88cec3911e600c9b48cbd4b935">parser_start</a></div><div class="ttdeci">void parser_start()</div><div class="ttdoc">Start the parser.</div></div>
-<div class="ttc" id="atoken_8h_html"><div class="ttname"><a href="token_8h.html">token.h</a></div></div>
+<div class="ttc" id="atoken_8h_html"><div class="ttname"><a href="token_8h.html">token.h</a></div><div class="ttdoc">File with token type and functions definitons.</div></div>
 <div class="ttc" id="aparser_8h_html_aed7709c3f2c8a30fbe978232fdeec281"><div class="ttname"><a href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a></div><div class="ttdeci">void parser_match(token_type t)</div><div class="ttdoc">Match the lookahead token against give token.</div><div class="ttdef"><b>Definition:</b> parser.c:73</div></div>
 <div class="ttc" id="aparser_8h_html_a5adfb9b790a748f0343199e0b8c65edb"><div class="ttname"><a href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a></div><div class="ttdeci">void parser_prolog()</div><div class="ttdoc">Below can be found the parsing functions deduced from the LL(1) table.</div><div class="ttdef"><b>Definition:</b> parser.c:131</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 22 2020 22:24:09 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Sun Nov 22 2020 23:00:55 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

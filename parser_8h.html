@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler.">parser.c</a>.  
+<p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler - the heart of the compiler.">parser.c</a>.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div>
@@ -84,7 +84,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ae0e258eded8f8653f8cc4189d005e800"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a> ()</td></tr>
 <tr class="memdesc:ae0e258eded8f8653f8cc4189d005e800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the lookahead token.  <a href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">More...</a><br /></td></tr>
 <tr class="separator:ae0e258eded8f8653f8cc4189d005e800"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed7709c3f2c8a30fbe978232fdeec281"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a> (<a class="el" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> t)</td></tr>
+<tr class="memitem:aed7709c3f2c8a30fbe978232fdeec281"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a> (token_type t)</td></tr>
 <tr class="memdesc:aed7709c3f2c8a30fbe978232fdeec281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match the lookahead token against give token.  <a href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">More...</a><br /></td></tr>
 <tr class="separator:aed7709c3f2c8a30fbe978232fdeec281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3c7e1321fa936707c04048fce387c67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a> (char *ident_name)</td></tr>
@@ -181,13 +181,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optexprs</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_expr</b> ()</td></tr>
 <tr class="separator:a7ec22e874532c8b253af5e1aad8d6cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50ce52316cf5ffc741ee0e6dbce32576"><td class="memItemLeft" align="right" valign="top"><a id="a50ce52316cf5ffc741ee0e6dbce32576"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_relop</b> (<a class="el" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_relop</b> (token_type type)</td></tr>
 <tr class="separator:a50ce52316cf5ffc741ee0e6dbce32576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0edd228ac9299a0fe74e5143ba037721"><td class="memItemLeft" align="right" valign="top"><a id="a0edd228ac9299a0fe74e5143ba037721"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_addop</b> (<a class="el" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_addop</b> (token_type type)</td></tr>
 <tr class="separator:a0edd228ac9299a0fe74e5143ba037721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2d06325a8c3ec4141f5239ea2ababc1"><td class="memItemLeft" align="right" valign="top"><a id="ab2d06325a8c3ec4141f5239ea2ababc1"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mulop</b> (<a class="el" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a> type)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mulop</b> (token_type type)</td></tr>
 <tr class="separator:ab2d06325a8c3ec4141f5239ea2ababc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9529a78e6b7c389d893477f8f70650db"><td class="memItemLeft" align="right" valign="top"><a id="a9529a78e6b7c389d893477f8f70650db"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_rel</b> ()</td></tr>
@@ -215,9 +215,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 <tr class="separator:a3dae77291f173a5eba5214b94dedd7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler.">parser.c</a>. </p>
-<dl class="section author"><dt>Author</dt><dd>Marek Filip (xfilip46, Wecros), FIT BUT </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>10/11/2020  Parser is the heart of the compiler and its most difficult part. </dd></dl>
+<div class="textblock"><p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler - the heart of the compiler.">parser.c</a>. </p>
+<dl class="section author"><dt>Author</dt><dd>Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/11/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="aed7709c3f2c8a30fbe978232fdeec281"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed7709c3f2c8a30fbe978232fdeec281">&#9670;&nbsp;</a></span>parser_match()</h2>
@@ -228,7 +228,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
         <tr>
           <td class="memname">void parser_match </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="token_8h.html#afe5ef662303b6b710ea6ee1a944bad0d">token_type</a>&#160;</td>
+          <td class="paramtype">token_type&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
           <td></td>
         </tr>
@@ -322,7 +322,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 22 2020 22:24:09 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Sun Nov 22 2020 23:00:55 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

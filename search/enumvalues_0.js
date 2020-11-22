@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['add_223',['ADD',['../token_8h.html#afe5ef662303b6b710ea6ee1a944bad0dacfcf145f2788bf340ff3f3098bc54909',1,'token.h']]],
-  ['and_224',['AND',['../token_8h.html#afe5ef662303b6b710ea6ee1a944bad0da865555c9f2e0458a7078486aa1b3254f',1,'token.h']]],
-  ['assign_225',['ASSIGN',['../token_8h.html#afe5ef662303b6b710ea6ee1a944bad0da52a9b031766fa116251f70e65a84c01a',1,'token.h']]]
+  ['block_5fcomment_196',['BLOCK_COMMENT',['../scanner-private_8h.html#a5a33cef52548bb44fa477479d10f4770a4af1c1795294f2b5eacf5eeb5fa49a83',1,'scanner-private.h']]],
+  ['block_5fcomment_5fleaving_197',['BLOCK_COMMENT_LEAVING',['../scanner-private_8h.html#a5a33cef52548bb44fa477479d10f4770afe6b49c6b180267a1d97c0fe8f0b5c2b',1,'scanner-private.h']]],
+  ['block_5fexited_198',['BLOCK_EXITED',['../scanner-private_8h.html#a5a33cef52548bb44fa477479d10f4770af68866494d4b56844dac8c4b973f550b',1,'scanner-private.h']]]
 ];

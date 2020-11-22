@@ -71,40 +71,40 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="error_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef __ERROR_H__</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define __ERROR_H__</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="error_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">   11</a></span>&#160;<span class="preprocessor">#define SUCCESS 0                   </span></div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="error_8h.html#a4ce5b272a1f23b34ec9c556f63fcaecc">   12</a></span>&#160;<span class="preprocessor">#define ERROR_LEXICAL 1             </span></div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="error_8h.html#a1dad5764ea8114d84f63a2f40e3a79cf">   13</a></span>&#160;<span class="preprocessor">#define ERROR_SYNTAX 2              </span></div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="error_8h.html#a00ef2788327663c618d974d593371eb7">   14</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_VAR 3             </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="error_8h.html#a30225d63fe5b8befe29f6e3d58e79bc3">   15</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_VAR_TYPE 4        </span></div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="error_8h.html#aeeebd67d583181b32a23b064f2a9f59f">   16</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_COMPATIBILITY 5   </span></div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="error_8h.html#aa7bf60f5d5479281484c03962989191c">   17</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_PROGRAM 6         </span></div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="error_8h.html#a560de2e5561c2bba0a776e5b4cf6366e">   18</a></span>&#160;<span class="preprocessor">#define ERROR_SEM 7                 </span></div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="error_8h.html#abd1f96d3e6261f747e19ddf4594e0b9d">   19</a></span>&#160;<span class="preprocessor">#define ERROR_ZERO 9                </span></div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="error_8h.html#a251a874f236102f69d747d0ccde7f860">   20</a></span>&#160;<span class="preprocessor">#define ERROR_INTERNAL 99           </span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">void error_exit(unsigned error_code, const char* fmt, ...);</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">   32</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">throw_syntax_error</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">   37</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">throw_lex_error</a>();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">throw_internal_error</a>();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">success_exit</a>();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif  //__ERROR_H__</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#ifndef __ERROR_H__</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define __ERROR_H__</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="error_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">   13</a></span>&#160;<span class="preprocessor">#define SUCCESS 0                   </span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="error_8h.html#a4ce5b272a1f23b34ec9c556f63fcaecc">   14</a></span>&#160;<span class="preprocessor">#define ERROR_LEXICAL 1             </span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="error_8h.html#a1dad5764ea8114d84f63a2f40e3a79cf">   15</a></span>&#160;<span class="preprocessor">#define ERROR_SYNTAX 2              </span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="error_8h.html#a00ef2788327663c618d974d593371eb7">   16</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_VAR 3             </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="error_8h.html#a30225d63fe5b8befe29f6e3d58e79bc3">   17</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_VAR_TYPE 4        </span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="error_8h.html#aeeebd67d583181b32a23b064f2a9f59f">   18</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_COMPATIBILITY 5   </span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="error_8h.html#aa7bf60f5d5479281484c03962989191c">   19</a></span>&#160;<span class="preprocessor">#define ERROR_SEM_PROGRAM 6         </span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="error_8h.html#a560de2e5561c2bba0a776e5b4cf6366e">   20</a></span>&#160;<span class="preprocessor">#define ERROR_SEM 7                 </span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="error_8h.html#abd1f96d3e6261f747e19ddf4594e0b9d">   21</a></span>&#160;<span class="preprocessor">#define ERROR_ZERO 9                </span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="error_8h.html#a251a874f236102f69d747d0ccde7f860">   22</a></span>&#160;<span class="preprocessor">#define ERROR_INTERNAL 99           </span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">void error_exit(unsigned error_code, const char* fmt, ...);</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">   34</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">throw_syntax_error</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">   39</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">throw_lex_error</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">throw_internal_error</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="error_8h.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">success_exit</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif  //__ERROR_H__</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aerror_8h_html_a7f2b4dcf80d5c13b3c44e734e6ac685c"><div class="ttname"><a href="error_8h.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">success_exit</a></div><div class="ttdeci">void success_exit()</div><div class="ttdoc">Function to call when we succesfully compiled the program.</div><div class="ttdef"><b>Definition:</b> error.c:47</div></div>
+<div class="ttc" id="aerror_8h_html_a7f2b4dcf80d5c13b3c44e734e6ac685c"><div class="ttname"><a href="error_8h.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">success_exit</a></div><div class="ttdeci">void success_exit()</div><div class="ttdoc">Function to call when we succesfully compiled the program.</div><div class="ttdef"><b>Definition:</b> error.c:48</div></div>
 <div class="ttc" id="aerror_8h_html_ab6a02d943655094dbe09a82edd519a7f"><div class="ttname"><a href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">throw_internal_error</a></div><div class="ttdeci">void throw_internal_error()</div><div class="ttdoc">Function to call when an internal error is encountered.</div></div>
 <div class="ttc" id="aerror_8h_html_a2adaf176a0dcea2a3872cd2461cecc21"><div class="ttname"><a href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">throw_syntax_error</a></div><div class="ttdeci">void throw_syntax_error()</div><div class="ttdoc">Function to call when a syntax error is encountered.</div></div>
 <div class="ttc" id="aerror_8h_html_a912e2ae9d067cc179bee2a735a000f68"><div class="ttname"><a href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">throw_lex_error</a></div><div class="ttdeci">void throw_lex_error()</div><div class="ttdoc">Function to call when a lexical error is encountered.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Nov 22 2020 22:24:09 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Sun Nov 22 2020 23:00:55 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
