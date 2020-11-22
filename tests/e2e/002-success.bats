@@ -45,3 +45,7 @@ load helpers
 @test "Success analysis - divide.go" {
   run_compiler $samples/divide.go
 }
+
+@test "success analysis - string_escape_hex" {
+  run_compiler $samples/string_escape_hex.go
+}

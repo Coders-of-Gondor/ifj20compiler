@@ -272,6 +272,35 @@ TEST_F(scanner_scanning_valid_sourcefile, scan_until_eof) {
     } while (ret != EOF);
 }
 
+class scanner_scanning_string_hex: public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        FILE *f;
+        int line;
+
+        void SetUp() override {
+            global_init();
+            f = fopen("./samples/string_escape_hex.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+            fclose(f);
+        }
+};
+
+TEST_F(scanner_scanning_string_hex, scan_hex_lit) {
+    int ret;
+    bool eol_encountered = false;
+    do {
+        ret = scanner_scan(s, &t, &eol_encountered, &line);
+        if (ret != EOF)
+            ASSERT_EQ(ret, 0);
+    } while (ret != EOF);
+}
+
 class scanner_scan_tokens : public ::testing::Test {
     protected:
         scanner_t *s;

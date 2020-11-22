@@ -2,6 +2,7 @@
  * @file scanner-private.h
  * @author Ondřej Míchal <xmicha80>
  * @author Vojtěch Fiala <xfiala61>
+ * @author Vojtěch Bůbela <xbubel08>
  * @brief Header file for scanner-private.c that defines states of the DFA
  * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 03/10/2020
