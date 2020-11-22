@@ -37,3 +37,11 @@ load helpers
 @test "Success analysis - math-operations.go" {
   run_compiler $samples/math-operations.go
 }
+
+@test "Success analysis - unary.go" {
+  run_compiler $samples/unary.go
+}
+
+@test "Success analysis - divide.go" {
+  run_compiler $samples/divide.go
+}
