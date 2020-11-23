@@ -460,7 +460,7 @@ class scanner_scan_token_unary : public ::testing::Test {
 TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -472,7 +472,7 @@ TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
 TEST_F(scanner_scan_token_unary, SUB_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -484,7 +484,7 @@ TEST_F(scanner_scan_token_unary, SUB_ASSIGN) {
 TEST_F(scanner_scan_token_unary, MUL_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -496,7 +496,7 @@ TEST_F(scanner_scan_token_unary, MUL_ASSIGN) {
 TEST_F(scanner_scan_token_unary, DIV_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -520,7 +520,7 @@ TEST_F(scanner_scan_token_unary, STR_LIT) {
         else if (k == 3)
             strAddChar(&str, 't');
     }
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -535,7 +535,7 @@ TEST_F(scanner_scan_token_unary, STR_LIT) {
 TEST_F(scanner_scan_token_unary, INT_LIT) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -549,7 +549,7 @@ TEST_F(scanner_scan_token_unary, INT_LIT) {
 TEST_F(scanner_scan_token_unary, FLOAT_INT) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 33; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
