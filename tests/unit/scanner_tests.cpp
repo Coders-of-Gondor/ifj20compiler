@@ -546,7 +546,7 @@ TEST_F(scanner_scan_token_unary, INT_LIT) {
     }
 }
 
-TEST_F(scanner_scan_token_unary, FLOAT_INT) {
+TEST_F(scanner_scan_token_unary, FLOAT_LIT) {
     bool eol_encounter = false;
     int result = 1;
     for (int i = 0; i < 33; i++) {
