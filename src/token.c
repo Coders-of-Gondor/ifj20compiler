@@ -11,6 +11,7 @@
 #include "token.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "global.h"      
 #include "str.h"
 #include "symtable.h"
@@ -28,8 +29,20 @@ void token_set_attribute(token_t *t, string str) {
 
     switch (t->type) {
         case STRING_LIT:
-            strInit(&t->attribute.str_val);       
-            strCopyString(&t->attribute.str_val, &str);
+            strInit(&t->attribute.str_val);      
+            string new;
+            strInit(&new);
+            char *get_string = strGetStr(&str);
+            int length = strGetLength(&str);
+
+            for (int i = 0; i < length; i++) {
+                if (i > 0 && i < length-1) {
+                    strAddChar(&new, get_string[i]);
+                }
+            }
+            
+            strCopyString(&t->attribute.str_val, &new);
+            strFree(&new);
             break;
         case INT_LIT:
             tmp_int = atol((&str)->str);
