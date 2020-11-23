@@ -464,11 +464,7 @@ TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 8)        // 9th is ':=' (DEFINE)
-            ASSERT_EQ(token_type, DEFINE);
-        else if (i == 9)        // 10th is 'INT_LIT'
-            ASSERT_EQ(token_type, INT_LIT);
-        else if (i == 11)       // 12th is '+=' (ADD_ASSIGN)
+        if (i == 11)       // 12th is '+=' (ADD_ASSIGN)
             ASSERT_EQ(token_type, ADD_ASSIGN);
     }
 }
@@ -506,6 +502,61 @@ TEST_F(scanner_scan_token_unary, DIV_ASSIGN) {
         int token_type = t.type;
         if (i == 20)        // 20th is '/=' (DIV_ASSIGN)
             ASSERT_EQ(token_type, DIV_ASSIGN);
+    }
+}
+
+TEST_F(scanner_scan_token_unary, STR_LIT) {
+    bool eol_encounter = false;
+    int result = 1;
+    string str;
+    strInit(&str);
+    for (int k = 0; k < 4; k++) {
+        if (k == 0)
+            strAddChar(&str, 't');
+        else if (k == 1)
+            strAddChar(&str, 'e');
+        else if (k == 2)
+            strAddChar(&str, 'x');
+        else if (k == 3)
+            strAddChar(&str, 't');
+    }
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 32) {        // 32th is "test" (STRING_LIT)
+            ASSERT_EQ(token_type, STRING_LIT);
+            ASSERT_EQ(strCmpString(&t.attribute.str_val, &str), 0);   // strcmpString is basically strcmp and that returns 0 if they're equal
+        }   
+    }
+    strFree(&str);
+}
+
+TEST_F(scanner_scan_token_unary, INT_LIT) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 9) {        // 10th is 'INT_LIT'
+            ASSERT_EQ(t.attribute.int_val, 1);
+            ASSERT_EQ(token_type, INT_LIT);
+        }
+    }
+}
+
+TEST_F(scanner_scan_token_unary, FLOAT_INT) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < 23; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 12) {
+            ASSERT_EQ(t.attribute.float_val, 1.5);
+            ASSERT_EQ(token_type, FLOAT64_LIT);
+        }
     }
 }
 
