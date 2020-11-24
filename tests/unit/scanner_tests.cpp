@@ -331,7 +331,7 @@ TEST_F(scanner_scan_tokens, get_first_token) {
 TEST_F(scanner_scan_tokens, get_more_tokens) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++) { // loop through the first 10 tokens
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -370,7 +370,7 @@ class scanner_scan_tokens_commentary : public ::testing::Test {
 TEST_F(scanner_scan_tokens_commentary, divide_or_comment) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++) {  // loop through the first 10 tokens
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -413,7 +413,7 @@ class scanner_scan_tokens_zero_end : public ::testing::Test {
 TEST_F(scanner_scan_tokens_zero_end, number_ends_with_zero) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 11; i++) {  // loop through the first 11 tokens
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -444,6 +444,7 @@ class scanner_scan_token_unary : public ::testing::Test {
         token_t t;
         FILE *f;
         int line;
+        int number_of_tokens_in_file = 36;
 
         void SetUp() override {
             global_init();
@@ -460,7 +461,7 @@ class scanner_scan_token_unary : public ::testing::Test {
 TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
@@ -472,11 +473,11 @@ TEST_F(scanner_scan_token_unary, ADD_ASSIGN) {
 TEST_F(scanner_scan_token_unary, SUB_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 14)        // 14th is '-=' (SUB_ASSIGN)
+        if (i == 17)        // 18th is '-=' (SUB_ASSIGN)
             ASSERT_EQ(token_type, SUB_ASSIGN);
     }
 }
@@ -484,11 +485,11 @@ TEST_F(scanner_scan_token_unary, SUB_ASSIGN) {
 TEST_F(scanner_scan_token_unary, MUL_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 17)        // 17th is '*=' (MUL_ASSIGN)
+        if (i == 20)        // 21st is '*=' (MUL_ASSIGN)
             ASSERT_EQ(token_type, MUL_ASSIGN);
     }
 }
@@ -496,11 +497,11 @@ TEST_F(scanner_scan_token_unary, MUL_ASSIGN) {
 TEST_F(scanner_scan_token_unary, DIV_ASSIGN) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 20)        // 20th is '/=' (DIV_ASSIGN)
+        if (i == 23)        // 24th is '/=' (DIV_ASSIGN)
             ASSERT_EQ(token_type, DIV_ASSIGN);
     }
 }
@@ -520,11 +521,11 @@ TEST_F(scanner_scan_token_unary, STR_LIT) {
         else if (k == 3)
             strAddChar(&str, 't');
     }
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 32) {        // 32th is "test" (STRING_LIT)
+        if (i == 35) {        // 36th is "test" (STRING_LIT)
             ASSERT_EQ(token_type, STRING_LIT);
             ASSERT_EQ(strCmpString(&t.attribute.str_val, &str), 0);   // strcmpString is basically strcmp and that returns 0 if they're equal
         }   
@@ -535,11 +536,11 @@ TEST_F(scanner_scan_token_unary, STR_LIT) {
 TEST_F(scanner_scan_token_unary, INT_LIT) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 9) {        // 10th is 'INT_LIT'
+        if (i == 12) {        // 13th is 'INT_LIT'
             ASSERT_EQ(t.attribute.int_val, 1);
             ASSERT_EQ(token_type, INT_LIT);
         }
@@ -549,11 +550,11 @@ TEST_F(scanner_scan_token_unary, INT_LIT) {
 TEST_F(scanner_scan_token_unary, FLOAT_LIT) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
-        if (i == 12) {
+        if (i == 15) {      // 16th is 'FLOAT_LIT'
             ASSERT_EQ(t.attribute.float_val, 1.5);
             ASSERT_EQ(token_type, FLOAT64_LIT);
         }
@@ -566,6 +567,7 @@ class scanner_scan_divide : public ::testing::Test {
         token_t t;
         FILE *f;
         int line;
+        int number_of_tokens_in_file = 15;
 
         void SetUp() override {
             global_init();
@@ -582,7 +584,7 @@ class scanner_scan_divide : public ::testing::Test {
 TEST_F(scanner_scan_divide, scan_divide) {
     bool eol_encounter = false;
     int result = 1;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
         result = scanner_scan(s, &t, &eol_encounter, &line);
         ASSERT_EQ(result, 0);
         int token_type = t.type;
