@@ -86,7 +86,7 @@ void parser_match(token_type t) {
             parser_end(ERROR_SYNTAX);
         }
 
-        parser_move(); 
+        parser_move();
 
     } else {
         debug("Expected type: %s", token_get_type_string(t));
@@ -160,7 +160,7 @@ void parser_end(int rc) {
     do {
         char *func_id = symtable_get_scope_name(st_called_funcs);
         if (rc != SUCCESS) {
-            break;  
+            break;
         }
 
         func_parameter_t *call_param = symtable_get_func_param(st_called_funcs);
@@ -220,7 +220,7 @@ void parser_end(int rc) {
 void parser_prolog() {
     debug_entry();
     parser_match(PACKAGE);
-    parser_match_ident("main"); 
+    parser_match_ident("main");
 }
 
 void parser_funcs() {
@@ -236,7 +236,7 @@ void parser_funcs() {
     if (lookahead.type == FUNC) {
         // function decleration
         // New function -> new local scope of symbols
-        parser_match(FUNC); 
+        parser_match(FUNC);
 
         char *func_id = lookahead.attribute.sym_key;
         no_eol = true;
@@ -427,7 +427,7 @@ void parser_params() {
             // no eps-rule -> throw syntax error
             parser_end(ERROR_SYNTAX);
             break;
-    } 
+    }
 }
 
 void parser_param() {
@@ -687,7 +687,7 @@ void parser_optassign() {
 // eps
 void parser_return() {
     debug_entry();
-    parser_match(RETURN);  
+    parser_match(RETURN);
 
     int num_of_returns = symtable_get_num_of_returns(st);
 
@@ -717,13 +717,343 @@ void parser_optexprs(int *num_of_exprs) {
 }
 
 /* ------------------------------------------------------------------------ */
-/* EXPRESSION RULES                                                         */
+/* EXPRESSION RULES - BOTTOM-UP PRECEDENCE ANALYSIS                         */
 /* ------------------------------------------------------------------------ */
 
+// Define some functions needed specifically for the precedence analysis.
+int stack_top(stack_int_t *stack) {
+    debug_entry();
+    int top = stack->top;
+    while (top >= 0) {
+        if (stack->array[top] != EXPR_SYMBOL && stack->array[top] != SHF) {
+            // literal found
+            return stack->array[top];
+        } else {
+            top--;
+        }
+    }
+
+    // no terminal found
+    return -1;  // terminals start at 0, so this is safe
+}
+
+int stack_find(stack_int_t *stack, int value) {
+    int top = stack->top;
+    while (top >= 0) {
+        if (stack->array[top] == value) {
+            // value found
+            return top;
+        } else {
+            top--;
+        }
+    }
+
+    // searched value not found
+    return -1;  // token_type starts at 0, so this is safe
+}
+
+int stack_at(stack_int_t *stack, int index) {
+    if (stack->top >= index) {
+        return stack->array[index];
+    }
+
+    return -1;
+}
+
+void stack_shift(stack_int_t *stack, token_type terminal) {
+    debug_entry();
+    // resize the stack if the stack is full, we need more space
+    if (stack_int_isfull(stack)) {
+        stack_int_resize(stack);
+    }
+
+    int terminal_pos = stack_find(stack, terminal);
+    int curr = terminal_pos + 1;
+    stack->top++;  // increment the top value to compensate for appended symbol
+
+    // rearrange everything that has been located before the terminal
+    while (curr != stack->top) {
+        token_type old = stack->array[curr];
+        curr++;
+        stack->array[curr] = old;
+    }
+    stack->array[terminal_pos + 1] = SHF;  // append the shift symbol
+}
+
+bool stack_reduce(stack_int_t *stack) {
+    debug_entry();
+    // if '<y' is on top of the stack and rule exists
+    int top= stack_int_peek(stack);
+
+    // get the positions of the top symbol and the shift symbol
+    int top_pos = stack_find(stack, top);
+    int shift_pos = stack_find(stack, SHF);
+    if (shift_pos == -1 || shift_pos > top_pos) return false;
+
+    stack_int_t *rule_stack = stack_int_init();
+    // determine if any other symbols are placed between these two
+    for (int i = shift_pos + 1; i <= top_pos; i++) {
+        int symbol = stack_at(stack, i);
+        stack_int_push(rule_stack, symbol);
+    }
+
+    // check the rules
+    if (!prec_apply_rule(rule_stack)) {
+        return false;
+    }
+    stack_int_free(rule_stack);
+
+    // actually change the symbols to E
+    stack->top = shift_pos;
+    stack->array[stack->top] = EXPR_SYMBOL;
+
+    return true;
+}
+
+// Precedence table definition.
+const token_type PREC_TABLE[PREC_TABLE_OP_COUNT][PREC_TABLE_OP_COUNT] =
+{      //   ,   REL  ADD  MUL   (    )   id   lit   $
+/*  ,  */ {RED, SHF, SHF, SHF, SHF, RED, SHF, SHF, RED},
+/* REL */ {RED, RED, SHF, SHF, SHF, RED, SHF, SHF, RED},
+/* ADD */ {RED, RED, RED, SHF, SHF, RED, SHF, SHF, RED},
+/* MUL */ {RED, RED, RED, RED, SHF, RED, SHF, SHF, RED},
+/*  (  */ {SHF, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
+/*  )  */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
+/* id  */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
+/* lit */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
+/*  $  */ {SHF, SHF, SHF, SHF, SHF, INV, SHF, SHF, INV}
+};
+
+int prec_get_table_index(token_type t) {
+    if (t == COMMA) {
+        return 0;
+    } else if (is_relop(t)) {
+        return 1;
+    } else if (is_addop(t)) {
+        return 2;
+    } else if (is_mulop(t)) {
+        return 3;
+    } else if (t == LPAREN) {
+        return 4;
+    } else if (t == RPAREN) {
+        return 5;
+    } else if (t == IDENT) {
+        return 6;
+    } else if (token_is_lit(t)) {
+        return 7;
+    } else if (END_OF_INPUT) {
+        return 8;
+    } else {
+        // will probably never throw
+        throw_syntax_error(t, line);
+    }
+}
+
+/**
+ * --- basic ---
+ * E : id
+ * E : lit
+ * E : ( E )
+ * E : E REL E
+ * E : E ADD E
+ * E : E MUL E
+ */
+bool prec_apply_rule(stack_int_t *rule_stack) {
+    token_type curr;  // current symbol
+    NEXT_SYMBOL;
+
+    // switch to determine the rightmost symbol
+    switch (curr) {
+        case IDENT:
+            // E : id
+            return true;
+        case INT_LIT:
+        case FLOAT64_LIT:
+        case STRING_LIT:
+            // E : lit
+            return true;
+        case RPAREN:
+            // E : ( E )
+            return prec_rule_rparen(rule_stack);
+        case EXPR_SYMBOL:
+            // E : E REL E
+            NEXT_SYMBOL;
+
+            if (!is_relop(curr) && !is_addop(curr) && !is_mulop(curr)) {
+                return false;
+            }
+
+            NEXT_SYMBOL;
+            if (curr != EXPR_SYMBOL) return false;
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool prec_rule_rparen(stack_int_t *rule_stack) {
+    token_type curr;
+    // go to the next symbol
+    NEXT_SYMBOL;
+    // test the symbol
+    if (curr != EXPR_SYMBOL) return false;
+
+    // go to the next symbol
+    NEXT_SYMBOL;
+    // test the symbol
+    if (curr != LPAREN) return false;
+
+    return true;
+}
+
+/**
+ * @brief Precedence analysis procedure that starts the parsing of expressions.
+ * @details Needs stack implementation to work properly.
+ */
+void parser_precedence_analysis() {
+    debug_entry();
+
+    stack_int_t *stack = stack_int_init();
+
+    // put $ at the top of the stack
+    stack_int_push(stack, END_OF_INPUT);
+
+    token_type input = lookahead.type;
+    bool stop = false;
+    bool in_func = false;
+    // start the precedence algorithm
+    while (true) {
+        debug("got eol? %d no_eol? %d required_eol? %d", eol_encountered, no_eol, required_eol);
+        debug("succesful stack? %d\n", prec_succesful_stack(stack));
+
+        // break the loop if conditions are met
+        if (prec_succesful_stack(stack) && eol_encountered) {
+            break;
+        } else if (stop && input == END_OF_INPUT) {
+            break;
+        }
+
+        if (stop && input == END_OF_INPUT) {
+            break;
+        } else if (stop) {
+            input = END_OF_INPUT;
+        }
+
+        // check if the identifier is '_' -> semantic error
+        if (input == IDENT && strcmp(lookahead.attribute.sym_key, "_") == 0) {
+           // TODO: throw semantic error
+        }
+
+        // handle the symbol accordingly
+        if (prec_handle_symbol(stack, input, &stop)) {
+            parser_move();
+            input = lookahead.type;
+
+            /*if (input != COMMA && input != IDENT && input != LPAREN && input != RPAREN &&*/
+                    /*!token_is_lit(input) && !is_mulop(input) && !is_addop(input) && !is_relop(input)) {*/
+                /*input = END_OF_INPUT;*/
+            /*}*/
+        }
+        token_type top = stack_int_peek(stack);
+
+        // do some things depending on the prec_handle_symbol function
+
+        if (!in_func && input == COMMA) {
+            input = END_OF_INPUT;
+        }
+
+        if (eol_encountered) {
+            // eol encountered, is this the end of the input?
+            if (token_is_lit(top) || top == IDENT || top == RPAREN) {
+                // top symbol is literal, id or ')'
+                if (is_addop(input) || is_mulop(input) || is_relop(input)) {
+                    // if the following character is some operator, we can't break line
+                    stack_int_free(stack);
+                    throw_syntax_error(input, line);
+                } else {
+                    // otherwise, it should be the end of the input
+                    // FIXME: eol_required=true?
+                    input = END_OF_INPUT;
+                }
+            }
+        }
+    }
+
+    if (!prec_succesful_stack(stack)) {
+        stack_int_free(stack);
+        throw_syntax_error(input, line);
+    }
+
+    stack_int_free(stack);
+}
+
+bool prec_succesful_stack(stack_int_t *stack) {
+    return stack->top == 1 &&
+           stack->array[1] == EXPR_SYMBOL && stack->array[0] == END_OF_INPUT;
+}
+
+bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop) {
+    debug_entry();
+    // check if the token is valid for expression grammar
+    // FIXME: What if the input token is EOF?
+    /*if (t != COMMA && t != IDENT && t != LPAREN && t != RPAREN && t != END_OF_INPUT &&*/
+            /*!token_is_lit(t) && !is_mulop(t) && !is_addop(t) && !is_relop(t)) {*/
+        /*throw_syntax_error(t, line);*/
+    /*}*/
+
+    // terminal on top of the stack
+    int top = stack_top(stack);
+    if (top == -1) {
+        // no terminal on top - weird, probably isn't needed
+        throw_syntax_error(input, line);
+    }
+
+    int row = prec_get_table_index(top);
+    int col = prec_get_table_index(input);
+    debug("Top T: %s, Top: %s, input: %s", token_get_type_string(top),
+            token_get_type_string(stack_int_peek(stack)), token_get_type_string(input));
+    switch(PREC_TABLE[row][col]) {
+        case EQQ:
+            // '=' symbol
+            // push input onto the stack and read the next symbol
+            stack_int_push(stack, input);
+            return true;
+        case SHF:
+            // '<' symbol
+            // change 'a' on stack to 'a<'
+            stack_shift(stack, top);
+            // and push input onto the stack and read the next symbol
+            stack_int_push(stack, input);
+            return true;
+        case RED:
+            // '>' symbol
+            // if '<y' is on top of the stack and rule exists
+            // convert '<y' to A and do semantic actions
+            // else, throw syntax error
+            if (!stack_reduce(stack)) {
+                throw_syntax_error(input, line);
+            }
+            break;
+        default:
+            // empty cell
+            *stop = true;
+            break;
+    }
+    return false;
+}
+
 void parser_expr() {
+    debug_entry();
+    // start the precedence analysis
+    parser_precedence_analysis();
+
+    // TODO: handle EOL
+
+    /* OUTDATED
     // This parsing is only used for the 0th submission
-    debug_entry();  
+    debug_entry();
     parser_rel();
+    OUTDATED */
 }
 
 /* THIS WILL BE LEFT OUT IN THE FINAL PARSER */
@@ -769,7 +1099,7 @@ bool is_mulop(token_type type) {
 void parser_relop() {
     debug_entry();
     if (is_relop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if 
+        // we can call 'match' like that because of the check in the if
         parser_match(lookahead.type);
     } else {
         // operator not found, syntax error
@@ -780,7 +1110,7 @@ void parser_relop() {
 void parser_addop() {
     debug_entry();
     if (is_addop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if 
+        // we can call 'match' like that because of the check in the if
         parser_match(lookahead.type);
     } else {
         // operator not found, syntax error
@@ -791,7 +1121,7 @@ void parser_addop() {
 void parser_mulop() {
     debug_entry();
     if (is_mulop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if 
+        // we can call 'match' like that because of the check in the if
         parser_match(lookahead.type);
     } else {
         // operator not found, syntax error
@@ -878,7 +1208,7 @@ void parser_factor() {
 /* ------------------------------------------------------------------------ */
 
 void parser_track_ident(char *id) {
-    debug_entry();  
+    debug_entry();
     debug("Adding symbol %s to symtable", id);
 
     symtable_symbol_t *symbol = symtable_add_symbol(st, id);

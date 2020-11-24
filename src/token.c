@@ -167,6 +167,16 @@ const char* token_get_type_string(token_type type) {
         case RBRACE: return "RBRACE";
         case COMMA: return "COMMA";
         case SEMICOLON: return "SEMICOLON";
+
+        // Precedence analysis
+        case END_OF_INPUT: return "END_OF_INPUT";
+        case EXPR_SYMBOL: return "EXPR_SYMBOL";
+
+        // Precedence table symbols
+        case INV: return "INV";
+        case RED: return "RED";
+        case SHF: return "SHF";
+        case EQQ: return "EQQ";
         default:
             break;
     }
