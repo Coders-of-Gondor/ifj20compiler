@@ -72,12 +72,22 @@ typedef enum token_type {
     GEQ, // >=
 
     //  Other
-    LPAREN,   // (
-    LBRACE,   // {
-    RPAREN,   // )
-    RBRACE,   // }
-    COMMA,    // ,
-    SEMICOLON // ;
+    LPAREN,    // (
+    LBRACE,    // {
+    RPAREN,    // )
+    RBRACE,    // }
+    COMMA,     // ,
+    SEMICOLON, // ;
+
+    // Precedence analysis symbols
+    END_OF_INPUT, // $ - used for precedence analysis
+    EXPR_SYMBOL,  // E - used for precedence analysis
+
+    // Precedence table symbols
+    INV, // x - invalid    
+    RED, // > - reduction
+    SHF, // < - shift
+    EQQ  // = - equals
 } token_type;
 
 /**

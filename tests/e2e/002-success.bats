@@ -2,6 +2,8 @@
 
 load helpers
 
+readonly success_sample="$samples/success-tests"
+
 @test "Success analysis - eols.go" {
   run_compiler $samples/eols.go
 }
@@ -48,4 +50,25 @@ load helpers
 
 @test "success analysis - string_escape_hex" {
   run_compiler $samples/string_escape_hex.go
+}
+
+# test the success of precedence parsing
+@test "success analysis - expr1" {
+  run_compiler $success_sample/expr1.go
+}
+
+@test "success analysis - expr2" {
+  run_compiler $success_sample/expr2.go
+}
+
+@test "success analysis - expr3" {
+  run_compiler $success_sample/expr3.go
+}
+
+@test "success analysis - expr4" {
+  run_compiler $success_sample/expr4.go
+}
+
+@test "success analysis - expr5" {
+  run_compiler $success_sample/expr5.go
 }

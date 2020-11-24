@@ -2,7 +2,7 @@
 
 load helpers
 
-lexical_samples="$samples/lexical-tests"
+readonly lexical_samples="$samples/lexical-tests"
 
 @test "Lexical analysis - colon" {
   run_compiler $ERROR_LEXICAL $lexical_samples/colon.go
