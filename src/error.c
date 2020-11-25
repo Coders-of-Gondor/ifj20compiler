@@ -13,7 +13,6 @@
 #include "error.h"
 #include "global.h"
 #include "debug.h"
-#include "token.h"
 
 void error_exit(unsigned error_code, const char* fmt, ...) {
     va_list ap;
@@ -41,8 +40,8 @@ void throw_lex_error(int line) {
     error_exit(ERROR_LEXICAL, "Lexical error at line %d!\n", line);
 }
 
-void throw_internal_error(int line) {
-    error_exit(ERROR_INTERNAL, "Internal error at line %d!\n", line);
+void throw_internal_error() {
+    error_exit(ERROR_INTERNAL, "Internal error!\n");
 }
 
 void success_exit() {
