@@ -8,11 +8,9 @@ load helpers
 
 @test "Run compiler with a valid ifj20 source file" {
   run_compiler $SUCCESS $samples/example1.go
-  [ "$output" = "" ]
 }
 
 @test "Run compiler with a valid ifj20 source file passed through stdin" {
   run_compiler $SUCCESS <$samples/example1.go
-  [ "$output" = "" ]
 }
 

@@ -44,11 +44,6 @@ function run_compiler() {
     }
     run compiler_without_stderr "$@" 3>/dev/null
 
-    if [ -n "$output" ]; then
-      echo "$output"
-      echo ""
-    fi
-
     if [ "$status" -ne "$expected_rc" ]; then
       echo "exit code is $status; expected $expected_rc" >&2
       false
