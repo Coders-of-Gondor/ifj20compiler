@@ -158,7 +158,7 @@ void parser_funcs() {
 
     if (!eof_found) {
         // if EOF not found, throw syntax error, program should not end here.
-        throw_syntax_error();
+        throw_syntax_error(lookahead.type, line);
     }
 }
 
@@ -299,7 +299,7 @@ void parser_params_n() {
             break;
         default:
             // no eps-rule -> throw syntax error
-            throw_syntax_error(line);
+            throw_syntax_error(lookahead.type, line);
             break;
     } 
 }

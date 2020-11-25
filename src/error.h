@@ -10,6 +10,8 @@
 #ifndef __ERROR_H__
 #define __ERROR_H__
 
+#include "token.h"
+
 #define SUCCESS 0                   /**< No errors */
 #define ERROR_LEXICAL 1             /**< Lexeme error */
 #define ERROR_SYNTAX 2              /**< Error in syntax */
@@ -31,12 +33,12 @@ void error_exit(unsigned error_code, const char* fmt, ...);
 /**
  * @brief Function to call when a syntax error is encountered.
  */
-void throw_syntax_error();
+void throw_syntax_error(token_type type, int line);
 
 /**
  * @brief Function to call when a lexical error is encountered.
  */
-void throw_lex_error();
+void throw_lex_error(int line);
 
 /**
  * @brief Function to call when an internal error is encountered.
