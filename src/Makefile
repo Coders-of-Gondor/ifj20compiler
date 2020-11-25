@@ -17,24 +17,25 @@ endif
 
 public_sources = \
 	debug.c \
-	main.c \
-	global.c \
 	error.c \
-	token.c \
-	symtable.c \
-	str.c \
+	global.c \
+	main.c \
+	parser.c \
 	scanner.c \
-	parser.c
+	str.c \
+	symtable.c \
+	token.c
 
 public_headers = \
 	debug.h \
-	global.h \
 	error.h \
-	token.h \
-	symtable.h \
-	str.h \
+	global.h \
+	paser.h \
 	scanner.h \
-	paser.h
+	stack.h \
+	str.h \
+	symtable.h \
+	token.h
 
 private_sources = \
 	scanner-private.c
