@@ -18,20 +18,20 @@
 
 typedef enum token_type {
     // General
-    INVALID,  // Invalid token (Lexical error)
-    EOL, 		// End of line
-    EOF_T, 	// End of file
-    IDENT,    // temp_value
+    INVALID, // Invalid token (Lexical error)
+    EOL,     // End of line
+    EOF_T,   // End of file
+    IDENT,   // temp_value
 
     // Literals
-    INT_LIT, 	   // 42
+    INT_LIT,     // 42
     FLOAT64_LIT, // 42.42
     STRING_LIT,  // "fourtytwo"
 
     // Data types
-    INT, 		   // int
-    FLOAT64, 	   // float64
-    STRING,  	   // string
+    INT,     // int
+    FLOAT64, // float64
+    STRING,  // string
 
     // Control
     IF,   // if
@@ -72,11 +72,11 @@ typedef enum token_type {
     GEQ, // >=
 
     //  Other
-    LPAREN, 	// (
-    LBRACE, 	// {
-    RPAREN, 	// )
-    RBRACE, 	// }
-    COMMA,  	// ,
+    LPAREN,   // (
+    LBRACE,   // {
+    RPAREN,   // )
+    RBRACE,   // }
+    COMMA,    // ,
     SEMICOLON // ;
 } token_type;
 
@@ -89,7 +89,7 @@ typedef struct token {
         int64_t int_val;
         double float_val;
         string str_val;
-        char *sym_key;	
+        char *sym_key;
     } attribute; /**< Token's attribute (e.g., symtable key, value of int,..). */
 } token_t;
 
