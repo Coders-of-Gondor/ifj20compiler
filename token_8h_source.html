@@ -80,10 +80,10 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> token_type {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="comment">// General</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    INVALID,  <span class="comment">// Invalid token (Lexical error)</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    EOL,    <span class="comment">// End of line</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    EOF_T,  <span class="comment">// End of file</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    IDENT,    <span class="comment">// temp_value</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    INVALID, <span class="comment">// Invalid token (Lexical error)</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    EOL,     <span class="comment">// End of line</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    EOF_T,   <span class="comment">// End of file</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    IDENT,   <span class="comment">// temp_value</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">// Literals</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    INT_LIT,     <span class="comment">// 42</span></div>
@@ -91,9 +91,9 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    STRING_LIT,  <span class="comment">// &quot;fourtytwo&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">// Data types</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    INT,       <span class="comment">// int</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    FLOAT64,     <span class="comment">// float64</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    STRING,      <span class="comment">// string</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    INT,     <span class="comment">// int</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    FLOAT64, <span class="comment">// float64</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    STRING,  <span class="comment">// string</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// Control</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    IF,   <span class="comment">// if</span></div>
@@ -148,7 +148,7 @@ $(function() {
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        int64_t int_val;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">double</span> float_val;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">string</span> str_val;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">char</span> *sym_key;  </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">char</span> *sym_key;</div>
 <div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structtoken__t.html#a63ec81fefb806c4d12c1d7024a561e12">   93</a></span>&#160;    } attribute; </div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;} <a class="code" href="structtoken__t.html">token_t</a>;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
@@ -178,7 +178,7 @@ $(function() {
 <div class="ttc" id="atoken_8h_html_adbd1a25ddaea72c6e03813b2cfb0c765"><div class="ttname"><a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a></div><div class="ttdeci">bool token_is_lit(token_type type)</div><div class="ttdoc">Return a true/false value depending on the token's type being a literal.</div><div class="ttdef"><b>Definition:</b> token.c:175</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 24 2020 18:12:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Wed Nov 25 2020 12:23:49 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
