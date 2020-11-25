@@ -1,9 +1,13 @@
 /**
  * @file scanner.c
  * @author Vojtěch Bůbela <xbubel08>
- * @brief Scanner DFA
+ * @author Vojtěch Fiala <xfiala61>
+ * @brief Code Generator
  * @details Implementace překladače imperativního jazyka IFJ20.
- * @date 24/11/2020
+ * @date 25/11/2020
  */
 
+char *conversion(char *str);
 void generate();
+void generate_head();
+void build_in_input(char type);
