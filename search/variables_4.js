@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keywords_5fsymtable_197',['keywords_symtable',['../global_8c.html#a397596f327bec1a9d83e7c1514f257c5',1,'keywords_symtable():&#160;global.c'],['../global_8h.html#a397596f327bec1a9d83e7c1514f257c5',1,'keywords_symtable():&#160;global.c']]]
+  ['idb_204',['idb',['../structsymtable__iterator__t.html#ae2fa09b674e1d450b1f51036d52cf83c',1,'symtable_iterator_t']]],
+  ['ide_205',['ide',['../structsymtable__iterator__t.html#ad332f169aba19b27a28f0de94260bcac',1,'symtable_iterator_t']]]
 ];

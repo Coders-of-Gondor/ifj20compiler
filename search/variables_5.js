@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['position_198',['position',['../structscanner.html#adba007194ba9db412eeb501de6242f60',1,'scanner']]],
-  ['ptr_199',['ptr',['../structsymtable__iterator__t.html#a3d5ba96e62e1037a93303f3f7305c290',1,'symtable_iterator_t']]]
+  ['keywords_5fsymtable_206',['keywords_symtable',['../global_8c.html#a397596f327bec1a9d83e7c1514f257c5',1,'keywords_symtable():&#160;global.c'],['../global_8h.html#a397596f327bec1a9d83e7c1514f257c5',1,'keywords_symtable():&#160;global.c']]]
 ];

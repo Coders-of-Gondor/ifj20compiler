@@ -76,16 +76,16 @@ $(function() {
 
 <p>Parser part of ifj20 compiler - the heart of the compiler.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="parser_8h_source.html">parser.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="error_8h_source.html">error.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="parser_8h_source.html">parser.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="str_8h_source.html">str.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -122,6 +122,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_type</b> ()</t
 <tr class="memitem:a5722e45b0933f6e2e9b45d86ea4f547c"><td class="memItemLeft" align="right" valign="top"><a id="a5722e45b0933f6e2e9b45d86ea4f547c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_block</b> ()</td></tr>
 <tr class="separator:a5722e45b0933f6e2e9b45d86ea4f547c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5d7bba69db4f1f2093674d8f5e4c649"><td class="memItemLeft" align="right" valign="top"><a id="ab5d7bba69db4f1f2093674d8f5e4c649"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_stmt_if</b> ()</td></tr>
+<tr class="separator:ab5d7bba69db4f1f2093674d8f5e4c649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add797419c94039be98a9f7ff0f48691d"><td class="memItemLeft" align="right" valign="top"><a id="add797419c94039be98a9f7ff0f48691d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_stmt_for</b> ()</td></tr>
+<tr class="separator:add797419c94039be98a9f7ff0f48691d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa21e18d566bfb8fa359b65ed8b843d92"><td class="memItemLeft" align="right" valign="top"><a id="aa21e18d566bfb8fa359b65ed8b843d92"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_params</b> ()</td></tr>
 <tr class="separator:aa21e18d566bfb8fa359b65ed8b843d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,29 +239,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="memItemLeft" align="right" valign="top"><a id="a635b917ff2a1e9eb28245cdb8dee4cec"></a>
-scanner_t *&#160;</td><td class="memItemRight" valign="bottom"><b>scanner</b></td></tr>
+<tr class="memitem:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="memItemLeft" align="right" valign="top">scanner_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a635b917ff2a1e9eb28245cdb8dee4cec">scanner</a></td></tr>
+<tr class="memdesc:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">scanner local to the parser  <a href="parser_8c.html#a635b917ff2a1e9eb28245cdb8dee4cec">More...</a><br /></td></tr>
 <tr class="separator:a635b917ff2a1e9eb28245cdb8dee4cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdbbc682dcd0f4a7f07607c38f261517"><td class="memItemLeft" align="right" valign="top"><a id="afdbbc682dcd0f4a7f07607c38f261517"></a>
-<a class="el" href="structtoken__t.html">token_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lookahead</b></td></tr>
-<tr class="separator:afdbbc682dcd0f4a7f07607c38f261517"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54f319b221ae296289c05eac5dda73c2"><td class="memItemLeft" align="right" valign="top"><a id="a54f319b221ae296289c05eac5dda73c2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>eol_encountered</b></td></tr>
+<tr class="memitem:a54f319b221ae296289c05eac5dda73c2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a54f319b221ae296289c05eac5dda73c2">eol_encountered</a></td></tr>
+<tr class="memdesc:a54f319b221ae296289c05eac5dda73c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">tracker to tell us if an eol was scanned  <a href="parser_8c.html#a54f319b221ae296289c05eac5dda73c2">More...</a><br /></td></tr>
 <tr class="separator:a54f319b221ae296289c05eac5dda73c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="memItemLeft" align="right" valign="top"><a id="a41ebd28ef1d7c6ade45642cb6acc1039"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>line</b> = 1</td></tr>
+<tr class="memitem:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a41ebd28ef1d7c6ade45642cb6acc1039">line</a> = 1</td></tr>
+<tr class="memdesc:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="mdescLeft">&#160;</td><td class="mdescRight">track the current line number  <a href="parser_8c.html#a41ebd28ef1d7c6ade45642cb6acc1039">More...</a><br /></td></tr>
 <tr class="separator:a41ebd28ef1d7c6ade45642cb6acc1039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e69df32e4407dbf966699aa3aaefba0"><td class="memItemLeft" align="right" valign="top"><a id="a7e69df32e4407dbf966699aa3aaefba0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>eof_found</b> = false</td></tr>
+<tr class="memitem:afdbbc682dcd0f4a7f07607c38f261517"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#afdbbc682dcd0f4a7f07607c38f261517">lookahead</a></td></tr>
+<tr class="memdesc:afdbbc682dcd0f4a7f07607c38f261517"><td class="mdescLeft">&#160;</td><td class="mdescRight">next token to look at  <a href="parser_8c.html#afdbbc682dcd0f4a7f07607c38f261517">More...</a><br /></td></tr>
+<tr class="separator:afdbbc682dcd0f4a7f07607c38f261517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e69df32e4407dbf966699aa3aaefba0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a7e69df32e4407dbf966699aa3aaefba0">eof_found</a> = false</td></tr>
+<tr class="memdesc:a7e69df32e4407dbf966699aa3aaefba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">track if the eof has been found, terminate the analysis correctly  <a href="parser_8c.html#a7e69df32e4407dbf966699aa3aaefba0">More...</a><br /></td></tr>
 <tr class="separator:a7e69df32e4407dbf966699aa3aaefba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2455fa6fe5b74e41c4d37250737963a"><td class="memItemLeft" align="right" valign="top"><a id="ad2455fa6fe5b74e41c4d37250737963a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>no_eol</b> = false</td></tr>
+<tr class="memitem:ad2455fa6fe5b74e41c4d37250737963a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#ad2455fa6fe5b74e41c4d37250737963a">no_eol</a> = false</td></tr>
+<tr class="memdesc:ad2455fa6fe5b74e41c4d37250737963a"><td class="mdescLeft">&#160;</td><td class="mdescRight">track if the eol could have been inserted before the token  <a href="parser_8c.html#ad2455fa6fe5b74e41c4d37250737963a">More...</a><br /></td></tr>
 <tr class="separator:ad2455fa6fe5b74e41c4d37250737963a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a861ba280c3f833800c5828e15453a7ab"><td class="memItemLeft" align="right" valign="top"><a id="a861ba280c3f833800c5828e15453a7ab"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>required_eol</b> = false</td></tr>
+<tr class="memitem:a861ba280c3f833800c5828e15453a7ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a861ba280c3f833800c5828e15453a7ab">required_eol</a> = false</td></tr>
+<tr class="memdesc:a861ba280c3f833800c5828e15453a7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">track if the eol should be required here  <a href="parser_8c.html#a861ba280c3f833800c5828e15453a7ab">More...</a><br /></td></tr>
 <tr class="separator:a861ba280c3f833800c5828e15453a7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a934c111b1421c6aa91507fabd5c96deb"><td class="memItemLeft" align="right" valign="top"><a id="a934c111b1421c6aa91507fabd5c96deb"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>return_code</b> = 0</td></tr>
+<tr class="memitem:a934c111b1421c6aa91507fabd5c96deb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a934c111b1421c6aa91507fabd5c96deb">return_code</a> = 0</td></tr>
+<tr class="memdesc:a934c111b1421c6aa91507fabd5c96deb"><td class="mdescLeft">&#160;</td><td class="mdescRight">track the return code for the eol checking  <a href="parser_8c.html#a934c111b1421c6aa91507fabd5c96deb">More...</a><br /></td></tr>
 <tr class="separator:a934c111b1421c6aa91507fabd5c96deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -343,10 +349,139 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>return_code</b> = 0</t
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a7e69df32e4407dbf966699aa3aaefba0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e69df32e4407dbf966699aa3aaefba0">&#9670;&nbsp;</a></span>eof_found</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eof_found = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>track if the eof has been found, terminate the analysis correctly </p>
+
+</div>
+</div>
+<a id="a54f319b221ae296289c05eac5dda73c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54f319b221ae296289c05eac5dda73c2">&#9670;&nbsp;</a></span>eol_encountered</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eol_encountered</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>tracker to tell us if an eol was scanned </p>
+
+</div>
+</div>
+<a id="a41ebd28ef1d7c6ade45642cb6acc1039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41ebd28ef1d7c6ade45642cb6acc1039">&#9670;&nbsp;</a></span>line</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int line = 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>track the current line number </p>
+
+</div>
+</div>
+<a id="afdbbc682dcd0f4a7f07607c38f261517"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdbbc682dcd0f4a7f07607c38f261517">&#9670;&nbsp;</a></span>lookahead</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtoken__t.html">token_t</a> lookahead</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>next token to look at </p>
+
+</div>
+</div>
+<a id="ad2455fa6fe5b74e41c4d37250737963a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2455fa6fe5b74e41c4d37250737963a">&#9670;&nbsp;</a></span>no_eol</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool no_eol = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>track if the eol could have been inserted before the token </p>
+
+</div>
+</div>
+<a id="a861ba280c3f833800c5828e15453a7ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a861ba280c3f833800c5828e15453a7ab">&#9670;&nbsp;</a></span>required_eol</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool required_eol = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>track if the eol should be required here </p>
+
+</div>
+</div>
+<a id="a934c111b1421c6aa91507fabd5c96deb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a934c111b1421c6aa91507fabd5c96deb">&#9670;&nbsp;</a></span>return_code</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int return_code = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>track the return code for the eol checking </p>
+
+</div>
+</div>
+<a id="a635b917ff2a1e9eb28245cdb8dee4cec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a635b917ff2a1e9eb28245cdb8dee4cec">&#9670;&nbsp;</a></span>scanner</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">scanner_t* <a class="el" href="structscanner.html">scanner</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>scanner local to the parser </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 26 2020 01:17:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Nov 26 2020 01:21:06 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
