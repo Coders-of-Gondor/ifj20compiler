@@ -31,6 +31,11 @@
 void error_exit(unsigned error_code, const char* fmt, ...);
 
 /**
+ * @brief Function to call when a semantics error is encountered.
+ */
+void throw_semantics_error(unsigned error_code, int line);
+
+/**
  * @brief Function to call when a syntax error is encountered.
  */
 void throw_syntax_error(token_type type, int line);

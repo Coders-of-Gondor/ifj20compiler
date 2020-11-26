@@ -1,6 +1,7 @@
 /**
  * @file parser.h
  * @author Marek Filip <xfilip46>
+ * @author Ondřej Míchal <xmicha80>
  * @brief Header file for the parser.c
  * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 10/11/2020
@@ -9,6 +10,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
+#include "ast.h"
 #include "scanner.h"
 #include "token.h"
 
@@ -26,7 +28,7 @@ void parser_match(token_type t);
 /**
  * @brief Match the lookahead token against IDENT type and match the ident name.
  * @description Report syntax error if any match fails.
- * 				This will be used for checking the 'main' part of "package main".
+ *        This will be used for checking the 'main' part of "package main".
  */
 void parser_match_ident(char *ident_name);
 
@@ -34,6 +36,8 @@ void parser_match_ident(char *ident_name);
  * @brief Start the parser. This is the starting rule of the LL(1) grammar.
  */
 void parser_start(scanner_t *scanner_main);
+
+void parser_end(int rc);
 
 /**
  * Below can be found the parsing functions deduced from the LL(1) table.
@@ -63,36 +67,35 @@ void parser_stmt_if();
 void parser_stmt_for();
 
 /* ------------------------------------------------------------------------ */
-/* PARAMETERS OF FUNCTION RULES                                             */
+/* FUNCTION RULES                                             */
 /* ------------------------------------------------------------------------ */
+
+void parser_func_call(char *id);
 
 // function parameters
 void parser_params(); 
-void parser_params_n(); 
 void parser_param(); 
 void parser_param_n(); 
 
 // return types
 void parser_r_params();
-void parser_r_params_n();
 void parser_r_param();
 void parser_r_param_n();
 
 // function call arguments
-void parser_c_params();
-void parser_c_params_n();
-void parser_c_param();
-void parser_c_param_n();
+void parser_c_params(func_parameter_t *first_param);
+void parser_c_param(func_parameter_t *param);
+void parser_c_param_n(func_parameter_t *param);
 
 /* ------------------------------------------------------------------------ */
 /* VAR DEFINITION AND ASSIGN                                                */
 /* ------------------------------------------------------------------------ */
 
-void parser_vardef(); 
-void parser_assign(); 
-void parser_id_n(); 
-void parser_exprs(); 
-void parser_expr_n(); 
+void parser_vardef(char *id); 
+void parser_assign(char *id); 
+void parser_id_n(int *num_of_ids); 
+void parser_exprs(int *num_of_exprs); 
+void parser_expr_n(int *num_of_exprs); 
 
 /* ------------------------------------------------------------------------ */
 /* HELPER FOR RULES                                                         */
@@ -109,7 +112,7 @@ void parser_optassign();
 // return
 // eps
 void parser_return(); 
-void parser_optexprs(); 
+void parser_optexprs(int *num_of_exprs); 
 
 /* ------------------------------------------------------------------------ */
 /* EXPRESSION RULES                                                         */
@@ -135,5 +138,11 @@ void parser_term_n();
 
 void parser_factor(); 
 void parser_funexp(); 
+
+/* ------------------------------------------------------------------------ */
+/* SEMANTIC ACTIONS                                                         */
+/* ------------------------------------------------------------------------ */
+
+void parser_track_ident(char *id);
 
 #endif // __PARSER_H__

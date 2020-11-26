@@ -28,6 +28,10 @@ void error_exit(unsigned error_code, const char* fmt, ...) {
     exit(error_code);
 }
 
+void throw_semantics_error(unsigned error_code, int line) {
+    error_exit(error_code, "Semantics error at line %d\n", line);
+}
+
 void throw_syntax_error(token_type type, int line) {
     #ifdef NDEBUG
     unused(type);  // silence the unused-parameter warning
