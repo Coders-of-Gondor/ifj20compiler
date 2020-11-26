@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['debug_5flit_5fvalue_137',['debug_lit_value',['../debug_8c.html#a4e165d7e7f48374234aa44ca5d6e75a8',1,'debug_lit_value(token_t t):&#160;debug.h'],['../debug_8h.html#a4e165d7e7f48374234aa44ca5d6e75a8',1,'debug_lit_value(token_t t):&#160;debug.h']]]
+  ['concat_5ffunc_143',['CONCAT_FUNC',['../stack_8h.html#a172a8288d359f857d3ac72c2496332b3',1,'CONCAT_FUNC(stack, TYPE, resize)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#ad02e81c4c361cb35223d949a721da0a5',1,'CONCAT_FUNC(stack, TYPE, isempty)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#acc46d33db78697489bc3a06096d2a442',1,'CONCAT_FUNC(stack, TYPE, isfull)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#a7a0cbe224176145491b8226318c6c40d',1,'CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#ac64900bea887b67325a9023ca4890cf9',1,'CONCAT_FUNC(stack, TYPE, peek)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#a780e67ae1075f7eccf99df97e4534e0b',1,'CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack:&#160;stack.h'],['../stack_8h.html#a4a5b84873cadf0e81d4e1b991b43bf99',1,'CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack:&#160;stack.h']]],
+  ['concat_5fstruct_144',['CONCAT_STRUCT',['../stack_8h.html#ab494eb158071212d0932a796b1bf8e8c',1,'stack.h']]]
 ];

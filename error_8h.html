@@ -76,7 +76,8 @@ $(function() {
 
 <p>Error codes and function declarations.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
+</div>
 <p><a href="error_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -117,12 +118,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a5e71660999acb39dbfecc753e6eac3da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#a5e71660999acb39dbfecc753e6eac3da">error_exit</a> (unsigned error_code, const char *fmt,...)</td></tr>
 <tr class="memdesc:a5e71660999acb39dbfecc753e6eac3da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for exiting the program.  <a href="error_8h.html#a5e71660999acb39dbfecc753e6eac3da">More...</a><br /></td></tr>
 <tr class="separator:a5e71660999acb39dbfecc753e6eac3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2adaf176a0dcea2a3872cd2461cecc21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">throw_syntax_error</a> ()</td></tr>
-<tr class="memdesc:a2adaf176a0dcea2a3872cd2461cecc21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a syntax error is encountered.  <a href="error_8h.html#a2adaf176a0dcea2a3872cd2461cecc21">More...</a><br /></td></tr>
-<tr class="separator:a2adaf176a0dcea2a3872cd2461cecc21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a912e2ae9d067cc179bee2a735a000f68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">throw_lex_error</a> ()</td></tr>
-<tr class="memdesc:a912e2ae9d067cc179bee2a735a000f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a lexical error is encountered.  <a href="error_8h.html#a912e2ae9d067cc179bee2a735a000f68">More...</a><br /></td></tr>
-<tr class="separator:a912e2ae9d067cc179bee2a735a000f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0865332b377ae87bac5308d8de94e2a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#a0865332b377ae87bac5308d8de94e2a3">throw_syntax_error</a> (token_type type, int line)</td></tr>
+<tr class="memdesc:a0865332b377ae87bac5308d8de94e2a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a syntax error is encountered.  <a href="error_8h.html#a0865332b377ae87bac5308d8de94e2a3">More...</a><br /></td></tr>
+<tr class="separator:a0865332b377ae87bac5308d8de94e2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1acf86e84a99cb28150c05d603c65e91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#a1acf86e84a99cb28150c05d603c65e91">throw_lex_error</a> (int line)</td></tr>
+<tr class="memdesc:a1acf86e84a99cb28150c05d603c65e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a lexical error is encountered.  <a href="error_8h.html#a1acf86e84a99cb28150c05d603c65e91">More...</a><br /></td></tr>
+<tr class="separator:a1acf86e84a99cb28150c05d603c65e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6a02d943655094dbe09a82edd519a7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">throw_internal_error</a> ()</td></tr>
 <tr class="memdesc:ab6a02d943655094dbe09a82edd519a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when an internal error is encountered.  <a href="error_8h.html#ab6a02d943655094dbe09a82edd519a7f">More...</a><br /></td></tr>
 <tr class="separator:ab6a02d943655094dbe09a82edd519a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,8 +374,8 @@ Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IF
 
 </div>
 </div>
-<a id="a912e2ae9d067cc179bee2a735a000f68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a912e2ae9d067cc179bee2a735a000f68">&#9670;&nbsp;</a></span>throw_lex_error()</h2>
+<a id="a1acf86e84a99cb28150c05d603c65e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1acf86e84a99cb28150c05d603c65e91">&#9670;&nbsp;</a></span>throw_lex_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,7 +383,8 @@ Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IF
         <tr>
           <td class="memname">void throw_lex_error </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -392,8 +394,8 @@ Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IF
 
 </div>
 </div>
-<a id="a2adaf176a0dcea2a3872cd2461cecc21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2adaf176a0dcea2a3872cd2461cecc21">&#9670;&nbsp;</a></span>throw_syntax_error()</h2>
+<a id="a0865332b377ae87bac5308d8de94e2a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0865332b377ae87bac5308d8de94e2a3">&#9670;&nbsp;</a></span>throw_syntax_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -401,8 +403,19 @@ Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IF
         <tr>
           <td class="memname">void throw_syntax_error </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -414,7 +427,7 @@ Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IF
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 25 2020 12:23:49 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Nov 26 2020 01:17:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

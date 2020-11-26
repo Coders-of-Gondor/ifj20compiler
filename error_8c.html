@@ -81,22 +81,21 @@ $(function() {
 <code>#include &quot;<a class="el" href="error_8h_source.html">error.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5e71660999acb39dbfecc753e6eac3da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a5e71660999acb39dbfecc753e6eac3da">error_exit</a> (unsigned error_code, const char *fmt,...)</td></tr>
 <tr class="memdesc:a5e71660999acb39dbfecc753e6eac3da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for exiting the program.  <a href="error_8c.html#a5e71660999acb39dbfecc753e6eac3da">More...</a><br /></td></tr>
 <tr class="separator:a5e71660999acb39dbfecc753e6eac3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0865332b377ae87bac5308d8de94e2a3"><td class="memItemLeft" align="right" valign="top"><a id="a0865332b377ae87bac5308d8de94e2a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>throw_syntax_error</b> (token_type type, int line)</td></tr>
+<tr class="memitem:a0865332b377ae87bac5308d8de94e2a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a0865332b377ae87bac5308d8de94e2a3">throw_syntax_error</a> (token_type type, int line)</td></tr>
+<tr class="memdesc:a0865332b377ae87bac5308d8de94e2a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a syntax error is encountered.  <a href="error_8c.html#a0865332b377ae87bac5308d8de94e2a3">More...</a><br /></td></tr>
 <tr class="separator:a0865332b377ae87bac5308d8de94e2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1acf86e84a99cb28150c05d603c65e91"><td class="memItemLeft" align="right" valign="top"><a id="a1acf86e84a99cb28150c05d603c65e91"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>throw_lex_error</b> (int line)</td></tr>
+<tr class="memitem:a1acf86e84a99cb28150c05d603c65e91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a1acf86e84a99cb28150c05d603c65e91">throw_lex_error</a> (int line)</td></tr>
+<tr class="memdesc:a1acf86e84a99cb28150c05d603c65e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when a lexical error is encountered.  <a href="error_8c.html#a1acf86e84a99cb28150c05d603c65e91">More...</a><br /></td></tr>
 <tr class="separator:a1acf86e84a99cb28150c05d603c65e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac829ff8bb526340bb248aecca4a9f005"><td class="memItemLeft" align="right" valign="top"><a id="ac829ff8bb526340bb248aecca4a9f005"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>throw_internal_error</b> (int line)</td></tr>
-<tr class="separator:ac829ff8bb526340bb248aecca4a9f005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a02d943655094dbe09a82edd519a7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#ab6a02d943655094dbe09a82edd519a7f">throw_internal_error</a> ()</td></tr>
+<tr class="memdesc:ab6a02d943655094dbe09a82edd519a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when an internal error is encountered.  <a href="error_8c.html#ab6a02d943655094dbe09a82edd519a7f">More...</a><br /></td></tr>
+<tr class="separator:ab6a02d943655094dbe09a82edd519a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f2b4dcf80d5c13b3c44e734e6ac685c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_8c.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">success_exit</a> ()</td></tr>
 <tr class="memdesc:a7f2b4dcf80d5c13b3c44e734e6ac685c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call when we succesfully compiled the program.  <a href="error_8c.html#a7f2b4dcf80d5c13b3c44e734e6ac685c">More...</a><br /></td></tr>
 <tr class="separator:a7f2b4dcf80d5c13b3c44e734e6ac685c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,10 +161,79 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>throw_internal_error<
 
 </div>
 </div>
+<a id="ab6a02d943655094dbe09a82edd519a7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a02d943655094dbe09a82edd519a7f">&#9670;&nbsp;</a></span>throw_internal_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void throw_internal_error </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to call when an internal error is encountered. </p>
+
+</div>
+</div>
+<a id="a1acf86e84a99cb28150c05d603c65e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1acf86e84a99cb28150c05d603c65e91">&#9670;&nbsp;</a></span>throw_lex_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void throw_lex_error </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to call when a lexical error is encountered. </p>
+
+</div>
+</div>
+<a id="a0865332b377ae87bac5308d8de94e2a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0865332b377ae87bac5308d8de94e2a3">&#9670;&nbsp;</a></span>throw_syntax_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void throw_syntax_error </td>
+          <td>(</td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to call when a syntax error is encountered. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 25 2020 12:23:49 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Nov 26 2020 01:17:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
