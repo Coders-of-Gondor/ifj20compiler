@@ -1,9 +1,8 @@
 #include "gtest/gtest.h"
 
 extern "C" {
-#define TYPE int
-#include "../../src/stack.h"
-#undef TYPE
+#include "../../src/stack_int.h"
+#include "../../src/stack_int.h"  // testing header guards
 }
 
 // Author: Marek Filip <xfilip46, Wecros>
@@ -19,7 +18,7 @@ class stack_int_empty : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_int_free(&stack);
+            stack_int_free(stack);
         }
 };
 
@@ -31,9 +30,10 @@ TEST_F(stack_int_empty, init) {
 }
 
 TEST_F(stack_int_empty, push_some_values) {
-    stack_int_push(stack, 5);
-    stack_int_push(stack, 10);
-    stack_int_push(stack, 15);
+    // test the correct return code if push was succesful
+    ASSERT_EQ(stack_int_push(stack, 5), true);
+    ASSERT_EQ(stack_int_push(stack, 10), true);
+    ASSERT_EQ(stack_int_push(stack, 15), true);
 
     ASSERT_EQ(stack->array[0], 5);
     ASSERT_EQ(stack->array[1], 10);
@@ -52,7 +52,7 @@ class stack_int_general : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_int_free(&stack);
+            stack_int_free(stack);
         }
 };
 
@@ -77,29 +77,6 @@ TEST_F(stack_int_general, pop_some_values) {
     ASSERT_EQ(5, stack_int_pop(stack));
 }
 
-// class to be destroyed
-class stack_int_destroy : public::testing::Test {
-    protected:
-        stack_int_t *stack;
-
-        void SetUp() override {
-            stack = stack_int_init();
-            stack_int_push(stack, 'x');
-            stack_int_push(stack, 'y');
-            stack_int_push(stack, 'z');
-        }
-        
-        void TearDown() override {
-            // do nothing
-        }
-};
-
-// test the successful deallocation
-TEST_F(stack_int_destroy, free_the_stack) {
-    stack_int_free(&stack);
-    ASSERT_EQ(stack, NULL);
-}
-
 class stack_int_full : public::testing::Test {
     protected:
         stack_int_t *stack;
@@ -119,7 +96,7 @@ class stack_int_full : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_int_free(&stack);
+            stack_int_free(stack);
         }
 };
 

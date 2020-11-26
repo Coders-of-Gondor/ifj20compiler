@@ -1,7 +1,7 @@
 # Makefile
 # Ondřej Míchal <xmicha80>
 # Implementace překladače imperativního jazyka IFJ20.
-# 24/09/2020
+# 26/11/2020
 
 export CC = /usr/bin/env gcc
 export CFLAGS = -std=c99 -g -Wall -Wextra
@@ -22,6 +22,7 @@ public_sources = \
 	main.c \
 	parser.c \
 	scanner.c \
+	stack_int.c \
 	str.c \
 	symtable.c \
 	token.c
@@ -33,6 +34,8 @@ public_headers = \
 	paser.h \
 	scanner.h \
 	stack.h \
+	stack_extern_template.h \
+	stack_int.h \
 	str.h \
 	symtable.h \
 	token.h
