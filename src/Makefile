@@ -32,7 +32,7 @@ public_headers = \
 	debug.h \
 	error.h \
 	global.h \
-	paser.h \
+	parser.h \
 	scanner.h \
 	stack.h \
 	stack_extern_template.h \
