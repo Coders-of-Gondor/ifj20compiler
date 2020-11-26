@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 extern "C" {
+// can include like this because cpp does not need extern definitions for some reason.
 #define TYPE char
 #include "../../src/stack.h"
 #undef TYPE
@@ -19,7 +20,7 @@ class stack_char_empty : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_char_free(&stack);
+            stack_char_free(stack);
         }
 };
 
@@ -31,9 +32,10 @@ TEST_F(stack_char_empty, init) {
 }
 
 TEST_F(stack_char_empty, push_some_values) {
-    stack_char_push(stack, 'x');
-    stack_char_push(stack, 'y');
-    stack_char_push(stack, 'z');
+    // test the correct return code if push was succesful
+    ASSERT_EQ(stack_char_push(stack, 'x'), true);
+    ASSERT_EQ(stack_char_push(stack, 'y'), true);
+    ASSERT_EQ(stack_char_push(stack, 'z'), true);
 
     ASSERT_EQ(stack->array[0], 'x');
     ASSERT_EQ(stack->array[1], 'y');
@@ -52,7 +54,7 @@ class stack_char_general : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_char_free(&stack);
+            stack_char_free(stack);
         }
 };
 
@@ -77,29 +79,6 @@ TEST_F(stack_char_general, pop_some_values) {
     ASSERT_EQ('x', stack_char_pop(stack));
 }
 
-// class to be destroyed
-class stack_char_destroy : public::testing::Test {
-    protected:
-        stack_char_t *stack;
-
-        void SetUp() override {
-            stack = stack_char_init();
-            stack_char_push(stack, 'x');
-            stack_char_push(stack, 'y');
-            stack_char_push(stack, 'z');
-        }
-        
-        void TearDown() override {
-            // do nothing
-        }
-};
-
-// test the successful deallocation
-TEST_F(stack_char_destroy, free_the_stack) {
-    stack_char_free(&stack);
-    ASSERT_EQ(stack, NULL);
-}
-
 class stack_char_full : public::testing::Test {
     protected:
         stack_char_t *stack;
@@ -119,7 +98,7 @@ class stack_char_full : public::testing::Test {
         }
         
         void TearDown() override {
-            stack_char_free(&stack);
+            stack_char_free(stack);
         }
 };
 

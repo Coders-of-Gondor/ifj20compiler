@@ -1,11 +1,15 @@
 /**
  * @file stack.h
  * @author Marek Filip <xfilip46>
- * @brief Integer stack header file.
+ * @brief General stack header file, make use of macros for the generalization.
  * @details Implementace překladače imperativního jazyka IFJ20.
- * Used in parser for the bottom-up precedence analysis.
- * @date 25/11/2020
+ * Details of how all the magic works is described below.
+ * @date 26/11/2020
  */
+
+// Header guards are dependent on the given TYPE.
+#ifndef __STACK_TYPE_H__
+#define __STACK_TYPE_H__
 
 /********* TYPICAL USAGE *********
 #define TYPE <YOURTYPE>
@@ -21,8 +25,14 @@ stack_YOURTYPE_push(stack, value);
 stack_YOURTYPE_peek(stack);
 YOURTYPE value2 = stack_YOURTYPE_pop(stack, value);
 
-stack_YOURTYPE_free(&stack);
+stack_YOURTYPE_free(stack);
+// You need to extern the function definitions.
 ****** END OF TYPICAL USAGE ******/
+
+/* ALTERNATIVE USAGE
+ * Create stack_<YOURTYPE>.c source files with extern func definitions
+ * and relevant stack_<YOURTYPE>.h with the defined TYPE.
+ */
 
 /** START of the STACK OVERFLOW content **/
 /**
@@ -63,21 +73,23 @@ typedef struct CONCAT_STRUCT(stack, TYPE)
 #include <stdbool.h>
 #include <stdlib.h>
 #include "debug.h"
-#include "error.h"
+
 // stack's starting capacity
 #define STACK_START_SIZE 10
 
 /**
  * @brief Helper function for reszing the stack when its capacity has been filled.
+ * @return True if everything went ok. False if internal error happened.
  */
-inline void CONCAT_FUNC(stack, TYPE, resize)(CONCAT_STRUCT(stack, TYPE) *stack) {
+inline bool CONCAT_FUNC(stack, TYPE, resize)(CONCAT_STRUCT(stack, TYPE) *stack) {
     debug_entry();
     // multiple the size by two
     stack->size *= 2;
     stack->array = (TYPE *) realloc(stack->array, sizeof(TYPE) * stack->size);
     if (stack->array == NULL) {
-        throw_internal_error();
+        return false;
     }
+    return true;
 }
 
 /**
@@ -97,21 +109,21 @@ inline bool CONCAT_FUNC(stack, TYPE, isfull)(CONCAT_STRUCT(stack, TYPE) *stack) 
 
 /**
  * @brief Initialize the stack.
- * @return Pointer to stack struct.
+ * @return Pointer to stack struct. NULL if internal error.
  */
 inline CONCAT_STRUCT(stack, TYPE) *CONCAT_FUNC(stack, TYPE, init)() {
     debug_entry();
     CONCAT_STRUCT(stack, TYPE) *stack = 
         (CONCAT_STRUCT(stack, TYPE) *) malloc(sizeof(CONCAT_STRUCT(stack, TYPE)));
     if (stack == NULL) {
-        throw_internal_error();
+        return NULL;
     }
 
     stack->size = STACK_START_SIZE;
     stack->top = -1;  // there is no top value yet
     stack->array = (TYPE *) malloc(sizeof(TYPE) * stack->size);
     if (stack->array == NULL) {
-        throw_internal_error();
+        return NULL;
     }
 
     return stack;
@@ -119,15 +131,19 @@ inline CONCAT_STRUCT(stack, TYPE) *CONCAT_FUNC(stack, TYPE, init)() {
 
 /**
  * @brief Push a value onto the stack.
+ * @return True if everything went okay, False if internal error happened.
  */
-inline void CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE val) {
+inline bool CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE val) {
     debug_entry();
     if (CONCAT_FUNC(stack, TYPE, isfull)(stack)) {
-        CONCAT_FUNC(stack, TYPE, resize)(stack);
+        if (!CONCAT_FUNC(stack, TYPE, resize)(stack)) {
+            return false;
+        }
     }
 
     stack->top++;
     stack->array[stack->top] = val;
+    return true;
 }
 
 /**
@@ -152,9 +168,10 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
  * @brief Destroy the stack struct and deallocate the memory.
  * @details Set stack to null.
  */
-inline void CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack, TYPE) **stack) {
+inline void CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack, TYPE) *stack) {
     debug_entry();
-    free((*stack)->array);
-    free(*stack);
-    *stack = NULL;
+    free(stack->array);
+    free(stack);
 }
+
+#endif // __STACK_TYPE_H__
