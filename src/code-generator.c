@@ -176,33 +176,135 @@ void build_in_len() {
     printf("RETURN\n\n");
 }
 
-void build_in_substr(char *var, char *content, char *begin, char *length) {
-    // TODO rewrite getting parameters from stack
-    // TODO rewrite into pseudo-assembly
-    // TODO get current frame
-    char *current_frame = "LF";
-    int begin_tmp = atoi(begin);
-    int length_tmp = atoi(length);
-    if (begin_tmp > strlen(content) || begin < 0)
-        return;  // do i do something here? priznak chyby?
-    if (length_tmp < 0)
-        return;     // same here
-    if (length_tmp > strlen(content)-begin_tmp)
-        length_tmp = strlen(content)-begin_tmp;
-
-    char new[length_tmp];
-    int counter = 0;
-
-    for (int i = begin_tmp; i < (begin_tmp + length_tmp); i++) {
-        new[counter] = content[i];
-        counter++;
-    }
-    printf("DEFVAR %s@%s\n", current_frame, var);  
-    printf("MOVE %s@%s %s@%s\n", current_frame, var, "string", new);
+void build_in_substr() {
 
     printf("LABEL $substr\n");
     printf("PUSHFRAME\n");
+    // inner variables
+    printf("DEFVAR LF@$counter_increase\n");
+    printf("DEFVAR LF@$length\n");
+    printf("DEFVAR LF@$result\n");
+    printf("DEFVAR LF@$bool_true\n");
+    printf ("DEFVAR LF@$rest_of_string_length\n");
+    printf("DEFVAR LF@$tmp\n");
 
+    // return values
+    printf("DEFVAR LF@retval\n");
+    printf("DEFVAR LF@retval_2\n");
+    
+    // initialize some values
+    printf("MOVE LF@$bool_true bool@true\n");
+    printf("STRLEN LF@$length LF@$1\n");
+    printf("SUB LF@$rest_of_string_length LF@$length LF@$2\n");
+
+    // check correct value
+    printf("GT LF@$result LF@$length LF@$2\n");
+    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+    printf("LT LF@$result int@0 LF@$2\n");
+    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+    printf("LT LF@$result int@0 LF@$3\n");
+    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+
+    //  check if n wasn't too big, if thats the case, correct it
+    printf("GT LF@$result LF@$3 LF@$rest_of_string_length\n");
+    printf("JUMPIFNEQ begin LF@$result LF@$bool_true\n");
+    printf("MOVE LF@$3 LF@$rest_of_string_length\n");
+
+    printf("LABEL begin\n");
+    printf("MOVE LF@$counter_increase int@1\n");
+    printf("MOVE LF@retval string@\n");
+
+    printf("MOVE LF@$length int@0\n");
+    printf("ADD LF@$length LF@$3 LF@$2\n");
+
+    printf("LABEL loop\n");
+    printf("GETCHAR LF@$tmp LF@$1 LF@$2\n");            // getchar -> move 1 char from %1 string on postion @counter to retval
+    printf("ADD LF@$2 LF@$2 LF@$counter_increase\n");   // counter = counter + 1
+    printf("CONCAT LF@retval LF@retval LF@$tmp\n");     // retval = retval+$tmp (concatenate)
+
+    printf("JUMPIFNEQ loop LF@$2 LF@$length\n");        // if counter != $length, continue
+    printf("JUMP good\n");
+
+    printf("LABEL bad\n");
+    printf("EXIT int@1\n"); // perhaps MOVE LF@retval_2 int@1 ?
+
+    printf("LABEL good\n");
+    printf("MOVE LF@retval_2 int@0\n");
+
+    printf("POPFRAME\n");
+    printf("RETURN\n");
+}
+
+void build_in_ord() {
+
+    printf("LABEL $ord\n");
+    printf("PUSHFRAME\n");
+
+    // define inner values
+    printf("DEFVAR LF@$retval\n");
+    printf("DEFVAR LF@$retval_2\n");
+    printf("DEFVAR LF@$bool_true\n");
+    printf("DEFVAR LF@$result\n");
+    printf("DEFVAR LF@$length\n");
+
+    // assign values to work with
+    printf("STRLEN LF@$length LF@$1\n");            // lenght = strlen(%1)
+    printf("SUB LF@$length LF@$length int@1\n");   //# lenght = length-1
+    printf("MOVE LF@$bool_true bool@true\n");     
+
+    // compare if we were given correct args
+    printf("GT LF@$result LF@$2 LF@$length\n");    // if %2 (i) > length-1, bad
+    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("GT LF@$result int@0 LF@$2\n");    // if 0 > LF@%2 (i), bad
+    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+
+    // do the thing already ffs
+    printf("STRI2INT LF@$retval LF@$1 LF@$2\n");
+
+    printf("MOVE LF@$retval_2 int@0\n");
+    printf("JUMP end\n");
+
+    printf("LABEL bad\n");
+    printf("MOVE LF@$retval_2 int@1\n");
+    printf("MOVE LF@$retval int@\n");
+
+    printf("LABEL end\n");
+
+    printf("POPFRAME\n");
+    printf("RETURN\n");
+}
+
+void build_in_chr() {
+
+    printf("LABEL $ord\n");
+    printf("PUSHFRAME\n");
+
+    // define inner values
+    printf("DEFVAR LF@$retval\n");
+    printf("DEFVAR LF@$retval_2\n");
+    printf("DEFVAR LF@$bool_true\n");
+    printf("DEFVAR LF@$result\n");
+
+    //assign values to work with
+    printf("MOVE LF@$bool_true bool@true\n");
+
+    //compare if we were given correct args
+    printf("GT LF@$result LF@$1 int@255\n");   // if $1 (i) > 255, bad 
+    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("GT LF@$result int@0 LF@$1\n");    // if 0 > LF@%2 (i), bad
+    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+
+    // do the fucking thing
+    printf("INT2CHAR LF@$retval LF@$1\n");
+
+    printf("MOVE LF@$retval_2 int@0\n");
+    printf("JUMP end\n");
+
+    printf("LABEL bad\n");
+    printf("MOVE LF@$retval_2 int@1\n");
+    printf("MOVE LF@$retval string@\n");
+
+    printf("LABEL end\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n");

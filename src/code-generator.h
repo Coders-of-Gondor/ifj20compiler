@@ -15,4 +15,6 @@ void build_in_input(char type);
 void build_in_float_to_int();
 void build_in_int_to_float();
 void build_in_len();
-void build_in_substr(char *var, char *content, char *begin, char *length);
+void build_in_substr();
+void build_in_ord();
+void build_in_chr();
