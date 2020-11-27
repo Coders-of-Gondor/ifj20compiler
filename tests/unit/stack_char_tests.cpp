@@ -2,6 +2,7 @@
 
 extern "C" {
 // can include like this because cpp does not need extern definitions for some reason.
+#define TYPEDEF
 #define TYPE char
 #include "../../src/stack.h"
 #undef TYPE
@@ -10,6 +11,14 @@ extern "C" {
 // Author: Marek Filip <xfilip46, Wecros>
 // Date 25/11/2020
 // Copied the behaviour of the tests from 'scanner_tests.cpp'
+
+int cmp_char(char a, char b) {
+    if (a == b) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
 
 class stack_char_empty : public::testing::Test {
     protected:
@@ -40,6 +49,13 @@ TEST_F(stack_char_empty, push_some_values) {
     ASSERT_EQ(stack->array[0], 'x');
     ASSERT_EQ(stack->array[1], 'y');
     ASSERT_EQ(stack->array[2], 'z');
+
+    // find out if the character is present
+    ASSERT_EQ(stack_char_ispresent(stack, 'x', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'y', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'z', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, '0', cmp_char), false);
+    ASSERT_EQ(stack_char_ispresent(stack, 'A', cmp_char), false);
 }
 
 class stack_char_general : public::testing::Test {
@@ -74,9 +90,24 @@ TEST_F(stack_char_general, peek_top) {
 }
 
 TEST_F(stack_char_general, pop_some_values) {
+    ASSERT_EQ(stack_char_ispresent(stack, 'x', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'y', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'z', cmp_char), true);
+
     ASSERT_EQ('z', stack_char_pop(stack));
+    ASSERT_EQ(stack_char_ispresent(stack, 'x', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'y', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'z', cmp_char), false);
+
     ASSERT_EQ('y', stack_char_pop(stack));
+    ASSERT_EQ(stack_char_ispresent(stack, 'x', cmp_char), true);
+    ASSERT_EQ(stack_char_ispresent(stack, 'y', cmp_char), false);
+    ASSERT_EQ(stack_char_ispresent(stack, 'z', cmp_char), false);
+
     ASSERT_EQ('x', stack_char_pop(stack));
+    ASSERT_EQ(stack_char_ispresent(stack, 'x', cmp_char), false);
+    ASSERT_EQ(stack_char_ispresent(stack, 'y', cmp_char), false);
+    ASSERT_EQ(stack_char_ispresent(stack, 'z', cmp_char), false);
 }
 
 class stack_char_full : public::testing::Test {
