@@ -14,6 +14,7 @@ LDFLAGS = -lgtest -pthread
 
 tests_sources = \
 	tests.cpp \
+	ast_tests.cpp \
 	stack_int_tests.cpp \
 	stack_char_tests.cpp \
 	stack_charptr_tests.cpp \
