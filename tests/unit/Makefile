@@ -16,6 +16,7 @@ tests_sources = \
 	tests.cpp \
 	stack_int_tests.cpp \
 	stack_char_tests.cpp \
+	stack_charptr_tests.cpp \
 	parser_tests.cpp \
 	scanner_tests.cpp \
 	symtable_tests.cpp \

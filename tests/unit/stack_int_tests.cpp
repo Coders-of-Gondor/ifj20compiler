@@ -9,6 +9,14 @@ extern "C" {
 // Date 25/11/2020
 // Copied the behaviour of the tests from 'scanner_tests.cpp'
 
+int cmp_int(int a, int b) {
+    if (a == b) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
 class stack_int_empty : public::testing::Test {
     protected:
         stack_int_t *stack;
@@ -38,6 +46,13 @@ TEST_F(stack_int_empty, push_some_values) {
     ASSERT_EQ(stack->array[0], 5);
     ASSERT_EQ(stack->array[1], 10);
     ASSERT_EQ(stack->array[2], 15);
+
+    // find out if the character is present
+    ASSERT_EQ(stack_int_ispresent(stack, 5, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 10, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 0, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 7, cmp_int), false);
 }
 
 class stack_int_general : public::testing::Test {
@@ -72,9 +87,24 @@ TEST_F(stack_int_general, peek_top) {
 }
 
 TEST_F(stack_int_general, pop_some_values) {
+    ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 10, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 5, cmp_int), true);
+
     ASSERT_EQ(15, stack_int_pop(stack));
+    ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 10, cmp_int), true);
+    ASSERT_EQ(stack_int_ispresent(stack, 5, cmp_int), true);
+
     ASSERT_EQ(10, stack_int_pop(stack));
+    ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 10, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 5, cmp_int), true);
+
     ASSERT_EQ(5, stack_int_pop(stack));
+    ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 10, cmp_int), false);
+    ASSERT_EQ(stack_int_ispresent(stack, 5, cmp_int), false);
 }
 
 class stack_int_full : public::testing::Test {
