@@ -1,5 +1,5 @@
 /**
- * @file scanner.c
+ * @file code-generator.c
  * @author Vojtěch Bůbela <xbubel08>
  * @author Vojtěch Fiala <xfiala61>
  * @brief Code Generator
@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "code-generator.h"
 #include <string.h>
+#include <stdlib.h>
 
 #define SPACE 32
 #define HASH 35
@@ -45,6 +46,18 @@ void generate() {
 
     generate_head();
 
+    char s = 's';
+    char i = 'i';
+    char f = 'f';
+
+    build_in_input(s);
+    build_in_input(i);
+    build_in_input(f);
+
+    build_in_float_to_int();
+    build_in_int_to_float();
+    build_in_len();
+
     /* while (there are instructions) {
         
         nacti novy radek 3AK
@@ -59,7 +72,7 @@ void generate() {
 
 void generate_head() {
     printf(".IFJcode20\n");
-    printf("JUMP main\n");
+    printf("JUMP main\n\n");
 }
 
 /**
@@ -67,71 +80,103 @@ void generate_head() {
  * @description The function should be something like 'y = inputs()', so we need to track the 'y' we are assigning into
  */
 
-void build_in_input(char type, char *var) {        // type is to differentiate between inputi, inputs, inputf; *var is the var name 
+void build_in_input(char type) {        // type is to differentiate between inputi, inputs, inputf; *var is the var name 
     // TODO figure out how to get what frame we at (like we wanna print LF@var or GF or WTF)
     // IMPLEMENT SMTH LIKE THIS -> char *current_frame = get_frame();
-    char *current_frame = "LF";
+
+
     switch (type) {
         case 's':
-            printf("DEFVAR %s@%s\n", current_frame, var);  
-            printf("READ %s@%s string\n", current_frame, var);
+            printf("LABEL $inputs\n");
+            printf("PUSHFRAME\n");
+
+            printf("DEFVAR LF@$retval1\n"); 
+            printf("DEFVAR LF@$retval2\n");  
+            printf("MOVE LF@$retval2 int@0\n");
+            printf("READ LF@$retval1 string\n");
+
+            printf("POPFRAME\n");
+            printf("RETURN\n\n");
             break;
 
         case 'i':
-            printf("DEFVAR %s@%s\n", current_frame, var);  
-            printf("READ %s@%s int\n", current_frame, var);
+            printf("LABEL $inputi\n");
+            printf("PUSHFRAME\n");
+
+            printf("DEFVAR LF@$retval1\n"); 
+            printf("DEFVAR LF@$retval2\n");  
+            printf("MOVE LF@$retval2 int@0\n");
+            printf("READ LF@$retval1 int\n");
+
+            printf("POPFRAME\n");
+            printf("RETURN\n\n");
             break;
 
         case 'f':
-            printf("DEFVAR %s@%s\n", current_frame, var);  
-            printf("READ %s@%s float\n", current_frame, var);
+            printf("LABEL $inputf\n");
+            printf("PUSHFRAME\n");
+
+            printf("DEFVAR LF@$retval1\n"); 
+            printf("DEFVAR LF@$retval2\n");  
+            printf("MOVE LF@$retval2 int@0\n");
+            printf("READ LF@$retval1 int\n");
+
+            printf("POPFRAME\n");
+            printf("RETURN\n\n");
             break;
     }
+
 }
 
 /**
  * @brief Printing function to convert float to int
  * @description The function should be something like 'x = float2int(y)'
  */
-void build_in_float_to_int(char *new, char *var, char *value) {
-    // TODO get current frame
-    // TODO rewrite getting parameters from stack
-    char *current_frame = "LF";
-    // TODO make sure we're actually geting char* or if it could be double
-    double tmp = atof(value);
+void build_in_float_to_int() {
+
+    printf("LABEL $float2int\n");
     printf("PUSHFRAME\n");
-    printf("DEFVAR %s@%s\n", current_frame, var);     // y
-    printf("MOVE %s@%s %s@%a\n", current_frame, var, "float", tmp);       // get value (in this fucked-up format we have, like wtf even is 0x1.555p+0)
-    printf("FLOAT2INT %s@%s %s@%s\n", current_frame, new, current_frame, var);    // just convert it already ffs
+
+    printf("DEFVAR LF@$retval1\n");
+    printf("FLOAT2INT LF@$retval1 LF@$  1\n");
+
+    printf("POPFRAME\n");
+    printf("RETURN\n\n");
 }
 
 /**
  * @brief Printing function to convert int to float
  * @description The function should be something like 'x = int2float(y)'
  */
-void built_in_int_to_float(char *new, char *var, char *value) {
-    // TODO get current frame
-    char *current_frame = "LF";
-    printf("DEFVAR %s@%s\n", current_frame, new);     // x
-    printf("DEFVAR %s@%s\n", current_frame, var);     // y
-    printf("MOVE %s@%s %s@%s\n", current_frame, var, "int", value);
-    printf("INT2FLOAT %s@%s %s@%s\n", current_frame, new, current_frame, var);  
+void build_in_int_to_float() {
+
+    printf("LABEL $int2float\n");
+    printf("PUSHFRAME\n");
+
+    printf("DEFVAR LF@$retval1\n");
+    printf("INT2FLOAT LF@$retval1 LF@$1\n");
+
+    printf("POPFRAME\n");
+    printf("RETURN\n\n");
 }
 
 /**
  * @brief Printing function to get length of argument
  * @description The function should be something like 'x = len(y)'
  */
-void built_in_len(char *new, char *var, char *value) {
-    // TODO get current frame
-    char *current_frame = "LF";
-    printf("DEFVAR %s@%s\n", current_frame, new);     // x
-    printf("DEFVAR %s@%s\n", current_frame, var);     // y
-    printf("MOVE %s@%s %s@%s\n", current_frame, var, "string", value);
-    printf("STRLEN %s@%s %s@%s\n", current_frame, new, current_frame, var);  
+void build_in_len() { 
+
+    printf("LABEL $len\n");
+    printf("PUSHFRAME\n");
+
+    printf("DEFVAR LF@$retval1\n");
+    printf("STRLEN LF@$retval1 LF@$1\n");
+
+    printf("POPFRAME\n");
+    printf("RETURN\n\n");
 }
 
-void built_in_substr(char *var, char *content, char *begin, char *length) {
+void build_in_substr(char *var, char *content, char *begin, char *length) {
     // TODO rewrite getting parameters from stack
     // TODO rewrite into pseudo-assembly
     // TODO get current frame
@@ -154,4 +199,11 @@ void built_in_substr(char *var, char *content, char *begin, char *length) {
     }
     printf("DEFVAR %s@%s\n", current_frame, var);  
     printf("MOVE %s@%s %s@%s\n", current_frame, var, "string", new);
+
+    printf("LABEL $substr\n");
+    printf("PUSHFRAME\n");
+
+
+    printf("POPFRAME\n");
+    printf("RETURN\n");
 }

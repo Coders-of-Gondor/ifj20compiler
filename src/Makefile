@@ -16,6 +16,7 @@ CFLAGS += -DNDEBUG
 endif
 
 public_sources = \
+	code-generator.c \
 	debug.c \
 	error.c \
 	global.c \
@@ -30,6 +31,7 @@ public_sources = \
 	token.c
 
 public_headers = \
+	code-generator.h \
 	debug.h \
 	error.h \
 	global.h \
