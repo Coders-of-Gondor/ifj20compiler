@@ -45,7 +45,7 @@ stack_YOURTYPE_free(stack);
  * Author of the question:
  *  - SouvikMaji
  *  - https://stackoverflow.com/users/3198508/souvikmaji
- * Author of the relevant answer: 
+ * Author of the relevant answer:
  *  - 5gon12eder
  *  - https://stackoverflow.com/users/1392132/5gon12eder
  */
@@ -76,6 +76,8 @@ typedef struct CONCAT_STRUCT(stack, TYPE)
 
 // stack's starting capacity
 #define STACK_START_SIZE 10
+// function pointer to the compare function for _ispresent()
+typedef int (*CMP_FUNC_PTR)(TYPE, TYPE);
 
 /**
  * @brief Helper function for reszing the stack when its capacity has been filled.
@@ -113,7 +115,7 @@ inline bool CONCAT_FUNC(stack, TYPE, isfull)(CONCAT_STRUCT(stack, TYPE) *stack) 
  */
 inline CONCAT_STRUCT(stack, TYPE) *CONCAT_FUNC(stack, TYPE, init)() {
     debug_entry();
-    CONCAT_STRUCT(stack, TYPE) *stack = 
+    CONCAT_STRUCT(stack, TYPE) *stack =
         (CONCAT_STRUCT(stack, TYPE) *) malloc(sizeof(CONCAT_STRUCT(stack, TYPE)));
     if (stack == NULL) {
         return NULL;
@@ -162,6 +164,29 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
     TYPE popped = stack->array[stack->top];
     stack->top--;
     return popped;
+}
+
+/**
+ * @brief Find out if a value is already in the stack.
+ * @return true if value found, false if not.
+ */
+typedef int (*CMP_FUNC_PTR)(TYPE, TYPE);
+inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack,
+                        TYPE value_to_find, CMP_FUNC_PTR compare_func) {
+    debug_entry();
+    int top = stack->top;
+
+    while (top >= 0) {
+        if (compare_func(stack->array[top], value_to_find) == 0) {
+            // value found
+            return true;
+        } else {
+            top--;
+        }
+    }
+
+    // no value found
+    return false;
 }
 
 /**
