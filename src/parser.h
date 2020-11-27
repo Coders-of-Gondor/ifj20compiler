@@ -9,6 +9,7 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
+#include "scanner.h"
 #include "token.h"
 
 /**
@@ -32,7 +33,7 @@ void parser_match_ident(char *ident_name);
 /**
  * @brief Start the parser. This is the starting rule of the LL(1) grammar.
  */
-void parser_start();
+void parser_start(scanner_t *scanner_main);
 
 /**
  * Below can be found the parsing functions deduced from the LL(1) table.
