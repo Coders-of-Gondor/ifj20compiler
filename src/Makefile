@@ -22,6 +22,7 @@ public_sources = \
 	main.c \
 	parser.c \
 	scanner.c \
+	stack_charptr.c \
 	stack_int.c \
 	str.c \
 	symtable.c \
@@ -35,6 +36,7 @@ public_headers = \
 	scanner.h \
 	stack.h \
 	stack_extern_template.h \
+	stack_charptr.h \
 	stack_int.h \
 	str.h \
 	symtable.h \

@@ -19,11 +19,19 @@ fi
 
 readonly date=$(date '+%d/%m/%Y')
 readonly TYPE=$1
+PTRTYPE=$1
 readonly DIR=$2
+
+# is pointer is present
+if echo "$TYPE" | grep '*' >/dev/null; then
+	# replace every "*" with "ptr"
+	PTRTYPE=$(echo "$TYPE" | sed "s/*/ptr/g")
+	TYPEDEF="typedef $TYPE $PTRTYPE"
+fi
 
 # create stack_type.c
 printf "/**
- * @file stack_$TYPE.c
+ * @file stack_$PTRTYPE.c
  * @author Marek Filip <xfilip46>
  * @brief $TYPE stack source file.
  * @details Implementace překladače imperativního jazyka IFJ20.
@@ -31,17 +39,17 @@ printf "/**
  * @date $date
  */
 
-#include \"stack_$TYPE.h\"
+#include \"stack_$PTRTYPE.h\"
 
 // due to how C includes work we can safely include extern definitions
 // from a header file
 #include \"stack_extern_template.h\"
-#undef TYPE  // undef the TYPE used in stack_$TYPE.h
-" > "$2/stack_$TYPE.c"
+#undef TYPE  // undef the TYPE used in stack_$PTRTYPE.h
+" > "$DIR/stack_$PTRTYPE.c"
 
 # create stack_type.h
 printf "/**
- * @file stack_$TYPE.h
+ * @file stack_$PTRTYPE.h
  * @author Marek Filip <xfilip46>
  * @brief $TYPE stack header file.
  * @details Implementace překladače imperativního jazyka IFJ20.
@@ -51,8 +59,10 @@ printf "/**
 
 // header guards included in stack.h, no need for them here
 
-#define TYPE $TYPE  // undef is located in the stack_$TYPE.c file
+$TYPEDEF;
+#define TYPEDEF $TYPEDEF
+#define TYPE $PTRTYPE  // undef is located in the stack_$PTRTYPE.c file
 #include \"stack.h\"
-" > "$2/stack_$TYPE.h"
+" > "$DIR/stack_$PTRTYPE.h"
 
 echo "Don't forget to add the source files into the Makefile!!!"

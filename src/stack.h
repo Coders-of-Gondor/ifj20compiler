@@ -10,6 +10,7 @@
 // Header guards are dependent on the given TYPE.
 #ifndef __STACK_TYPE_H__
 #define __STACK_TYPE_H__
+TYPEDEF;
 
 /********* TYPICAL USAGE *********
 #define TYPE <YOURTYPE>

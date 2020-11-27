@@ -37,7 +37,7 @@ TEST_F(stack_charptr_general, push_some_values) {
 }
 
 TEST_F(stack_charptr_general, peek_top) {
-    int val = stack_charptr_peek(stack);
+    char *val = stack_charptr_peek(stack);
     ASSERT_EQ(val, "foo");
 }
 
