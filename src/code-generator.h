@@ -1,5 +1,5 @@
 /**
- * @file scanner.c
+ * @file code-generator.h
  * @author Vojtěch Bůbela <xbubel08>
  * @author Vojtěch Fiala <xfiala61>
  * @brief Code Generator
@@ -11,8 +11,8 @@ char *conversion(char *str);
 void generate();
 void generate_head();
 
-void build_in_input(char type, char *var);
-void build_in_float_to_int(char *new, char *var, char* value);
-void built_in_int_to_float(char *new, char *var, char *value);
-void built_in_len(char *new, char *var, char *value);
-void built_in_substr(char *var, char *content, char *begin, char *length);
+void build_in_input(char type);
+void build_in_float_to_int();
+void build_in_int_to_float();
+void build_in_len();
+void build_in_substr(char *var, char *content, char *begin, char *length);

@@ -17,6 +17,7 @@ endif
 
 public_sources = \
 	ast.c \
+	code-generator.c \
 	debug.c \
 	error.c \
 	global.c \
@@ -32,6 +33,7 @@ public_sources = \
 
 public_headers = \
 	ast.h \
+	code-generator.h \
 	debug.h \
 	error.h \
 	global.h \

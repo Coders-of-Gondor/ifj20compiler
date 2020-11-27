@@ -14,6 +14,7 @@
 #include "global.h"
 #include "scanner.h"
 #include "parser.h"
+#include "code-generator.h"
 
 const char *program_name = "ifj20compiler";
 
@@ -89,6 +90,8 @@ int main(int argc, char *argv[]) {
 
     scanner_free(scanner);
     fclose(f);
+    
+    generate();
 
     return SUCCESS;
 }
