@@ -75,7 +75,8 @@ $(function() {
 
 <p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler - the heart of the compiler.">parser.c</a>.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -90,9 +91,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa3c7e1321fa936707c04048fce387c67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a> (char *ident_name)</td></tr>
 <tr class="memdesc:aa3c7e1321fa936707c04048fce387c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match the lookahead token against IDENT type and match the ident name.  <a href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">More...</a><br /></td></tr>
 <tr class="separator:aa3c7e1321fa936707c04048fce387c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71466a88cec3911e600c9b48cbd4b935"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a71466a88cec3911e600c9b48cbd4b935">parser_start</a> ()</td></tr>
-<tr class="memdesc:a71466a88cec3911e600c9b48cbd4b935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the parser.  <a href="parser_8h.html#a71466a88cec3911e600c9b48cbd4b935">More...</a><br /></td></tr>
-<tr class="separator:a71466a88cec3911e600c9b48cbd4b935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ec2ec63d189bf8816896b67901a6a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a> (scanner_t *scanner_main)</td></tr>
+<tr class="memdesc:a33ec2ec63d189bf8816896b67901a6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the parser.  <a href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">More...</a><br /></td></tr>
+<tr class="separator:a33ec2ec63d189bf8816896b67901a6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5adfb9b790a748f0343199e0b8c65edb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a> ()</td></tr>
 <tr class="memdesc:a5adfb9b790a748f0343199e0b8c65edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Below can be found the parsing functions deduced from the LL(1) table.  <a href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">More...</a><br /></td></tr>
 <tr class="separator:a5adfb9b790a748f0343199e0b8c65edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -305,8 +306,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 
 </div>
 </div>
-<a id="a71466a88cec3911e600c9b48cbd4b935"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71466a88cec3911e600c9b48cbd4b935">&#9670;&nbsp;</a></span>parser_start()</h2>
+<a id="a33ec2ec63d189bf8816896b67901a6a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33ec2ec63d189bf8816896b67901a6a2">&#9670;&nbsp;</a></span>parser_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -314,7 +315,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
         <tr>
           <td class="memname">void parser_start </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">scanner_t *&#160;</td>
+          <td class="paramname"><em>scanner_main</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -328,7 +330,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()<
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 27 2020 19:20:54 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Fri Nov 27 2020 19:21:30 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
