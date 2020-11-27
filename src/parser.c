@@ -28,8 +28,6 @@ bool eof_found = false; /**< track if the eof has been found, terminate the anal
 bool no_eol = false; /**< track if the eol could have been inserted before the token */
 bool required_eol = false; /**< track if the eol should be required here */
 
-int return_code = 0; /**< track the return code for the eol checking */
-
 // TODO: make eol rules
 
 void parser_move() {
@@ -37,7 +35,7 @@ void parser_move() {
 
     eol_encountered = false;
     // move the lookahead
-    return_code = scanner_scan(scanner, &lookahead, &eol_encountered, &line);
+    int return_code = scanner_scan(scanner, &lookahead, &eol_encountered, &line);
 
     // TODO: make sure all return cases are handled here
 
@@ -111,7 +109,7 @@ void parser_start(scanner_t *scanner_main) {
     // move the lookahead to the first lexeme
     parser_move();
 
-    parser_prolog();  
+    parser_prolog();
     parser_funcs();
 }
 
@@ -127,7 +125,7 @@ void parser_funcs() {
     if (eof_found) {
         fprintf(stderr, "EOF encountered, stopping syntax analysis...\n");
         fprintf(stderr, "line: %d\n", line);
-        success_exit();
+        return;
     }
 
     // if FUNC not found, apply eps-rule
