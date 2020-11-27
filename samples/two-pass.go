@@ -5,7 +5,7 @@ package main
 func g() {
 	j := 0
 	j = f(3)
-	f(j)
+	j = f(j)
 }
 
 func f(i int) (int) {
