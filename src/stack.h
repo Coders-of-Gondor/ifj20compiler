@@ -169,6 +169,7 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
 
 /**
  * @brief Find out if a value is already in the stack.
+ * @pre Needs a comparasion function as its parameter.
  * @return true if value found, false if not.
  */
 inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack,
@@ -187,6 +188,28 @@ inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stac
 
     // no value found
     return false;
+}
+
+/**
+ * @brief Tell how many times is the value in the stack.
+ * @pre Needs a comparasion function as its parameter.
+ * @return Return the number of occurences.
+ */
+inline int CONCAT_FUNC(stack, TYPE, howmany)(CONCAT_STRUCT(stack, TYPE) *stack,
+                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR)compare_func) {
+    debug_entry();
+    int top = stack->top;
+    int occurences = 0;
+
+    while (top >= 0) {
+        if (compare_func(stack->array[top], value_to_find) == 0) {
+            // value found
+            occurences++;
+        }
+        top--;
+    }
+
+    return occurences;
 }
 
 /**
