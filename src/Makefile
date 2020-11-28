@@ -24,6 +24,7 @@ public_sources = \
 	scanner.c \
 	stack_charptr.c \
 	stack_int.c \
+	stack_stack_charptr_tptr.c \
 	str.c \
 	symtable.c \
 	token.c
@@ -38,6 +39,7 @@ public_headers = \
 	stack_extern_template.h \
 	stack_charptr.h \
 	stack_int.h \
+	stack_stack_charptr_tptr.h \
 	str.h \
 	symtable.h \
 	token.h

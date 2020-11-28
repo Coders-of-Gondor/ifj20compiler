@@ -8,9 +8,9 @@
  */
 
 // Header guards are dependent on the given TYPE.
-#ifndef __STACK_TYPE_H__
-#define __STACK_TYPE_H__
+#ifdef TYPEDEF
 TYPEDEF;
+#endif
 
 /********* TYPICAL USAGE *********
 #define TYPE <YOURTYPE>
@@ -78,7 +78,7 @@ typedef struct CONCAT_STRUCT(stack, TYPE)
 // stack's starting capacity
 #define STACK_START_SIZE 10
 // function pointer to the compare function for _ispresent()
-typedef int (*CMP_FUNC_PTR)(TYPE, TYPE);
+typedef int (*CONCAT_FUNC(CMP, TYPE, PTR))(TYPE, TYPE);
 
 /**
  * @brief Helper function for reszing the stack when its capacity has been filled.
@@ -171,9 +171,8 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
  * @brief Find out if a value is already in the stack.
  * @return true if value found, false if not.
  */
-typedef int (*CMP_FUNC_PTR)(TYPE, TYPE);
 inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack,
-                        TYPE value_to_find, CMP_FUNC_PTR compare_func) {
+                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR)compare_func) {
     debug_entry();
     int top = stack->top;
 
@@ -199,5 +198,3 @@ inline void CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack, TYPE) *stack) {
     free(stack->array);
     free(stack);
 }
-
-#endif // __STACK_TYPE_H__
