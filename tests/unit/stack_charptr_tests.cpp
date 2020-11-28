@@ -8,7 +8,7 @@ extern "C" {
 
 // Author: Marek Filip <xfilip46, Wecros>
 // Date 27/11/2020
-// Copied the behaviour of the tests from 'stack_charptr_tests.cpp'
+// Copied the behaviour of the tests from 'stack_int_tests.cpp'
 
 class stack_charptr_general : public::testing::Test {
     protected:
