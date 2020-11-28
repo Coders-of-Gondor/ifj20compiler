@@ -148,8 +148,10 @@ TEST_F(stack_int_full, pop_some_values) {
 
 // complex test to make sure resize works correctly
 TEST_F(stack_int_full, complex_test) {
+    ASSERT_EQ(stack->size, 10);
     // push one value to make the stack bigger  
     stack_int_push(stack, 11);
+    ASSERT_EQ(stack->size, 20);
     ASSERT_EQ(stack->array[10], 11);
 
     // peek and pop
@@ -159,4 +161,5 @@ TEST_F(stack_int_full, complex_test) {
     // push again
     stack_int_push(stack, 11);
     ASSERT_EQ(stack->array[10], 11);
+    ASSERT_EQ(stack->size, 20);
 }
