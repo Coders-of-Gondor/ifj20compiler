@@ -99,3 +99,11 @@ readonly lexical_samples="$samples/lexical-tests"
 @test "Lexical analysis - string4" {
   run_compiler $ERROR_LEXICAL $lexical_samples/string4.go
 }
+
+@test "Lexical analysis - unending_comment" {
+  run_compiler $ERROR_LEXICAL $lexical_samples/unending.go
+}
+
+@test "Lexical analysis - block_comment_in_block" {
+  run_compiler $ERROR_LEXICAL $lexical_samples/block_in_block.go
+}
