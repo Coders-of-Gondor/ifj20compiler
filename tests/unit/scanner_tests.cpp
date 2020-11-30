@@ -600,3 +600,40 @@ TEST_F(scanner_scan_divide, scan_divide) {
             ASSERT_EQ(token_type, IDENT);
     }
 }
+
+class scanner_scan_underscore : public ::testing::Test {
+    protected:
+        scanner_t *s;
+        token_t t;
+        FILE *f;
+        int line;
+        int number_of_tokens_in_file = 11;
+
+        void SetUp() override {
+            global_init();
+            f = fopen("./samples/underscore.go", "r");
+            s = scanner_new(f);
+        }
+
+        void TearDown() override {
+            scanner_free(s);
+            fclose(f);
+        }
+};
+
+TEST_F(scanner_scan_underscore, scan_underscore) {
+    bool eol_encounter = false;
+    int result = 1;
+    for (int i = 0; i < number_of_tokens_in_file; i++) {
+        result = scanner_scan(s, &t, &eol_encounter, &line);
+        ASSERT_EQ(result, 0);
+        int token_type = t.type;
+        if (i == 7) 
+            ASSERT_EQ(token_type, IDENT);
+        else if (i == 8) 
+            ASSERT_EQ(token_type, ASSIGN);
+        else if (i == 9) 
+            ASSERT_EQ(token_type, INT_LIT);
+        
+    }
+}

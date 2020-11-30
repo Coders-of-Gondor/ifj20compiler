@@ -52,6 +52,10 @@ readonly success_sample="$samples/success-tests"
   run_compiler $samples/string_escape_hex.go
 }
 
+@test "success analysis - underscore" {
+  run_compiler $samples/underscore.go
+}
+
 # test the success of precedence parsing
 @test "success analysis - expr1" {
   run_compiler $success_sample/expr1.go

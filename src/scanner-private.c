@@ -11,8 +11,10 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "debug.h"
 #include "scanner-private.h"
+#include "error.h"
 
 /**
  * @brief file_move moves current position in a file by X
@@ -28,7 +30,7 @@
  *
  * @param s an instance of scanner
  */
-void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
+int scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
     // debug_entry();
     comment_state state = CLEAN;
     char prev_char;
@@ -42,6 +44,10 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
             state = CLEAN;
 
         switch (s->character) {
+            case EOF:
+                if (state == BLOCK_COMMENT)
+                    return 1;
+                break;
             case '\n':
                 *eol_encountered = true;
                 (*line)++;
@@ -62,7 +68,12 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
                 if (state == COMMENT_CHANGE) {
                     state = BLOCK_COMMENT;
                 } else if (state == BLOCK_COMMENT) {
-                    state = BLOCK_COMMENT_LEAVING;
+                    char lil_peek = fgetc(s->file);
+                    ungetc(lil_peek, s->file);
+                    if (lil_peek ==  '/') {
+                        state = BLOCK_COMMENT_LEAVING;
+                    }
+
                 }
                 break;
             default:
@@ -77,6 +88,7 @@ void scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *
 
     ungetc(s->character, s->file);
     s->position--;
+    return 0;
 }
 
 /**
