@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ifj20compiler: stack_charptr.h Source File</title>
+<title>ifj20compiler: stack_stack_charptr_tptr.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,27 +66,41 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">stack_charptr.h</div>  </div>
+<div class="title">stack_stack_charptr_tptr.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="stack__charptr_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// typedef to handle pointers</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">char</span>* charptr;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define TYPEDEF typedef char* charptr</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define TYPE charptr</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// external header guards for stack.h</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#ifndef __STACK_charptr_H__</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define __STACK_charptr_H__</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack_8h.html">stack.h</a>&quot;</span>  <span class="comment">// this is the main file</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#undef TYPE  // will be defined again in the stack_charptr.h</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#undef TYPEDEF  // undefine the TYPEDEF, has been already used in stack.h</span></div>
-</div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astack_8h_html"><div class="ttname"><a href="stack_8h.html">stack.h</a></div><div class="ttdoc">General stack header file, make use of macros for the generalization.</div></div>
+
+<p>stack_charptr_t* stack header file.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="stack__charptr_8h_source.html">stack_charptr.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="stack_8h_source.html">stack.h</a>&quot;</code><br />
+</div>
+<p><a href="stack__stack__charptr__tptr_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a11a4114a8973be51c022ce946b643033"><td class="memItemLeft" align="right" valign="top"><a id="a11a4114a8973be51c022ce946b643033"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TYPEDEF</b>&#160;&#160;&#160;typedef stack_charptr_t* stack_charptr_tptr</td></tr>
+<tr class="separator:a11a4114a8973be51c022ce946b643033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a392548f2df67370cb15d2a5d75cd7b"><td class="memItemLeft" align="right" valign="top"><a id="a5a392548f2df67370cb15d2a5d75cd7b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TYPE</b>&#160;&#160;&#160;stack_charptr_tptr</td></tr>
+<tr class="separator:a5a392548f2df67370cb15d2a5d75cd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a9102c04d557c8658759115274a9af9bb"><td class="memItemLeft" align="right" valign="top"><a id="a9102c04d557c8658759115274a9af9bb"></a>
+typedef stack_charptr_t *&#160;</td><td class="memItemRight" valign="bottom"><b>stack_charptr_tptr</b></td></tr>
+<tr class="separator:a9102c04d557c8658759115274a9af9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>stack_charptr_t* stack header file. </p>
+<dl class="section author"><dt>Author</dt><dd>Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. Generated by generate_stack_type.bash (Author: Marek Filip &lt;xfilip46&gt;) </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>28/11/2020 </dd></dl>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Tue Dec 1 2020 13:03:30 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
