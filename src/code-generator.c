@@ -8,9 +8,14 @@
  */
 
 #include <stdio.h>
-#include "code-generator.h"
+#include <string.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include "code-generator.h"
+#include "three-adress-code.h"
+#include "error.h"
+#include "global.h"
 
 #define SPACE 32
 #define HASH 35
@@ -20,7 +25,7 @@ char *conversion(char *str) {
 
     int length = strlen(str);
     char buff[5];
-    char *new = malloc(4*length+1);
+    char *new = malloc((4*length+1)*sizeof(char));
     strcpy(new, "");
 
     if (new == NULL) 
@@ -38,25 +43,109 @@ char *conversion(char *str) {
 
 }
 
+char *remove_type(char *str) {
+
+    int length = strlen(str);
+    char *new = malloc(length*sizeof(char));
+    char new_float[200]; 
+    double d;
+    strcpy(new, "");
+
+    if (new == NULL) 
+        exit(99);
+
+    for (int i = 1; i < length; i++) {
+        new = strncat(new, &str[i], 1);     // copy string without the first letter of the former
+    }
+
+    char *buff = malloc((length+8)*sizeof(char));
+    char *converted_str = malloc(length*sizeof(char));
+
+    switch (str[0]) {
+        case 's':
+            converted_str = conversion(new);
+            strcpy(buff, "string@");
+            break;
+
+        case 'f':
+            free(converted_str);
+            d = strtod(new, NULL);
+            sprintf(new_float, "%a", d);
+            strcpy(buff, "float@");
+            strncat(buff, new_float, strlen(new_float));
+            free(new);
+
+            return buff;
+            break;
+
+        case 'i':
+            strcpy(converted_str, new);
+            strcpy(buff, "int@");
+            break;
+    }
+    free(new);
+    strncat(buff, converted_str, strlen(converted_str));
+    free(converted_str);
+    return buff;
+}
+
+
 void generate() {
 
     //deklarace pomocnych promenych
 
     //promenna ve ktere bude jeden radek 3Ak
 
+    TACList *L = malloc(sizeof(struct TACList)); 
+
+    TAC_init(L);
+
+    TAC_create_row(L);
+
+    TAC_insert(L, OP_LABEL, "main", NULL, NULL);
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "a");
+    TAC_insert(L, OP_MOVE, "I5", NULL, "a");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "b");
+
+    //start generating code
+
     generate_head();
 
-    char s = 's';
-    char i = 'i';
-    char f = 'f';
-
-    build_in_input(s);
-    build_in_input(i);
-    build_in_input(f);
+    build_in_input('s');
+    build_in_input('i');
+    build_in_input('f');
 
     build_in_float_to_int();
     build_in_int_to_float();
     build_in_len();
+
+    printf("\n");
+   
+    L->act = L->first;
+
+    while (L->act->next_row != NULL) {
+
+        switch (L->act->op) {
+
+        case OP_ADD:
+            
+            break;
+
+        case OP_LABEL:
+            printf("LABEL %s:\n",L->act->arg1);
+            break;
+
+        
+        
+        default:
+            break;
+        }
+
+        L->act = L->act->next_row;
+    }
+
+    TAC_delete(L);
+    
 
     /* while (there are instructions) {
         
@@ -68,244 +157,4 @@ void generate() {
 
     */
 
-}
-
-void generate_head() {
-    printf(".IFJcode20\n");
-    printf("JUMP main\n\n");
-}
-
-/**
- * @brief Printing functions that prints the Input instructions
- * @description The function should be something like 'y = inputs()', so we need to track the 'y' we are assigning into
- */
-
-void build_in_input(char type) {        // type is to differentiate between inputi, inputs, inputf; *var is the var name 
-    // TODO figure out how to get what frame we at (like we wanna print LF@var or GF or WTF)
-    // IMPLEMENT SMTH LIKE THIS -> char *current_frame = get_frame();
-
-
-    switch (type) {
-        case 's':
-            printf("LABEL $inputs\n");
-            printf("PUSHFRAME\n");
-
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 string\n");
-
-            printf("POPFRAME\n");
-            printf("RETURN\n\n");
-            break;
-
-        case 'i':
-            printf("LABEL $inputi\n");
-            printf("PUSHFRAME\n");
-
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 int\n");
-
-            printf("POPFRAME\n");
-            printf("RETURN\n\n");
-            break;
-
-        case 'f':
-            printf("LABEL $inputf\n");
-            printf("PUSHFRAME\n");
-
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 int\n");
-
-            printf("POPFRAME\n");
-            printf("RETURN\n\n");
-            break;
-    }
-
-}
-
-/**
- * @brief Printing function to convert float to int
- * @description The function should be something like 'x = float2int(y)'
- */
-void build_in_float_to_int() {
-
-    printf("LABEL $float2int\n");
-    printf("PUSHFRAME\n");
-
-    printf("DEFVAR LF@$retval1\n");
-    printf("FLOAT2INT LF@$retval1 LF@$  1\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n\n");
-}
-
-/**
- * @brief Printing function to convert int to float
- * @description The function should be something like 'x = int2float(y)'
- */
-void build_in_int_to_float() {
-
-    printf("LABEL $int2float\n");
-    printf("PUSHFRAME\n");
-
-    printf("DEFVAR LF@$retval1\n");
-    printf("INT2FLOAT LF@$retval1 LF@$1\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n\n");
-}
-
-/**
- * @brief Printing function to get length of argument
- * @description The function should be something like 'x = len(y)'
- */
-void build_in_len() { 
-
-    printf("LABEL $len\n");
-    printf("PUSHFRAME\n");
-
-    printf("DEFVAR LF@$retval1\n");
-    printf("STRLEN LF@$retval1 LF@$1\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n\n");
-}
-
-void build_in_substr() {
-
-    printf("LABEL $substr\n");
-    printf("PUSHFRAME\n");
-    // inner variables
-    printf("DEFVAR LF@$counter_increase\n");
-    printf("DEFVAR LF@$length\n");
-    printf("DEFVAR LF@$result\n");
-    printf("DEFVAR LF@$bool_true\n");
-    printf ("DEFVAR LF@$rest_of_string_length\n");
-    printf("DEFVAR LF@$tmp\n");
-
-    // return values
-    printf("DEFVAR LF@retval\n");
-    printf("DEFVAR LF@retval_2\n");
-    
-    // initialize some values
-    printf("MOVE LF@$bool_true bool@true\n");
-    printf("STRLEN LF@$length LF@$1\n");
-    printf("SUB LF@$rest_of_string_length LF@$length LF@$2\n");
-
-    // check correct value
-    printf("GT LF@$result LF@$length LF@$2\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
-    printf("LT LF@$result int@0 LF@$2\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
-    printf("LT LF@$result int@0 LF@$3\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
-
-    //  check if n wasn't too big, if thats the case, correct it
-    printf("GT LF@$result LF@$3 LF@$rest_of_string_length\n");
-    printf("JUMPIFNEQ begin LF@$result LF@$bool_true\n");
-    printf("MOVE LF@$3 LF@$rest_of_string_length\n");
-
-    printf("LABEL begin\n");
-    printf("MOVE LF@$counter_increase int@1\n");
-    printf("MOVE LF@retval string@\n");
-
-    printf("MOVE LF@$length int@0\n");
-    printf("ADD LF@$length LF@$3 LF@$2\n");
-
-    printf("LABEL loop\n");
-    printf("GETCHAR LF@$tmp LF@$1 LF@$2\n");            // getchar -> move 1 char from %1 string on postion @counter to retval
-    printf("ADD LF@$2 LF@$2 LF@$counter_increase\n");   // counter = counter + 1
-    printf("CONCAT LF@retval LF@retval LF@$tmp\n");     // retval = retval+$tmp (concatenate)
-
-    printf("JUMPIFNEQ loop LF@$2 LF@$length\n");        // if counter != $length, continue
-    printf("JUMP good\n");
-
-    printf("LABEL bad\n");
-    printf("EXIT int@1\n"); // perhaps MOVE LF@retval_2 int@1 ?
-
-    printf("LABEL good\n");
-    printf("MOVE LF@retval_2 int@0\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n");
-}
-
-void build_in_ord() {
-
-    printf("LABEL $ord\n");
-    printf("PUSHFRAME\n");
-
-    // define inner values
-    printf("DEFVAR LF@$retval\n");
-    printf("DEFVAR LF@$retval_2\n");
-    printf("DEFVAR LF@$bool_true\n");
-    printf("DEFVAR LF@$result\n");
-    printf("DEFVAR LF@$length\n");
-
-    // assign values to work with
-    printf("STRLEN LF@$length LF@$1\n");            // lenght = strlen(%1)
-    printf("SUB LF@$length LF@$length int@1\n");   //# lenght = length-1
-    printf("MOVE LF@$bool_true bool@true\n");     
-
-    // compare if we were given correct args
-    printf("GT LF@$result LF@$2 LF@$length\n");    // if %2 (i) > length-1, bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
-    printf("GT LF@$result int@0 LF@$2\n");    // if 0 > LF@%2 (i), bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
-
-    // do the thing already ffs
-    printf("STRI2INT LF@$retval LF@$1 LF@$2\n");
-
-    printf("MOVE LF@$retval_2 int@0\n");
-    printf("JUMP end\n");
-
-    printf("LABEL bad\n");
-    printf("MOVE LF@$retval_2 int@1\n");
-    printf("MOVE LF@$retval int@\n");
-
-    printf("LABEL end\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n");
-}
-
-void build_in_chr() {
-
-    printf("LABEL $ord\n");
-    printf("PUSHFRAME\n");
-
-    // define inner values
-    printf("DEFVAR LF@$retval\n");
-    printf("DEFVAR LF@$retval_2\n");
-    printf("DEFVAR LF@$bool_true\n");
-    printf("DEFVAR LF@$result\n");
-
-    //assign values to work with
-    printf("MOVE LF@$bool_true bool@true\n");
-
-    //compare if we were given correct args
-    printf("GT LF@$result LF@$1 int@255\n");   // if $1 (i) > 255, bad 
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
-    printf("GT LF@$result int@0 LF@$1\n");    // if 0 > LF@%2 (i), bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
-
-    // do the fucking thing
-    printf("INT2CHAR LF@$retval LF@$1\n");
-
-    printf("MOVE LF@$retval_2 int@0\n");
-    printf("JUMP end\n");
-
-    printf("LABEL bad\n");
-    printf("MOVE LF@$retval_2 int@1\n");
-    printf("MOVE LF@$retval string@\n");
-
-    printf("LABEL end\n");
-
-    printf("POPFRAME\n");
-    printf("RETURN\n");
 }

@@ -20,6 +20,7 @@ public_sources = \
 	debug.c \
 	error.c \
 	global.c \
+	instructions.c \
 	main.c \
 	parser.c \
 	scanner.c \
@@ -28,6 +29,7 @@ public_sources = \
 	stack_stack_charptr_tptr.c \
 	str.c \
 	symtable.c \
+	three-adress-code.c \
 	token.c
 
 public_headers = \
@@ -44,6 +46,7 @@ public_headers = \
 	stack_stack_charptr_tptr.h \
 	str.h \
 	symtable.h \
+	three-adress-code.h \
 	token.h
 
 private_sources = \

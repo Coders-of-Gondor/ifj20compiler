@@ -10,6 +10,7 @@
 #include "global.h"
 #include "symtable.h"
 #include "token.h"
+#include "error.h"
 
 /**
  * @brief Definitions of the global variables of global.h
