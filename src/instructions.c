@@ -10,8 +10,12 @@
 #include "code-generator.h"
 #include <stdio.h>
 
-void print_MOVE(char *arg1, char *arg2, char *arg3, char *arg4) {
-    printf("MOVE %s@%s %s@%s\n", arg1, arg2, arg3, arg4);
+void print_MOVE(char *arg1, char *arg2, char *arg3, char *arg4, char *number) {
+    if (number == NULL) {
+        printf("MOVE %s@%s %s@%s\n", arg1, arg2, arg3, arg4);
+    } else {
+        printf("MOVE %s@%s %s\n", arg1, arg2, number);
+    }
 }
 
 void print_ADD(char *var, char *sym1, char *sym2, char *number) {
@@ -20,21 +24,122 @@ void print_ADD(char *var, char *sym1, char *sym2, char *number) {
         printf("ADD LF@%s LF@%s LF@%s\n", var, sym1, sym2);
 }
 
-void print_SUB(char *var, char *sym1, char *sym2) {
-    printf("SUB %s %s %s\n", var, sym1, sym2);
+void print_CONCAT(char *var, char *sym1, char *sym2) {
+        printf("CONCAT LF@%s LF@%s LF@%s\n", var, sym1, sym2);
 }
 
-void print_MUL(char *var, char *sym1, char *sym2) {
-    printf("MUL %s %s %s\n", var, sym1, sym2);
+void print_SUB(char *var, char *sym1, char *sym2, char *number) {
+    if(number == NULL){
+        printf("SUB LF@%s LF@%s LF@%s\n", var, sym1, sym2);
+    } else {
+        printf("SUB LF@%s LF@%s %s\n", var, sym1, number);
+    }
 }
 
-void print_DIV(char *var, char *sym1, char *sym2) {
-    printf("DIV %s %s %s\n", var, sym1, sym2);
+void print_MUL(char *var, char *sym1, char *sym2, char *number) {
+    if(number == NULL){
+        printf("MUL LF@%s LF@%s LF@%s\n", var, sym1, sym2);
+    } else {
+        printf("MUL LF@%s LF@%s %s\n", var, sym1, number);
+    }
 }
 
-void print_IDIV(char *var, char *sym1, char *sym2) {
-    printf("SUB %s %s %s\n", var, sym1, sym2);
+void print_DIV(char *var, char *sym1, char *sym2, char *number) {
+    if(number == NULL){
+        printf("DIV LF@%s LF@%s LF@%s\n", var, sym1, sym2);
+    } else {
+        printf("DIV LF@%s LF@%s %s\n", var, sym1, number);
+    }
 }
+
+void print_IDIV(char *var, char *sym1, char *sym2, char *number) {
+    if(number == NULL){
+        printf("IDIV LF@%s LF@%s LF@%s\n", var, sym1, sym2);
+    } else {
+        printf("IDIV LF@%s LF@%s %s\n", var, sym1, number);
+    }
+}
+
+void print_ADD_ASSIGN(char *var, char *sym1, char *number) {
+    if(number == NULL){
+        printf("ADD LF@%s LF@%s LF@%s\n", var, var, sym1);
+    } else {
+        printf("ADD LF@%s LF@%s %s\n", var, var, number);
+    }
+}
+
+void print_SUB_ASSIGN(char *var, char *sym1, char *number) {
+    if(number == NULL){
+        printf("SUB LF@%s LF@%s LF@%s\n", var, var, sym1);
+    } else {
+        printf("SUB LF@%s LF@%s %s\n", var, var, number);
+    }
+}
+
+void print_MUL_ASSIGN(char *var, char *sym1, char *number) {
+    if(number == NULL){
+        printf("MUL LF@%s LF@%s LF@%s\n", var, var, sym1);
+    } else {
+        printf("MUL LF@%s LF@%s %s\n", var, var, number);
+    }
+}
+
+void print_DIV_ASSIGN(char *var, char *sym1, char *number) {
+    if(number == NULL){
+        printf("DIV LF@%s LF@%s LF@%s\n", var, var, sym1);
+    } else {
+        printf("DIV LF@%s LF@%s %s\n", var, var, number);
+    }
+}
+
+void print_IDIV_ASSIGN(char *var, char *sym1, char *number) {
+    if(number == NULL){
+        printf("IDIV LF@%s LF@%s LF@%s\n", var, var, sym1);
+    } else {
+        printf("IDIV LF@%s LF@%s %s\n", var, var, number);
+    }
+}
+
+void print_DEFINE(char *var) {
+    printf("DEFVAR LF@%s", var);
+}
+
+void print_AND(char *var, char *sym1, char *sym2) {
+    printf("AND LF@%s LF@%s LF@%s", var, sym1, sym2);
+}
+
+void print_OR(char *var, char *sym1, char *sym2) {
+    printf("OR LF@%s LF@%s LF@%s", var, sym1, sym2);
+}
+
+void print_EQL(char *var, char *sym1, char *sym2) {
+    printf("EQ LF@%s LF@%s LF@%s", var, sym1, sym2);
+}
+
+void print_NEQ(char *var, char *sym1, char *sym2) {
+    printf("EQ LF@%s LF@%s LF@%s", var, sym1, sym2);
+    printf("NOT LF@%s LF@%s", var, var);
+}
+
+void print_LSS(char *var, char *sym1, char *sym2) {
+    printf("LT LF@%s LF@%s LF@%s", var, sym1, sym2);
+}
+
+void print_LEQ(char *var, char *sym1, char *sym2) {
+    printf("LT LF@%s LF@%s LF@%s", var, sym1, sym2);
+    printf("EQ LF@%s LF@%s LF@%s", "$$$tmp", sym1, sym2);
+    printf("AND LF@%s LF@%s LF@%s", var, var, "$$$tmp");
+}
+
+void print_GTR(char *var, char *sym1, char *sym2) {
+    printf("GT LF@%s LF@%s LF@%s", var, sym1, sym2);
+}
+
+void print_GEQ(char *var, char *sym1, char *sym2) {
+    printf("GT LF@%s LF@%s LF@%s", var, sym1, sym2);
+    printf("EQ LF@%s LF@%s LF@%s", "$$$tmp", sym1, sym2);
+    printf("AND LF@%s LF@%s LF@%s", var, var, "$$$tmp");
+}    
 
 void generate_head() {
     printf(".IFJcode20\n");
@@ -224,7 +329,7 @@ void build_in_ord() {
     printf("GT LF@$result int@0 LF@$2\n");    // if 0 > LF@%2 (i), bad
     printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
 
-    // do the thing already ffs
+    // do the thing already
     printf("STRI2INT LF@$retval LF@$1 LF@$2\n");
 
     printf("MOVE LF@$retval_2 int@0\n");
@@ -260,7 +365,7 @@ void build_in_chr() {
     printf("GT LF@$result int@0 LF@$1\n");    // if 0 > LF@%2 (i), bad
     printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
 
-    // do the fucking thing
+    // do the thing 
     printf("INT2CHAR LF@$retval LF@$1\n");
 
     printf("MOVE LF@$retval_2 int@0\n");
