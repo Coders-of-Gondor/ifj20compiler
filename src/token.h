@@ -87,7 +87,8 @@ typedef enum token_type {
     INV, // x - invalid    
     RED, // > - reduction
     SHF, // < - shift
-    EQQ  // = - equals
+    EQQ, // = - equals
+    UNA  // >|< - unary
 } token_type;
 
 /**

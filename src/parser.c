@@ -319,6 +319,30 @@ void parser_id_first(char *id) {
             parser_assign(id);
             required_eol = true;
             break;
+        case ADD_ASSIGN:
+            // += assign
+            parser_match(ADD_ASSIGN);
+            parser_expr();
+            required_eol = true;
+            break;
+        case SUB_ASSIGN:
+            // += assign
+            parser_match(SUB_ASSIGN);
+            parser_expr();
+            required_eol = true;
+            break;
+        case MUL_ASSIGN:
+            // += assign
+            parser_match(MUL_ASSIGN);
+            parser_expr();
+            required_eol = true;
+            break;
+        case DIV_ASSIGN:
+            // += assign
+            parser_match(DIV_ASSIGN);
+            parser_expr();
+            required_eol = true;
+            break;
         case LPAREN:
             // function call
             // Store identifier of the called function
@@ -799,11 +823,14 @@ bool stack_reduce(stack_int_t *stack, stack_int_t *function_stack) {
     }
 
     // check the rules
-    if (!prec_apply_rule(rule_stack, function_stack)) {
-        stack_int_free(rule_stack);
-        return false;
-    }
+    int rule_rc = prec_apply_rule(rule_stack, function_stack);
     stack_int_free(rule_stack);
+
+    if (rule_rc == 0) {
+        return false;
+    } else if (rule_rc == 2) {
+        // handle unary semantics
+    }
 
     // actually change the symbols to E
     stack->top = shift_pos;
@@ -817,7 +844,7 @@ const token_type PREC_TABLE[PREC_TABLE_OP_COUNT][PREC_TABLE_OP_COUNT] =
 {      //   ,   REL  ADD  MUL   (    )   id   lit   $
 /*  ,  */ {EQQ, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
 /* REL */ {RED, RED, SHF, SHF, SHF, RED, SHF, SHF, RED},
-/* ADD */ {RED, RED, RED, SHF, SHF, RED, SHF, SHF, RED},
+/* ADD */ {RED, RED, UNA, SHF, SHF, RED, SHF, SHF, RED},
 /* MUL */ {RED, RED, RED, RED, SHF, RED, SHF, SHF, RED},
 /*  (  */ {EQQ, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
 /*  )  */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
@@ -863,8 +890,10 @@ int prec_get_table_index(token_type t) {
  * E : id ( )
  * E : id ( E )
  * E : id ( E , ... )
+ * --- UNARY ---
+ * E : ADD E
  */
-bool prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack) {
+int prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack) {
     token_type curr;  // current symbol
     NEXT_SYMBOL;
 
@@ -885,16 +914,26 @@ bool prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack) {
             // E : id ( ... , E )
             return prec_rule_rparen(rule_stack, function_stack);
         case EXPR_SYMBOL:
-            // E : E REL E
+            // E : ADD E
             NEXT_SYMBOL;
+
+            if (is_addop(curr)) {
+                if (stack_int_isempty(rule_stack)) {
+                    return true;
+                }
+            }
 
             if (!is_relop(curr) && !is_addop(curr) && !is_mulop(curr)) {
                 return false;
             }
 
+            // E : E REL E
+            // E : E ADD E
+            // E : E MUL E
             NEXT_SYMBOL;
             if (curr != EXPR_SYMBOL) return false;
             return true;
+
         default:
             return false;
     }
@@ -1053,6 +1092,16 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_
     debug("Top T: %s, Top: %s, input: %s", token_get_type_string(top),
             token_get_type_string(stack_int_peek(stack)), token_get_type_string(input));
     switch(PREC_TABLE[row][col]) {
+        case UNA:
+            // '>|<' unary symbol
+            // check what is in stack and jump to RED or SHF
+
+            if (top == EXPR_SYMBOL) {
+                goto RED;
+            } else {
+                goto SHF;
+            }
+
         case EQQ:
             // '=' symbol
             // push input onto the stack and read the next symbol
@@ -1063,6 +1112,7 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_
             }
 
             return true;
+        SHF:
         case SHF:
             // '<' symbol
             // change 'a' on stack to 'a<'
@@ -1070,6 +1120,7 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_
             // and push input onto the stack and read the next symbol
             stack_int_push(stack, input);
             return true;
+        RED:
         case RED:
             // '>' symbol
             // if '<y' is on top of the stack and rule exists
