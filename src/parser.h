@@ -142,6 +142,7 @@ void parser_optexprs(int *num_of_exprs);
  * SHF - '<', shift symbol - change the top symbol onto the stack ('a') to '<a'
  *        and push the input onto the stack and read the next input.
  * EQQ - '=', equal symbol - push the input onto the stack and read the next input.
+ * UNA - '>|<', unary symbol - decide if to shift or to reduce depending on the stack.
  *
  * EXPRESSION RULES:
  * --- basic ---
@@ -199,9 +200,11 @@ int prec_get_table_index(token_type t);
 
 /**
  * @brief Determine the rule validity
- * @return True if the rule is applicable, false if it is not.
+ * @return 0 - failed -> error
+ *         1 - success - standard
+ *         2 - success - unary
  */
-bool prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack);
+int prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack);
 
 
 bool prec_rule_rparen(stack_int_t *rule_stack, stack_int_t *function_stack);
