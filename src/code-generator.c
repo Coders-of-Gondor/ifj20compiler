@@ -21,6 +21,10 @@
 #define HASH 35
 #define BACKSLASH 92
 
+#include "stack_stack_charptr_tptr.h"
+
+typedef stack_stack_charptr_tptr_t stack_of_stacks;
+
 char *conversion(char *str) {
 
     int length = strlen(str);
@@ -107,7 +111,25 @@ void generate() {
     TAC_insert(L, OP_MOVE, "I5", NULL, "a");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "b");
 
+    #define STACK(F) stack_stack_charptr_tptr_ ## F
     //start generating code
+    // stack_of_stacks *megastack = stack_stack_charptr_tptr_init();
+    stack_of_stacks *megastack = STACK(init)();
+
+    stack_charptr_t *string_stack1 = stack_charptr_init();
+    stack_charptr_push(string_stack1, "foo");
+    
+    stack_charptr_ispresent(string_stack1, "foo", strcmp);
+    char *stringus = stack_charptr_pop(string_stack1);
+    if (!stack_charptr_ispresent(string_stack1, "foo", strcmp)) {
+        stack_charptr_push(string_stack1, "foo");
+    }
+
+    STACK(push)(megastack, string_stack1);
+
+    stack_charptr_free(string_stack1);
+    STACK(free)(megastack);
+
 
     generate_head();
 
