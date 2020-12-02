@@ -166,15 +166,14 @@ void parser_optexprs(int *num_of_exprs);
  * @brief The precetence table used for the parsing.
  * @details Implemented as a 2D array.
  * >|< - unary and standard
- * !<! - funexp
  *  --- ,   REL ADD MUL (   )   id  lit $
- *  ,   >   <   <   <   <   >   <   <   >
+ *  ,   =   <   <   <   <   =   <   <
  *  REL >   >   <   <   <   >   <   <   >
  *  ADD >   >  >|<  <   <   >   <   <   >
  *  MUL >   >   >   >   <   >   <   <   >
- *  (   <   <   <   <   <   =   <   <
+ *  (   =   <   <   <   <   =   <   <
  *  )   >   >   >   >       >           >
- *  id  >   >   >   >  !<!  >           >
+ *  id  >   >   >   >   =   >           >
  *  lit >   >   >   >       >           >
  *  $   <   <   <   <   <       <   <
  *
@@ -195,17 +194,17 @@ int prec_get_table_index(token_type t);
 // Macro to read the next symbol, so we don't have to write it over and over again
 #define NEXT_SYMBOL do { \
     if (!stack_int_isempty(rule_stack)) curr = stack_int_pop(rule_stack); \
-    else return false; \
+    else {debug("empty rule stack!"); return false;} \
 } while(0)
 
 /**
  * @brief Determine the rule validity
  * @return True if the rule is applicable, false if it is not.
  */
-bool prec_apply_rule(stack_int_t *rule_stack);
+bool prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack);
 
 
-bool prec_rule_rparen(stack_int_t *rule_stack);
+bool prec_rule_rparen(stack_int_t *rule_stack, stack_int_t *function_stack);
 
 /**
  * @brief Determine if the precedence analysis constructed a single exprresion.
@@ -217,7 +216,12 @@ bool prec_succesful_stack(stack_int_t *stack);
  * @brief Handle the symbol according to the precedence's algorithm.
  * @return True if the parser should fetch the next symbol, false if not.
  */
-bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop);
+bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_int_t *function_stack);
+
+/**
+ * @brief Clean up the memory from the allocated stacks.
+ */
+void prec_clean(stack_int_t *stack, stack_int_t *func_stack);
 
 /**
  * @brief Same as stack_int_peek but skip the nonterminal values.
@@ -234,7 +238,7 @@ void stack_shift(stack_int_t *stack, token_type terminal);
  * @brief Change the top symbol+terminal to nonterminal rule.
  * @return True if the reduction was succesful, False if not.
  */
-bool stack_reduce(stack_int_t *stack);
+bool stack_reduce(stack_int_t *stack, stack_int_t *function_stack);
 
 /**
  * @brief Find the first index position of the passed value.
@@ -254,8 +258,11 @@ int stack_at(stack_int_t *stack, int index);
  */
 void parser_expr();
 
-/* ------------------------------------------------------------------------ */
-/* OUTDATED                                                                 */
+/**
+ * @brief Precedence analysis procedure that starts the parsing of expressions.
+ * @details Needs stack implementation to work properly.
+ */
+void parser_precedence_analysis();
 
 // is token type relational operator
 bool is_relop(token_type type);
@@ -263,21 +270,6 @@ bool is_relop(token_type type);
 bool is_addop(token_type type);
 // is token type mul/div operator
 bool is_mulop(token_type type);
-
-void parser_rel();
-void parser_rel_n();
-
-void parser_add();
-void parser_add_n();
-
-void parser_term();
-void parser_term_n();
-
-void parser_factor();
-void parser_funexp();
-
-/* OUTDATED                                                                 */
-/* ------------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------------ */
 /* SEMANTIC ACTIONS                                                         */

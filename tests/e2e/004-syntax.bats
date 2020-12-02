@@ -100,7 +100,7 @@ readonly syntax_samples="$samples"/syntax-tests
   run_compiler "$ERROR_SYNTAX" "$syntax_samples"/param4.go
 }
 
-@test "Syntax analysis - eol1" {
+@test "Syntax analysis - eol" {
   run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol1.go
 }
 
@@ -114,4 +114,64 @@ readonly syntax_samples="$samples"/syntax-tests
 
 @test "Syntax analysis - eol4" {
   run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol4.go
+}
+
+@test "Syntax analysis - eol5" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol5.go
+}
+
+@test "Syntax analysis - eol6" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol6.go
+}
+
+@test "Syntax analysis - eol7" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol7.go
+}
+
+@test "Syntax analysis - eol8" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol8.go
+}
+
+@test "Syntax analysis - eol9" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol9.go
+}
+
+@test "Syntax analysis - eol10" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol10.go
+}
+
+@test "Syntax analysis - eol11" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol11.go
+}
+
+@test "Syntax analysis - eol12" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol12.go
+}
+
+@test "Syntax analysis - eol13" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol13.go
+}
+
+@test "Syntax analysis - eol14" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol14.go
+}
+
+@test "Syntax analysis - eol15" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol15.go
+}
+
+@test "Syntax analysis - eol16" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol16.go
+}
+
+@test "Syntax analysis - eol17" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol17.go
+}
+
+@test "Syntax analysis - eol18" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol18.go
+}
+
+@test "Syntax analysis - eol19" {
+  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/eol19.go
 }

@@ -20,3 +20,7 @@ readonly semantic_samples="$samples/semantic-tests"
 @test "Semantic analysis - expr4" {
   run_compiler $ERROR_SEM_PROGRAM $semantic_samples/expr4.go
 }
+
+@test "Semantic analysis - expr5" {
+  run_compiler $ERROR_SEM_VAR $semantic_samples/expr5.go
+}

@@ -270,9 +270,7 @@ void parser_stmts() {
         case RETURN:
             parser_stmt();
             parser_stmts();
-            break;
-        default:
-            // apply eps-rule
+            break; default: // apply eps-rule
             break;
     }
 }
@@ -361,6 +359,7 @@ void parser_block() {
     debug_entry();
     parser_match(LBRACE);
     no_eol = false;
+    required_eol = true;
     parser_stmts();
     parser_match(RBRACE);
 }
@@ -502,7 +501,9 @@ void parser_r_param_n() {
     if (lookahead.type == COMMA) {
         parser_match(COMMA);
         symtable_add_func_return(st, lookahead.type);
+
         parser_type();
+        no_eol = true;
         parser_r_param_n();
     }
     // apply eps-rule
@@ -780,10 +781,10 @@ void stack_shift(stack_int_t *stack, token_type terminal) {
     stack->array[terminal_pos + 1] = SHF;  // append the shift symbol
 }
 
-bool stack_reduce(stack_int_t *stack) {
+bool stack_reduce(stack_int_t *stack, stack_int_t *function_stack) {
     debug_entry();
     // if '<y' is on top of the stack and rule exists
-    int top= stack_int_peek(stack);
+    int top = stack_int_peek(stack);
 
     // get the positions of the top symbol and the shift symbol
     int top_pos = stack_find(stack, top);
@@ -798,7 +799,8 @@ bool stack_reduce(stack_int_t *stack) {
     }
 
     // check the rules
-    if (!prec_apply_rule(rule_stack)) {
+    if (!prec_apply_rule(rule_stack, function_stack)) {
+        stack_int_free(rule_stack);
         return false;
     }
     stack_int_free(rule_stack);
@@ -813,13 +815,13 @@ bool stack_reduce(stack_int_t *stack) {
 // Precedence table definition.
 const token_type PREC_TABLE[PREC_TABLE_OP_COUNT][PREC_TABLE_OP_COUNT] =
 {      //   ,   REL  ADD  MUL   (    )   id   lit   $
-/*  ,  */ {RED, SHF, SHF, SHF, SHF, RED, SHF, SHF, RED},
+/*  ,  */ {EQQ, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
 /* REL */ {RED, RED, SHF, SHF, SHF, RED, SHF, SHF, RED},
 /* ADD */ {RED, RED, RED, SHF, SHF, RED, SHF, SHF, RED},
 /* MUL */ {RED, RED, RED, RED, SHF, RED, SHF, SHF, RED},
-/*  (  */ {SHF, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
+/*  (  */ {EQQ, SHF, SHF, SHF, SHF, EQQ, SHF, SHF, INV},
 /*  )  */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
-/* id  */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
+/* id  */ {RED, RED, RED, RED, EQQ, RED, INV, INV, RED},
 /* lit */ {RED, RED, RED, RED, INV, RED, INV, INV, RED},
 /*  $  */ {SHF, SHF, SHF, SHF, SHF, INV, SHF, SHF, INV}
 };
@@ -857,8 +859,12 @@ int prec_get_table_index(token_type t) {
  * E : E REL E
  * E : E ADD E
  * E : E MUL E
+ * --- FUNC  ---
+ * E : id ( )
+ * E : id ( E )
+ * E : id ( E , ... )
  */
-bool prec_apply_rule(stack_int_t *rule_stack) {
+bool prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack) {
     token_type curr;  // current symbol
     NEXT_SYMBOL;
 
@@ -874,7 +880,10 @@ bool prec_apply_rule(stack_int_t *rule_stack) {
             return true;
         case RPAREN:
             // E : ( E )
-            return prec_rule_rparen(rule_stack);
+            // E : id ( )
+            // E : id ( E )
+            // E : id ( ... , E )
+            return prec_rule_rparen(rule_stack, function_stack);
         case EXPR_SYMBOL:
             // E : E REL E
             NEXT_SYMBOL;
@@ -891,36 +900,73 @@ bool prec_apply_rule(stack_int_t *rule_stack) {
     }
 }
 
-bool prec_rule_rparen(stack_int_t *rule_stack) {
+bool prec_rule_rparen(stack_int_t *rule_stack, stack_int_t *function_stack) {
     token_type curr;
     // go to the next symbol
     NEXT_SYMBOL;
     // test the symbol
-    if (curr != EXPR_SYMBOL) return false;
+    if (curr != EXPR_SYMBOL && curr != LPAREN) return false;
 
-    // go to the next symbol
+    if (curr == LPAREN) {
+        // E : id ( )
+        NEXT_SYMBOL;
+        if (curr != IDENT) return false;
+
+        stack_int_pop(function_stack);
+        return true;
+    }
+    // curr == E
     NEXT_SYMBOL;
-    // test the symbol
+    if (curr != LPAREN && curr != COMMA) return false;
+
+    if (curr == LPAREN) {
+        if (stack_int_isempty(rule_stack)) {
+            // E : ( E )
+            return true;
+        } else {
+            // E : id ( E )
+            NEXT_SYMBOL;
+            if (curr != IDENT) return false;
+
+            stack_int_pop(function_stack);
+            return true;
+        }
+    }
+
+    // curr == ,
+    // E : id ( ... , E )
+    while (!stack_int_isempty(rule_stack)) {
+        NEXT_SYMBOL;
+        if (curr != EXPR_SYMBOL) return false;
+
+        NEXT_SYMBOL;
+        if (curr != COMMA) break;
+    }
     if (curr != LPAREN) return false;
 
+    NEXT_SYMBOL;
+    if (curr != IDENT) return false;
+
+    stack_int_pop(function_stack);
     return true;
 }
 
-/**
- * @brief Precedence analysis procedure that starts the parsing of expressions.
- * @details Needs stack implementation to work properly.
- */
+void prec_clean(stack_int_t *stack, stack_int_t *func_stack) {
+    stack_int_free(stack);
+    stack_int_free(func_stack);
+}
+
 void parser_precedence_analysis() {
     debug_entry();
 
     stack_int_t *stack = stack_int_init();
-
     // put $ at the top of the stack
     stack_int_push(stack, END_OF_INPUT);
 
     token_type input = lookahead.type;
+    stack_int_t *function_stack = stack_int_init();
     bool stop = false;
-    bool in_func = false;
+
     // start the precedence algorithm
     while (true) {
         debug("got eol? %d no_eol? %d required_eol? %d", eol_encountered, no_eol, required_eol);
@@ -931,48 +977,41 @@ void parser_precedence_analysis() {
             break;
         } else if (stop && input == END_OF_INPUT) {
             break;
-        }
-
-        if (stop && input == END_OF_INPUT) {
-            break;
         } else if (stop) {
             input = END_OF_INPUT;
         }
 
         // check if the identifier is '_' -> semantic error
         if (input == IDENT && strcmp(lookahead.attribute.sym_key, "_") == 0) {
-           // TODO: throw semantic error
+           // FIXME: properly throw semantic error
+           exit(3);
         }
 
         // handle the symbol accordingly
-        if (prec_handle_symbol(stack, input, &stop)) {
+        if (prec_handle_symbol(stack, input, &stop, function_stack)) {
             parser_move();
             input = lookahead.type;
-
-            /*if (input != COMMA && input != IDENT && input != LPAREN && input != RPAREN &&*/
-                    /*!token_is_lit(input) && !is_mulop(input) && !is_addop(input) && !is_relop(input)) {*/
-                /*input = END_OF_INPUT;*/
-            /*}*/
         }
-        token_type top = stack_int_peek(stack);
 
         // do some things depending on the prec_handle_symbol function
 
-        if (!in_func && input == COMMA) {
+        // Mutiple assign statement, consider the comma as the end of the input
+        if (stack_int_isempty(function_stack) && input == COMMA) {
             input = END_OF_INPUT;
         }
 
         if (eol_encountered) {
+            token_type top = stack_int_peek(stack);
             // eol encountered, is this the end of the input?
             if (token_is_lit(top) || top == IDENT || top == RPAREN) {
                 // top symbol is literal, id or ')'
-                if (is_addop(input) || is_mulop(input) || is_relop(input)) {
+                if (is_addop(input) || is_mulop(input) || is_relop(input) ||
+                        input == COMMA || input == RPAREN) {
                     // if the following character is some operator, we can't break line
-                    stack_int_free(stack);
+                    prec_clean(stack, function_stack);
                     throw_syntax_error(input, line);
                 } else {
                     // otherwise, it should be the end of the input
-                    // FIXME: eol_required=true?
                     input = END_OF_INPUT;
                 }
             }
@@ -980,7 +1019,7 @@ void parser_precedence_analysis() {
     }
 
     if (!prec_succesful_stack(stack)) {
-        stack_int_free(stack);
+        prec_clean(stack, function_stack);
         throw_syntax_error(input, line);
     }
 
@@ -992,7 +1031,7 @@ bool prec_succesful_stack(stack_int_t *stack) {
            stack->array[1] == EXPR_SYMBOL && stack->array[0] == END_OF_INPUT;
 }
 
-bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop) {
+bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_int_t *function_stack) {
     debug_entry();
     // check if the token is valid for expression grammar
     // FIXME: What if the input token is EOF?
@@ -1005,6 +1044,7 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop) {
     int top = stack_top(stack);
     if (top == -1) {
         // no terminal on top - weird, probably isn't needed
+        prec_clean(stack, function_stack);
         throw_syntax_error(input, line);
     }
 
@@ -1017,6 +1057,11 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop) {
             // '=' symbol
             // push input onto the stack and read the next symbol
             stack_int_push(stack, input);
+            // special treatment for the FUNEXP
+            if (top == IDENT && input == LPAREN) {
+                stack_int_push(function_stack, 1);
+            }
+
             return true;
         case SHF:
             // '<' symbol
@@ -1030,7 +1075,8 @@ bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop) {
             // if '<y' is on top of the stack and rule exists
             // convert '<y' to A and do semantic actions
             // else, throw syntax error
-            if (!stack_reduce(stack)) {
+            if (!stack_reduce(stack, function_stack)) {
+                prec_clean(stack, function_stack);
                 throw_syntax_error(input, line);
             }
             break;
@@ -1046,17 +1092,7 @@ void parser_expr() {
     debug_entry();
     // start the precedence analysis
     parser_precedence_analysis();
-
-    // TODO: handle EOL
-
-    /* OUTDATED
-    // This parsing is only used for the 0th submission
-    debug_entry();
-    parser_rel();
-    OUTDATED */
 }
-
-/* THIS WILL BE LEFT OUT IN THE FINAL PARSER */
 
 /* Helper functions */
 bool is_relop(token_type type) {
@@ -1093,113 +1129,6 @@ bool is_mulop(token_type type) {
             return true;
         default:
             return false;
-    }
-}
-
-void parser_relop() {
-    debug_entry();
-    if (is_relop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if
-        parser_match(lookahead.type);
-    } else {
-        // operator not found, syntax error
-        throw_syntax_error(lookahead.type, line);
-    }
-}
-
-void parser_addop() {
-    debug_entry();
-    if (is_addop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if
-        parser_match(lookahead.type);
-    } else {
-        // operator not found, syntax error
-        throw_syntax_error(lookahead.type, line);
-    }
-}
-
-void parser_mulop() {
-    debug_entry();
-    if (is_mulop(lookahead.type)) {
-        // we can call 'match' like that because of the check in the if
-        parser_match(lookahead.type);
-    } else {
-        // operator not found, syntax error
-        throw_syntax_error(lookahead.type, line);
-    }
-}
-
-void parser_rel() {
-    debug_entry();
-    parser_add();
-    parser_rel_n();
-}
-
-void parser_rel_n() {
-    debug_entry();
-    // if token type is not relation operator, apply eps-rule
-    if (is_relop(lookahead.type)) {
-        // expand the relation operator
-        parser_relop();
-        parser_add();
-        parser_rel_n();
-    }
-    // apply eps-rule
-}
-
-void parser_add() {
-    debug_entry();
-    parser_term();
-    parser_add_n();
-}
-
-void parser_add_n() {
-    debug_entry();
-    // if token type is not add/sub perator, apply eps-rule
-    if (is_addop(lookahead.type)) {
-        parser_addop();
-        parser_term();
-        parser_add_n();
-    }
-    // apply eps-rule
-}
-
-void parser_term() {
-    debug_entry();
-    parser_factor();
-    parser_term_n();
-}
-
-void parser_term_n() {
-    debug_entry();
-    // if token type is not mul/div operator, apply eps-rule
-    if (is_mulop(lookahead.type)) {
-        parser_mulop();
-        parser_factor();
-        parser_term_n();
-    }
-    // apply eps-rule
-}
-
-void parser_factor() {
-    debug_entry();
-    token_type t = lookahead.type;
-    char *id = lookahead.attribute.sym_key;
-
-    if (t == LPAREN) {
-        parser_match(LPAREN);
-        parser_expr();
-        parser_match(RPAREN);
-    } else if (token_is_lit(t)) {
-        // can only match INT, FLOAT64, STRING due to is_lit()
-        parser_match(t);
-    } else if (t == IDENT) {
-        parser_match(IDENT);
-        t = lookahead.type;
-        if (t == LPAREN)
-            parser_func_call(id);
-    } else {
-        throw_syntax_error(lookahead.type, line);
     }
 }
 
