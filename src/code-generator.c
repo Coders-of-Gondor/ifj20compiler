@@ -150,14 +150,102 @@ void generate() {
         switch (L->act->op) {
 
         case OP_ADD:
-            
+            if ("is_this_a_string?")    // TODO: Check if this is a string
+                print_ADD(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            else {
+                print_CONCAT(L->act->result, L->act->arg1, L->act->arg2);
+            }
+            break;
+
+        case OP_SUB:
+            print_SUB(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            break;
+
+        case OP_MUL:
+            print_MUL(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            break;
+
+        case OP_DIV:
+            if ("is_this_a_float?") // TODO
+                print_DIV(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            else if ("is_this_an int?")
+                print_IDIV(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            break;
+
+        case OP_ADD_ASSIGN:
+            print_ADD_ASSIGN(L->act->result, L->act->arg1, NULL);
+            break;
+
+        case OP_SUB_ASSIGN:
+            print_SUB_ASSIGN(L->act->result, L->act->arg1, NULL);
+            break;
+
+        case OP_MUL_ASSIGN:
+            print_MUL_ASSIGN(L->act->result, L->act->arg1, NULL);
+            break;
+
+        case OP_DIV_ASSIGN:
+            if ("is_this_a_float?") // TODO
+                print_DIV_ASSIGN(L->act->result, L->act->arg1, NULL);
+            else if ("is_this_an_int?")
+                print_IDIV_ASSIGN(L->act->result, L->act->arg1, NULL);
+            break;
+
+        case OP_DEFINE:
+            print_DEFINE(L->act->result);
+            break;
+
+        case OP_AND:
+            print_AND(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_OR:
+            print_OR(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_EQL:
+            print_EQL(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_NEQ:
+            print_NEQ(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_LSS:
+            print_LSS(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_LEQ:
+            print_LEQ(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_GTR:
+            print_GTR(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_GEQ:
+            print_GEQ(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_CALL:
+            printf("CALL %s", L->act->arg1);
+            break;
+
+        case OP_CREATE_FRAME:
+            printf("CREATEFRAME");
             break;
 
         case OP_LABEL:
             printf("LABEL %s:\n",L->act->arg1);
             break;
 
-        
+        case OP_RETURN:
+            printf("RETURN");
+            break;
+
+        case OP_MOVE:
+            print_MOVE("LF", L->act->result, "LF", L->act->arg1, "number");
+            break;
         
         default:
             break;
