@@ -1,4 +1,4 @@
-/**
+    /**
  * @file three-adress-code.c
  * @author Vojtěch Bůbela <xbubel08>
  * @author Vojtěch Fiala <xfiala61>
