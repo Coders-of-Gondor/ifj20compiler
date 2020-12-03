@@ -67,7 +67,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">parser.h File Reference</div>  </div>
 </div><!--header-->
@@ -75,12 +77,22 @@ $(function() {
 
 <p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler - the heart of the compiler.">parser.c</a>.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;ast.h&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;ast.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="stack__int_8h_source.html">stack_int.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aac0ea55ee9a986717d87b3a2703dda92"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>&#160;&#160;&#160;9</td></tr>
+<tr class="memdesc:aac0ea55ee9a986717d87b3a2703dda92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expressions are parsed using the bottom-up method.  <a href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">More...</a><br /></td></tr>
+<tr class="separator:aac0ea55ee9a986717d87b3a2703dda92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9be06b5aa7c54ab4494b54c5096a3f00"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>NEXT_SYMBOL</b></td></tr>
+<tr class="separator:a9be06b5aa7c54ab4494b54c5096a3f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae0e258eded8f8653f8cc4189d005e800"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a> ()</td></tr>
@@ -182,9 +194,45 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_return</b> ()<
 <tr class="memitem:ad26ae65e5d22b28f780f525eefd394ef"><td class="memItemLeft" align="right" valign="top"><a id="ad26ae65e5d22b28f780f525eefd394ef"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optexprs</b> (int *num_of_exprs)</td></tr>
 <tr class="separator:ad26ae65e5d22b28f780f525eefd394ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ec22e874532c8b253af5e1aad8d6cb5"><td class="memItemLeft" align="right" valign="top"><a id="a7ec22e874532c8b253af5e1aad8d6cb5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_expr</b> ()</td></tr>
+<tr class="memitem:aa1e8c479346c3b6db4e2e8fb0ea89588"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">prec_get_table_index</a> (token_type t)</td></tr>
+<tr class="memdesc:aa1e8c479346c3b6db4e2e8fb0ea89588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the index of the precedence table from the given token.  <a href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">More...</a><br /></td></tr>
+<tr class="separator:aa1e8c479346c3b6db4e2e8fb0ea89588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c91aa500eb9834b84eaace25ce6516"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a89c91aa500eb9834b84eaace25ce6516">prec_apply_rule</a> (stack_int_t *rule_stack, stack_int_t *function_stack)</td></tr>
+<tr class="memdesc:a89c91aa500eb9834b84eaace25ce6516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the rule validity.  <a href="parser_8h.html#a89c91aa500eb9834b84eaace25ce6516">More...</a><br /></td></tr>
+<tr class="separator:a89c91aa500eb9834b84eaace25ce6516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60acfe0543ce5d419f9246fa675e92d"><td class="memItemLeft" align="right" valign="top"><a id="ae60acfe0543ce5d419f9246fa675e92d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>prec_rule_rparen</b> (stack_int_t *rule_stack, stack_int_t *function_stack)</td></tr>
+<tr class="separator:ae60acfe0543ce5d419f9246fa675e92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a184e1c8dbb30d0c9dc1bf7a985229636"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a184e1c8dbb30d0c9dc1bf7a985229636">prec_succesful_stack</a> (stack_int_t *stack)</td></tr>
+<tr class="memdesc:a184e1c8dbb30d0c9dc1bf7a985229636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if the precedence analysis constructed a single exprresion.  <a href="parser_8h.html#a184e1c8dbb30d0c9dc1bf7a985229636">More...</a><br /></td></tr>
+<tr class="separator:a184e1c8dbb30d0c9dc1bf7a985229636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99820f83823c5c64f0dd43ba83357ff7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a99820f83823c5c64f0dd43ba83357ff7">prec_handle_symbol</a> (stack_int_t *stack, token_type input, bool *stop, stack_int_t *function_stack)</td></tr>
+<tr class="memdesc:a99820f83823c5c64f0dd43ba83357ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the symbol according to the precedence's algorithm.  <a href="parser_8h.html#a99820f83823c5c64f0dd43ba83357ff7">More...</a><br /></td></tr>
+<tr class="separator:a99820f83823c5c64f0dd43ba83357ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719f2bbbcfdaf31c6ba30f9ad74491e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a719f2bbbcfdaf31c6ba30f9ad74491e0">prec_clean</a> (stack_int_t *stack, stack_int_t *func_stack)</td></tr>
+<tr class="memdesc:a719f2bbbcfdaf31c6ba30f9ad74491e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up the memory from the allocated stacks.  <a href="parser_8h.html#a719f2bbbcfdaf31c6ba30f9ad74491e0">More...</a><br /></td></tr>
+<tr class="separator:a719f2bbbcfdaf31c6ba30f9ad74491e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0794ef3d3f3fbc7fd8bb6674a6422d02"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a0794ef3d3f3fbc7fd8bb6674a6422d02">stack_top</a> (stack_int_t *stack)</td></tr>
+<tr class="memdesc:a0794ef3d3f3fbc7fd8bb6674a6422d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as stack_int_peek but skip the nonterminal values.  <a href="parser_8h.html#a0794ef3d3f3fbc7fd8bb6674a6422d02">More...</a><br /></td></tr>
+<tr class="separator:a0794ef3d3f3fbc7fd8bb6674a6422d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c4e83167c79fc86e7617f1a3cc26fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a70c4e83167c79fc86e7617f1a3cc26fd">stack_shift</a> (stack_int_t *stack, token_type terminal)</td></tr>
+<tr class="memdesc:a70c4e83167c79fc86e7617f1a3cc26fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the top terminal to terminal+symbol.  <a href="parser_8h.html#a70c4e83167c79fc86e7617f1a3cc26fd">More...</a><br /></td></tr>
+<tr class="separator:a70c4e83167c79fc86e7617f1a3cc26fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad71b7a39ddc9a114e3bf18b676e162fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#ad71b7a39ddc9a114e3bf18b676e162fa">stack_reduce</a> (stack_int_t *stack, stack_int_t *function_stack)</td></tr>
+<tr class="memdesc:ad71b7a39ddc9a114e3bf18b676e162fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the top symbol+terminal to nonterminal rule.  <a href="parser_8h.html#ad71b7a39ddc9a114e3bf18b676e162fa">More...</a><br /></td></tr>
+<tr class="separator:ad71b7a39ddc9a114e3bf18b676e162fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4600a8dfed20e52a071027c091173524"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a4600a8dfed20e52a071027c091173524">stack_find</a> (stack_int_t *stack, int value)</td></tr>
+<tr class="memdesc:a4600a8dfed20e52a071027c091173524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the first index position of the passed value.  <a href="parser_8h.html#a4600a8dfed20e52a071027c091173524">More...</a><br /></td></tr>
+<tr class="separator:a4600a8dfed20e52a071027c091173524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa1a59b4d085a67ac5b5c2e7339395b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a6fa1a59b4d085a67ac5b5c2e7339395b">stack_at</a> (stack_int_t *stack, int index)</td></tr>
+<tr class="memdesc:a6fa1a59b4d085a67ac5b5c2e7339395b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value located at given index.  <a href="parser_8h.html#a6fa1a59b4d085a67ac5b5c2e7339395b">More...</a><br /></td></tr>
+<tr class="separator:a6fa1a59b4d085a67ac5b5c2e7339395b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec22e874532c8b253af5e1aad8d6cb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">parser_expr</a> ()</td></tr>
+<tr class="memdesc:a7ec22e874532c8b253af5e1aad8d6cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the parsing of an expression.  <a href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">More...</a><br /></td></tr>
 <tr class="separator:a7ec22e874532c8b253af5e1aad8d6cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75770df3879690605e955d6a62edf19b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a75770df3879690605e955d6a62edf19b">parser_precedence_analysis</a> ()</td></tr>
+<tr class="memdesc:a75770df3879690605e955d6a62edf19b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Precedence analysis procedure that starts the parsing of expressions.  <a href="parser_8h.html#a75770df3879690605e955d6a62edf19b">More...</a><br /></td></tr>
+<tr class="separator:a75770df3879690605e955d6a62edf19b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50ce52316cf5ffc741ee0e6dbce32576"><td class="memItemLeft" align="right" valign="top"><a id="a50ce52316cf5ffc741ee0e6dbce32576"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_relop</b> (token_type type)</td></tr>
 <tr class="separator:a50ce52316cf5ffc741ee0e6dbce32576"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,33 +242,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_addop</b> (token_t
 <tr class="memitem:ab2d06325a8c3ec4141f5239ea2ababc1"><td class="memItemLeft" align="right" valign="top"><a id="ab2d06325a8c3ec4141f5239ea2ababc1"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mulop</b> (token_type type)</td></tr>
 <tr class="separator:ab2d06325a8c3ec4141f5239ea2ababc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9529a78e6b7c389d893477f8f70650db"><td class="memItemLeft" align="right" valign="top"><a id="a9529a78e6b7c389d893477f8f70650db"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_rel</b> ()</td></tr>
-<tr class="separator:a9529a78e6b7c389d893477f8f70650db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae40f2f38033d645588d8860cf4881d34"><td class="memItemLeft" align="right" valign="top"><a id="ae40f2f38033d645588d8860cf4881d34"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_rel_n</b> ()</td></tr>
-<tr class="separator:ae40f2f38033d645588d8860cf4881d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9844284a01d92557d6dc04104bcc8c5e"><td class="memItemLeft" align="right" valign="top"><a id="a9844284a01d92557d6dc04104bcc8c5e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_add</b> ()</td></tr>
-<tr class="separator:a9844284a01d92557d6dc04104bcc8c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a384dd9b14f089dd90c8d384f99e7a10c"><td class="memItemLeft" align="right" valign="top"><a id="a384dd9b14f089dd90c8d384f99e7a10c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_add_n</b> ()</td></tr>
-<tr class="separator:a384dd9b14f089dd90c8d384f99e7a10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a436ca00707cd1451f57684e2fedff5b7"><td class="memItemLeft" align="right" valign="top"><a id="a436ca00707cd1451f57684e2fedff5b7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_term</b> ()</td></tr>
-<tr class="separator:a436ca00707cd1451f57684e2fedff5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9932ccb540b50fb1eddd962fe461a054"><td class="memItemLeft" align="right" valign="top"><a id="a9932ccb540b50fb1eddd962fe461a054"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_term_n</b> ()</td></tr>
-<tr class="separator:a9932ccb540b50fb1eddd962fe461a054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28c1d8dd38679778a17ed68309e46a56"><td class="memItemLeft" align="right" valign="top"><a id="a28c1d8dd38679778a17ed68309e46a56"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_factor</b> ()</td></tr>
-<tr class="separator:a28c1d8dd38679778a17ed68309e46a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dae77291f173a5eba5214b94dedd7e4"><td class="memItemLeft" align="right" valign="top"><a id="a3dae77291f173a5eba5214b94dedd7e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_funexp</b> ()</td></tr>
-<tr class="separator:a3dae77291f173a5eba5214b94dedd7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa226b5294cff521c18e8be9b22262f04"><td class="memItemLeft" align="right" valign="top"><a id="aa226b5294cff521c18e8be9b22262f04"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_track_ident</b> (char *id)</td></tr>
 <tr class="separator:aa226b5294cff521c18e8be9b22262f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2125ad61ec69a16afec4dc117e7917db"><td class="memItemLeft" align="right" valign="top">const token_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a> [<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>][<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>]</td></tr>
+<tr class="memdesc:a2125ad61ec69a16afec4dc117e7917db"><td class="mdescLeft">&#160;</td><td class="mdescRight">The precetence table used for the parsing.  <a href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">More...</a><br /></td></tr>
+<tr class="separator:a2125ad61ec69a16afec4dc117e7917db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file for the <a class="el" href="parser_8c.html" title="Parser part of ifj20 compiler - the heart of the compiler.">parser.c</a>. </p>
@@ -228,7 +258,66 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_track_ident</b
 <dd>
 Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>10/11/2020 </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9be06b5aa7c54ab4494b54c5096a3f00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be06b5aa7c54ab4494b54c5096a3f00">&#9670;&nbsp;</a></span>NEXT_SYMBOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NEXT_SYMBOL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">    if (!stack_int_isempty(rule_stack)) curr = stack_int_pop(rule_stack); \</div>
+<div class="line">    else {debug(<span class="stringliteral">&quot;empty rule stack!&quot;</span>); <span class="keywordflow">return</span> <span class="keyword">false</span>;} \</div>
+<div class="line">} <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aac0ea55ee9a986717d87b3a2703dda92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac0ea55ee9a986717d87b3a2703dda92">&#9670;&nbsp;</a></span>PREC_TABLE_OP_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PREC_TABLE_OP_COUNT&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expressions are parsed using the bottom-up method. </p>
+<p>We use precedence table as our method. We need to make sure the precedences of the operators are correct and that the table is constructed well. Other than that the code working with our precedence table could theoretically work with a precedence table of any kind. We also use the UNARY and FUNEXP extensions.</p>
+<p>UNARY - the difficulty here is using both +/- operators as right and left associative. The solution will be to use ad hoc method to deal with the issue when encountered FUNEXP - the issue here is using identificators for both variables and functions calls. There cannot be a '(' next to a variable, but there must be one next to the function call. Another problem comes from the variable argument count. I will try to deal with both issues using a smart grammar and some ad hoc code.</p>
+<p>INV - 'x', invalid symbol - if encountered -&gt; syntax error RED - '&gt;', reduce symbol - if '&lt; + symbol' is on the stack and you can reduce the stack to apply a grammar rule, do so and process the semantic actions else throw a syntax error SHF - '&lt;', shift symbol - change the top symbol onto the stack ('a') to '&lt;a' and push the input onto the stack and read the next input. EQQ - '=', equal symbol - push the input onto the stack and read the next input. UNA - '&gt;|&lt;', unary symbol - decide if to shift or to reduce depending on the stack.</p>
+<p>EXPRESSION RULES: &mdash; basic &mdash; E : id E : lit E : ( E ) E : E REL E E : E ADD E E : E MUL E &mdash; UNARY &mdash; E : ADD E &mdash; FUNC &mdash; E : id ( ) E : id ( E ) E : id ( E , ... ) </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a7ec22e874532c8b253af5e1aad8d6cb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ec22e874532c8b253af5e1aad8d6cb5">&#9670;&nbsp;</a></span>parser_expr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parser_expr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start the parsing of an expression. </p>
+<p>Pass control to bottom-up.  Outdated function kept from the Expression LL analysis. </p>
+
+</div>
+</div>
 <a id="aed7709c3f2c8a30fbe978232fdeec281"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed7709c3f2c8a30fbe978232fdeec281">&#9670;&nbsp;</a></span>parser_match()</h2>
 
@@ -290,6 +379,26 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 
 </div>
 </div>
+<a id="a75770df3879690605e955d6a62edf19b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75770df3879690605e955d6a62edf19b">&#9670;&nbsp;</a></span>parser_precedence_analysis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parser_precedence_analysis </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Precedence analysis procedure that starts the parsing of expressions. </p>
+<p>Needs stack implementation to work properly. </p>
+
+</div>
+</div>
 <a id="a5adfb9b790a748f0343199e0b8c65edb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5adfb9b790a748f0343199e0b8c65edb">&#9670;&nbsp;</a></span>parser_prolog()</h2>
 
@@ -330,10 +439,330 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 
 </div>
 </div>
+<a id="a89c91aa500eb9834b84eaace25ce6516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89c91aa500eb9834b84eaace25ce6516">&#9670;&nbsp;</a></span>prec_apply_rule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int prec_apply_rule </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>rule_stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>function_stack</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determine the rule validity. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 - failed -&gt; error 1 - success - standard 2 - success - unary</dd></dl>
+<p>Determine the rule validity.</p>
+<p>) &mdash; UNARY &mdash; E : ADD E </p>
+
+</div>
+</div>
+<a id="a719f2bbbcfdaf31c6ba30f9ad74491e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a719f2bbbcfdaf31c6ba30f9ad74491e0">&#9670;&nbsp;</a></span>prec_clean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void prec_clean </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>func_stack</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clean up the memory from the allocated stacks. </p>
+
+</div>
+</div>
+<a id="aa1e8c479346c3b6db4e2e8fb0ea89588"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1e8c479346c3b6db4e2e8fb0ea89588">&#9670;&nbsp;</a></span>prec_get_table_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int prec_get_table_index </td>
+          <td>(</td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the index of the precedence table from the given token. </p>
+<dl class="section return"><dt>Returns</dt><dd>index </dd></dl>
+
+</div>
+</div>
+<a id="a99820f83823c5c64f0dd43ba83357ff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99820f83823c5c64f0dd43ba83357ff7">&#9670;&nbsp;</a></span>prec_handle_symbol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool prec_handle_symbol </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>stop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>function_stack</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle the symbol according to the precedence's algorithm. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the parser should fetch the next symbol, false if not. </dd></dl>
+<p>token_is_lit(t) &amp;&amp; !is_mulop(t) &amp;&amp; !is_addop(t) &amp;&amp; !is_relop(t)) {</p>
+
+</div>
+</div>
+<a id="a184e1c8dbb30d0c9dc1bf7a985229636"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a184e1c8dbb30d0c9dc1bf7a985229636">&#9670;&nbsp;</a></span>prec_succesful_stack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool prec_succesful_stack </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determine if the precedence analysis constructed a single exprresion. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if it did, false if it did not. </dd></dl>
+
+</div>
+</div>
+<a id="a6fa1a59b4d085a67ac5b5c2e7339395b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fa1a59b4d085a67ac5b5c2e7339395b">&#9670;&nbsp;</a></span>stack_at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int stack_at </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the value located at given index. </p>
+<dl class="section return"><dt>Returns</dt><dd>Value if found, -1 if not found. </dd></dl>
+
+</div>
+</div>
+<a id="a4600a8dfed20e52a071027c091173524"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4600a8dfed20e52a071027c091173524">&#9670;&nbsp;</a></span>stack_find()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int stack_find </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find the first index position of the passed value. </p>
+<dl class="section return"><dt>Returns</dt><dd>Position index if found, -1 if not found. </dd></dl>
+
+</div>
+</div>
+<a id="ad71b7a39ddc9a114e3bf18b676e162fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad71b7a39ddc9a114e3bf18b676e162fa">&#9670;&nbsp;</a></span>stack_reduce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool stack_reduce </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>function_stack</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change the top symbol+terminal to nonterminal rule. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the reduction was succesful, False if not. </dd></dl>
+
+</div>
+</div>
+<a id="a70c4e83167c79fc86e7617f1a3cc26fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70c4e83167c79fc86e7617f1a3cc26fd">&#9670;&nbsp;</a></span>stack_shift()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void stack_shift </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>terminal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change the top terminal to terminal+symbol. </p>
+<p>Every other nonterminal before the terminal will be reordered. </p>
+
+</div>
+</div>
+<a id="a0794ef3d3f3fbc7fd8bb6674a6422d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0794ef3d3f3fbc7fd8bb6674a6422d02">&#9670;&nbsp;</a></span>stack_top()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int stack_top </td>
+          <td>(</td>
+          <td class="paramtype">stack_int_t *&#160;</td>
+          <td class="paramname"><em>stack</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Same as stack_int_peek but skip the nonterminal values. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2125ad61ec69a16afec4dc117e7917db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2125ad61ec69a16afec4dc117e7917db">&#9670;&nbsp;</a></span>PREC_TABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const token_type PREC_TABLE[<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>][<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The precetence table used for the parsing. </p>
+<p>Implemented as a 2D array. &gt;|&lt; - unary and standard &mdash; , REL ADD MUL ( ) id lit $ , = &lt; &lt; &lt; &lt; = &lt; &lt; REL &gt; &gt; &lt; &lt; &lt; &gt; &lt; &lt; &gt; ADD &gt; &gt; &gt;|&lt; &lt; &lt; &gt; &lt; &lt; &gt; MUL &gt; &gt; &gt; &gt; &lt; &gt; &lt; &lt; &gt; ( = &lt; &lt; &lt; &lt; = &lt; &lt; ) &gt; &gt; &gt; &gt; &gt; &gt; id &gt; &gt; &gt; &gt; = &gt; &gt; lit &gt; &gt; &gt; &gt; &gt; &gt; $ &lt; &lt; &lt; &lt; &lt; &lt; &lt;</p>
+<p>REL : &lt; | &gt; | &lt;= | &gt;= | == | != ADD : + | - MUL : * | / id : any identificator lit : any literal </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 18:31:43 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Dec 3 2020 20:35:08 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

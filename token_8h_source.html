@@ -134,51 +134,62 @@ $(function() {
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    GEQ, <span class="comment">// &gt;=</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  Other</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    LPAREN,   <span class="comment">// (</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    LBRACE,   <span class="comment">// {</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    RPAREN,   <span class="comment">// )</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    RBRACE,   <span class="comment">// }</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    COMMA,    <span class="comment">// ,</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    SEMICOLON <span class="comment">// ;</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} token_type;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="structtoken__t.html">   86</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>token {</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">   87</a></span>&#160;    token_type <a class="code" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">type</a>; </div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="uniontoken__t_1_1Attribute.html">   88</a></span>&#160;    <span class="keyword">union </span><a class="code" href="uniontoken__t_1_1Attribute.html">Attribute</a> {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        int64_t int_val;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">double</span> float_val;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">string</span> str_val;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">char</span> *sym_key;</div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structtoken__t.html#a63ec81fefb806c4d12c1d7024a561e12">   93</a></span>&#160;    } attribute; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;} <a class="code" href="structtoken__t.html">token_t</a>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a>(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">void</span> token_free(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, token_type type);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">int</span> ident_is_keyword(<span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;token_type get_keyword_type(<span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* token_get_type_string(token_type type);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a>(token_type type);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    LPAREN,    <span class="comment">// (</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    LBRACE,    <span class="comment">// {</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    RPAREN,    <span class="comment">// )</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    RBRACE,    <span class="comment">// }</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    COMMA,     <span class="comment">// ,</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    SEMICOLON, <span class="comment">// ;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">// Precedence analysis symbols</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    END_OF_INPUT, <span class="comment">// $ - used for precedence analysis</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    EXPR_SYMBOL,  <span class="comment">// E - used for precedence analysis</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">// Precedence table symbols</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    INV, <span class="comment">// x - invalid    </span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    RED, <span class="comment">// &gt; - reduction</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    SHF, <span class="comment">// &lt; - shift</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    EQQ, <span class="comment">// = - equals</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    UNA  <span class="comment">// &gt;|&lt; - unary</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;} token_type;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structtoken__t.html">   97</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>token {</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">   98</a></span>&#160;    token_type <a class="code" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">type</a>; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="uniontoken__t_1_1Attribute.html">   99</a></span>&#160;    <span class="keyword">union </span><a class="code" href="uniontoken__t_1_1Attribute.html">Attribute</a> {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        int64_t int_val;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">double</span> float_val;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">string</span> str_val;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">char</span> *sym_key;</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="structtoken__t.html#a63ec81fefb806c4d12c1d7024a561e12">  104</a></span>&#160;    } attribute; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;} <a class="code" href="structtoken__t.html">token_t</a>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a>(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> token_free(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, token_type type);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif // __TOKEN_H__</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">int</span> ident_is_keyword(<span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;token_type get_keyword_type(<span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* token_get_type_string(token_type type);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a>(token_type type);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif // __TOKEN_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="atoken_8h_html_aff7ac769bb81d9d254eeef4edc90feae"><div class="ttname"><a href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a></div><div class="ttdeci">void token_set_attribute(token_t *t, string str)</div><div class="ttdoc">token_set_attribute sets token attribute according to the token type</div><div class="ttdef"><b>Definition:</b> token.c:26</div></div>
 <div class="ttc" id="astr_8h_html"><div class="ttname"><a href="str_8h.html">str.h</a></div><div class="ttdoc">hlavickovy soubor pro praci s nekonecne dlouhymi retezci</div></div>
 <div class="ttc" id="atoken_8h_html_a77ae74478f8f921566716cdc5086b52d"><div class="ttname"><a href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a></div><div class="ttdeci">void token_init(token_t *t)</div><div class="ttdoc">token_init initializes an instance of token</div><div class="ttdef"><b>Definition:</b> token.c:71</div></div>
-<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:86</div></div>
-<div class="ttc" id="astructtoken__t_html_a4020c9594f08fd05a06b253bfc892430"><div class="ttname"><a href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">token_t::type</a></div><div class="ttdeci">token_type type</div><div class="ttdoc">Type of the token.</div><div class="ttdef"><b>Definition:</b> token.h:87</div></div>
-<div class="ttc" id="auniontoken__t_1_1Attribute_html"><div class="ttname"><a href="uniontoken__t_1_1Attribute.html">token_t::Attribute</a></div><div class="ttdef"><b>Definition:</b> token.h:88</div></div>
+<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:97</div></div>
+<div class="ttc" id="astructtoken__t_html_a4020c9594f08fd05a06b253bfc892430"><div class="ttname"><a href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">token_t::type</a></div><div class="ttdeci">token_type type</div><div class="ttdoc">Type of the token.</div><div class="ttdef"><b>Definition:</b> token.h:98</div></div>
+<div class="ttc" id="auniontoken__t_1_1Attribute_html"><div class="ttname"><a href="uniontoken__t_1_1Attribute.html">token_t::Attribute</a></div><div class="ttdef"><b>Definition:</b> token.h:99</div></div>
 <div class="ttc" id="atoken_8h_html_a27fe9f8d6cced49e9de2a02a3bcc1013"><div class="ttname"><a href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a></div><div class="ttdeci">void token_set_type(token_t *t, token_type type)</div><div class="ttdoc">token_set_type sets type for token_t *t</div><div class="ttdef"><b>Definition:</b> token.c:88</div></div>
-<div class="ttc" id="atoken_8h_html_adbd1a25ddaea72c6e03813b2cfb0c765"><div class="ttname"><a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a></div><div class="ttdeci">bool token_is_lit(token_type type)</div><div class="ttdoc">Return a true/false value depending on the token's type being a literal.</div><div class="ttdef"><b>Definition:</b> token.c:176</div></div>
+<div class="ttc" id="atoken_8h_html_adbd1a25ddaea72c6e03813b2cfb0c765"><div class="ttname"><a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a></div><div class="ttdeci">bool token_is_lit(token_type type)</div><div class="ttdoc">Return a true/false value depending on the token's type being a literal.</div><div class="ttdef"><b>Definition:</b> token.c:186</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 18:31:43 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Dec 3 2020 20:35:08 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
