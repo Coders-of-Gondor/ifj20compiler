@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['error_2ec_137',['error.c',['../error_8c.html',1,'']]],
-  ['error_2eh_138',['error.h',['../error_8h.html',1,'']]]
+  ['debug_2ec_143',['debug.c',['../debug_8c.html',1,'']]],
+  ['debug_2eh_144',['debug.h',['../debug_8h.html',1,'']]]
 ];
