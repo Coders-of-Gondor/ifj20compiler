@@ -173,7 +173,7 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
  * @return true if value found, false if not.
  */
 inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack,
-                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR)compare_func) {
+                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func) {
     debug_entry();
     int top = stack->top;
 
@@ -196,7 +196,7 @@ inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stac
  * @return Return the number of occurences.
  */
 inline int CONCAT_FUNC(stack, TYPE, howmany)(CONCAT_STRUCT(stack, TYPE) *stack,
-                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR)compare_func) {
+                        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func) {
     debug_entry();
     int top = stack->top;
     int occurences = 0;

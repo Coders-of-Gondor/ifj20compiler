@@ -7,19 +7,14 @@
  * @date 10/11/2020
  */
 
-#include <stdbool.h>
-#include <stdio.h>
 #include <string.h>
 
-#include "ast.h"
 #include "debug.h"
 #include "error.h"
 #include "global.h"
 #include "parser.h"
 #include "scanner.h"
-#include "str.h"
 #include "symtable.h"
-#include "token.h"
 
 scanner_t *scanner; /**< scanner local to the parser */
 bool eol_encountered; /**< tracker to tell us if an eol was scanned */
@@ -813,7 +808,9 @@ bool stack_reduce(stack_int_t *stack, stack_int_t *function_stack) {
     // get the positions of the top symbol and the shift symbol
     int top_pos = stack_find(stack, top);
     int shift_pos = stack_find(stack, SHF);
-    if (shift_pos == -1 || shift_pos > top_pos) return false;
+    if (shift_pos == -1 || shift_pos > top_pos) {
+        return false;
+    }
 
     stack_int_t *rule_stack = stack_int_init();
     // determine if any other symbols are placed between these two

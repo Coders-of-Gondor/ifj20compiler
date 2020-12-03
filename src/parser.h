@@ -10,6 +10,8 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
+#include <stdbool.h>
+
 #include "ast.h"
 #include "scanner.h"
 #include "stack_int.h"
@@ -120,7 +122,7 @@ void parser_optexprs(int *num_of_exprs);
 /* ------------------------------------------------------------------------ */
 
 /**
- * Expressions are parsed using the bottom-up method. We use precdence table
+ * Expressions are parsed using the bottom-up method. We use precedence table
  * as our method. We need to make sure the precedences of the operators are
  * correct and that the table is constructed well. Other than that the code
  * working with our precedence table could theoretically work with a precedence
