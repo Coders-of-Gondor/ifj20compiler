@@ -42,7 +42,9 @@ typedef struct symtable_symbol {
 symtable_t *symtable_new();
 void symtable_free(symtable_t *st);
 
+// TODO: Add a bool to limit the search to the current scope (current row in stack)
 symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key);
+symtable_symbol_t *symtable_find_symbol_curr_scope(symtable_t *st, symtable_key_t key);
 symtable_symbol_t *symtable_add_symbol(symtable_t *st, symtable_key_t key);
 void symtable_remove_symbol(symtable_t *st, symtable_key_t key);
 
@@ -57,6 +59,7 @@ void symtable_set_first_scope(symtable_t *st);
 bool symtable_next_scope(symtable_t *st);
 
 bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type);
+void symtable_add_inf_func_param(symtable_t *st);
 func_parameter_t *symtable_get_func_param(symtable_t *st);
 int symtable_get_num_of_params(symtable_t *st);
 

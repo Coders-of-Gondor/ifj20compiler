@@ -1,5 +1,6 @@
 package main
 
 func main() {
-  id := hello("asdfasdf" < easdf, int, 234)
+  asdf := "oka"
+  id := hello("asdfasdf" < asdf, int, 234)
 }

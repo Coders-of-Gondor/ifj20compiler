@@ -80,3 +80,19 @@ readonly semantics_samples="$samples"/semantics-tests
 @test "Semantic analysis - expr5" {
   run_compiler $ERROR_SEM_VAR $semantics_samples/expr5.go
 }
+
+@test "Semantic analysis - expr6" {
+  run_compiler $ERROR_SEM_COMPATIBILITY $semantics_samples/expr6.go
+}
+
+@test "Semantic analysis - control1" {
+  run_compiler $ERROR_SEM $semantics_samples/control1.go
+}
+
+@test "Semantic analysis - control2" {
+  run_compiler $ERROR_SEM $semantics_samples/control2.go
+}
+
+@test "Semantic analysis - control3" {
+  run_compiler $ERROR_SEM_COMPATIBILITY $semantics_samples/control3.go
+}

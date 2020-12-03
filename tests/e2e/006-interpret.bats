@@ -4,6 +4,22 @@ load helpers
   run_interpreter $samples/hello.in $samples/hello.go $samples/hello.out
 }
 
+@test "Interpret analysis - hello2.go" {
+  run_interpreter $samples/hello2.in $samples/hello2.go $samples/hello2.out
+}
+
+@test "Interpret analysis - hello3.go" {
+  run_interpreter $samples/hello3.in $samples/hello3.go $samples/hello3.out
+}
+
+@test "Interpret analysis - hello4.go" {
+  run_interpreter $samples/hello4.in $samples/hello4.go $samples/hello4.out
+}
+
+@test "Interpret analysis - hello5.go" {
+  run_interpreter $samples/hello5.in $samples/hello5.go $samples/hello5.out
+}
+
 @test "Interpret analysis - print_float.go" {
   run_interpreter $samples/print_float.in $samples/print_float.go $samples/print_float.out
 }

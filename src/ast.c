@@ -24,6 +24,7 @@ func_parameter_t *func_parameter_new() {
 
     strInit(&p->id);
     p->next_param = NULL;
+    p->prev_param = NULL;
     p->type = INVALID;
 
     return p;
@@ -99,4 +100,111 @@ void func_set_id(func_t *f, char *id) {
 
     for (size_t i = 0; i < strlen(id); i++)
         strAddChar(&f->id, id[i]);
+}
+
+void func_add_parameter(func_t *f, char *id, token_type type) {
+    if (f == NULL)
+        return;
+
+    func_parameter_t *new_parameter = func_parameter_new();
+    if (new_parameter == NULL)
+        return;
+
+    if (id != NULL) {
+       strInit(&new_parameter->id);
+       for (size_t i = 0; i < strlen(id); i++)
+           strAddChar(&new_parameter->id, id[i]);
+    }
+
+    new_parameter->type = type;
+
+    if (f->first_parameter == NULL) {
+        f->first_parameter = new_parameter;
+    } else {
+        func_parameter_t *last_parameter = f->first_parameter;
+        while (last_parameter->next_param != NULL)
+            last_parameter = last_parameter->next_param;
+        last_parameter->next_param = new_parameter;
+        last_parameter->next_param->prev_param = last_parameter;
+    }
+    f->num_of_parameters++;
+}
+
+void func_add_return(func_t *f, token_type type) {
+    if (f == NULL)
+        return;
+
+    func_return_t *new_return = func_return_new();
+    if (new_return == NULL)
+        return;
+
+    new_return->type = type;
+
+    if (f->first_return == NULL) {
+        f->first_return = new_return;
+    } else {
+        func_return_t *last_return = f->first_return;
+        while (last_return->next_return != NULL)
+            last_return = last_return->next_return;
+        last_return->next_return = new_return;
+    }
+    f->num_of_returns++;
+}
+
+assign_t *assign_new(token_type type) {
+    assign_t *a = malloc(sizeof(struct assign));
+    if (a == NULL)
+        return NULL;
+
+    a->type = type;
+    a->next_assign = NULL;
+
+    return a;
+}
+
+void assign_free(assign_t *a) {
+    if (a == NULL)
+        return;
+
+    free(a);
+}
+
+void func_call_init(func_call_t *fc) {
+    if (fc == NULL)
+        return;
+
+    func_init(&fc->func);
+    fc->num_of_expected_returns = 0;
+    fc->first_assign = NULL;
+}
+
+void func_call_free(func_call_t *fc) {
+    if (fc == NULL)
+        return;
+
+    func_free(&fc->func);
+    while (fc->first_assign != NULL) {
+        assign_t *tmp_assign = fc->first_assign->next_assign;
+        assign_free(fc->first_assign);
+        fc->first_assign = tmp_assign;
+    }
+}
+
+void func_call_add_assign(func_call_t *fc, token_type type) {
+    if (fc == NULL)
+        return;
+
+    assign_t *new_assign = assign_new(type);
+    if (new_assign == NULL)
+        return;
+
+    if (fc->first_assign == NULL) {
+        fc->first_assign = new_assign;
+    } else {
+        assign_t *last_assign = fc->first_assign;
+        while (last_assign->next_assign != NULL)
+            last_assign = last_assign->next_assign;
+        last_assign->next_assign = new_assign;
+    }
+    fc->num_of_expected_returns++;
 }

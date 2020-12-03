@@ -26,6 +26,6 @@ func main() {
       print("Vysledek je ", vysl, "\n")
     }
   } else {
-    print("Chyba pri nacitani celeho cisla!\n")	
+    print("Chyba pri nacitani celeho cisla!\n")
   }
 }

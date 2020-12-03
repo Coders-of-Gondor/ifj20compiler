@@ -1,7 +1,7 @@
 package main
 
 func main() {
-  if 1
+  if 1 > 0
   {
   } else {
     return 5

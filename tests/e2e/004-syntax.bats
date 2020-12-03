@@ -48,14 +48,6 @@ readonly syntax_samples="$samples"/syntax-tests
   run_compiler "$ERROR_SYNTAX" "$syntax_samples"/expr4.go
 }
 
-@test "Syntax analysis - control1" {
-  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/control1.go
-}
-
-@test "Syntax analysis - control2" {
-  run_compiler "$ERROR_SYNTAX" "$syntax_samples"/control2.go
-}
-
 @test "Syntax analysis - control3" {
   run_compiler "$ERROR_SYNTAX" "$syntax_samples"/control3.go
 }

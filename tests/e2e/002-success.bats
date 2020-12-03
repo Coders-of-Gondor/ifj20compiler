@@ -88,3 +88,15 @@ readonly success_sample="$samples/success-tests"
 @test "Sucess analysis - eol1" {
   run_compiler $success_sample/eol1.go
 }
+
+@test "Sucess analysis - func1" {
+  run_compiler $success_sample/func1.go
+}
+
+@test "Sucess analysis - control1" {
+  run_compiler $success_sample/control1.go
+}
+
+@test "Sucess analysis - control2" {
+  run_compiler $success_sample/control2.go
+}

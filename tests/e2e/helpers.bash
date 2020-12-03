@@ -2,7 +2,7 @@
 
 # --- CONSTANTS ---
 readonly IFJ20COMPILER=${IFJ20COMPILER:-./build/bin/ifj20compiler}
-readonly IFJ20INTERPRETER=${IFJ20INTERPRETER:-./build/bin/ic20int}
+readonly IFJ20INTERPRETER=${IFJ20INTERPRETER:-./ic20int}
 readonly BUILD_OUT=${BUILD_OUT:-./build/out}
 readonly samples="./samples"
 
@@ -67,17 +67,20 @@ function run_interpreter() {
     OUT_DIFF="$BUILD_OUT/$(basename $2).diff"
 
     # helper function to get the inputs and save the outputs
-    compile_and_save_output() {
-      timeout --foreground --kill=10 30 $IFJ20COMPILER "$2" 2>/dev/null >"$OUT_GEN"
-      timeout --foreground --kill=10 30 $IFJ20INTERPRETER "$OUT_GEN" <"$1" > "$OUT_FILE"
-    }
-    run compile_and_save_output "$@" 3>/dev/null
+    #compile_and_save_output() {
+      #echo "$1"
+      #timeout --foreground --kill=10 30 "$IFJ20COMPILER" "$2" 2>/dev/null >"$OUT_GEN"
+      #"$IFJ20INTERPRETER" "$OUT_GEN" <"$1" >"$OUT_FILE"
+    #}
+    timeout --foreground --kill=10 30 "$IFJ20COMPILER" "$2" 2>/dev/null >"$OUT_GEN"
+    timeout --foreground --kill=10 30 "$IFJ20INTERPRETER" "$OUT_GEN" <"$1" >"$OUT_FILE"
 
     echo "Different interpreted outputs. All files located at $BUILD_OUT/"
     echo "Diff: $(basename $OUT_DIFF), Generated code: $(basename $OUT_GEN), interpreted output: $(basename $OUT_FILE)"
     echo "Showing the head:"
     # If sed causes problems, remove it.
     diff <(sed -e '$a\' "$3") <(sed -e '$a\' "$OUT_FILE") | tee "$OUT_DIFF" | head -n 5
+    #diff "$3" "$OUT_FILE" | tee "$OUT_DIFF" | head -n 5
     test "${PIPESTATUS[0]}" -eq 0  # trigger the failed status
 
     if [ "$status" -ne "$expected_rc" ]; then

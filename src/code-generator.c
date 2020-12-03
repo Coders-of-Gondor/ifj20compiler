@@ -41,7 +41,13 @@ char *conversion(char *str) {
 
     for (int i = 0; i < length; i++) {
         if (str[i] <= SPACE || str[i] == HASH || str[i] == BACKSLASH) {     // <= Space means that everything below space is to be replaced
-            sprintf(buff, "\\0%d", str[i]);
+            if (str[i] < 10) {
+                sprintf(buff, "\\00%d", str[i]);
+            } else if (str[i] < 100) {
+                sprintf(buff, "\\0%d", str[i]);
+            } else {
+                sprintf(buff, "\\%d", str[i]);
+            }
             new = strncat(new, buff, 5);
         } else {
             new = strncat(new, &str[i], 1);

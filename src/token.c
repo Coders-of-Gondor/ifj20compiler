@@ -116,6 +116,7 @@ const char* token_get_type_string(token_type type) {
         case INT_LIT: return "INT_LIT";
         case FLOAT64_LIT: return "FLOAT64_LIT";
         case STRING_LIT: return "STRING_LIT";
+        case BOOL_LIT: return "BOOL_LIT";
 
         // Data types
         case INT: return "INT";
