@@ -6,5 +6,5 @@ func foo(a int, b int) (int) {
 }
 
 func main() {
-  id := foo(a, b, 5)
+  id := foo(1, 2, 5)
 }

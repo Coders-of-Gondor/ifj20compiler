@@ -8,5 +8,5 @@ func main() {
   hello := 4
   asdf := "asdf"
   sdf := "sdf"
-  id := foo(hello, asdf sdf)
+  id := foo(hello, asdf, sdf)
 }

@@ -31,7 +31,6 @@
  * @param s an instance of scanner
  */
 int scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *line) {
-    // debug_entry();
     comment_state state = CLEAN;
     char prev_char;
 
@@ -104,7 +103,6 @@ int scanner_skip_whitespace_comments(scanner_t *s, bool *eol_encountered, int *l
  * @retval 2 is sign to stop scanner and return token
  */
 int scan_string_lit(scanner_t *s) {
-    debug_entry();
     if (s->character == '"') {
         s->state = STOP;
         return 2;
@@ -131,7 +129,6 @@ int scan_string_lit(scanner_t *s) {
  * @retval 1 on error
  */
 int scan_num_lit(scanner_t *s, token_t *t) {
-    debug_entry();
     switch (s->character) {
 
         case '0' ... '9':
@@ -176,7 +173,6 @@ int scan_num_lit(scanner_t *s, token_t *t) {
  */
 
 int innit_scan(scanner_t *s, token_t *t) {
-    debug_entry();
     char peek;
   
     switch(s->character) {

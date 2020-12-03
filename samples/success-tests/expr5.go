@@ -2,7 +2,7 @@ package main
 
 func foo(a int, b int) (int) {
   val := a + b
-  return id
+  return val
 }
 
 func main() {

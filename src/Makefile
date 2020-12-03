@@ -26,6 +26,7 @@ public_sources = \
 	parser.c \
 	scanner.c \
 	stack_charptr.c \
+	stack_func_call_t.c \
 	stack_int.c \
 	stack_stack_charptr_tptr.c \
 	stack_token_t.c \
@@ -45,6 +46,7 @@ public_headers = \
 	stack.h \
 	stack_extern_template.h \
 	stack_charptr.h \
+	stack_func_call_t.h \
 	stack_int.h \
 	stack_stack_charptr_tptr.h \
 	stack_token_t.h \

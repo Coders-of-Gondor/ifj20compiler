@@ -27,6 +27,7 @@ typedef enum token_type {
     INT_LIT,     // 42
     FLOAT64_LIT, // 42.42
     STRING_LIT,  // "fourtytwo"
+    BOOL_LIT,    // true, false
 
     // Data types
     INT,     // int
@@ -88,7 +89,7 @@ typedef enum token_type {
     RED, // > - reduction
     SHF, // < - shift
     EQQ, // = - equals
-    UNA  // >|< - unary
+    UNA // >|< - unary
 } token_type;
 
 /**

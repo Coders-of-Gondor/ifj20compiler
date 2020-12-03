@@ -19,6 +19,7 @@ typedef char* item;
 
 typedef enum operator_type {
     // Operations
+    OP_INVALID,
     OP_ADD, // for integers and flaots
     OP_ADD_STRING, // fot concatenation of strings
     OP_SUB, // -

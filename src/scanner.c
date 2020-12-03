@@ -20,6 +20,10 @@
 #include "error.h"
 
 
+bool escaped_char = false;
+bool hexa = false;
+char hexa_seq[2];
+
 /**
  * @brief scanner_init initializes an instance of scanner
  *
@@ -53,11 +57,11 @@ void scanner_free(scanner_t *s) {
 
 /**
  * @brief scanner_scan reads a source file and returns a single token.
- * 
+ *
  * @details scanner_scan only returns a single token for each call, thus it has
  * to be called several times until it reaches EOF or encounters an error.
  * The implementation uses finite state machine.
- * 
+ *
  * @param s an instance of scanner
  * @param t a pointer to token
  * @param eol_encountered is a bool that stores information that EOL - '\n'
@@ -114,7 +118,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
         /*
         * initial scan solves all branches of DFA apart from
         * numerical literal, decimal literal, identifier and
-        * string literal 
+        * string literal
         */
 
             //-----beggining of initial scan------
@@ -124,7 +128,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             //-----end of initial scan-----
 
             /*
-            * this part of code is for numerical literal 
+            * this part of code is for numerical literal
             */
 
             //-----beggining of numerical literal scan------
@@ -154,7 +158,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             //-----end of numerical literal scan------
 
             /*
-            * this part of code is for decimal literal 
+            * this part of code is for decimal literal
             */
 
             //-----beggining of decimal literal scan-----
@@ -181,7 +185,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                 if (s->character >= 48 && s->character <= 57) {
                     s->state = f17;
                 } else {
-                    ungetc(s->character, s->file);   // is this necessary? 
+                    ungetc(s->character, s->file);   // is this necessary?
                     s->state = LEX_ERROR;
                 }
                 break;
@@ -189,9 +193,9 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             case f16:
                 if ((s->character == 'e') || (s->character == 'E')) {
                     s->state = q8;
-                } 
-        
-                else if (s->character >= 48 && s->character <= 57) {    
+                }
+
+                else if (s->character >= 48 && s->character <= 57) {
                     s->state = f16;       // If after X.Y we have another number, keep on looping
                 }
 
@@ -210,7 +214,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             //----end of decimal literal scan-----
 
             /*
-            * this part of code is for string literal 
+            * this part of code is for string literal
             */
 
             //-----beggining of string literal scan-----
@@ -233,7 +237,8 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                            s->character == 't' ||
                            s->character == 92  ||
                            s->character == '"') {
-                                s->state = q3;
+                    // make test for uvozovka
+                    s->state = q3;
                 } else {
                     s->state = LEX_ERROR;
                 }
@@ -246,7 +251,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                         s->state = LEX_ERROR;
                 } else {
                     s->state = q6;
-                }      
+                }
                 break;
 
             case q6:
@@ -256,7 +261,7 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
                         s->state = LEX_ERROR;
                 } else {
                     s->state = q3;
-                }   
+                }
                 break;
             //----end of string literal scan-----
 
@@ -290,12 +295,45 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
             }
 
         if (s->state != STOP && s->state != LEX_ERROR) {
+            if (s->state == q4 && s->character == 92) {
+                // skip the '\'
+                escaped_char = true;
+                continue;
+            } else if (s->state == q5) {
+                // skip the hexa 'x'
+                hexa = true;
+                continue;
+            } else if (s->state == q6 && hexa) {
+                // add the first hexa
+                hexa_seq[0] = s->character;
+                continue;
+            } else if (s->state == q3 && hexa) {
+                // add the second hexa character and set it
+                hexa_seq[1] = s->character;
+                int sequence = (int) strtol(hexa_seq, NULL, 16);
+                s->character = sequence;
+            } else if (s->state == q3 && escaped_char) {
+                // add the '\'
+                if (s->character == 'n') {
+                    s->character = 10;
+                } else if (s->character == 't') {
+                    s->character = 9;
+                } else if (s->character == 92) {
+                    s->character = 92;
+                } else if (s->character == '"') {
+                    s->character = '"';
+                }
+            }
+
             if ((strAddChar(&str, s->character)) == 1) {
                 return ERROR_INTERNAL;
             }
+
+            escaped_char = false;
+            hexa = false;
         }
     } while (s->state != STOP && s->state != LEX_ERROR);
- 
+
     token_set_attribute(t, str);
     strFree(&str);
 
@@ -307,4 +345,3 @@ int scanner_scan(scanner_t *s, token_t *t, bool *eol_encountered, int *line) {
 
     return 0;
 }
- 

@@ -34,7 +34,7 @@
 #include "symtable-private.h"
 #include "token.h"
 
-#define ST_INIT_NUM_OF_BUCKETS 65536
+#define ST_INIT_NUM_OF_BUCKETS 128
 #define ST_INIT_NUM_IN_BUCKET 16
 
 /**
@@ -304,19 +304,11 @@ symtable_scope_t *symtable_scope_new() {
     if (st_stack == NULL)
         return NULL;
 
-    func_parameter_t *p = func_parameter_new();
-    if (p == NULL)
-        return NULL;
-
-    func_return_t *r = func_return_new();
-    if (r == NULL)
-        return NULL;
-
     strInit(&st_scope->id);
     st_scope->num_of_params = 0;
     st_scope->num_of_ret_args = 0;
-    st_scope->first_parameter = p;
-    st_scope->first_return = r;
+    st_scope->first_parameter = NULL;
+    st_scope->first_return = NULL;
     st_scope->st_stack = st_stack;
     st_scope->next_scope = NULL;
 
@@ -429,6 +421,14 @@ bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type)
     return true;
 }
 
+void symtable_add_inf_func_param(symtable_t *st) {
+    if (st == NULL)
+        return;
+
+    st->current_scope->num_of_params = -1;
+}
+
+
 func_parameter_t *symtable_get_func_param(symtable_t *st) {
     if (st == NULL)
         return NULL;
@@ -447,7 +447,11 @@ void symtable_add_func_return(symtable_t *st, token_type type) {
     if (st == NULL)
         return;
 
-    func_return_t *r = func_return_new(type);
+    func_return_t *r = func_return_new();
+    if (r == NULL)
+        return;
+
+    r->type = type;
 
     func_return_t *tmp_r = st->current_scope->first_return;
     if (tmp_r == NULL)
@@ -458,7 +462,6 @@ void symtable_add_func_return(symtable_t *st, token_type type) {
 
         tmp_r->next_return = r;
     }
-
 
     st->current_scope->num_of_ret_args++;
 }
@@ -517,6 +520,31 @@ symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
 }
 
 /**
+ * @brief Same as symtable_find but only for current scope.
+ * @deatils Hacky implementation, be wary of this!
+ */
+symtable_iterator_t symtable_find_curr_scope(symtable_t *st, symtable_key_t key) {
+    // Start in current row
+    symtable_row_t *st_row = st->current_scope->st_stack->current_row;
+
+    size_t i = symtable_hash_fun(key) % st_row->arr_size;
+    struct symtable_item *item = st_row->item_list[i];
+
+    if (item == NULL)
+        return symtable_row_end(st->current_scope->st_stack->current_row);
+
+    symtable_iterator_t it = { item, st_row, i, 0 };
+    while (symtable_iterator_valid(it)) {
+        if (strcmp(it.ptr->key, key) == 0)
+            return it;
+
+        it = symtable_iterator_next(it);
+    }
+
+    return symtable_row_end(st->current_scope->st_stack->current_row);
+}
+
+/**
  * @brief symtable_find_symbol looks for a symbol in symbol table matching a key
  *
  * @details key is used to search for an entry in a symtable. If key matches
@@ -533,6 +561,18 @@ symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
  */
 symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key) {
     symtable_iterator_t it = symtable_find(st, key);
+    if (symtable_iterator_valid(it))
+        return &it.ptr->symbol;
+
+    return NULL;
+}
+
+/**
+ * @brief Same as symtable_find_symbol but only for current scope.
+ * @deatils Hacky implementation, be wary of this!
+ */
+symtable_symbol_t *symtable_find_symbol_curr_scope(symtable_t *st, symtable_key_t key) {
+    symtable_iterator_t it = symtable_find_curr_scope(st, key);
     if (symtable_iterator_valid(it))
         return &it.ptr->symbol;
 

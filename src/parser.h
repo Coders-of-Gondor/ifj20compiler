@@ -14,6 +14,7 @@
 
 #include "ast.h"
 #include "scanner.h"
+#include "stack_func_call_t.h"
 #include "stack_int.h"
 #include "stack_token_t.h"
 #include "token.h"
@@ -21,6 +22,7 @@
 
 // stack
 typedef stack_token_t_t stack_token_t;
+typedef stack_func_call_t_t stack_func_call_t;
 
 /**
  * @brief Move the lookahead token.
@@ -87,7 +89,7 @@ void parser_func_call(char *id);
 // function parameters
 void parser_params();
 void parser_param();
-void parser_param_n();
+void parser_param_n(int arg_num);
 
 // return types
 void parser_r_params();
@@ -95,26 +97,32 @@ void parser_r_param();
 void parser_r_param_n();
 
 // function call arguments
-void parser_c_params(func_parameter_t *first_param);
-void parser_c_param(func_parameter_t *param);
-void parser_c_param_n(func_parameter_t *param);
+void parser_c_params(func_t *func);
+void parser_c_param(func_t *func);
+void parser_c_param_n(func_t *func);
 
 /* ------------------------------------------------------------------------ */
 /* VAR DEFINITION AND ASSIGN                                                */
 /* ------------------------------------------------------------------------ */
 
 void parser_vardef(char *id);
-void parser_assign(char *id);
-void parser_id_n(int *num_of_ids);
-void parser_exprs(int *num_of_exprs);
-void parser_expr_n(int *num_of_exprs);
+
+void parser_assign(char* id, TACList *my_list); 
+void parser_add_assign(char* id, TACList *my_list);
+void parser_sub_assign(char* id, TACList *my_list);
+void parser_mul_assign(char* id, TACList *my_list);
+void parser_div_assign(char* id, TACList *my_list);
+
+void parser_id_n(); 
+void parser_exprs();
+void parser_expr_n();
 
 /* ------------------------------------------------------------------------ */
 /* HELPER FOR RULES                                                         */
 /* ------------------------------------------------------------------------ */
 
 void parser_optdef();
-void parser_optassign();
+void parser_optassign(TACList *my_list);
 
 /* ------------------------------------------------------------------------ */
 /* RETURN STATEMENT                                                         */
@@ -124,7 +132,7 @@ void parser_optassign();
 // return
 // eps
 void parser_return();
-void parser_optexprs(int *num_of_exprs);
+void parser_optexprs();
 
 /* ------------------------------------------------------------------------ */
 /* EXPRESSION RULES - BOTTOM-UP PRECEDENCE ANALYSIS                         */
@@ -208,6 +216,7 @@ int prec_get_table_index(token_type t);
     if (!stack_token_t_isempty(rule_stack)) { \
         curr_token = stack_token_t_pop(rule_stack); \
         curr_symbol = curr_token.type; \
+        debug("Next symbol is of type %s", token_get_type_string(curr_symbol)); \
     } else { \
         debug("Empty rule stack!"); \
         return false; \
@@ -293,6 +302,8 @@ token_t prec_create_EOI_symbol();
 /**
  * @brief Start the parsing of an expression. Pass control to bottom-up.
  * @details Outdated function kept from the Expression LL analysis.
+ * @param target_type target type of the expression; different ypes may require
+ * different handling
  */
 void parser_expr();
 
@@ -314,6 +325,11 @@ bool is_mulop(token_type type);
 /* ------------------------------------------------------------------------ */
 
 void parser_track_ident(char *id);
+
+/**
+ * clean_func_calls cleans the stack of function calls
+ */
+void clean_func_calls();
 
 /* ------------------------------------------------------------------------ */
 /* THREE ADDRESS CODE GENERATION ACTIONS                                    */

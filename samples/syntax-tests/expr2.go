@@ -2,6 +2,6 @@ package main
 
 func foo() {
 
-  ___ := "asdf" + "asdf"
-  ___ = 123 < 34 >= 234 < > 234
+  ok := 15 + 3
+  ok = 123 < > 4
 }

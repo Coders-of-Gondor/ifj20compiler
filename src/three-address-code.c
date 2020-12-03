@@ -13,8 +13,9 @@
 
 #include <stdlib.h>
 
-#include "three-address-code.h"
+#include "debug.h"
 #include "error.h"
+#include "three-address-code.h"
 
 TACList *TAC_new() {
     TACList *L = malloc(sizeof(TACList));
@@ -54,7 +55,7 @@ bool TAC_create_row(TACList *L) {
 }
 
 bool TAC_insert(TACList *L, operator_type op_type, item arg1, item arg2, item result) {
-
+    debug_entry();
     L->act->op = op_type;
     L->act->arg1 = arg1;
     L->act->arg2 = arg2;
@@ -63,6 +64,7 @@ bool TAC_insert(TACList *L, operator_type op_type, item arg1, item arg2, item re
     if(!TAC_create_row(L)) {
         return false;
     }
+    debug("TAC - %d - '%s', '%s' : '%s'", op_type, arg1, arg2, result);
 
     return true;
 }
