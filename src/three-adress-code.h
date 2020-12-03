@@ -39,11 +39,12 @@ typedef enum operator_type {
     //instructions
     OP_CALL, // jump to label
     OP_CREATE_FRAME, //notion that function will be called
-    OP_LABEL, //after label comes declaration of function
+    OP_LABEL,  //label
     OP_RETURN, //notion that declaration of function ends
     OP_MOVE, //move arg2 to arg1
     OP_INC_SCOPE, //increase scope
-    OP_DEC_SCOPE //decrease scope
+    OP_DEC_SCOPE, //decrease scope
+    OP_LABEL_FUNC ////after label comes declaration of function
 } operator_type;
 
 //one row of three adress code in quadruples form (from dragon book)
