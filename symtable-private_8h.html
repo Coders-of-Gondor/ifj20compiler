@@ -67,12 +67,14 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">symtable-private.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;ast.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
 </div>
 <p><a href="symtable-private_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -80,22 +82,290 @@ $(function() {
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__item.html">symtable_item</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__body.html">symtable_body</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__row.html">symtable_row_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structsymtable__row.html" title="symtable_row holds symbols and reference to outer level (depth)">symtable_row</a> holds symbols and reference to outer level (depth)  <a href="structsymtable__row.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__stack.html">symtable_stack_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structsymtable__stack.html" title="symtable_stack manages levels (depth) of scope (e.g.">symtable_stack</a> manages levels (depth) of scope (e.g.  <a href="structsymtable__stack.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__scope.html">symtable_scope_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structsymtable__scope.html" title="symtable_scope manages symbols for a single scope (e.g., global, function)">symtable_scope</a> manages symbols for a single scope (e.g., global, function)  <a href="structsymtable__scope.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable.html">symtable_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable is the main data strcture used for all global and local symbols  <a href="structsymtable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__manager__body.html">symtable_manager_body</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable__manager.html">symtable_manager_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a940558054dd02d437828ae6e7b8b4072"><td class="memItemLeft" align="right" valign="top">symtable_row_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a940558054dd02d437828ae6e7b8b4072">symtable_row_new</a> ()</td></tr>
+<tr class="memdesc:a940558054dd02d437828ae6e7b8b4072"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_new constructs a new symtable row  <a href="symtable-private_8h.html#a940558054dd02d437828ae6e7b8b4072">More...</a><br /></td></tr>
+<tr class="separator:a940558054dd02d437828ae6e7b8b4072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b39921a34e8069d14a68932ba31d5da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a4b39921a34e8069d14a68932ba31d5da">symtable_row_free</a> (symtable_row_t *st_row)</td></tr>
+<tr class="memdesc:a4b39921a34e8069d14a68932ba31d5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_free clears and destroys an instance of symtable row  <a href="symtable-private_8h.html#a4b39921a34e8069d14a68932ba31d5da">More...</a><br /></td></tr>
+<tr class="separator:a4b39921a34e8069d14a68932ba31d5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1490229a9511ffd8140911fc9f57bf79"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a1490229a9511ffd8140911fc9f57bf79">symtable_hash_fun</a> (symtable_key_t key)</td></tr>
+<tr class="memdesc:a1490229a9511ffd8140911fc9f57bf79"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_hash_fun returns a hash for a hashtable key  <a href="symtable-private_8h.html#a1490229a9511ffd8140911fc9f57bf79">More...</a><br /></td></tr>
+<tr class="separator:a1490229a9511ffd8140911fc9f57bf79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5f26d8103616000e320a86d56e269e"><td class="memItemLeft" align="right" valign="top"><a id="a1b5f26d8103616000e320a86d56e269e"></a>
+<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_find</b> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
+<tr class="separator:a1b5f26d8103616000e320a86d56e269e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5e18f79598f9072c39e5148dba3442"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a6c5e18f79598f9072c39e5148dba3442">symtable_erase_symbol</a> (<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> it)</td></tr>
+<tr class="memdesc:a6c5e18f79598f9072c39e5148dba3442"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_erase erases an item in a symbol table aimed at by an iterator  <a href="symtable-private_8h.html#a6c5e18f79598f9072c39e5148dba3442">More...</a><br /></td></tr>
+<tr class="separator:a6c5e18f79598f9072c39e5148dba3442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a66baeb449a0ea5fd1fedb3d1e8ac9345">symtable_row_begin</a> (symtable_row_t *st_row)</td></tr>
+<tr class="memdesc:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_begin returns a new iterator aiming at the first object in a symbol table  <a href="symtable-private_8h.html#a66baeb449a0ea5fd1fedb3d1e8ac9345">More...</a><br /></td></tr>
+<tr class="separator:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703c9f6a2cda11aa11e88d8446bcb6e7"><td class="memItemLeft" align="right" valign="top"><a id="a703c9f6a2cda11aa11e88d8446bcb6e7"></a>
+<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_row_end</b> (symtable_row_t *st_row)</td></tr>
+<tr class="separator:a703c9f6a2cda11aa11e88d8446bcb6e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0593594479ca97d4f8e11192a04c9341"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a0593594479ca97d4f8e11192a04c9341">symtable_iterator_next</a> (<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> it)</td></tr>
+<tr class="memdesc:a0593594479ca97d4f8e11192a04c9341"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_iterator_next returns an iterator pointing to the next record  <a href="symtable-private_8h.html#a0593594479ca97d4f8e11192a04c9341">More...</a><br /></td></tr>
+<tr class="separator:a0593594479ca97d4f8e11192a04c9341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a042171b1f35b4009d6a570dcbde23506"><td class="memItemLeft" align="right" valign="top"><a id="a042171b1f35b4009d6a570dcbde23506"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_iterator_valid</b> (<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> it)</td></tr>
+<tr class="separator:a042171b1f35b4009d6a570dcbde23506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d45c346194d82541f7e2be88116ede7"><td class="memItemLeft" align="right" valign="top"><a id="a0d45c346194d82541f7e2be88116ede7"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_iterator_equal</b> (<a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> it1, <a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> it2)</td></tr>
+<tr class="separator:a0d45c346194d82541f7e2be88116ede7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf0ad706c11c36219a5e3124bc2736b9"><td class="memItemLeft" align="right" valign="top">symtable_stack_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#adf0ad706c11c36219a5e3124bc2736b9">symtable_stack_new</a> ()</td></tr>
+<tr class="memdesc:adf0ad706c11c36219a5e3124bc2736b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_stack_new initializes an instance of <a class="el" href="structsymtable__stack.html" title="symtable_stack manages levels (depth) of scope (e.g.">symtable_stack</a>  <a href="symtable-private_8h.html#adf0ad706c11c36219a5e3124bc2736b9">More...</a><br /></td></tr>
+<tr class="separator:adf0ad706c11c36219a5e3124bc2736b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22adc107786e138fb8832f9e83d164a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable-private_8h.html#a22adc107786e138fb8832f9e83d164a8">symtable_stack_free</a> (symtable_stack_t *sts)</td></tr>
+<tr class="memdesc:a22adc107786e138fb8832f9e83d164a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_stack_free destroys an instance of symtable stacks  <a href="symtable-private_8h.html#a22adc107786e138fb8832f9e83d164a8">More...</a><br /></td></tr>
+<tr class="separator:a22adc107786e138fb8832f9e83d164a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948ed7db19b3b3be555ed8feaa5fcfa0"><td class="memItemLeft" align="right" valign="top"><a id="a948ed7db19b3b3be555ed8feaa5fcfa0"></a>
+symtable_scope_t *&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_scope_new</b> ()</td></tr>
+<tr class="separator:a948ed7db19b3b3be555ed8feaa5fcfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64b994f061da17b504d1b5ea2a68597b"><td class="memItemLeft" align="right" valign="top"><a id="a64b994f061da17b504d1b5ea2a68597b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_scope_free</b> (symtable_scope_t *st_scope)</td></tr>
+<tr class="separator:a64b994f061da17b504d1b5ea2a68597b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Ondřej Míchal &lt;xmicha80&gt; </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>20/10/2020 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6c5e18f79598f9072c39e5148dba3442"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c5e18f79598f9072c39e5148dba3442">&#9670;&nbsp;</a></span>symtable_erase_symbol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void symtable_erase_symbol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td>
+          <td class="paramname"><em>it</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_erase erases an item in a symbol table aimed at by an iterator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">st</td><td>pointer to an instance of symtable </td></tr>
+    <tr><td class="paramname">it</td><td>symtable iterator </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1490229a9511ffd8140911fc9f57bf79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1490229a9511ffd8140911fc9f57bf79">&#9670;&nbsp;</a></span>symtable_hash_fun()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t symtable_hash_fun </td>
+          <td>(</td>
+          <td class="paramtype">symtable_key_t&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_hash_fun returns a hash for a hashtable key </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>text</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>hash </dd></dl>
+
+</div>
+</div>
+<a id="a0593594479ca97d4f8e11192a04c9341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0593594479ca97d4f8e11192a04c9341">&#9670;&nbsp;</a></span>symtable_iterator_next()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> symtable_iterator_next </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td>
+          <td class="paramname"><em>it</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_iterator_next returns an iterator pointing to the next record </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">it</td><td>symtable iterator</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>symtable iterator </dd></dl>
+
+</div>
+</div>
+<a id="a66baeb449a0ea5fd1fedb3d1e8ac9345"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66baeb449a0ea5fd1fedb3d1e8ac9345">&#9670;&nbsp;</a></span>symtable_row_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> symtable_row_begin </td>
+          <td>(</td>
+          <td class="paramtype">symtable_row_t *&#160;</td>
+          <td class="paramname"><em>st_row</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_row_begin returns a new iterator aiming at the first object in a symbol table </p>
+<p>symtable_row_begins looks for the first object in a symtable. If it's not found, it returns symtable_row_end(t).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>pointer to an instance of symtable</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>symtable iterator </dd></dl>
+
+</div>
+</div>
+<a id="a4b39921a34e8069d14a68932ba31d5da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b39921a34e8069d14a68932ba31d5da">&#9670;&nbsp;</a></span>symtable_row_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void symtable_row_free </td>
+          <td>(</td>
+          <td class="paramtype">symtable_row_t *&#160;</td>
+          <td class="paramname"><em>st_row</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_row_free clears and destroys an instance of symtable row </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">st</td><td>pointer to a symtable row </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a940558054dd02d437828ae6e7b8b4072"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a940558054dd02d437828ae6e7b8b4072">&#9670;&nbsp;</a></span>symtable_row_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">symtable_row_t* symtable_row_new </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_row_new constructs a new symtable row </p>
+<dl class="section return"><dt>Returns</dt><dd>pointer to a symtable row</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>error </td></tr>
+    <tr><td class="paramname">pointer</td><td>success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a22adc107786e138fb8832f9e83d164a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22adc107786e138fb8832f9e83d164a8">&#9670;&nbsp;</a></span>symtable_stack_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void symtable_stack_free </td>
+          <td>(</td>
+          <td class="paramtype">symtable_stack_t *&#160;</td>
+          <td class="paramname"><em>st_stack</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_stack_free destroys an instance of symtable stacks </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sts</td><td>pointer to an instance of symtable stack </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adf0ad706c11c36219a5e3124bc2736b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf0ad706c11c36219a5e3124bc2736b9">&#9670;&nbsp;</a></span>symtable_stack_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">symtable_stack_t* symtable_stack_new </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_stack_new initializes an instance of <a class="el" href="structsymtable__stack.html" title="symtable_stack manages levels (depth) of scope (e.g.">symtable_stack</a> </p>
+<p>symtable_stack_new allocates space for a set number of symtable stacks. If more space is needed, symtable_stack_push_stack will reallocate the body (by doubling the maximum of stacks). The structure starts with 1 stack. Initial maximum number of stacks is 4.</p>
+<dl class="section return"><dt>Returns</dt><dd>pointer to an instance of symtable stack</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>error </td></tr>
+    <tr><td class="paramname">pointer</td><td>success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 18:30:15 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Dec 3 2020 18:31:43 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

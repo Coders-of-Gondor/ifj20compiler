@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ifj20compiler: symtable_body Struct Reference</title>
+<title>ifj20compiler: symtable_row_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,32 +65,43 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">symtable_body Struct Reference</div>  </div>
+<div class="title">symtable_row_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="structsymtable__row.html" title="symtable_row holds symbols and reference to outer level (depth)">symtable_row</a> holds symbols and reference to outer level (depth)  
+ <a href="structsymtable__row.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="symtable-private_8h_source.html">symtable-private.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae790bc0e126184308ea232a86338fe1e"><td class="memItemLeft" align="right" valign="top"><a id="ae790bc0e126184308ea232a86338fe1e"></a>
+<tr class="memitem:a4e6280aa64e2d26c547256b68a01d1f5"><td class="memItemLeft" align="right" valign="top"><a id="a4e6280aa64e2d26c547256b68a01d1f5"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
-<tr class="separator:ae790bc0e126184308ea232a86338fe1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d9abfebc3d44b1bf204257129e9f6cb"><td class="memItemLeft" align="right" valign="top"><a id="a8d9abfebc3d44b1bf204257129e9f6cb"></a>
+<tr class="separator:a4e6280aa64e2d26c547256b68a01d1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad25a574c5c10d7d5c226def2e0a1f0c3"><td class="memItemLeft" align="right" valign="top"><a id="ad25a574c5c10d7d5c226def2e0a1f0c3"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>arr_size</b></td></tr>
-<tr class="separator:a8d9abfebc3d44b1bf204257129e9f6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91fd9f528469dbdd5636dc131306905"><td class="memItemLeft" align="right" valign="top"><a id="af91fd9f528469dbdd5636dc131306905"></a>
+<tr class="separator:ad25a574c5c10d7d5c226def2e0a1f0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac75691717f8be91fbfa6a75dfba6cabe"><td class="memItemLeft" align="right" valign="top"><a id="ac75691717f8be91fbfa6a75dfba6cabe"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>bucket_cap</b></td></tr>
-<tr class="separator:af91fd9f528469dbdd5636dc131306905"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adff63502405c1e67d20e3c860d21fc10"><td class="memItemLeft" align="right" valign="top"><a id="adff63502405c1e67d20e3c860d21fc10"></a>
+<tr class="separator:ac75691717f8be91fbfa6a75dfba6cabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc1ccad698bcbabd646716086ab28346"><td class="memItemLeft" align="right" valign="top"><a id="adc1ccad698bcbabd646716086ab28346"></a>
+struct <a class="el" href="structsymtable__row.html">symtable_row</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>outer_row</b></td></tr>
+<tr class="separator:adc1ccad698bcbabd646716086ab28346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2fe00b5c134aed2381eafc824f36bb9"><td class="memItemLeft" align="right" valign="top"><a id="af2fe00b5c134aed2381eafc824f36bb9"></a>
 struct <a class="el" href="structsymtable__item.html">symtable_item</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>item_list</b> []</td></tr>
-<tr class="separator:adff63502405c1e67d20e3c860d21fc10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af2fe00b5c134aed2381eafc824f36bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="structsymtable__row.html" title="symtable_row holds symbols and reference to outer level (depth)">symtable_row</a> holds symbols and reference to outer level (depth) </p>
+<p><a class="el" href="structsymtable__row.html" title="symtable_row holds symbols and reference to outer level (depth)">symtable_row</a> is built on top of hashtable </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="symtable-private_8h_source.html">symtable-private.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 18:30:15 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Dec 3 2020 18:31:43 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

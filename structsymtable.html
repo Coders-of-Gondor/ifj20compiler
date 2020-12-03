@@ -68,20 +68,82 @@ $(function() {
 <div class="title">symtable_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>symtable is the main data strcture used for all global and local symbols  
+ <a href="structsymtable.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="symtable-private_8h_source.html">symtable-private.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab2f0e77029b86382e33c5f206cb712ba"><td class="memItemLeft" align="right" valign="top"><a id="ab2f0e77029b86382e33c5f206cb712ba"></a>
-struct <a class="el" href="structsymtable__body.html">symtable_body</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>stb</b></td></tr>
-<tr class="separator:ab2f0e77029b86382e33c5f206cb712ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d3f40b32b610f9dbca3e8f1b0c3824"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable.html#a53d3f40b32b610f9dbca3e8f1b0c3824">num_of_scopes</a></td></tr>
+<tr class="memdesc:a53d3f40b32b610f9dbca3e8f1b0c3824"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of scopes  <a href="structsymtable.html#a53d3f40b32b610f9dbca3e8f1b0c3824">More...</a><br /></td></tr>
+<tr class="separator:a53d3f40b32b610f9dbca3e8f1b0c3824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa033fc9199d56af8fddbc76cab648203"><td class="memItemLeft" align="right" valign="top">symtable_scope_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable.html#aa033fc9199d56af8fddbc76cab648203">current_scope</a></td></tr>
+<tr class="memdesc:aa033fc9199d56af8fddbc76cab648203"><td class="mdescLeft">&#160;</td><td class="mdescRight">current scope  <a href="structsymtable.html#aa033fc9199d56af8fddbc76cab648203">More...</a><br /></td></tr>
+<tr class="separator:aa033fc9199d56af8fddbc76cab648203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed455a7674f33b718f32d297409ef667"><td class="memItemLeft" align="right" valign="top">symtable_scope_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsymtable.html#aed455a7674f33b718f32d297409ef667">first_scope</a></td></tr>
+<tr class="memdesc:aed455a7674f33b718f32d297409ef667"><td class="mdescLeft">&#160;</td><td class="mdescRight">the first scope in a linked list  <a href="structsymtable.html#aed455a7674f33b718f32d297409ef667">More...</a><br /></td></tr>
+<tr class="separator:aed455a7674f33b718f32d297409ef667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>symtable is the main data strcture used for all global and local symbols </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="aa033fc9199d56af8fddbc76cab648203"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa033fc9199d56af8fddbc76cab648203">&#9670;&nbsp;</a></span>current_scope</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">symtable_scope_t* symtable_t::current_scope</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>current scope </p>
+
+</div>
+</div>
+<a id="aed455a7674f33b718f32d297409ef667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed455a7674f33b718f32d297409ef667">&#9670;&nbsp;</a></span>first_scope</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">symtable_scope_t* symtable_t::first_scope</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>the first scope in a linked list </p>
+
+</div>
+</div>
+<a id="a53d3f40b32b610f9dbca3e8f1b0c3824"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53d3f40b32b610f9dbca3e8f1b0c3824">&#9670;&nbsp;</a></span>num_of_scopes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t symtable_t::num_of_scopes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>number of scopes </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="symtable-private_8h_source.html">symtable-private.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 18:30:15 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Thu Dec 3 2020 18:31:43 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
