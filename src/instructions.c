@@ -126,9 +126,8 @@ void print_LSS(char *var, char *sym1, char *sym2) {
 }
 
 void print_LEQ(char *var, char *sym1, char *sym2) {
-    printf("LT LF@%s LF@%s LF@%s", var, sym1, sym2);
-    printf("EQ LF@%s LF@%s LF@%s", "$$$tmp", sym1, sym2);
-    printf("AND LF@%s LF@%s LF@%s", var, var, "$$$tmp");
+    // x <= y => y > x
+    printf("GT LF@%s LF@%s LF@%s", var, sym2, sym1);
 }
 
 void print_GTR(char *var, char *sym1, char *sym2) {
@@ -136,9 +135,8 @@ void print_GTR(char *var, char *sym1, char *sym2) {
 }
 
 void print_GEQ(char *var, char *sym1, char *sym2) {
-    printf("GT LF@%s LF@%s LF@%s", var, sym1, sym2);
-    printf("EQ LF@%s LF@%s LF@%s", "$$$tmp", sym1, sym2);
-    printf("AND LF@%s LF@%s LF@%s", var, var, "$$$tmp");
+    // x >= y => y < x
+    printf("LT LF@%s LF@%s LF@%s", var, sym2, sym1);
 }    
 
 void generate_head() {
