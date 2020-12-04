@@ -18,8 +18,6 @@
  */
 
 func_parameter_t *func_parameter_new() {
-    debug_entry();
-
     func_parameter_t *p = malloc(sizeof(struct function_parameter));
     if (p == NULL)
         return NULL;
@@ -32,8 +30,6 @@ func_parameter_t *func_parameter_new() {
 }
 
 void func_parameter_free(func_parameter_t *p) {
-    debug_entry();
-
     if (p == NULL)
         return;
 
@@ -46,8 +42,6 @@ void func_parameter_free(func_parameter_t *p) {
  */
 
 func_return_t *func_return_new() {
-    debug_entry();
-
     func_return_t *r = malloc(sizeof(struct function_return));
     if (r == NULL)
         return NULL;
@@ -59,8 +53,6 @@ func_return_t *func_return_new() {
 }
 
 void func_return_free(func_return_t *r) {
-    debug_entry();
-
     if (r == NULL)
         return;
 
@@ -72,8 +64,6 @@ void func_return_free(func_return_t *r) {
  */
 
 void func_init(func_t *f) {
-    debug_entry();
-
     if (f == NULL)
         return;
 
@@ -85,8 +75,6 @@ void func_init(func_t *f) {
 }
 
 void func_free(func_t *f) {
-    debug_entry();
-
     if (f == NULL)
         return;
 
@@ -106,8 +94,6 @@ void func_free(func_t *f) {
 }
 
 void func_set_id(func_t *f, char *id) {
-    debug_entry();
-
     if (f == NULL)
         return;
 

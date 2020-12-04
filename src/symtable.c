@@ -64,8 +64,6 @@ size_t symtable_hash_fun(symtable_key_t key) {
  * @retval pointer success
  */
 symtable_row_t *symtable_row_new() {
-    debug_entry();
-
     symtable_row_t *st_row = malloc(sizeof(struct symtable_row) + ST_INIT_NUM_OF_BUCKETS * sizeof(struct symtable_symbol *));
     if (st_row == NULL)
         return NULL;
@@ -86,7 +84,6 @@ symtable_row_t *symtable_row_new() {
  * @param st pointer to a symtable row
  */
 void symtable_row_free(symtable_row_t *st_row) {
-    debug_entry();
     if (st_row != NULL) {
         symtable_row_clear(st_row);
         free(st_row);
@@ -99,7 +96,6 @@ void symtable_row_free(symtable_row_t *st_row) {
  * @param t pointer to a symtable row
  */
 void symtable_row_clear(symtable_row_t *st_row) {
-    debug_entry();
     if (st_row == NULL)
         return;
 
@@ -187,7 +183,6 @@ symtable_iterator_t symtable_iterator_next(symtable_iterator_t it) {
  * @retval pointer success
  */
 symtable_stack_t *symtable_stack_new() {
-    debug_entry();
     symtable_stack_t *st_stack = malloc(sizeof(struct symtable_stack));
     if (st_stack == NULL)
         return NULL;
@@ -209,7 +204,6 @@ symtable_stack_t *symtable_stack_new() {
  * @param sts pointer to an instance of symtable stack
  */
 void symtable_stack_free(symtable_stack_t *st_stack) {
-    debug_entry();
     if (st_stack == NULL)
         return;
 
@@ -231,7 +225,6 @@ void symtable_stack_free(symtable_stack_t *st_stack) {
  * @param sts pointer to an instance of symtable stack
  */
 void symtable_push_stack(symtable_t *st) {
-    debug_entry();
     if (st == NULL)
         return;
 
@@ -256,7 +249,6 @@ void symtable_push_stack(symtable_t *st) {
  * @param sts pointer to an instance of symtable stack
  */
 void symtable_pop_stack(symtable_t *st) {
-    debug_entry();
     if (st == NULL)
         return;
 
@@ -273,7 +265,6 @@ void symtable_pop_stack(symtable_t *st) {
 }
 
 bool symtable_new_scope(symtable_t *st, symtable_key_t id) {
-    debug_entry();
     if (st == NULL)
         return false;
 
@@ -333,8 +324,6 @@ symtable_scope_t *symtable_scope_new() {
 }
 
 void symtable_scope_free(symtable_scope_t *st_scope) {
-    debug_entry();
-
     if (st_scope == NULL)
         return;
 
@@ -354,8 +343,6 @@ void symtable_scope_free(symtable_scope_t *st_scope) {
 }
 
 char *symtable_get_scope_name(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return NULL;
 
@@ -363,8 +350,6 @@ char *symtable_get_scope_name(symtable_t *st) {
 }
 
 bool symtable_set_current_scope(symtable_t *st, symtable_key_t id) {
-    debug_entry();
-
     if (st == NULL)
         return false;
 
@@ -379,8 +364,6 @@ bool symtable_set_current_scope(symtable_t *st, symtable_key_t id) {
 }
 
 void symtable_set_first_scope(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return;
 
@@ -388,8 +371,6 @@ void symtable_set_first_scope(symtable_t *st) {
 }
 
 bool symtable_next_scope(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return false;
 
@@ -402,8 +383,6 @@ bool symtable_next_scope(symtable_t *st) {
 }
 
 symtable_t *symtable_new() {
-    debug_entry();
-
     symtable_t *st = malloc(sizeof(struct symtable));
     if (st == NULL)
         return NULL;
@@ -420,8 +399,6 @@ symtable_t *symtable_new() {
 }
 
 bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type) {
-    debug_entry();
-
     if (st == NULL)
         return false;
 
@@ -453,8 +430,6 @@ bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type)
 }
 
 func_parameter_t *symtable_get_func_param(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return NULL;
 
@@ -462,8 +437,6 @@ func_parameter_t *symtable_get_func_param(symtable_t *st) {
 }
 
 int symtable_get_num_of_params(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return -1;
 
@@ -471,8 +444,6 @@ int symtable_get_num_of_params(symtable_t *st) {
 }
 
 void symtable_add_func_return(symtable_t *st, token_type type) {
-    debug_entry();
-
     if (st == NULL)
         return;
 
@@ -493,8 +464,6 @@ void symtable_add_func_return(symtable_t *st, token_type type) {
 }
 
 func_return_t *symtable_get_func_return(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return NULL;
 
@@ -502,8 +471,6 @@ func_return_t *symtable_get_func_return(symtable_t *st) {
 }
 
 int symtable_get_num_of_returns(symtable_t *st) {
-    debug_entry();
-
     if (st == NULL)
         return -1;
 
@@ -525,8 +492,6 @@ void symtable_free(symtable_t *st) {
 }
 
 symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
-    debug_entry();
-
     // Start in current row
     symtable_row_t *st_row = st->current_scope->st_stack->current_row;
 
@@ -567,8 +532,6 @@ symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
  * @retval pointer search symbol does exist
  */
 symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key) {
-    debug_entry();
-
     symtable_iterator_t it = symtable_find(st, key);
     if (symtable_iterator_valid(it))
         return &it.ptr->symbol;
@@ -588,8 +551,6 @@ symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key) {
  * @retval pointer newly created symbol
  */
 symtable_symbol_t *symtable_add_symbol(symtable_t *st, symtable_key_t key) {
-    debug_entry();
-
     if (st == NULL)
         return NULL;
 
@@ -668,7 +629,6 @@ symtable_symbol_t *symtable_add_symbol(symtable_t *st, symtable_key_t key) {
  * @param key text
  */
 void symtable_remove_symbol(symtable_t *st, symtable_key_t key) {
-    debug_entry();
     if (st == NULL)
         return;
 
@@ -684,8 +644,6 @@ void symtable_remove_symbol(symtable_t *st, symtable_key_t key) {
  * @param it symtable iterator
  */
 void symtable_erase_symbol(symtable_iterator_t it) {
-    debug_entry();
-
     symtable_iterator_t next_it = symtable_iterator_next(it);
     symtable_iterator_t prev_it = { it.st_row->item_list[it.idb], it.st_row, it.idb, 0 };
 
