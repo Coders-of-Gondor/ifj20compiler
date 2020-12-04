@@ -15,6 +15,7 @@ extern inline void CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack, TYPE) *st
 extern inline bool CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE val);
 extern inline TYPE CONCAT_FUNC(stack, TYPE, peek)(CONCAT_STRUCT(stack, TYPE) *stack);
 extern inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack);
+extern inline void CONCAT_FUNC(stack, TYPE, reverse)(CONCAT_STRUCT(stack, TYPE) *stack);
 extern inline bool CONCAT_FUNC(stack, TYPE, isempty)(CONCAT_STRUCT(stack, TYPE) *stack);
 extern inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func);
 extern inline int CONCAT_FUNC(stack, TYPE, howmany)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR)compare_func);

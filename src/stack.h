@@ -160,6 +160,17 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
 }
 
 /**
+ * @brief Reverse the order of values in stack
+ */
+inline void CONCAT_FUNC(stack, TYPE, reverse)(CONCAT_STRUCT(stack, TYPE) *stack) {
+    for (int i = 0; i <= stack->top / 2; i++) {
+        TYPE tmp = stack->array[i];
+        stack->array[i] = stack->array[stack->top-i];
+        stack->array[stack->top] = tmp;
+    }
+}
+
+/**
  * @brief Find out if a value is already in the stack.
  * @pre Needs a comparison function as its parameter.
  *      Comparsion function returns 0 if the comparsion was succesful.
