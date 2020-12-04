@@ -100,6 +100,42 @@ char *remove_type(char *str) {
     return buff;
 }
 
+char* set_scope(char *var, int scope, stack_charptr_t *stack) {
+    char buff[(5+strlen(var))*sizeof(char)];
+    char append_scope[5];
+
+    strcpy(buff, "");
+    strncat(buff, var, strlen(var));
+    sprintf(append_scope, "$%d", scope);
+    strncat(buff, append_scope, strlen(append_scope));
+
+    for (int i = scope; i > 0; i--) {
+        if (stack_charptr_ispresent(stack, buff, strcmp)); // TODO
+            //Do_something
+    }
+    return buff;
+}
+
+char* change_scope(char *var, int scope) {
+    int length = strlen(var);
+    char *buff = malloc((5 + length)*sizeof(char));
+    strcpy(buff, "");
+    int occurence = 0;
+    char append_scope[5];
+    sprintf(append_scope, "%d", scope);
+
+    for (int i = 0; i < length; i++) {
+        if (var[i] == '$')
+            occurence = i;
+    }
+    
+    printf("%d\n", occurence);
+    strncat(buff, var, occurence+1);
+    strncat(buff, append_scope, strlen(append_scope));
+
+    return buff;
+}
+
 
 void generate() {
 
