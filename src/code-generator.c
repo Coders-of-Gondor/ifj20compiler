@@ -21,9 +21,12 @@
 #define HASH 35
 #define BACKSLASH 92
 
+#define STACK(F) stack_stack_charptr_tptr_ ## F
+
 #include "stack_stack_charptr_tptr.h"
 
 typedef stack_stack_charptr_tptr_t stack_of_stacks;
+typedef stack_charptr_t stack_of_strings;
 
 char *conversion(char *str) {
 
@@ -86,6 +89,10 @@ char *remove_type(char *str) {
             strcpy(converted_str, new);
             strcpy(buff, "int@");
             break;
+
+        case 'd':
+            strcpy(converted_str, new);
+            break;
     }
     free(new);
     strncat(buff, converted_str, strlen(converted_str));
@@ -95,6 +102,8 @@ char *remove_type(char *str) {
 
 
 void generate() {
+
+    unsigned int scope = 0;
 
     //deklarace pomocnych promenych
 
@@ -111,24 +120,25 @@ void generate() {
     TAC_insert(L, OP_MOVE, "I5", NULL, "a");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "b");
 
-    #define STACK(F) stack_stack_charptr_tptr_ ## F
-    //start generating code
+    
+    // start generating code
     // stack_of_stacks *megastack = stack_stack_charptr_tptr_init();
     stack_of_stacks *megastack = STACK(init)();
 
-    stack_charptr_t *string_stack1 = stack_charptr_init();
-    stack_charptr_push(string_stack1, "foo");
+    //  create frame for func main
+    stack_charptr_t *frame_main = stack_charptr_init();
+    stack_charptr_push(megastack, frame_main);
     
-    stack_charptr_ispresent(string_stack1, "foo", strcmp);
-    char *stringus = stack_charptr_pop(string_stack1);
-    if (!stack_charptr_ispresent(string_stack1, "foo", strcmp)) {
-        stack_charptr_push(string_stack1, "foo");
-    }
+    // stack_charptr_ispresent(string_stack1, "foo", strcmp);
+    // char *stringus = stack_charptr_pop(string_stack1);
+    // if (!stack_charptr_ispresent(string_stack1, "foo", strcmp)) {
+        // stack_charptr_push(string_stack1, "foo");
+    // }
 
-    STACK(push)(megastack, string_stack1);
+    // STACK(push)(megastack, string_stack1);
 
-    stack_charptr_free(string_stack1);
-    STACK(free)(megastack);
+    // stack_charptr_free(string_stack1);
+    // STACK(free)(megastack);
 
 
     generate_head();
@@ -191,8 +201,18 @@ void generate() {
                 print_IDIV_ASSIGN(L->act->result, L->act->arg1, NULL);
             break;
 
-        case OP_DEFINE:
-            print_DEFINE(L->act->result);
+        case OP_DEFINE:;
+
+            char *processed = remove_type(L->act->result);
+            
+            stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
+
+            char *tmp_string = malloc(sizeof(__CHAR_BIT__) * (strlen(processed) + 5));
+            sprintf(tmp_string, "%s$%d", processed, scope);
+
+            stack_charptr_push(temp, tmp_string);
+
+            print_DEFINE(tmp_string);
             break;
 
         case OP_AND:
@@ -239,12 +259,31 @@ void generate() {
             printf("LABEL %s:\n",L->act->arg1);
             break;
 
+        case OP_LABEL_FUNC:
+            printf("LABEL %s:\n",L->act->arg1);
+
+            //entered definition of a function -> create new frame to
+            //keep track of variables declared and defined there. Then
+            //push the new_frame to stack of stacks
+            stack_charptr_t *frame_new = stack_charptr_init();
+            stack_charptr_push(megastack, frame_new);
+
+            break;
+
         case OP_RETURN:
             printf("RETURN");
             break;
 
         case OP_MOVE:
             print_MOVE("LF", L->act->result, "LF", L->act->arg1, "number");
+            break;
+
+        case OP_INC_SCOPE:
+                scope++;
+            break;
+
+        case OP_DEC_SCOPE:
+                scope--;
             break;
         
         default:
