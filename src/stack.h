@@ -73,7 +73,6 @@ typedef struct CONCAT_STRUCT(stack, TYPE)
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include "debug.h"
 
 // stack's starting capacity
 #define STACK_START_SIZE 10
@@ -85,7 +84,6 @@ typedef int (*CONCAT_FUNC(CMP, TYPE, PTR))(TYPE, TYPE);
  * @return True if everything went ok. False if internal error happened.
  */
 inline bool CONCAT_FUNC(stack, TYPE, resize)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     // multiple the size by two
     stack->size *= 2;
     stack->array = (TYPE *) realloc(stack->array, sizeof(TYPE) * stack->size);
@@ -99,14 +97,12 @@ inline bool CONCAT_FUNC(stack, TYPE, resize)(CONCAT_STRUCT(stack, TYPE) *stack) 
  * @brief Helper function to tell if the stack is empty.
  */
 inline bool CONCAT_FUNC(stack, TYPE, isempty)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     return stack->top == -1;
 }
 
 /**
  * @brief Helper function to tell if the stack's capacity is full.  */
 inline bool CONCAT_FUNC(stack, TYPE, isfull)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     return stack->top == stack->size - 1;
 }
 
@@ -115,7 +111,6 @@ inline bool CONCAT_FUNC(stack, TYPE, isfull)(CONCAT_STRUCT(stack, TYPE) *stack) 
  * @return Pointer to stack struct. NULL if internal error.
  */
 inline CONCAT_STRUCT(stack, TYPE) *CONCAT_FUNC(stack, TYPE, init)() {
-    debug_entry();
     CONCAT_STRUCT(stack, TYPE) *stack =
         (CONCAT_STRUCT(stack, TYPE) *) malloc(sizeof(CONCAT_STRUCT(stack, TYPE)));
     if (stack == NULL) {
@@ -137,7 +132,6 @@ inline CONCAT_STRUCT(stack, TYPE) *CONCAT_FUNC(stack, TYPE, init)() {
  * @return True if everything went okay, False if internal error happened.
  */
 inline bool CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack, TYPE) *stack, TYPE val) {
-    debug_entry();
     if (CONCAT_FUNC(stack, TYPE, isfull)(stack)) {
         if (!CONCAT_FUNC(stack, TYPE, resize)(stack)) {
             return false;
@@ -153,7 +147,6 @@ inline bool CONCAT_FUNC(stack, TYPE, push)(CONCAT_STRUCT(stack, TYPE) *stack, TY
  * @brief Read the top value from the stack.
  */
 inline TYPE CONCAT_FUNC(stack, TYPE, peek)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     return stack->array[stack->top];
 }
 
@@ -161,7 +154,6 @@ inline TYPE CONCAT_FUNC(stack, TYPE, peek)(CONCAT_STRUCT(stack, TYPE) *stack) {
  * @brief Read a value from the stack and remove it.
  */
 inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     TYPE popped = stack->array[stack->top];
     stack->top--;
     return popped;
@@ -174,7 +166,6 @@ inline TYPE CONCAT_FUNC(stack, TYPE, pop)(CONCAT_STRUCT(stack, TYPE) *stack) {
  */
 inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stack,
                         TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func) {
-    debug_entry();
     int top = stack->top;
 
     while (top >= 0) {
@@ -197,7 +188,6 @@ inline bool CONCAT_FUNC(stack, TYPE, ispresent)(CONCAT_STRUCT(stack, TYPE) *stac
  */
 inline int CONCAT_FUNC(stack, TYPE, howmany)(CONCAT_STRUCT(stack, TYPE) *stack,
                         TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func) {
-    debug_entry();
     int top = stack->top;
     int occurences = 0;
 
@@ -213,11 +203,40 @@ inline int CONCAT_FUNC(stack, TYPE, howmany)(CONCAT_STRUCT(stack, TYPE) *stack,
 }
 
 /**
+ * @brief Get the value located at given index.
+ * @return Return the value located at the index.
+ */
+inline TYPE CONCAT_FUNC(stack, TYPE, at)(CONCAT_STRUCT(stack, TYPE) *stack, int index) {
+    return stack->array[index];
+}
+
+/**
+ * @brief Get the index of the first value encountered.
+ * @pre Needs a comparasion function as its parameter.
+ * @return index if found, -1 if value not found.
+ */
+inline int CONCAT_FUNC(stack, TYPE, find)(CONCAT_STRUCT(stack, TYPE) *stack,
+        TYPE value_to_find, CONCAT_FUNC(CMP, TYPE, PTR) compare_func) {
+    int top = stack->top;
+
+    while (top >= 0) {
+        if (compare_func(stack->array[top], value_to_find) == 0) {
+            // token found
+            return top;
+        } else {
+            top--;
+        }
+    }
+
+    // searched value not found
+    return -1;  // token_type starts at 0, so this is safe
+}
+
+/**
  * @brief Destroy the stack struct and deallocate the memory.
  * @details Set stack to null.
  */
 inline void CONCAT_FUNC(stack, TYPE, free)(CONCAT_STRUCT(stack, TYPE) *stack) {
-    debug_entry();
     free(stack->array);
     free(stack);
 }
