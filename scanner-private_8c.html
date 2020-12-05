@@ -78,14 +78,16 @@ $(function() {
 <div class="textblock"><code>#include &lt;ctype.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="debug_8h_source.html">debug.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="scanner-private_8h_source.html">scanner-private.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="error_8h_source.html">error.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a38f7ea8e4222dc273821b0492da04d06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="scanner-private_8c.html#a38f7ea8e4222dc273821b0492da04d06">scanner_skip_whitespace_comments</a> (scanner_t *s, bool *<a class="el" href="parser_8c.html#a54f319b221ae296289c05eac5dda73c2">eol_encountered</a>, int *<a class="el" href="parser_8c.html#a41ebd28ef1d7c6ade45642cb6acc1039">line</a>)</td></tr>
-<tr class="memdesc:a38f7ea8e4222dc273821b0492da04d06"><td class="mdescLeft">&#160;</td><td class="mdescRight">file_move moves current position in a file by X  <a href="scanner-private_8c.html#a38f7ea8e4222dc273821b0492da04d06">More...</a><br /></td></tr>
-<tr class="separator:a38f7ea8e4222dc273821b0492da04d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a328d6ef554701a0f0ef6205cc01203dc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="scanner-private_8c.html#a328d6ef554701a0f0ef6205cc01203dc">scanner_skip_whitespace_comments</a> (scanner_t *s, bool *<a class="el" href="parser_8c.html#a54f319b221ae296289c05eac5dda73c2">eol_encountered</a>, int *<a class="el" href="parser_8c.html#a41ebd28ef1d7c6ade45642cb6acc1039">line</a>)</td></tr>
+<tr class="memdesc:a328d6ef554701a0f0ef6205cc01203dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">file_move moves current position in a file by X  <a href="scanner-private_8c.html#a328d6ef554701a0f0ef6205cc01203dc">More...</a><br /></td></tr>
+<tr class="separator:a328d6ef554701a0f0ef6205cc01203dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dba7abdd67bbcb0d40797b5a944f31f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="scanner-private_8c.html#a8dba7abdd67bbcb0d40797b5a944f31f">scan_string_lit</a> (scanner_t *s)</td></tr>
 <tr class="memdesc:a8dba7abdd67bbcb0d40797b5a944f31f"><td class="mdescLeft">&#160;</td><td class="mdescRight">scan_string_lit is a branch of DKA that looks for string tokens  <a href="scanner-private_8c.html#a8dba7abdd67bbcb0d40797b5a944f31f">More...</a><br /></td></tr>
 <tr class="separator:a8dba7abdd67bbcb0d40797b5a944f31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,14 +232,14 @@ Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka
 
 </div>
 </div>
-<a id="a38f7ea8e4222dc273821b0492da04d06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38f7ea8e4222dc273821b0492da04d06">&#9670;&nbsp;</a></span>scanner_skip_whitespace_comments()</h2>
+<a id="a328d6ef554701a0f0ef6205cc01203dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a328d6ef554701a0f0ef6205cc01203dc">&#9670;&nbsp;</a></span>scanner_skip_whitespace_comments()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void scanner_skip_whitespace_comments </td>
+          <td class="memname">int scanner_skip_whitespace_comments </td>
           <td>(</td>
           <td class="paramtype">scanner_t *&#160;</td>
           <td class="paramname"><em>s</em>, </td>
@@ -283,7 +285,7 @@ Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 3 2020 20:35:08 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Sat Dec 5 2020 23:15:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
