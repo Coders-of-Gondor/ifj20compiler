@@ -91,6 +91,7 @@ char *remove_type(char *str) {
             break;
 
         case 'd':
+            strcpy(buff, "");
             strcpy(converted_str, new);
             break;
     }
@@ -152,9 +153,9 @@ void generate() {
     TAC_create_row(L);
 
     TAC_insert(L, OP_LABEL, "main", NULL, NULL);
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "a");
-    TAC_insert(L, OP_MOVE, "I5", NULL, "a");
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "b");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
+    TAC_insert(L, OP_MOVE, "i5", NULL, "a");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
 
     
     // start generating code
