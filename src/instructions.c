@@ -20,8 +20,9 @@ void print_MOVE(char *arg1, char *arg2, char *arg3, char *arg4, char *number) {
 
 void print_ADD(char *var, char *sym1, char *sym2, char *number) {
 
-    if(number == NULL);
+    if(number == NULL){
         printf("ADD LF@%s LF@%s LF@%s\n", var, sym1, sym2);
+    }
 }
 
 void print_CONCAT(char *var, char *sym1, char *sym2) {

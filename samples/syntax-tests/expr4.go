@@ -1,10 +1,10 @@
 package main
 
-func hello() {
+func hello() (int) {
   return 5
 }
 
-func stop() {
+func stop() (int) {
   return 6
 }
 

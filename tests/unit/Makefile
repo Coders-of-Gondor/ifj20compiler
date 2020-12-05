@@ -14,14 +14,15 @@ LDFLAGS = -lgtest -pthread
 
 tests_sources = \
 	tests.cpp \
+	ast_tests.cpp \
 	stack_int_tests.cpp \
 	stack_char_tests.cpp \
 	stack_charptr_tests.cpp \
 	stack_stack_charptr_tptr_tests.cpp \
-	parser_tests.cpp \
 	scanner_tests.cpp \
 	symtable_tests.cpp \
-	token_tests.cpp
+	token_tests.cpp \
+	parser_tests.cpp
 
 tests_objects = $(tests_sources:%.cpp=$(OBJECTS_DIR)/%.o)
 

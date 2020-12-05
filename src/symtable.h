@@ -13,7 +13,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 /**
  * @file symtable.h
@@ -24,74 +24,44 @@
 #ifndef __SYMTABLE_H__
 #define __SYMTABLE_H__
 
+#include <stdbool.h>
 #include <stdlib.h>
+#include "ast.h"
+#include "str.h"
 #include "token.h"
 
 struct symtable;
 typedef struct symtable symtable_t;
 
 typedef const char * symtable_key_t;
-typedef token_t symtable_value_t;
-
-struct symtable_item;
-
-typedef struct symtable_iterator {
-    struct symtable_item *ptr; /**< pointer to a record */
-    const symtable_t *st; /**< pointer to a symtable on which the iterator operates */
-    size_t idb; /**< id of a bucket where the iterator is */
-    size_t ide; /**< id of an entry in a bucket */
-} symtable_iterator_t;
-
-size_t symtable_hash_fun(symtable_key_t key);
+typedef struct symtable_symbol {
+    token_type type;
+    token_t token;
+} symtable_symbol_t;
 
 symtable_t *symtable_new();
 void symtable_free(symtable_t *st);
 
-size_t symtable_size(const symtable_t *st);
-size_t symtable_bucket_count(const symtable_t *st);
-size_t symtable_bucket_cap(const symtable_t *st);
+symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key);
+symtable_symbol_t *symtable_add_symbol(symtable_t *st, symtable_key_t key);
+void symtable_remove_symbol(symtable_t *st, symtable_key_t key);
 
-symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key);
-symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key);
+void symtable_push_stack(symtable_t *st);
+void symtable_pop_stack(symtable_t *st);
 
-void symtable_clear(symtable_t *st);
-void symtable_remove(symtable_t *st, symtable_key_t key);
-void symtable_erase(symtable_t *st, symtable_iterator_t it);
+bool symtable_new_scope(symtable_t *st, symtable_key_t id);
+char *symtable_get_scope_name(symtable_t *st);
 
-symtable_iterator_t symtable_begin(const symtable_t *st);
-symtable_iterator_t symtable_end(const symtable_t *st);
-symtable_iterator_t symtable_iterator_next(symtable_iterator_t it);
+bool symtable_set_current_scope(symtable_t *st, symtable_key_t id);
+void symtable_set_first_scope(symtable_t *st);
+bool symtable_next_scope(symtable_t *st);
 
-symtable_value_t symtable_iterator_get_value(symtable_iterator_t it);
-symtable_value_t symtable_iterator_set_value(symtable_iterator_t it, symtable_value_t val);
+bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type);
+func_parameter_t *symtable_get_func_param(symtable_t *st);
+int symtable_get_num_of_params(symtable_t *st);
 
-static inline int symtable_iterator_valid(symtable_iterator_t it) {
-  return it.ptr != NULL;
-}
-static inline int symtable_iterator_equal(symtable_iterator_t it1, symtable_iterator_t it2) {
-  return it1.ptr == it2.ptr && it1.st == it2.st;
-}
-
-struct symtable_manager;
-typedef struct symtable_manager symtable_manager_t;
-
-symtable_manager_t *symtable_manager_new();
-void symtable_manager_free(symtable_manager_t *stm);
-
-size_t symtable_manager_stack_size(const symtable_manager_t *stm);
-size_t symtable_manager_max_stack_size(const symtable_manager_t *stm);
-
-void symtable_manager_push(symtable_manager_t *stm);
-void symtable_manager_pop(symtable_manager_t *stm);
-
-symtable_t *symtable_manager_get_top(symtable_manager_t *stm);
-
-symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_t key);
-symtable_iterator_t symtable_manager_lookup_add(symtable_manager_t *stm, symtable_key_t key);
-symtable_iterator_t symtable_manager_add(symtable_manager_t *stm, symtable_key_t key);
-
-int symtable_manager_has(symtable_manager_t *stm, symtable_key_t key);
-
-void symtable_manager_remove(symtable_manager_t *stm, symtable_key_t key);
+void symtable_add_func_return(symtable_t *st, token_type type);
+func_return_t *symtable_get_func_return(symtable_t *st);
+int symtable_get_num_of_returns(symtable_t *st);
 
 #endif // __SYMTABLE_H__

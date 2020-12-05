@@ -13,7 +13,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 /**
  * @file symtable.c
@@ -23,17 +23,19 @@
  */
 
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "debug.h"
+#include "str.h"
+#include "symtable.h"
 #include "symtable-private.h"
 #include "token.h"
 
 #define ST_INIT_NUM_OF_BUCKETS 65536
 #define ST_INIT_NUM_IN_BUCKET 16
-#define STM_INIT_STACK_MAX 256
 
 /**
  * @brief symtable_hash_fun returns a hash for a hashtable key
@@ -43,203 +45,51 @@
  * @return hash
  */
 size_t symtable_hash_fun(symtable_key_t key) {
-  uint32_t h = 0; // Must be 32 bits
-  const unsigned char *p;
+    uint32_t h = 0; // Must be 32 bits
+    const unsigned char *p;
 
-  for (p = (const unsigned char*) key; *p != '\0'; p++) {
-    h = 65599 * h + *p;
-  }
+    for (p = (const unsigned char*) key; *p != '\0'; p++) {
+        h = 65599 * h + *p;
+    }
 
-  return h;
+    return h;
 }
 
 /**
- * @brief symtable_new constructs a new symbol table
+ * @brief symtable_row_new constructs a new symtable row
  *
- * @return pointer to an instance of symtable
+ * @return pointer to a symtable row
  *
  * @retval NULL error
  * @retval pointer success
  */
-symtable_t *symtable_new() {
-  debug_entry();
-  symtable_t *st = malloc(sizeof(struct symtable));
-  if (st == NULL)
-    return NULL;
+symtable_row_t *symtable_row_new() {
+    debug_entry();
 
-  st->stb = malloc(sizeof(struct symtable_body) + ST_INIT_NUM_OF_BUCKETS * sizeof(struct symtable_item *));
-  if (st->stb == NULL)
-    return NULL;
+    symtable_row_t *st_row = malloc(sizeof(struct symtable_row) + ST_INIT_NUM_OF_BUCKETS * sizeof(struct symtable_symbol *));
+    if (st_row == NULL)
+        return NULL;
 
-  st->stb->size = 0;
-  st->stb->arr_size = ST_INIT_NUM_OF_BUCKETS;
-  st->stb->bucket_cap = ST_INIT_NUM_IN_BUCKET;
+    st_row->size = 0;
+    st_row->arr_size = ST_INIT_NUM_OF_BUCKETS;
+    st_row->bucket_cap = ST_INIT_NUM_IN_BUCKET;
 
-  for (size_t i = 0; i < st->stb->arr_size; i++)
-    st->stb->item_list[i] = NULL;
+    for (size_t i = 0; i < st_row->arr_size; i++)
+        st_row->item_list[i] = NULL;
 
-  return st;
+    return st_row;
 }
 
 /**
- * @brief symtable_free clears and destroys an instance symtable
+ * @brief symtable_row_free clears and destroys an instance of symtable row
  *
- * @param st pointer to an instance of symtable
+ * @param st pointer to a symtable row
  */
-void symtable_free(symtable_t *st) {
-  debug_entry();
-  if (st != NULL) {
-    symtable_clear(st);
-    free(st->stb);
-    free(st);
-  }
-}
-
-/**
- * @brief symtable_size returns the number of records in a symbol table
- *
- * @param t pointer to an instance of symtable
- *
- * @return number of records
- */
-size_t symtable_size(const symtable_t *st) {
-  return st->stb->size;
-}
-
-/**
- * @brief symtable_bucket_count returns the number of "buckets" in a symbol table
- *
- * @param t pointer to an instance of symtable
- *
- * @return number of "buckets" in a symtable
- */
-size_t symtable_bucket_count(const symtable_t *st) {
-  return st->stb->arr_size;
-}
-
-/**
- * @brief symtable_bucket_cap returns the number of "buckets" in a symbol table
- *
- * @param t pointer to an instance of symtable
- *
- * @return number of "buckets" in a symtable
- */
-size_t symtable_bucket_cap(const symtable_t *st) {
-  return st->stb->bucket_cap;
-}
-
-/**
- * @brief symtable_find looks for a record in symbol table matching a key
- *
- * @details key is used to search for an entry in a symtable. If key matches
- * an entry in a symtable, the returned iterator aims at it. If not, the
- * returned iterator is symtable_end(t);
- *
- * @param t pointer to an instance of symtable
- * @param key text
- *
- * @return symtable iterator
- */
-symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
-  debug_entry();
-  size_t i = symtable_hash_fun(key) % symtable_bucket_count(st);
-  struct symtable_item *item = st->stb->item_list[i];
-
-  if (item == NULL)
-    return symtable_end(st);
-
-  symtable_iterator_t it = { item, st, i, 0 };
-
-  while(symtable_iterator_valid(it)) {
-    if (strcmp(it.ptr->key, key) == 0) {
-      break;
+void symtable_row_free(symtable_row_t *st_row) {
+    debug_entry();
+    if (st_row != NULL) {
+        free(st_row);
     }
-
-    if (item->next == NULL) {
-      return symtable_end(st);
-    }
-
-    it = symtable_iterator_next(it);
-  }
-
-  return it;
-}
-
-/**
- * @brief symtable_lookup_add looks for a key in a symbol table and adds new if not found
- *
- * @param t pointer to an instance of symtable
- * @param key text
- *
- * @return symtable iterator
- */
-symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key) {
-  debug_entry();
-  symtable_iterator_t it = symtable_find(st, key);
-  if (symtable_iterator_valid(it))
-    return it;
-
-  size_t i = symtable_hash_fun(key) % symtable_bucket_count(st);
-  it.idb = i;
-  it.ide = 0; // Iterator starts at the beginning of a bucket
-
-  struct symtable_item *new_item = malloc(sizeof(struct symtable_item));
-  if (new_item == NULL)
-    return symtable_end(st);
-
-  char *new_key = malloc(sizeof(char) * (strlen(key) + 1));
-  if (new_key == NULL)
-    return symtable_end(st);
-  strcpy(new_key, key);
-
-  new_item->key = new_key;
-  new_item->next = NULL;
-
-  // No magic is needed if the new item is in a bucket all alone
-  if (st->stb->item_list[it.idb] == NULL) {
-    st->stb->item_list[it.idb] = new_item;
-    it.ptr = st->stb->item_list[it.idb];
-  } else {
-    it.ptr = st->stb->item_list[it.idb];
-    if (strcmp(it.ptr->key, key) != 0) {
-      while (it.ptr->next != NULL) {
-        it.ptr = it.ptr->next;
-        it.ide++;
-      }
-
-      // Realloc innner symtable if it gets too busy (a bucket is over 70% full)
-      if ((it.ide / symtable_bucket_cap(st)) >= 0.7f) {
-        size_t max_bucket_count = symtable_bucket_count(st);
-        size_t new_max_bucket_count = max_bucket_count * 2;
-        struct symtable_body *tmp_stb = realloc(st->stb, sizeof(struct symtable_body) + new_max_bucket_count * sizeof(struct symtable_item));
-        if (tmp_stb == NULL)
-          return symtable_end(st);
-
-        st->stb = tmp_stb;
-
-        for (size_t i = max_bucket_count; i < new_max_bucket_count; i++)
-          st->stb->item_list[i] = NULL;
-
-        st->stb->arr_size = new_max_bucket_count;
-        st->stb->bucket_cap *= 2;
-
-        // The symtable was reallocated so the last record in a bucket needs to
-        // be found again.
-        it.ptr = st->stb->item_list[it.idb];
-        while (it.ptr->next != NULL) {
-          it.ptr = it.ptr->next;
-          it.ide++;
-        }
-      }
-
-      it.ptr->next = new_item;
-      it.ptr = it.ptr->next;
-    }
-  }
-
-  st->stb->size++;
-
-  return it;
 }
 
 /**
@@ -247,102 +97,53 @@ symtable_iterator_t symtable_lookup_add(symtable_t *st, symtable_key_t key) {
  *
  * @param t pointer to an instance of symtable
  */
-void symtable_clear(symtable_t *st) {
-  debug_entry();
-  if (st == NULL)
-    return;
+void symtable_clear_row(symtable_t *st) {
+    debug_entry();
+    if (st == NULL)
+        return;
 
-  symtable_iterator_t it = symtable_begin(st);
-  symtable_iterator_t next_it;
+    symtable_row_t *st_row = st->current_scope->st_stack->current_row;
 
-  while (symtable_iterator_valid(it)) {
-    next_it = symtable_iterator_next(it);
-    symtable_erase(st, it);
-    it = next_it;
-  }
-}
+    symtable_iterator_t it = symtable_row_begin(st_row);
+    symtable_iterator_t next_it;
 
-/**
- * @brief symtable_remove erases an item in a symbol table with a given key
- *
- * @param st pointer to an instance of symtable
- * @param key text
- */
-void symtable_remove(symtable_t *st, symtable_key_t key) {
-  debug_entry();
-  if (st == NULL)
-    return;
-
-  symtable_iterator_t it = symtable_find(st, key);
-
-  symtable_erase(st, it);
-}
-
-/**
- * @brief symtable_erase erases an item in a symbol table aimed at by an iterator
- *
- * @param st pointer to an instance of symtable
- * @param it symtable iterator
- */
-void symtable_erase(symtable_t *st, symtable_iterator_t it) {
-  debug_entry();
-  if (st == NULL)
-    return;
-
-  symtable_iterator_t next_it = symtable_iterator_next(it);
-  symtable_iterator_t prev_it = { st->stb->item_list[it.idb], st, it.idb, 0 };
-
-  // Iterator is at the beginning of a bucket
-  if (symtable_iterator_equal(prev_it, it)) {
-    if (symtable_iterator_valid(next_it) && it.idb == next_it.idb)
-      st->stb->item_list[it.idb] = next_it.ptr;
-    else
-      st->stb->item_list[it.idb] = NULL;
-  } else {
-    // Find the entry right behind the erased one
-    while (prev_it.ptr->next != it.ptr) {
-      prev_it.ptr = prev_it.ptr->next;
+    while (symtable_iterator_valid(it)) {
+        next_it = symtable_iterator_next(it);
+        symtable_erase_symbol(it);
+        it = next_it;
     }
-
-    if (symtable_iterator_valid(next_it) && it.idb == next_it.idb)
-      prev_it.ptr->next = next_it.ptr;
-    else
-      prev_it.ptr->next = NULL;
-  }
-
-  free((char *) it.ptr->key);
-  free(it.ptr);
 }
 
+
 /**
- * @brief symtable_begin returns a new iterator aiming at the first object in a symbol table
+ * @brief symtable_row_begin returns a new iterator aiming at the first object in a symbol table
  *
- * @details symtable_begins looks for the first object in a symtable. If it's
- * not found, it returns symtable_end(t).
+ * @details symtable_row_begins looks for the first object in a symtable. If it's
+ * not found, it returns symtable_row_end(t).
  *
  * @param t pointer to an instance of symtable
  *
  * @return symtable iterator
  */
-symtable_iterator_t symtable_begin(const symtable_t *st) {
-  symtable_iterator_t it = { st->stb->item_list[0], st, 0, 0 };
+symtable_iterator_t symtable_row_begin(symtable_row_t *st_row) {
+    symtable_iterator_t it = { st_row->item_list[0], st_row, 0, 0 };
 
-  while(it.idb < symtable_bucket_count(st)) {
-    it.ptr = st->stb->item_list[it.idb];
+    while(it.idb < st_row->arr_size) {
+        it.ptr = st_row->item_list[it.idb];
 
-    if (symtable_iterator_valid(it))
-      return it;
+        if (symtable_iterator_valid(it))
+            return it;
 
-    it.idb++;
-  }
+        it.idb++;
+    }
 
-  return symtable_end(st);
+    return symtable_row_end(st_row);
 }
 
-symtable_iterator_t symtable_end(const symtable_t *st) {
-  symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
+symtable_iterator_t symtable_row_end(symtable_row_t *st_row) {
+    symtable_iterator_t it = { NULL, st_row, st_row->arr_size, st_row->bucket_cap };
 
-  return it;
+    return it;
 }
 
 /**
@@ -353,269 +154,546 @@ symtable_iterator_t symtable_end(const symtable_t *st) {
  * @return symtable iterator
  */
 symtable_iterator_t symtable_iterator_next(symtable_iterator_t it) {
-  if (it.ptr != NULL) {
-    if (it.ptr->next != NULL) {
-      it.ptr = it.ptr->next;
-      it.ide++;
-      return it;
+    if (it.ptr != NULL) {
+        if (it.ptr->next != NULL) {
+            it.ptr = it.ptr->next;
+            it.ide++;
+            return it;
+        }
     }
-  }
 
-  for (++it.idb; it.idb < symtable_bucket_count(it.st); it.idb++) {
-    if (it.st->stb->item_list[it.idb] != NULL) {
-      it.ptr = it.st->stb->item_list[it.idb];
-      it.ide = 0;
+    for (++it.idb; it.idb < it.st_row->arr_size; it.idb++) {
+        if (it.st_row->item_list[it.idb] != NULL) {
+            it.ptr = it.st_row->item_list[it.idb];
+            it.ide = 0;
 
-      return it;
+            return it;
+        }
     }
-  }
 
-  return symtable_end(it.st);
+    return symtable_row_end(it.st_row);
 }
 
 /**
- * @brief symtable_iterator_get_value gets the value of a record
+ * @brief symtable_stack_new initializes an instance of symtable_stack
  *
- * @param it hashtable iterator
+ * @details symtable_stack_new allocates space for a set number of symtable
+ * stacks. If more space is needed, symtable_stack_push_stack will reallocate
+ * the body (by doubling the maximum of stacks). The structure starts with 1
+ * stack. Initial maximum number of stacks is 4.
  *
- * @return record value (token)
- */
-symtable_value_t symtable_iterator_get_value(symtable_iterator_t it) {
-  return it.ptr->data;
-}
-
-
-/**
- * @brief symtable_iterator_set_value sets the value (token) of a record
- *
- * @details by giving a record a value (token), symtable "takes over ownership"
- * and will take care of deallocating the token when a record is deleted or the
- * whole symtable is destroyed.
- *
- * @param it hashtable iterator
- * @param val token
- *
- * @return record value (token)
- */
-symtable_value_t symtable_iterator_set_value(symtable_iterator_t it, symtable_value_t val) {
-  it.ptr->data = val;
-
-  return it.ptr->data;
-}
-
-/**
- * @brief symtable_manager_new initializes an instance symtable manager
- *
- * @details symtable_manager_new allocates space for a set number of stacks. If
- * more space is needed, symtable_manager_push_stack will reallocate the
- * manager. Manager starts with 1 stack. Initial maximum number of stacks is 4.
- *
- * @return pointer to an instance of symtable manager
+ * @return pointer to an instance of symtable stack
  *
  * @retval NULL error
  * @retval pointer success
  */
-symtable_manager_t *symtable_manager_new() {
-  debug_entry();
-  symtable_manager_t *stm = malloc(sizeof(struct symtable_manager));
-  if (stm == NULL)
-    return NULL;
+symtable_stack_t *symtable_stack_new() {
+    debug_entry();
+    symtable_stack_t *st_stack = malloc(sizeof(struct symtable_stack));
+    if (st_stack == NULL)
+        return NULL;
 
-  stm->stmb = malloc(sizeof(struct symtable_manager_body) + STM_INIT_STACK_MAX * sizeof(struct symtable));
-  if (stm->stmb == NULL)
-    return NULL;
+    st_stack->stack_count = 1;
 
-  stm->stmb->stack_count = 1;
-  stm->stmb->max_stack_count = STM_INIT_STACK_MAX;
+    symtable_row_t *st_row = symtable_row_new();
+    if (st_row == NULL)
+        return NULL;
 
-  symtable_t *st = symtable_new();
-  if (st == NULL)
-    return NULL;
+    st_stack->current_row = st_row;
 
-  for (size_t i = 0; i < symtable_manager_max_stack_size(stm); i++)
-    stm->stmb->symtables[i] = NULL;
-
-  stm->stmb->symtables[0] = st;
-
-  return stm;
+    return st_stack;
 }
 
 /**
- * @brief symtable_manager_free destroys an instance of symtable manager
+ * @brief symtable_stack_free destroys an instance of symtable stacks
  *
- * @param stm pointer to an instance of symtable manager
+ * @param sts pointer to an instance of symtable stack
  */
-void symtable_manager_free(symtable_manager_t *stm) {
-  debug_entry();
-  if (stm != NULL) {
-    for (size_t i = 0; i < stm->stmb->stack_count; i++)
-      symtable_free(stm->stmb->symtables[i]);
-    free(stm->stmb);
-    free(stm);
-  }
-}
-
-size_t symtable_manager_stack_size(const symtable_manager_t *stm) {
-  return stm->stmb->stack_count;
-}
-
-size_t symtable_manager_max_stack_size(const symtable_manager_t *stm) {
-  return stm->stmb->max_stack_count;
+void symtable_stack_free(symtable_stack_t *st_stack) {
+    debug_entry();
+    if (st_stack != NULL) {
+        for (symtable_row_t *st_row = st_stack->current_row; st_row != NULL; st_row = st_row->outer_row)
+            symtable_row_free(st_row);
+        free(st_stack);
+    }
 }
 
 /**
- * @brief symtable_manager_push adds a new symtable to its stack
+ * @brief symtable_stack_push adds a new symtable to the stack
  *
- * @details symtable_manager_push checks before adding a stack if there's
- * enough space for it. If there is not, it reallocates the manager to
+ * @details symtable_stack_push checks before adding a stack if there's
+ * enough space for it. If there is not, it reallocates the strucutre to
  * accomodate twice as many symtable stacks.
  *
- * @param stm pointer to an instance of symtable manager
+ * @param sts pointer to an instance of symtable stack
  */
-void symtable_manager_push(symtable_manager_t *stm) {
-  debug_entry();
-  if (stm == NULL)
-    return;
+void symtable_push_stack(symtable_t *st) {
+    debug_entry();
+    if (st == NULL)
+        return;
 
-  symtable_t *st = symtable_new();
-  if (st == NULL)
-    return;
+    symtable_stack_t *st_stack = st->current_scope->st_stack;
 
-  if (stm->stmb->stack_count == stm->stmb->max_stack_count) {
-    size_t max_stack_size = symtable_manager_max_stack_size(stm);
-    size_t new_max_stack_size = max_stack_size * 2;
-    struct symtable_manager_body *tmp_stmb = realloc(stm->stmb, sizeof(struct symtable_manager_body) + new_max_stack_size * sizeof(struct symtable));
-    if (tmp_stmb == NULL)
-      return;
+    symtable_row_t *st_row = symtable_row_new();
+    if (st_row == NULL)
+        return;
 
-    stm->stmb = tmp_stmb;
+    st_row->outer_row = st_stack->current_row;
 
-    for (size_t i = max_stack_size; i < new_max_stack_size; i++)
-      stm->stmb->symtables[i] = NULL;
-
-    stm->stmb->max_stack_count = new_max_stack_size;
-  }
-
-  stm->stmb->symtables[symtable_manager_stack_size(stm)] = st;
-  stm->stmb->stack_count++;
+    st_stack->current_row = st_row;
+    st_stack->stack_count++;
 }
 
 /**
- * @brief symtable_manager_pop removes the topmost symtable in its stack
+ * @brief symtable_stack_pop removes the topmost symtable from the stack
  *
- * @details symtable_manager_pop pops a stack only if there's more than
- * one stack in the manager. The popped symtable is not kept in memory.
+ * @details symtable_stack_pop pops a stack only if there's more than
+ * one symtable in the stack. The popped symtable is not kept in memory.
  *
- * @param stm pointer to an instance of symtable manager
+ * @param sts pointer to an instance of symtable stack
  */
-void symtable_manager_pop(symtable_manager_t *stm) {
-  debug_entry();
-  if (stm == NULL)
-    return;
+void symtable_pop_stack(symtable_t *st) {
+    debug_entry();
+    if (st == NULL)
+        return;
 
-  if (stm->stmb->stack_count > 1) {
-    symtable_t *st = symtable_manager_get_top(stm);
-    symtable_free(st);
-    stm->stmb->stack_count--;
-  }
+    symtable_stack_t *st_stack = st->current_scope->st_stack;
+
+    if (st_stack->stack_count > 1) {
+        symtable_row_t *new_row = st_stack->current_row->outer_row;
+
+        symtable_row_free(st_stack->current_row);
+
+        st_stack->current_row = new_row;
+        st_stack->stack_count--;
+    }
+}
+
+bool symtable_new_scope(symtable_t *st, symtable_key_t id) {
+    debug_entry();
+    if (st == NULL)
+        return false;
+
+    symtable_scope_t *st_scope = symtable_scope_new();
+    if (st_scope == NULL)
+        return false;
+
+    symtable_scope_t *tmp_scope = st->first_scope;
+    while (tmp_scope != NULL) {
+        if (strCmpConstStr(&tmp_scope->id, (char *) id) == 0)
+            return false;
+
+        tmp_scope = tmp_scope->next_scope;
+    }
+
+    for (size_t i = 0; i < strlen(id); i++)
+        strAddChar(&st_scope->id, id[i]);
+
+    // Get the last scope in the list to append the new one
+    symtable_scope_t *last_scope = st->first_scope;
+    while (last_scope->next_scope != NULL)
+        last_scope = last_scope->next_scope;
+
+    last_scope->next_scope = st_scope; 
+    st->current_scope = st_scope;
+    st->num_of_scopes++;
+
+    return true;
+}
+
+symtable_scope_t *symtable_scope_new() {
+    symtable_scope_t *st_scope = malloc(sizeof(struct symtable_scope));
+    if (st_scope == NULL)
+        return NULL;
+
+    symtable_stack_t *st_stack = symtable_stack_new();
+    if (st_stack == NULL)
+        return NULL;
+
+    func_parameter_t *p = func_parameter_new();
+    if (p == NULL)
+        return NULL;
+
+    func_return_t *r = func_return_new();
+    if (r == NULL)
+        return NULL;
+
+    strInit(&st_scope->id);
+    st_scope->num_of_params = 0;
+    st_scope->num_of_ret_args = 0;
+    st_scope->first_parameter = p;
+    st_scope->first_return = r;
+    st_scope->st_stack = st_stack;
+    st_scope->next_scope = NULL;
+
+    return st_scope;
+}
+
+void symtable_scope_free(symtable_scope_t *st_scope) {
+    debug_entry();
+
+    if (st_scope != NULL)
+        return;
+
+    symtable_stack_free(st_scope->st_stack);
+    strFree(&st_scope->id);
+    free(st_scope);
+}
+
+char *symtable_get_scope_name(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return NULL;
+
+    return st->current_scope->id.str;
+}
+
+bool symtable_set_current_scope(symtable_t *st, symtable_key_t id) {
+    debug_entry();
+
+    if (st == NULL)
+        return false;
+
+    for (symtable_scope_t *st_scope = st->first_scope; st_scope != NULL; st_scope = st_scope->next_scope) {
+        if (strCmpConstStr(&st_scope->id, (char *) id) == 0) {
+            st->current_scope = st_scope;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void symtable_set_first_scope(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return;
+
+    st->current_scope = st->first_scope;
+}
+
+bool symtable_next_scope(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return false;
+
+    if (st->current_scope->next_scope != NULL) {
+        st->current_scope = st->current_scope->next_scope;
+        return true;
+    }
+
+    return false;
+}
+
+symtable_t *symtable_new() {
+    debug_entry();
+
+    symtable_t *st = malloc(sizeof(struct symtable));
+    if (st == NULL)
+        return NULL;
+
+    symtable_scope_t *st_scope = symtable_scope_new();
+    if (st_scope == NULL)
+        return NULL;
+
+    st->num_of_scopes = 1;
+    st->current_scope = st_scope;
+    st->first_scope = st_scope;
+
+    return st;
+}
+
+bool symtable_add_func_param(symtable_t *st, symtable_key_t id, token_type type) {
+    debug_entry();
+
+    if (st == NULL)
+        return false;
+
+    func_parameter_t *p = func_parameter_new();
+    if (p == NULL)
+        return false;
+
+    for (size_t i = 0; i < strlen(id); i++)
+        strAddChar(&p->id, id[i]);
+    p->type = type;
+
+    func_parameter_t *tmp_p = st->current_scope->first_parameter;
+
+    if (tmp_p == NULL)
+        st->current_scope->first_parameter = p;
+    else {
+        while (tmp_p->next_param != NULL)
+            tmp_p = tmp_p->next_param;
+
+        tmp_p->next_param = p;
+    }
+
+    st->current_scope->num_of_params++;
+    debug("scope %s() - num of params: %lu",
+            st->current_scope->id.str,
+            st->current_scope->num_of_params);
+
+    return true;
+}
+
+func_parameter_t *symtable_get_func_param(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return NULL;
+
+    return st->current_scope->first_parameter;
+}
+
+int symtable_get_num_of_params(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return -1;
+
+    return st->current_scope->num_of_params;
+}
+
+void symtable_add_func_return(symtable_t *st, token_type type) {
+    debug_entry();
+
+    if (st == NULL)
+        return;
+
+    func_return_t *r = func_return_new(type);
+
+    func_return_t *tmp_r = st->current_scope->first_return;
+    if (tmp_r == NULL)
+        st->current_scope->first_return = r;
+    else {
+        while (tmp_r->next_return != NULL)
+            tmp_r = tmp_r->next_return;
+
+        tmp_r->next_return = r;
+    }
+
+
+    st->current_scope->num_of_ret_args++;
+}
+
+func_return_t *symtable_get_func_return(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return NULL;
+
+    return st->current_scope->first_return;
+}
+
+int symtable_get_num_of_returns(symtable_t *st) {
+    debug_entry();
+
+    if (st == NULL)
+        return -1;
+
+    return st->current_scope->num_of_ret_args;
+}
+
+
+void symtable_free(symtable_t *st) {
+    if (st == NULL)
+        return;
+
+    while (st->first_scope != NULL) {
+        symtable_scope_t *next_scope = st->first_scope->next_scope;
+        symtable_scope_free(st->first_scope);
+        st->first_scope = next_scope;
+        st->num_of_scopes--;
+    }
+    free(st);
+}
+
+symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key) {
+    debug_entry();
+
+    // Start in current row
+    symtable_row_t *st_row = st->current_scope->st_stack->current_row;
+
+    size_t i = symtable_hash_fun(key) % st_row->arr_size;
+
+    for (; st_row != NULL; st_row = st_row->outer_row) {
+        struct symtable_item *item = st_row->item_list[i];
+
+        if (item == NULL)
+            continue;
+
+        symtable_iterator_t it = { item, st_row, i, 0 };
+
+        while(symtable_iterator_valid(it)) {
+            if (strcmp(it.ptr->key, key) == 0)
+                return it;
+
+            it = symtable_iterator_next(it);
+        }
+    }
+
+    return symtable_row_end(st->current_scope->st_stack->current_row);
 }
 
 /**
- * @brief symtable_manager_get_top returns the topmost symtable in the stack
+ * @brief symtable_find_symbol looks for a symbol in symbol table matching a key
  *
- * @return pointer to an instance of symtable
+ * @details key is used to search for an entry in a symtable. If key matches
+ * an entry in a symtable, the returned pointer aims at the data. If not, the
+ * returned pointer is NULL;
+ *
+ * @param t pointer to a symtable
+ * @param key text
+ *
+ * @return pointer to symtable symbol
+ *
+ * @retval NULL searched symbol does not exist
+ * @retval pointer search symbol does exist
+ */
+symtable_symbol_t *symtable_find_symbol(symtable_t *st, symtable_key_t key) {
+    debug_entry();
+
+    symtable_iterator_t it = symtable_find(st, key);
+    if (symtable_iterator_valid(it))
+        return &it.ptr->symbol;
+
+    return NULL;
+}
+
+/**
+ * @brief symtable_add_symbol adds new symbol into symbol table
+ *
+ * @param t pointer to an instance of symtable
+ * @param key text
+ *
+ * @return symtable iterator
  *
  * @retval NULL error
- * @retval pointer success
+ * @retval pointer newly created symbol
  */
-symtable_t *symtable_manager_get_top(symtable_manager_t *stm) {
-  if (stm == NULL)
-    return NULL;
+symtable_symbol_t *symtable_add_symbol(symtable_t *st, symtable_key_t key) {
+    debug_entry();
 
-  return stm->stmb->symtables[symtable_manager_stack_size(stm) - 1];
+    if (st == NULL)
+        return NULL;
+
+    symtable_stack_t *st_stack = st->current_scope->st_stack;
+    symtable_row_t *st_row = st_stack->current_row;
+
+    size_t i = symtable_hash_fun(key) % st_row->arr_size;
+
+    struct symtable_item *item = st_row->item_list[i];
+    symtable_iterator_t it = { item, st_row, i, 0 };
+
+    struct symtable_item *new_item = malloc(sizeof(struct symtable_item));
+    if (new_item == NULL)
+        return NULL;
+
+    char *new_key = malloc(sizeof(char) * (strlen(key) + 1));
+    if (new_key == NULL)
+        return NULL;
+    strcpy(new_key, key);
+
+    new_item->key = new_key;
+    new_item->next = NULL;
+
+    // No magic is needed if the new item is in a bucket all alone
+    if (st_row->item_list[it.idb] == NULL) {
+        st_row->item_list[it.idb] = new_item;
+        it.ptr = st_row->item_list[it.idb];
+    } else {
+        it.ptr = st_row->item_list[it.idb];
+        if (strcmp(it.ptr->key, key) != 0) {
+            while (it.ptr->next != NULL) {
+                it.ptr = it.ptr->next;
+                it.ide++;
+            }
+
+            // Realloc innner symtable if it gets too busy (a bucket is over 70% full)
+            if ((it.ide / st_row->bucket_cap) >= 0.7f) {
+                size_t max_bucket_count = st_row->arr_size;
+                size_t new_max_bucket_count = max_bucket_count * 2;
+                symtable_row_t *tmp_row = realloc(st_row, sizeof(struct symtable_row) + new_max_bucket_count * sizeof(struct symtable_item));
+                if (tmp_row == NULL)
+                    return NULL;
+
+                st_stack->current_row = tmp_row;
+                st_row = st_stack->current_row;
+
+                for (size_t i = max_bucket_count; i < new_max_bucket_count; i++)
+                    st_row->item_list[i] = NULL;
+
+                st_row->arr_size = new_max_bucket_count;
+                st_row->bucket_cap *= 2;
+
+                // The symtable was reallocated so the last record in a bucket needs to
+                // be found again.
+                it.ptr = st_row->item_list[it.idb];
+                while (it.ptr->next != NULL) {
+                    it.ptr = it.ptr->next;
+                    it.ide++;
+                }
+            }
+
+            it.ptr->next = new_item;
+            it.ptr = it.ptr->next;
+        }
+    }
+
+    st_row->size++;
+
+    return &it.ptr->symbol;
 }
 
 /**
- * @brief symtable_manager_find looks for a key in a stack of symtables
+ * @brief symtable_remove erases an item in a symbol table with a given key
  *
- * @details symtable_manager_find_symbol traverses the stacks from top to bottom
- * while looking for a key.
- *
- * @param stm pointer to an instance of symtable manager
- * @param key symbol identificator
- *
- * @return symtable_iterator
- *
- * @retval symtable_end(st) searched key does not exist
- * @retval symtable_iterator iterator aiming at the key
+ * @param st pointer to an instance of symtable
+ * @param key text
  */
-symtable_iterator_t symtable_manager_find(symtable_manager_t *stm, symtable_key_t key) {
-  debug_entry();
-  symtable_t *st = symtable_manager_get_top(stm);
-  symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
+void symtable_remove_symbol(symtable_t *st, symtable_key_t key) {
+    debug_entry();
+    if (st == NULL)
+        return;
 
-  for (int i = stm->stmb->stack_count - 1; i > 0 && !symtable_iterator_valid(it); i--) {
-    it = symtable_find(stm->stmb->symtables[i], key);
-  }
+    symtable_iterator_t it = symtable_find(st, key);
 
-  return it;
+    symtable_erase_symbol(it);
 }
 
 /**
- * @brief symtable_manager_lookup_add adds a symbol to the topmost symtable
+ * @brief symtable_erase erases an item in a symbol table aimed at by an iterator
  *
- * @details symtable_manager_add_symbol firstly searches for a key in all stacks
- * of symtables. If a key is found, an iterator aiming at the entry is returned.
- * If a key is not found, it is added to the topmost symtable and iterator
- * aiming at it is returned.
- *
- * @param stm pointer to an instance of symtable manager
- * @param key symbol identificator
- *
- * @return symtable_iterator
+ * @param st pointer to an instance of symtable
+ * @param it symtable iterator
  */
-symtable_iterator_t symtable_manager_lookup_add(symtable_manager_t *stm, symtable_key_t key) {
-  debug_entry();
-  symtable_t *st = symtable_manager_get_top(stm);
-  symtable_iterator_t it = { NULL, st, symtable_bucket_count(st), symtable_bucket_cap(st) };
+void symtable_erase_symbol(symtable_iterator_t it) {
+    debug_entry();
 
-  it = symtable_manager_find(stm, key);
-  if (symtable_iterator_valid(it))
-    return it;
+    symtable_iterator_t next_it = symtable_iterator_next(it);
+    symtable_iterator_t prev_it = { it.st_row->item_list[it.idb], it.st_row, it.idb, 0 };
 
-  it = symtable_lookup_add(st, key);
+    // Iterator is at the beginning of a bucket
+    if (symtable_iterator_equal(prev_it, it)) {
+        if (symtable_iterator_valid(next_it) && it.idb == next_it.idb)
+            it.st_row->item_list[it.idb] = next_it.ptr;
+        else
+            it.st_row->item_list[it.idb] = NULL;
+    } else {
+        // Find the entry right behind the erased one
+        while (prev_it.ptr->next != it.ptr) {
+            prev_it.ptr = prev_it.ptr->next;
+        }
 
-  return it;
-}
+        if (symtable_iterator_valid(next_it) && it.idb == next_it.idb)
+            prev_it.ptr->next = next_it.ptr;
+        else
+            prev_it.ptr->next = NULL;
+    }
 
-/**
- * @brief symtable_manager_has checks if a symbol is in a stack of symtables
- *
- * @details symtable_manager_has traverses the stacks from top to bottom while
- * looking for a symbol. It reports if the stack contains the symbol or not.
- *
- * @param stm pointer to an instance of symtable manager
- * @param key symbol identificator
- */
-int symtable_manager_has(symtable_manager_t *stm, symtable_key_t key) {
-  symtable_iterator_t it = symtable_manager_find(stm, key);
-  if (!symtable_iterator_valid(it))
-    return 1;
-
-  return 0;
-}
-
-/**
- * @brief symtable_manager_remove removes a symbol from the topmost symtable
- *
- * @param stm pointer to an instane of symtable manager
- * @param key symbol identificator
- */
-void symtable_manager_remove(symtable_manager_t *stm, symtable_key_t key) {
-  if (stm == NULL)
-    return;
-
-  symtable_t *st = symtable_manager_get_top(stm);
-
-  symtable_remove(st, key);
+    free((char *) it.ptr->key);
+    free(it.ptr);
 }

@@ -90,18 +90,19 @@ void token_set_type(token_t *t, token_type type) {
 }
 
 int ident_is_keyword(string str) {
-    symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
-    if (symtable_iterator_valid(it)) {
-        return 0;
-    } else {
+    symtable_symbol_t *symbol = symtable_find_symbol(keywords_symtable, str.str);
+    if (symbol == NULL)
         return 1;
-    }
+
+    return 0;
 }
 
 token_type get_keyword_type(string str) {
-    symtable_iterator_t it = symtable_find(keywords_symtable, str.str);
-    symtable_value_t val = symtable_iterator_get_value(it);
-    return val.type;
+    symtable_symbol_t *symbol = symtable_find_symbol(keywords_symtable, str.str);
+    if (symbol == NULL)
+        return INVALID;
+
+    return symbol->token.type;
 }
 
 const char* token_get_type_string(token_type type) {
@@ -166,6 +167,16 @@ const char* token_get_type_string(token_type type) {
         case RBRACE: return "RBRACE";
         case COMMA: return "COMMA";
         case SEMICOLON: return "SEMICOLON";
+
+        // Precedence analysis
+        case END_OF_INPUT: return "END_OF_INPUT";
+        case EXPR_SYMBOL: return "EXPR_SYMBOL";
+
+        // Precedence table symbols
+        case INV: return "INV";
+        case RED: return "RED";
+        case SHF: return "SHF";
+        case EQQ: return "EQQ";
         default:
             break;
     }
