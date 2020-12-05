@@ -11,6 +11,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "three-adress-code.h"
 #include "error.h"
@@ -29,7 +30,7 @@ void TAC_create_row(TACList *L) {
     }
 
     if (L->first == NULL) { //if its the first row
-        L->first = new; 
+        L->first = new;
         L->act = new;
     } else {
         L->act->next_row = new; //last row now points to the new row
@@ -40,6 +41,20 @@ void TAC_create_row(TACList *L) {
 }
 
 void TAC_insert(TACList *L, operator_type op_type, char *arg1, char *arg2, char *result) {
+
+    //guess this is not needed?
+    
+    // if (result != NULL) {
+    //     L->act->result = malloc(strlen(result) * __CHAR_BIT__);
+    // }
+
+    // if (arg1 != NULL) {
+    //     L->act->arg1 = malloc(strlen(arg1) * __CHAR_BIT__);
+    // }
+
+    // if (arg2 != NULL) {
+    //     L->act->arg2 = malloc(strlen(arg2) * __CHAR_BIT__);
+    // }
 
     L->act->op = op_type;
     L->act->arg1 = arg1;
@@ -57,6 +72,17 @@ void TAC_delete(TACList *L) {
         
         TACptr next = temp->next_row;
 
+
+        // if (temp->arg1 != NULL) {
+        //     free(temp->arg1);
+        // }
+
+        // if (temp->arg2 != NULL)
+        //     free(temp->arg2);
+
+        // if (temp->result != NULL)
+        //     free(temp->result);
+            
         free(temp);
 
         temp = next;

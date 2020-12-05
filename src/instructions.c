@@ -9,16 +9,44 @@
 
 #include "code-generator.h"
 #include <stdio.h>
+#include <string.h>
 
-void print_MOVE(char *arg1, char *arg2, char *frame1, char *frame2) {
+void print_MOVE(char *arg1, char *arg2) {
     char *tmp_var = remove_type(arg1);
     char *tmp_sym1 = remove_type(arg2);
     
-    if (arg2[0] == 'd') {
-        printf("MOVE %s@%s %s@%s\n", frame1, tmp_var, frame2, tmp_sym1); 
+    bool occurence1 = false;
+    int length = strlen(arg1);
+    for (int i = 0; i < length; i++) {
+        if (arg1[i] == '#')
+            occurence1 = true;
     }
-    else if (arg2[0] != 'd') {
-        printf("MOVE %s@%s %s\n", frame1, tmp_var, tmp_sym1);   
+
+    bool occurence2 = false;
+    int length2 = strlen(arg2);
+    for (int i = 0; i < length2; i++) {
+        if (arg2[i] == '#')
+            occurence2 = true;
+    }
+
+    if (occurence1) {
+        if (arg2[0] == 'd') {
+            printf("MOVE TF@%s LF@%s\n", tmp_var, tmp_sym1); 
+        } else if (arg2[0] != 'd') {
+            printf("MOVE TF@%s %s\n", tmp_var, tmp_sym1); 
+        }
+    } else if (occurence2) {
+        if (arg2[0] == 'd') {
+            printf("MOVE LF@%s TF@%s\n", tmp_var, tmp_sym1); 
+        } else if (arg2[0] != 'd') {
+            printf("MOVE LF@%s %s\n", tmp_var, tmp_sym1);   
+        }
+    } else {
+        if (arg2[0] == 'd') {
+            printf("MOVE LF@%s LF@%s\n", tmp_var, tmp_sym1); 
+        } else if (arg2[0] != 'd') {
+            printf("MOVE LF@%s %s\n", tmp_var, tmp_sym1);  
+        }
     }
 }
 
@@ -200,7 +228,12 @@ void print_IDIV_ASSIGN(char *var, char *sym1) {
 
 void print_DEFINE(char *var) {
     char *tmp_var = remove_type(var);
-    printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
+
+    if (tmp_var[0] != '#') {
+        printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
+    } else {
+        printf("DEFVAR TF@%s\n", tmp_var);
+    }
 }
 
 void print_AND(char *var, char *sym1, char *sym2) {
