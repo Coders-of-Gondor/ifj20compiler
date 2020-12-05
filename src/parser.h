@@ -15,7 +15,11 @@
 #include "ast.h"
 #include "scanner.h"
 #include "stack_int.h"
+#include "stack_token_t.h"
 #include "token.h"
+
+// stack
+typedef stack_token_t_t stack_token_t;
 
 /**
  * @brief Move the lookahead token.
@@ -196,66 +200,90 @@ int prec_get_table_index(token_type t);
 
 // Macro to read the next symbol, so we don't have to write it over and over again
 #define NEXT_SYMBOL do { \
-    if (!stack_int_isempty(rule_stack)) curr = stack_int_pop(rule_stack); \
-    else {debug("empty rule stack!"); return false;} \
+    if (!stack_token_t_isempty(rule_stack)) { \
+        curr_token = stack_token_t_pop(rule_stack); \
+        curr_symbol = curr_token.type; \
+    } else { \
+        debug("Empty rule stack!"); \
+        return false; \
+    } \
 } while(0)
 
 /**
  * @brief Determine the rule validity
- * @return 0 - failed -> error
- *         1 - success - standard
- *         2 - success - unary
+ * @return false - failed -> error
+ *         true - success
  */
-int prec_apply_rule(stack_int_t *rule_stack, stack_int_t *function_stack);
+bool prec_apply_rule(stack_token_t *rule_stack, stack_int_t *function_stack);
 
 
-bool prec_rule_rparen(stack_int_t *rule_stack, stack_int_t *function_stack);
+/**
+ * @brief Helper function for handling ')' rule reduction.
+ * @return success/fail
+ */
+bool prec_rule_rparen(stack_token_t *rule_stack, stack_int_t *function_stack);
 
 /**
  * @brief Determine if the precedence analysis constructed a single exprresion.
  * @return True if it did, false if it did not.
  */
-bool prec_succesful_stack(stack_int_t *stack);
+bool prec_succesful_stack(stack_token_t *token_stack);
 
 /**
  * @brief Handle the symbol according to the precedence's algorithm.
  * @return True if the parser should fetch the next symbol, false if not.
  */
-bool prec_handle_symbol(stack_int_t *stack, token_type input, bool *stop, stack_int_t *function_stack);
+bool prec_handle_symbol(stack_token_t *token_stack, token_t input, bool *stop, stack_int_t *function_stack);
 
 /**
  * @brief Clean up the memory from the allocated stacks.
  */
-void prec_clean(stack_int_t *stack, stack_int_t *func_stack);
+void prec_clean(stack_token_t *token_stack, stack_int_t *func_stack);
 
 /**
- * @brief Same as stack_int_peek but skip the nonterminal values.
+ * @brief Same as stack_token_t_peek but skip the nonterminal values.
+ * @details Token is returned as an argument reference.
+ * @return true if such nonterminal found, false if not.
  */
-int stack_top(stack_int_t *stack);
+bool stack_top_nonterminal(stack_token_t *stack, token_t *value);
 
 /**
  * @brief Change the top terminal to terminal+symbol.
  * @details Every other nonterminal before the terminal will be reordered.
  */
-void stack_shift(stack_int_t *stack, token_type terminal);
+void stack_shift(stack_token_t *token_stack, token_t terminal);
 
 /**
- * @brief Change the top symbol+terminal to nonterminal rule.
+ * @brief Change the everything between the shift and top to nonterminal rule.
  * @return True if the reduction was succesful, False if not.
  */
-bool stack_reduce(stack_int_t *stack, stack_int_t *function_stack);
+bool stack_reduce(stack_token_t *token_stack, stack_int_t *function_stack);
 
 /**
- * @brief Find the first index position of the passed value.
- * @return Position index if found, -1 if not found.
+ * @brief Helper function to simplify stack_token_t_find.
+ * @details Not used anymore, left for backwards compatibility :D.
  */
-int stack_find(stack_int_t *stack, int value);
+inline int stack_find(stack_token_t_t *stack, token_t val) {
+    return stack_token_t_find(stack, val, cmp_token_t);
+}
+
+// Create the expression, shift and end of input symbols.
 
 /**
- * @brief Return the value located at given index.
- * @return Value if found, -1 if not found.
+ * @brief Create the expression (E) symbol.
  */
-int stack_at(stack_int_t *stack, int index);
+token_t prec_create_expr_symbol();
+
+/**
+ * @brief Create the shift (<) symbol.
+ */
+token_t prec_create_shift_symbol();
+
+/**
+ * @brief Create the end of input ($) symbol.
+ */
+token_t prec_create_EOI_symbol();
+
 
 /**
  * @brief Start the parsing of an expression. Pass control to bottom-up.
