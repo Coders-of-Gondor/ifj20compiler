@@ -196,3 +196,9 @@ bool token_is_lit(token_type type) {
     }
 }
 
+int cmp_token_t(token_t a, token_t b) {
+    if (a.type == b.type) {
+        return 0;
+    }
+    return -1;
+}

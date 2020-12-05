@@ -121,4 +121,11 @@ const char* token_get_type_string(token_type type);
  */
 bool token_is_lit(token_type type);
 
+/**
+ * @brief Compare two tokens.
+ * @details The types of the tokens are compared, not the attributes.
+ * @return 0 if tokens are same, -1 if not. (following strcmp behaviour).
+ */
+int cmp_token_t(token_t a, token_t b);
+
 #endif // __TOKEN_H__

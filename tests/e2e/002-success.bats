@@ -16,7 +16,7 @@ readonly success_sample="$samples/success-tests"
   run_compiler $samples/example2.go
 }
 
-@test "Success analysis - exapmles3.go" {
+@test "Success analysis - exapmle3.go" {
   run_compiler $samples/example3.go
 }
 
@@ -48,7 +48,7 @@ readonly success_sample="$samples/success-tests"
   run_compiler $samples/divide.go
 }
 
-@test "success analysis - string_escape_hex" {
+@test "Sucess analysis - string_escape_hex" {
   run_compiler $samples/string_escape_hex.go
 }
 
@@ -57,34 +57,34 @@ readonly success_sample="$samples/success-tests"
 }
 
 # test the success of precedence parsing
-@test "success analysis - expr1" {
+@test "Sucess analysis - expr1" {
   run_compiler $success_sample/expr1.go
 }
 
-@test "success analysis - expr2" {
+@test "Sucess analysis - expr2" {
   run_compiler $success_sample/expr2.go
 }
 
-@test "success analysis - expr3" {
+@test "Sucess analysis - expr3" {
   run_compiler $success_sample/expr3.go
 }
 
-@test "success analysis - expr4" {
+@test "Sucess analysis - expr4" {
   run_compiler $success_sample/expr4.go
 }
 
-@test "success analysis - expr5" {
+@test "Sucess analysis - expr5" {
   run_compiler $success_sample/expr5.go
 }
 
-@test "success analysis - expr6" {
+@test "Sucess analysis - expr6" {
   run_compiler $success_sample/expr6.go
 }
 
-@test "success analysis - expr7" {
+@test "Sucess analysis - expr7" {
   run_compiler $success_sample/expr7.go
 }
 
-@test "success analysis - eol1" {
+@test "Sucess analysis - eol1" {
   run_compiler $success_sample/eol1.go
 }

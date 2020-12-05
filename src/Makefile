@@ -26,6 +26,7 @@ public_sources = \
 	stack_charptr.c \
 	stack_int.c \
 	stack_stack_charptr_tptr.c \
+	stack_token_t.c \
 	str.c \
 	symtable.c \
 	token.c
@@ -42,6 +43,7 @@ public_headers = \
 	stack_charptr.h \
 	stack_int.h \
 	stack_stack_charptr_tptr.h \
+	stack_token_t.h \
 	str.h \
 	symtable.h \
 	token.h
