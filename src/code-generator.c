@@ -101,7 +101,7 @@ char *remove_type(char *str) {
 }
 
 char* set_scope(char *var, int scope, stack_charptr_t *stack) {
-    char buff[(5+strlen(var))*sizeof(char)];
+    char *buff = malloc((5+strlen(var)*sizeof(char)));
     char append_scope[5];
 
     strcpy(buff, "");
