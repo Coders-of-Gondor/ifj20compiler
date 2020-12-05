@@ -104,7 +104,7 @@ void print_IDIV_ASSIGN(char *var, char *sym1, char *number) {
 }
 
 void print_DEFINE(char *var) {
-    printf("DEFVAR LF@%s", var);
+    printf("DEFVAR LF@%s\n", var);
 }
 
 void print_AND(char *var, char *sym1, char *sym2) {
@@ -210,7 +210,7 @@ void build_in_float_to_int() {
     printf("PUSHFRAME\n");
 
     printf("DEFVAR LF@$retval1\n");
-    printf("FLOAT2INT LF@$retval1 LF@$  1\n");
+    printf("FLOAT2INT LF@$retval1 LF@$1\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n\n");

@@ -22,7 +22,8 @@ tests_sources = \
 	scanner_tests.cpp \
 	symtable_tests.cpp \
 	token_tests.cpp \
-	parser_tests.cpp
+	parser_tests.cpp \
+	generator_tests.cpp
 
 tests_objects = $(tests_sources:%.cpp=$(OBJECTS_DIR)/%.o)
 
