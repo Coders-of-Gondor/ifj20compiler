@@ -66,7 +66,11 @@ char *remove_type(char *str) {
     }
 
     char *buff = malloc((length+8)*sizeof(char));
+    if (buff == NULL)
+        exit(99);
     char *converted_str = malloc(length*sizeof(char));
+        if (converted_str == NULL)
+            exit(99);
 
     switch (str[0]) {
         case 's':
@@ -95,7 +99,7 @@ char *remove_type(char *str) {
             strcpy(converted_str, new);
             break;
     }
-    free(new);
+    //free(new);    // TODO: fix this, segfaults if we have a string with a space(s)
     strncat(buff, converted_str, strlen(converted_str));
     free(converted_str);
     return buff;
@@ -154,8 +158,16 @@ void generate() {
 
     TAC_insert(L, OP_LABEL, "main", NULL, NULL);
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
-    TAC_insert(L, OP_MOVE, "i5", NULL, "a");
+    TAC_insert(L, OP_MOVE, "i5", NULL, "da");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "daa");
+    TAC_insert(L, OP_MOVE, "i69", NULL, "daa");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
+    TAC_insert(L, OP_MOVE, "f5", NULL, "db");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "dc");
+    TAC_insert(L, OP_MOVE, "sText s mezerou", NULL, "dc");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "dd");
+    TAC_insert(L, OP_MOVE, "sneco", NULL, "dd");
+    TAC_insert(L, OP_MOVE, "daa", NULL, "dd");
 
     
     // start generating code
@@ -198,49 +210,49 @@ void generate() {
 
         case OP_ADD:
             if ("is_this_a_string?")    // TODO: Check if this is a string
-                print_ADD(L->act->result, L->act->arg1, L->act->arg2, NULL);
+                print_ADD(L->act->result, L->act->arg1, L->act->arg2);
             else {
                 print_CONCAT(L->act->result, L->act->arg1, L->act->arg2);
             }
             break;
 
         case OP_SUB:
-            print_SUB(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            print_SUB(L->act->result, L->act->arg1, L->act->arg2);
             break;
 
         case OP_MUL:
-            print_MUL(L->act->result, L->act->arg1, L->act->arg2, NULL);
+            print_MUL(L->act->result, L->act->arg1, L->act->arg2);
             break;
 
         case OP_DIV:
             if ("is_this_a_float?") // TODO
-                print_DIV(L->act->result, L->act->arg1, L->act->arg2, NULL);
+                print_DIV(L->act->result, L->act->arg1, L->act->arg2);
             else if ("is_this_an int?")
-                print_IDIV(L->act->result, L->act->arg1, L->act->arg2, NULL);
+                print_IDIV(L->act->result, L->act->arg1, L->act->arg2);
             break;
 
         case OP_ADD_ASSIGN:
-            print_ADD_ASSIGN(L->act->result, L->act->arg1, NULL);
+            print_ADD_ASSIGN(L->act->result, L->act->arg1);
             break;
 
         case OP_SUB_ASSIGN:
-            print_SUB_ASSIGN(L->act->result, L->act->arg1, NULL);
+            print_SUB_ASSIGN(L->act->result, L->act->arg1);
             break;
 
         case OP_MUL_ASSIGN:
-            print_MUL_ASSIGN(L->act->result, L->act->arg1, NULL);
+            print_MUL_ASSIGN(L->act->result, L->act->arg1);
             break;
 
         case OP_DIV_ASSIGN:
             if ("is_this_a_float?") // TODO
-                print_DIV_ASSIGN(L->act->result, L->act->arg1, NULL);
+                print_DIV_ASSIGN(L->act->result, L->act->arg1);
             else if ("is_this_an_int?")
-                print_IDIV_ASSIGN(L->act->result, L->act->arg1, NULL);
+                print_IDIV_ASSIGN(L->act->result, L->act->arg1);
             break;
 
         case OP_DEFINE:;
 
-            char *processed = remove_type(L->act->result);
+            char *processed = L->act->result;
             
             stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
 
@@ -312,7 +324,7 @@ void generate() {
             break;
 
         case OP_MOVE:
-            print_MOVE("LF", L->act->result, "LF", L->act->arg1, "number");
+            print_MOVE(L->act->result, L->act->arg1, "LF", "LF");
             break;
 
         case OP_INC_SCOPE:
