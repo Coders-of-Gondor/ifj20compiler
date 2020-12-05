@@ -28,6 +28,7 @@ public_sources = \
 	stack_stack_charptr_tptr.c \
 	str.c \
 	symtable.c \
+	three-address-code.c \
 	token.c
 
 public_headers = \
@@ -44,6 +45,7 @@ public_headers = \
 	stack_stack_charptr_tptr.h \
 	str.h \
 	symtable.h \
+	three-address-code.h \
 	token.h
 
 private_sources = \
