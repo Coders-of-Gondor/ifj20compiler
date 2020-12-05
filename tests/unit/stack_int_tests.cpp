@@ -12,9 +12,8 @@ extern "C" {
 int cmp_int(int a, int b) {
     if (a == b) {
         return 0;
-    } else {
-        return -1;
     }
+    return -1;
 }
 
 class stack_int_empty : public::testing::Test {
@@ -53,6 +52,19 @@ TEST_F(stack_int_empty, push_some_values) {
     ASSERT_EQ(stack_int_ispresent(stack, 15, cmp_int), true);
     ASSERT_EQ(stack_int_ispresent(stack, 0, cmp_int), false);
     ASSERT_EQ(stack_int_ispresent(stack, 7, cmp_int), false);
+
+    // test stack_at
+    ASSERT_EQ(stack_int_at(stack, 0), 5);
+    ASSERT_EQ(stack_int_at(stack, 1), 10);
+    ASSERT_EQ(stack_int_at(stack, 2), 15);
+    ASSERT_EQ(stack_int_at(stack, 3), 0);  // beware of this test
+
+    // test stack_find
+    ASSERT_EQ(stack_int_find(stack, 5, cmp_int), 0);
+    ASSERT_EQ(stack_int_find(stack, 10, cmp_int), 1);
+    ASSERT_EQ(stack_int_find(stack, 15, cmp_int), 2);
+    ASSERT_EQ(stack_int_find(stack, 3, cmp_int), -1);
+    ASSERT_EQ(stack_int_find(stack, -1, cmp_int), -1);
 }
 
 class stack_int_general : public::testing::Test {
