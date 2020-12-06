@@ -391,14 +391,6 @@ void generate() {
             break;
 
         case OP_RETURN:
-<<<<<<< HEAD
-            printf("RETURN\n");
-            printf("POPFRAME\n");
-            break;
-
-        case OP_MOVE:
-            print_MOVE(L->act->result, L->act->arg1);
-=======
             printf("POPFRAME\n");
             stack_stack_charptr_tptr_pop(megastack);
             scope = 0;
@@ -419,7 +411,6 @@ void generate() {
             }
 
             print_MOVE(arg1, arg2);
->>>>>>> 94ba489f79f31b2514003815e311929da6b4e05a
             break;
 
         case OP_INC_SCOPE:

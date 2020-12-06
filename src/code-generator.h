@@ -51,6 +51,8 @@ void print_LSS(char *var, char *sym1, char *sym2);
 void print_LEQ(char *var, char *sym1, char *sym2);
 void print_GTR(char *var, char *sym1, char *sym2);
 void print_GEQ(char *var, char *sym1, char *sym2);
+void print_UNARY_ADD(char *var, char *sym1);
+void print_UNARY_SUB(char *var, char *sym1);
 
 
 #endif

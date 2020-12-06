@@ -35,6 +35,8 @@ typedef enum operator_type {
     OP_LEQ, // <=
     OP_GTR, // >
     OP_GEQ, // >=
+    OP_UNARY_ADD, // +
+    OP_UNARY_SUB, // - 
 
     //instructions
     OP_CALL, // jump to label

@@ -394,6 +394,32 @@ void print_GEQ(char *var, char *sym1, char *sym2) {
        
 }    
 
+void print_UNARY_ADD(char *var, char *sym1) {
+    // x := +y
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
+
+    if (sym1[0] == 'd') {
+        printf("ADD LF@%s int@0 LF@%s\n", tmp_var, tmp_sym1);
+    }
+    else if (sym1[0] != 'd') {
+        printf("ADD LF@%s int@0 %s\n", tmp_var, tmp_sym1);
+    }  
+}  
+
+void print_UNARY_SUB(char *var, char *sym1) {
+    // x := +y
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
+
+    if (sym1[0] == 'd') {
+        printf("SUB LF@%s int@0 LF@%s\n", tmp_var, tmp_sym1);
+    }
+    else if (sym1[0] != 'd') {
+        printf("SUB LF@%s int@0 %s\n", tmp_var, tmp_sym1);
+    }  
+}  
+
 void generate_head() {
     printf(".IFJcode20\n");
     printf("JUMP main\n\n");
