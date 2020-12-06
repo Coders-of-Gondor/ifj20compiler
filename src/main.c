@@ -1,7 +1,7 @@
-/** 
+/**
  * @file main.c
  * @author Ondřej Míchal <xmicha80>
- * @brief Main file that runs the whole program 
+ * @brief Main file that runs the whole program
  * @details Implementace překladače imperativního jazyka IFJ20.
  * @date 24/09/2020
  */
@@ -85,11 +85,15 @@ int main(int argc, char *argv[]) {
     }
 
     scanner_t *scanner = scanner_new(f);
+
     parser_start(scanner);
 
-    global_free();
     scanner_free(scanner);
     fclose(f);
+
+    // TODO: generate code
+
+    global_free();
 
     return SUCCESS;
 }

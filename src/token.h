@@ -84,7 +84,7 @@ typedef enum token_type {
     EXPR_SYMBOL,  // E - used for precedence analysis
 
     // Precedence table symbols
-    INV, // x - invalid    
+    INV, // x - invalid
     RED, // > - reduction
     SHF, // < - shift
     EQQ, // = - equals

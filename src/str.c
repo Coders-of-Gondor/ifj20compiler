@@ -1,5 +1,8 @@
 /**
- * Library included from "jednoduchy_interpret.zip" located at the project's
+ * @file str.c
+ * @author BUT FIT + Marek Filip <xfilip46>
+ * @brief hlavickovy soubor pro praci s nekonecne dlouhymi retezci
+ * @details Library included from "jednoduchy_interpret.zip" located at the project's
  * website. We do not own anything from this file.
  */
 
@@ -11,7 +14,7 @@
 #define STR_LEN_INC 8
 // konstanta STR_LEN_INC udava, na kolik bytu provedeme pocatecni alokaci pameti
 // pokud nacitame retezec znak po znaku, pamet se postupne bude alkokovat na
-// nasobky tohoto cisla 
+// nasobky tohoto cisla
 
 #define STR_ERROR   1
 #define STR_SUCCESS 0

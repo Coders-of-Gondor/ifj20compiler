@@ -2,7 +2,7 @@
 
 extern "C" {
 #include <string.h>
-#include "../../src/three-adress-code.h"
+#include "../../src/three-address-code.h"
 }
 
 TEST(TAC_tests, converts) {
@@ -26,9 +26,9 @@ TEST(TAC_tests, converts) {
     ASSERT_EQ(strcmp(result, "dfoo"), 0);
 
     result = TAC_create_function_argument(1);
-    ASSERT_EQ(strcmp(result, "#arg1"), 0);
+    ASSERT_EQ(strcmp(result, "&arg1"), 0);
     result = TAC_create_function_argument(523);
-    ASSERT_EQ(strcmp(result, "#arg523"), 0);
+    ASSERT_EQ(strcmp(result, "&arg523"), 0);
 }
 
 TEST(TAC_tests, convert_term) {

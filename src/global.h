@@ -14,11 +14,17 @@
 
 #include "symtable.h"
 #include "scanner.h"
+#include "three-address-code.h"
 
 /**
  * @brief Decleration of a global variable tracking symbol table holding keywords.
  */
 extern symtable_t *keywords_symtable;
+
+/**
+ * @brief List of three address code instructions
+ */
+extern TACList *tac_list;
 
 struct keyword {
     char lit[20];

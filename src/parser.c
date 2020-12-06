@@ -14,8 +14,10 @@
 #include "global.h"
 #include "parser.h"
 #include "scanner.h"
+#include "stack_charptr.h"
 #include "stack_token_t.h"
 #include "symtable.h"
+#include "str.h"
 
 scanner_t *scanner; /**< scanner local to the parser */
 bool eol_encountered; /**< tracker to tell us if an eol was scanned */
@@ -29,8 +31,13 @@ bool required_eol = false; /**< track if the eol should be required here */
 
 symtable_t *st; /**< holds symbol stacks for every function */
 
-symtable_t *st_internal_funcs; /** holds signatures of all internal functions */
-symtable_t *st_called_funcs; /** holds signatures of all called functions */
+symtable_t *st_internal_funcs; /**< holds signatures of all internal functions */
+symtable_t *st_called_funcs; /**< holds signatures of all called functions */
+
+int temp_var_cnt;  /**< temporary variable's index tracker */
+int label_cnt;  /**< labels's index tracker */
+
+stack_charptr_t *stack_temp_vars; /**< stack of ids of temporary variables needed for expressions */
 
 // TODO: make eol rules
 
@@ -136,6 +143,10 @@ void parser_start(scanner_t *scanner_main) {
         symtable_new_scope(st_internal_funcs, internal_func_names[i]);
     }
 
+    stack_temp_vars = stack_charptr_init();
+    if (stack_temp_vars == NULL)
+        parser_end(ERROR_INTERNAL);
+
     // move the lookahead to the first lexeme
     parser_move();
 
@@ -202,6 +213,8 @@ void parser_end(int rc) {
     symtable_free(st);
     symtable_free(st_called_funcs);
     symtable_free(st_internal_funcs);
+    clean_temporary_variables(stack_temp_vars);
+    stack_charptr_free(stack_temp_vars);
 
     if (rc == ERROR_LEXICAL)
         throw_lex_error(line);
@@ -925,7 +938,7 @@ bool prec_apply_rule(stack_token_t *rule_stack, stack_int_t *function_stack) {
             // E : E ADD E
             // E : E MUL E
             NEXT_SYMBOL;
-            if (curr_symbol != EXPR_SYMBOL) { 
+            if (curr_symbol != EXPR_SYMBOL) {
                 return false;
             }
             return true;
@@ -1215,4 +1228,53 @@ void parser_track_ident(char *id) {
     symtable_symbol_t *symbol = symtable_add_symbol(st, id);
 
     symbol->type = IDENT;
+}
+
+/* ------------------------------------------------------------------------ */
+/* THREE ADDRESS CODE GENERATION ACTIONS                                    */
+/* ------------------------------------------------------------------------ */
+
+char *create_temporary_variable(token_type type) {
+    debug_entry();
+    temp_var_cnt++;
+    char *temporary_variable = "$t";
+    char *index_string = convert_int_to_string(temp_var_cnt);
+    temporary_variable = append(temporary_variable, index_string);
+    free (index_string);
+    if (temporary_variable == NULL) {
+        parser_end(ERROR_INTERNAL);
+    }
+
+    // Track the new variable
+    parser_track_ident(temporary_variable);
+    stack_charptr_push(stack_temp_vars, temporary_variable);
+
+    // Give it a type
+    symtable_symbol_t *symbol = symtable_find_symbol(st, temporary_variable);
+    if (symbol == NULL) {
+        parser_end(ERROR_INTERNAL);
+    }
+    symbol->token.type = type;
+
+    return temporary_variable;
+}
+
+
+void clean_temporary_variables() {
+    debug_entry();
+    while (!stack_charptr_isempty(stack_temp_vars)) {
+        const char *ident = stack_charptr_pop(stack_temp_vars);
+        free((char *) ident);
+    }
+}
+
+char *create_label_name() {
+    debug_entry();
+    label_cnt++;
+    char *label_name = "label$";
+    char *index_string = convert_int_to_string(label_cnt);
+    label_name = append(label_name, index_string);
+    free(index_string);
+
+    return label_name;
 }

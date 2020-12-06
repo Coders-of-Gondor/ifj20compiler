@@ -2,6 +2,7 @@
  * @file three-address-code.h 
  * @author Vojtěch Bůbela <xbubel08>
  * @author Ondřej Míchal <xmicha80>
+ * @author Marek Filip <xfilip46>
  * @brief Header file for three adress code structure
  * @details Implementace překladače imperativního jazyka IFJ20.
  * This file was inspired by c201.h file from first homework from IAL
@@ -11,7 +12,8 @@
 #ifndef __THREE_ADDRESS_CODE_H__
 #define __THREE_ADDRESS_CODE_H__
 
-#include <stdbool.h>
+#include "str.h"
+#include "token.h"
 
 typedef char* item;
 
@@ -98,5 +100,41 @@ bool TAC_insert(TACList *L, operator_type op_type, item arg1, item arg2, item re
  * @return returns false if memory allocation fails
  */
 bool TAC_create_row(TACList *L);
+
+/**
+ * @brief Get the value which will be passed to the function call.
+ */
+item TAC_create_function_argument(int arg_number);
+
+/**
+ * @brief Get the value which will be returned.
+ */
+item TAC_create_return_value(int ret_number);
+
+/**
+ * @brief Get the 3ac version of float64.
+ */
+item TAC_get_float(double val);
+
+/**
+ * @brief Get the 3ac version of int.
+ */
+item TAC_get_int(int64_t val);
+
+/**
+ * @brief Get the 3ac version of string.
+ */
+item TAC_get_string(string val);
+
+/**
+ * @brief Get the 3ac version of identifier.
+ */
+item TAC_get_identifier(char *val);
+
+/**
+ * @brief Convert token's term to appropriate TAC item.
+ * @return NULL if invalid token, otherwise TAC item.
+ */
+item TAC_convert_term(token_t token);
 
 #endif

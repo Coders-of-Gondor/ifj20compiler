@@ -10,7 +10,7 @@ extern "C" {
  */
 
 TEST(string_tests, prepend) {
-    char *foo = "foo";
+    char *foo = (char *)"foo";
     foo = prepend(foo, "i");
     ASSERT_EQ(strcmp(foo, "ifoo"), 0);
 

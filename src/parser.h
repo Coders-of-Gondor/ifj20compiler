@@ -17,6 +17,7 @@
 #include "stack_int.h"
 #include "stack_token_t.h"
 #include "token.h"
+#include "three-address-code.h"
 
 // stack
 typedef stack_token_t_t stack_token_t;
@@ -44,6 +45,10 @@ void parser_match_ident(char *ident_name);
  */
 void parser_start(scanner_t *scanner_main);
 
+/**
+ * @brief End the parser with according return code and handle semantic checks
+ * at the end of input.
+ */
 void parser_end(int rc);
 
 /**
@@ -309,5 +314,28 @@ bool is_mulop(token_type type);
 /* ------------------------------------------------------------------------ */
 
 void parser_track_ident(char *id);
+
+/* ------------------------------------------------------------------------ */
+/* THREE ADDRESS CODE GENERATION ACTIONS                                    */
+/* ------------------------------------------------------------------------ */
+
+/**
+ * @brief Create a new temporary variable
+ * @details Prepended with $ to counter collisions with identifiers
+ * @return NULL on error, temporary variable identifier on success
+ */
+char *create_temporary_variable(token_type type);
+
+/**
+ * @brief clean_temporary_variables cleans the stack of idents of temporary
+ *        variables
+ */
+void clean_temporary_variables();
+
+/**
+ * @brief Create a new unique label.
+ * @return NULL on error, label on success.
+ */
+char *create_label_name();
 
 #endif // __PARSER_H__
