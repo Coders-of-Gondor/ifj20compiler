@@ -18,14 +18,17 @@ typedef enum operator_type {
     OP_INVALID, //invalid operator
 
     //operations
-    OP_ADD, // +
+    OP_ADD, // for integers and flaots
+    OP_ADD_STRING, // fot concatenation of strings
     OP_SUB, // -
     OP_MUL, // *
     OP_DIV, // /
+    OP_IDIV, // / for integers
     OP_ADD_ASSIGN, // +=
     OP_SUB_ASSIGN, // -=
     OP_MUL_ASSIGN, // *=
     OP_DIV_ASSIGN, // /=
+    OP_IDIV_ASSIGN, // /= for integers
     OP_DEFINE, // :=
     OP_AND, // &&
     OP_OR,  // ||

@@ -12,7 +12,7 @@
 #ifndef __CODE_GENERATOR_H__
 #define __CODE_GENERATOR_H__
 
-int get_scope(char *var);
+int get_scope(const char *var);
 char *remove_type(char *str);
 
 

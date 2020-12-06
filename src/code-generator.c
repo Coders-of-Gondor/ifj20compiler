@@ -28,25 +28,6 @@
 typedef stack_stack_charptr_tptr_t stack_of_stacks;
 typedef stack_charptr_t stack_of_strings;
 
-int get_scope(char *var) {
-    int length = strlen(var);
-    int occurence = 0;
-
-    for (int i = 0; i < length; i++) {
-        if (var[i] == '$')
-            occurence = i;
-    }
-    
-    char scope_part[10];
-    int k = 0;
-    for (int i = occurence+1; i < length; i++) {
-        scope_part[k] = var[i];
-        k++;
-    }
-    int scope = strtol(scope_part, NULL, 10);
-    return scope;
-}
-
 char *conversion(char *str) {
 
     int length = strlen(str);
@@ -160,7 +141,7 @@ char *remove_type(char *str) {
 //     return buff;
 // }
 
-int get_scope(char *var) {
+int get_scope(const char *var) {
     int length = strlen(var);
     int occurence = 0;
 
@@ -204,7 +185,6 @@ void generate() {
     // return;
 
     int scope = 0;
-
 
 
     //deklarace pomocnych promenych
@@ -267,6 +247,8 @@ void generate() {
     build_in_float_to_int();
     build_in_int_to_float();
     build_in_len();
+    build_in_substr();
+    build_in_ord();
 
     printf("\n");
    
@@ -274,195 +256,211 @@ void generate() {
 
     while (L->act->next_row != NULL) {
 
+        char *arg1 = L->act->result;
+        char *arg2 = L->act->arg1;
+        char *arg3 = L->act->arg2;
+
+        if (L->act->result != NULL){
+            if (L->act->result[0] == 'd') {
+                    arg1 = assign_scope(scope, L->act->result, megastack);
+                }
+        }
+
+        if (L->act->arg1 != NULL){
+            if (L->act->arg1[0] == 'd') {
+                    arg2 = assign_scope(scope, L->act->arg1, megastack);
+                }
+        }
+
+        if (L->act->arg2 != NULL){
+            if (L->act->arg2[0] == 'd') {
+                    arg3 = assign_scope(scope, L->act->arg2, megastack);
+                }
+        }
+
         switch (L->act->op) {
 
-        case OP_ADD:
-            if ("is_this_a_string?")    // TODO: Check if this is a string
-                print_ADD(L->act->result, L->act->arg1, L->act->arg2);
-            else {
-                print_CONCAT(L->act->result, L->act->arg1, L->act->arg2);
-            }
-            break;
+            case OP_ADD:
+                print_ADD(arg1, arg2, arg3);
+                break;
 
-        case OP_SUB:
-            print_SUB(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_ADD_STRING:
+                print_CONCAT(arg1, arg2, arg3);
+                break; 
 
-        case OP_MUL:
-            print_MUL(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_SUB:
+                print_SUB(arg1, arg2, arg3);
+                break;
 
-        case OP_DIV:
-            if ("is_this_a_float?") // TODO
-                print_DIV(L->act->result, L->act->arg1, L->act->arg2);
-            else if ("is_this_an int?")
-                print_IDIV(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_MUL:
+                print_MUL(arg1, arg2, arg3);
+                break;
 
-        case OP_ADD_ASSIGN:
-            print_ADD_ASSIGN(L->act->result, L->act->arg1);
-            break;
+            case OP_DIV:
+                print_DIV(arg1, arg2, arg3);
+                break;
 
-        case OP_SUB_ASSIGN:
-            print_SUB_ASSIGN(L->act->result, L->act->arg1);
-            break;
+            case OP_IDIV:
+                print_IDIV(arg1, arg2, arg3);
+                break;
 
-        case OP_MUL_ASSIGN:
-            print_MUL_ASSIGN(L->act->result, L->act->arg1);
-            break;
+            case OP_ADD_ASSIGN:
+                print_ADD_ASSIGN(arg1, arg2);
+                break;
 
-        case OP_DIV_ASSIGN:
-            if ("is_this_a_float?") // TODO
-                print_DIV_ASSIGN(L->act->result, L->act->arg1);
-            else if ("is_this_an_int?")
-                print_IDIV_ASSIGN(L->act->result, L->act->arg1);
-            break;
+            case OP_SUB_ASSIGN:
+                print_SUB_ASSIGN(arg1,arg2);
+                break;
 
-        case OP_DEFINE:;
+            case OP_MUL_ASSIGN:
+                print_MUL_ASSIGN(arg1, arg2);
+                break;
 
-            char *processed = L->act->result;
-            
-            stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
+            case OP_DIV_ASSIGN:
+                print_DIV_ASSIGN(arg1, arg2);
+                break;
 
-            char *tmp_string = malloc(__CHAR_BIT__ * (strlen(processed) + 5));
-            sprintf(tmp_string, "%s$%d", processed, scope);
+            case OP_IDIV_ASSIGN:
+                print_IDIV_ASSIGN(arg1, arg2);
+                break;
 
-            stack_charptr_push(temp, tmp_string);
+            case OP_DEFINE:;
 
-            print_DEFINE(tmp_string);
-            free(tmp_string);
-            break;
+                char *processed = L->act->result;
 
-        case OP_AND:
-            print_AND(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+                stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
 
-        case OP_OR:
-            print_OR(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+                char *tmp_string = malloc(__CHAR_BIT__ * (strlen(processed) + 5));
+                sprintf(tmp_string, "%s$%d", processed, scope);
 
-        case OP_EQL:
-            print_EQL(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+                stack_charptr_push(temp, tmp_string);
 
-        case OP_NEQ:
-            print_NEQ(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+                print_DEFINE(tmp_string);
+                free(tmp_string);
+                break;
 
-        case OP_LSS:
-            print_LSS(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_AND:
+                print_AND(arg1, arg2, arg3);
+                break;
 
-        case OP_LEQ:
-            print_LEQ(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_OR:
+                print_OR(arg1, arg2, arg3);
+                break;
 
-        case OP_GTR:
-            print_GTR(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_EQL:
+                print_EQL(arg1, arg2, arg3);
+                break;
 
-        case OP_GEQ:
-            print_GEQ(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_NEQ:
+                print_NEQ(arg1, arg2, arg3);
+                break;
 
-        case OP_UNARY_ADD:
-            print_UNARY_ADD(L->act->result, L->act->arg1);
-            break;
+            case OP_LSS:
+                print_LSS(arg1, arg2, arg3);
+                break;
 
-        case OP_UNARY_SUB:
-            print_UNARY_SUB(L->act->result, L->act->arg1);
-            break;
+            case OP_LEQ:
+                print_LEQ(arg1, arg2, arg3);
+                break;
 
-        case OP_CALL:
-            printf("CALL %s\n", L->act->arg1);
-            break;
+            case OP_GTR:
+                print_GTR(arg1, arg2, arg3);
+                break;
 
-        case OP_CREATE_FRAME:
-            printf("CREATEFRAME\n");
-            break;
+            case OP_GEQ:
+                print_GEQ(arg1, arg2, arg3);
+                break;
 
-        case OP_LABEL:
-            printf("LABEL %s:\n",L->act->arg1);
-            break;
+            case OP_UNARY_ADD:
+                print_UNARY_ADD(arg1, arg2);
+                break;
 
-        case OP_LABEL_FUNC:
-            printf("LABEL %s:\n",L->act->arg1);
+            case OP_UNARY_SUB:
+                print_UNARY_SUB(arg1, arg2);
+                break;
 
-            //entered definition of a function -> create new frame to
-            //keep track of variables declared and defined there. Then
-            //push the new_frame to stack of stacks
-            stack_charptr_t *frame_new = stack_charptr_init();
-            stack_stack_charptr_tptr_push(megastack, frame_new);
+            case OP_CALL:
+                printf("CALL %s\n", L->act->arg1);
+                break;
 
-            scope = 1;
+            case OP_CREATE_FRAME:
+                printf("CREATEFRAME\n");
+                break;
 
-            break;
+            case OP_LABEL:
+                printf("LABEL %s:\n",L->act->arg1);
+                break;
 
-        case OP_RETURN:
-            printf("POPFRAME\n");
-            stack_stack_charptr_tptr_pop(megastack);
-            scope = 0;
-            printf("RETURN\n");
-            break;
+            case OP_LABEL_FUNC:
+                printf("LABEL %s:\n",L->act->arg1);
 
-        case OP_MOVE:;
+                //entered definition of a function -> create new frame to
+                //keep track of variables declared and defined there. Then
+                //push the new_frame to stack of stacks
+                stack_charptr_t *frame_new = stack_charptr_init();
+                stack_stack_charptr_tptr_push(megastack, frame_new);
 
-            char *arg1 = L->act->result;
-            char *arg2 = L->act->arg1;
+                scope = 1;
 
-            if (L->act->result[0] == 'd') {
-                arg1 = assign_scope(scope, L->act->result, megastack);
-            }
+                break;
 
-            if (L->act->arg1[0] == 'd') {
-                arg2 = assign_scope(scope, L->act->arg1, megastack);
-            }
+            case OP_RETURN:
+                printf("POPFRAME\n");
+                stack_stack_charptr_tptr_pop(megastack);
+                scope = 0;
+                printf("RETURN\n");
+                break;
 
-            print_MOVE(arg1, arg2);
-            break;
+            case OP_MOVE:
+                print_MOVE(arg1, arg2);
+                break;
 
-        case OP_INC_SCOPE:
-                scope++;
-            break;
+            case OP_INC_SCOPE:
+                    scope++;
+                break;
 
-        case OP_DEC_SCOPE:;
+            case OP_DEC_SCOPE:;
 
-            //make a copy of current stack of variables
-            stack_of_strings *temp_stack = stack_stack_charptr_tptr_peek(megastack);
+                //make a copy of current stack of variables
+                stack_of_strings *temp_stack = stack_stack_charptr_tptr_peek(megastack);
 
-                do {
-                    //copy the name of first variable on stack
-                    char *temp_string = stack_charptr_peek(temp_stack);
+                    do {
+                        // copy the name of first variable on stack
+                        if(stack_charptr_isempty(temp_stack)) {
+                            break;
+                        }
 
-                    //find out to what scope it belongs to
-                    int scope_pop = get_scope(temp_string);
+                        const char *temp_string = stack_charptr_peek(temp_stack);
 
-                    //if it dont belong to current scope that is being escaped
-                    //break the cycle
-                    if (scope_pop != scope) {
-                        break;
-                    }
-                    stack_charptr_pop(temp_stack); 
+                        //find out to what scope it belongs to
+                        int scope_pop = get_scope(temp_string);
 
-                } while(1);
+                        //if it dont belong to current scope that is being escaped
+                        //break the cycle
+                        if (scope_pop != scope) {
+                            break;
+                        }
+                        stack_charptr_pop(temp_stack);
 
-                scope--;
-            break;
-        
-        case OP_JUMP:
-            print_JUMP(L->act->result);
-            break;
+                    } while(1);
 
-        case OP_JUMPIFEQ:
-            print_JUMPIFEQ(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+                    scope--;
+                break;
 
-        case OP_JUMPIFNEQ:
-            print_JUMPIFNEQ(L->act->result, L->act->arg1, L->act->arg2);
-            break;
+            case OP_JUMP:
+                print_JUMP(L->act->result);
+                break;
 
-        default:
-            break;
+            case OP_JUMPIFEQ:
+                print_JUMPIFEQ(arg1, arg2, arg3);
+                break;
+
+            case OP_JUMPIFNEQ:
+                print_JUMPIFNEQ(arg1, arg2, arg3);
+                break;
+
+            default:
+                break;
         }
 
         L->act = L->act->next_row;

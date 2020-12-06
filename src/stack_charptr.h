@@ -8,8 +8,8 @@
  */
 
 // typedef to handle pointers
-typedef char* charptr;
-#define TYPEDEF typedef char* charptr
+typedef const char* charptr;
+#define TYPEDEF typedef const char* charptr
 
 #define TYPE charptr
 
