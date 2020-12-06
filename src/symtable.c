@@ -88,21 +88,20 @@ symtable_row_t *symtable_row_new() {
 void symtable_row_free(symtable_row_t *st_row) {
     debug_entry();
     if (st_row != NULL) {
+        symtable_row_clear(st_row);
         free(st_row);
     }
 }
 
 /**
- * @brief symtable_clear erases all items in a symbol table
+ * @brief symtable_row_clear erases all items in a symbol table row
  *
- * @param t pointer to an instance of symtable
+ * @param t pointer to a symtable row
  */
-void symtable_clear_row(symtable_t *st) {
+void symtable_row_clear(symtable_row_t *st_row) {
     debug_entry();
-    if (st == NULL)
+    if (st_row == NULL)
         return;
-
-    symtable_row_t *st_row = st->current_scope->st_stack->current_row;
 
     symtable_iterator_t it = symtable_row_begin(st_row);
     symtable_iterator_t next_it;
@@ -211,11 +210,15 @@ symtable_stack_t *symtable_stack_new() {
  */
 void symtable_stack_free(symtable_stack_t *st_stack) {
     debug_entry();
-    if (st_stack != NULL) {
-        for (symtable_row_t *st_row = st_stack->current_row; st_row != NULL; st_row = st_row->outer_row)
-            symtable_row_free(st_row);
-        free(st_stack);
+    if (st_stack == NULL)
+        return;
+
+    while (st_stack->current_row != NULL) {
+        symtable_row_t *outer_row = st_stack->current_row->outer_row;
+        symtable_row_free(st_stack->current_row);
+        st_stack->current_row = outer_row;
     }
+    free(st_stack);
 }
 
 /**
@@ -332,10 +335,20 @@ symtable_scope_t *symtable_scope_new() {
 void symtable_scope_free(symtable_scope_t *st_scope) {
     debug_entry();
 
-    if (st_scope != NULL)
+    if (st_scope == NULL)
         return;
 
     symtable_stack_free(st_scope->st_stack);
+    while(st_scope->first_parameter != NULL) {
+        func_parameter_t *next_parameter = st_scope->first_parameter->next_param;
+        func_parameter_free(st_scope->first_parameter);
+        st_scope->first_parameter = next_parameter;
+    }
+    while(st_scope->first_return != NULL) {
+        func_return_t *next_return = st_scope->first_return->next_return;
+        func_return_free(st_scope->first_return);
+        st_scope->first_return = next_return;
+    }
     strFree(&st_scope->id);
     free(st_scope);
 }

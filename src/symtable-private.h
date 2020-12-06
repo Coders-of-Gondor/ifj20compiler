@@ -60,6 +60,7 @@ size_t symtable_hash_fun(symtable_key_t key);
 symtable_iterator_t symtable_find(symtable_t *st, symtable_key_t key);
 
 void symtable_erase_symbol(symtable_iterator_t it);
+void symtable_row_clear(symtable_row_t *st_row);
 
 symtable_iterator_t symtable_row_begin(symtable_row_t *st_row);
 symtable_iterator_t symtable_row_end(symtable_row_t *st_row);
@@ -84,7 +85,7 @@ struct symtable_stack {
 typedef struct symtable_stack symtable_stack_t;
 
 symtable_stack_t *symtable_stack_new();
-void symtable_stack_free(symtable_stack_t *sts);
+void symtable_stack_free(symtable_stack_t *st_stack);
 
 /**
  * @brief symtable_scope manages symbols for a single scope (e.g., global,

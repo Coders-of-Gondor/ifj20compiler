@@ -94,13 +94,13 @@ void func_free(func_t *f) {
     func_parameter_t *p_tmp = f->first_parameter;
     while(f->first_parameter != NULL) {
         p_tmp = p_tmp->next_param;
-        free(f->first_parameter);
+        func_parameter_free(f->first_parameter);
         f->first_parameter = p_tmp;
     }
     func_return_t *r_tmp = f->first_return;
     while(f->first_return != NULL) {
         r_tmp = r_tmp->next_return;
-        free(f->first_return);
+        func_return_free(f->first_return);
         f->first_return = r_tmp;
     }
 }
