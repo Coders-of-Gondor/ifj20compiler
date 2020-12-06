@@ -19,14 +19,14 @@ void print_MOVE(char *arg1, char *arg2) {
     bool occurence1 = false;
     int length = strlen(arg1);
     for (int i = 0; i < length; i++) {
-        if (arg1[i] == '&')
+        if (arg1[i] == '#')
             occurence1 = true;
     }
 
     bool occurence2 = false;
     int length2 = strlen(arg2);
     for (int i = 0; i < length2; i++) {
-        if (arg2[i] == '&')
+        if (arg2[i] == '#')
             occurence2 = true;
     }
 
@@ -230,7 +230,7 @@ void print_IDIV_ASSIGN(char *var, char *sym1) {
 void print_DEFINE(char *var) {
     char *tmp_var = remove_type(var);
 
-    if (tmp_var[0] != '&') {
+    if (tmp_var[0] != '#') {
         printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
     } else {
         printf("DEFVAR TF@%s\n", tmp_var);
