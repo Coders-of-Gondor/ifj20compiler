@@ -61,7 +61,7 @@ TEST_F(stack_charptr_general, test_number_of_occurences) {
 
 
 TEST_F(stack_charptr_general, peek_top) {
-    char *val = stack_charptr_peek(stack);
+    const char *val = stack_charptr_peek(stack);
     ASSERT_EQ(val, "foo");
 }
 

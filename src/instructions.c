@@ -664,7 +664,7 @@ void build_in_substr() {
     printf("MOVE LF@&retval2 int@0\n");
 
     printf("POPFRAME\n");
-    printf("RETURN\n");
+    printf("RETURN\n\n");
 }
 
 
@@ -711,7 +711,7 @@ void build_in_ord() {
     printf("LABEL $end\n");
 
     printf("POPFRAME\n");
-    printf("RETURN\n");
+    printf("RETURN\n\n");
 }
 
 /**
@@ -752,5 +752,5 @@ void build_in_chr() {
     printf("LABEL $end\n");
 
     printf("POPFRAME\n");
-    printf("RETURN\n");
+    printf("RETURN\n\n");
 }
