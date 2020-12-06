@@ -9,12 +9,15 @@
 #include "debug.h"
 #include "global.h"
 #include "symtable.h"
+#include "three-address-code.h"
 #include "token.h"
 
 /**
  * @brief Definitions of the global variables of global.h
  */
 symtable_t *keywords_symtable;
+
+TACList *tac_list;
 
 int global_init() {
     debug_entry();
@@ -54,6 +57,14 @@ int global_init() {
         symbol->token = t;
     }
 
+    // Initialize list of three address code instructions
+    tac_list = TAC_new();
+    if (tac_list == NULL)
+        return 1;
+
+    if (!TAC_create_row(tac_list))
+        return 1;
+
     return 0;
 }
 
@@ -61,4 +72,5 @@ void global_free() {
     debug_entry();
 
     symtable_free(keywords_symtable);
+    TAC_free(tac_list);
 }

@@ -1,5 +1,6 @@
 /**
  * @file str.h
+ * @author BUT FIT + Marek Filip <xfilip46>
  * @brief hlavickovy soubor pro praci s nekonecne dlouhymi retezci
  * @details Library included from "jednoduchy_interpret.zip" located at the project's
  * website. We do not own anything from this file.
@@ -29,6 +30,13 @@ int strCmpConstStr(string *s1, char *s2);
 
 char *strGetStr(string *s);
 int strGetLength(string *s);
+
+/**
+ * @author Marek Filip <xfilip46>
+ * @brief Additional string functions working with char pointer.
+ * @details Implementace překladače imperativního jazyka IFJ20.
+ * @date 6/12/2020
+ */
 
 /**
  * @brief Prepend a string with given string.
