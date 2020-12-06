@@ -46,7 +46,10 @@ typedef enum operator_type {
     OP_MOVE, //move arg2 to arg1
     OP_INC_SCOPE, //increase scope
     OP_DEC_SCOPE, //decrease scope
-    OP_LABEL_FUNC ////after label comes declaration of function
+    OP_LABEL_FUNC, ////after label comes declaration of function
+    OP_JUMP,    // jump
+    OP_JUMPIFEQ,  // jump if ()
+    OP_JUMPIFNEQ // jump if !()
 } operator_type;
 
 //one row of three adress code in quadruples form (from dragon book)

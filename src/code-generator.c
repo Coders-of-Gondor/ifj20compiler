@@ -365,6 +365,14 @@ void generate() {
             print_GEQ(L->act->result, L->act->arg1, L->act->arg2);
             break;
 
+        case OP_UNARY_ADD:
+            print_UNARY_ADD(L->act->result, L->act->arg1);
+            break;
+
+        case OP_UNARY_SUB:
+            print_UNARY_SUB(L->act->result, L->act->arg1);
+            break;
+
         case OP_CALL:
             printf("CALL %s\n", L->act->arg1);
             break;
@@ -441,6 +449,18 @@ void generate() {
                 scope--;
             break;
         
+        case OP_JUMP:
+            print_JUMP(L->act->result);
+            break;
+
+        case OP_JUMPIFEQ:
+            print_JUMPIFEQ(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
+        case OP_JUMPIFNEQ:
+            print_JUMPIFNEQ(L->act->result, L->act->arg1, L->act->arg2);
+            break;
+
         default:
             break;
         }

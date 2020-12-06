@@ -276,7 +276,7 @@ void print_OR(char *var, char *sym1, char *sym2) {
 }
 
 void print_EQL(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
+    char *tmp_var = remove_type(var);   
     char *tmp_sym1 = remove_type(sym1);
     char *tmp_sym2 = remove_type(sym2);
 
@@ -419,6 +419,52 @@ void print_UNARY_SUB(char *var, char *sym1) {
         printf("SUB LF@%s int@0 %s\n", tmp_var, tmp_sym1);
     }  
 }  
+
+void print_JUMP(char *var) {
+    // JUMP label
+    char *tmp_var = remove_type(var);
+    printf("JUMP %s\n", tmp_var);
+} 
+
+void print_JUMPIFEQ(char *var, char *sym1, char *sym2) {
+    // JUMPEQ label
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
+    char *tmp_sym2 = remove_type(sym2);
+
+    if (sym1[0] == 'd' && sym2[0] == 'd') {
+        printf("JUMPIFEQ %s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] != 'd' && sym2[0] == 'd') {
+        printf("JUMPIFEQ %s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] == 'd' && sym2[0] != 'd') {
+        printf("JUMPIFEQ %s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] != 'd' && sym2[0] != 'd') {
+        printf("JUMPIFEQ %s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+} 
+
+void print_JUMPIFNEQ(char *var, char *sym1, char *sym2) {
+    // JUMPNEQ label
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
+    char *tmp_sym2 = remove_type(sym2);
+
+    if (sym1[0] == 'd' && sym2[0] == 'd') {
+        printf("JUMPIFNEQ %s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] != 'd' && sym2[0] == 'd') {
+        printf("JUMPIFNEQ %s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] == 'd' && sym2[0] != 'd') {
+        printf("JUMPIFNEQ %s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+    else if (sym1[0] != 'd' && sym2[0] != 'd') {
+        printf("JUMPIFNEQ %s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+    }
+} 
 
 void generate_head() {
     printf(".IFJcode20\n");
