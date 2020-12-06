@@ -34,4 +34,8 @@ struct keyword {
  */
 int global_init();
 
+/**
+ * @brief Destructor of global entities
+ */
+void global_free();
 #endif // __GLOBAL_H__

@@ -56,3 +56,9 @@ int global_init() {
 
     return 0;
 }
+
+void global_free() {
+    debug_entry();
+
+    symtable_free(keywords_symtable);
+}

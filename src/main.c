@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
     scanner_t *scanner = scanner_new(f);
     parser_start(scanner);
 
+    global_free();
     scanner_free(scanner);
     fclose(f);
 
