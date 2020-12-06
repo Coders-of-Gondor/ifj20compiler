@@ -229,7 +229,12 @@ void print_IDIV_ASSIGN(char *var, char *sym1) {
 
 void print_DEFINE(char *var) {
     char *tmp_var = remove_type(var);
-    printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
+
+    if (tmp_var[0] != '#') {
+        printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
+    } else {
+        printf("DEFVAR TF@%s\n", tmp_var);
+    }
 }
 
 void print_AND(char *var, char *sym1, char *sym2) {

@@ -14,6 +14,8 @@
 
 int get_scope(char *var);
 char *remove_type(char *str);
+
+
 char *conversion(char *str);
 char* set_scope(char *var, int scope, stack_charptr_t *stack);
 char* change_scope(char *var, int scope);

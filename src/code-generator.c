@@ -124,46 +124,88 @@ char *remove_type(char *str) {
     return buff;
 }
 
-char* set_scope(char *var, int scope, stack_charptr_t *stack) {
-    char *buff = malloc((5+strlen(var)*sizeof(char)));
-    char append_scope[5];
+// char* set_scope(char *var, int scope, stack_charptr_t *stack) {
+//     char *buff = malloc((5+strlen(var)*sizeof(char)));
+//     char append_scope[5];
 
-    strcpy(buff, "");
-    strncat(buff, var, strlen(var));
-    sprintf(append_scope, "$%d", scope);
-    strncat(buff, append_scope, strlen(append_scope));
+//     strcpy(buff, "");
+//     strncat(buff, var, strlen(var));
+//     sprintf(append_scope, "$%d", scope);
+//     strncat(buff, append_scope, strlen(append_scope));
 
-    for (int i = scope; i > 0; i--) {
-        if (stack_charptr_ispresent(stack, buff, strcmp)); // TODO
-            //Do_something
-    }
-    return buff;
-}
+//     for (int i = scope; i > 0; i--) {
+//         if (stack_charptr_ispresent(stack, buff, strcmp)); // TODO
+//             //Do_something
+//     }
+//     return buff;
+// }
 
-char* change_scope(char *var, int scope) {
+// char* change_scope(char *var, int scope) {
+//     int length = strlen(var);
+//     char *buff = malloc((5 + length)*sizeof(char));
+//     strcpy(buff, "");
+//     int occurence = 0;
+//     char append_scope[5];
+//     sprintf(append_scope, "%d", scope);
+
+//     for (int i = 0; i < length; i++) {
+//         if (var[i] == '$')
+//             occurence = i;
+//     }
+    
+//     printf("%d\n", occurence);
+//     strncat(buff, var, occurence+1);
+//     strncat(buff, append_scope, strlen(append_scope));
+
+//     return buff;
+// }
+
+int get_scope(char *var) {
     int length = strlen(var);
-    char *buff = malloc((5 + length)*sizeof(char));
-    strcpy(buff, "");
     int occurence = 0;
-    char append_scope[5];
-    sprintf(append_scope, "%d", scope);
 
     for (int i = 0; i < length; i++) {
         if (var[i] == '$')
             occurence = i;
     }
     
-    printf("%d\n", occurence);
-    strncat(buff, var, occurence+1);
-    strncat(buff, append_scope, strlen(append_scope));
-
-    return buff;
+    char scope_part[10];
+    int k = 0;
+    for (int i = occurence+1; i < length; i++) {
+        scope_part[k] = var[i];
+        k++;
+    }
+    int scope = strtol(scope_part, NULL, 10);
+    return scope;
 }
 
+char *assign_scope(int scope, char *var, stack_of_stacks *megastack){
+
+    stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
+
+    int temp_scope = scope;
+    char *tmp_string = malloc(__CHAR_BIT__ * (strlen(var) + 5));
+
+    do {
+
+
+        sprintf(tmp_string, "%s$%d", var, temp_scope);
+        temp_scope--;
+        break;
+
+    } while (!stack_charptr_ispresent(temp, tmp_string, strcmp));
+
+    return tmp_string;
+}
 
 void generate() {
+    debug_entry();
+    
+    // return;
 
-    unsigned int scope = 0;
+    int scope = 0;
+
+
 
     //deklarace pomocnych promenych
 
@@ -175,18 +217,26 @@ void generate() {
 
     TAC_create_row(L);
 
-    TAC_insert(L, OP_LABEL, "main", NULL, NULL);
+    TAC_insert(L, OP_LABEL_FUNC, "main", NULL, NULL);
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
     TAC_insert(L, OP_MOVE, "i5", NULL, "da");
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "daa");
-    TAC_insert(L, OP_MOVE, "i69", NULL, "daa");
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
-    TAC_insert(L, OP_MOVE, "f5", NULL, "db");
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "dc");
-    TAC_insert(L, OP_MOVE, "sText s mezerou", NULL, "dc");
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "dd");
-    TAC_insert(L, OP_MOVE, "sneco", NULL, "dd");
-    TAC_insert(L, OP_MOVE, "daa", NULL, "dd");
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
+    TAC_insert(L, OP_MOVE, "i10", NULL, "da");
+    TAC_insert(L, OP_DEC_SCOPE, NULL, NULL, NULL);
+    TAC_insert(L, OP_MOVE, "i10", NULL, "da");
+
+
 
     
     // start generating code
@@ -194,8 +244,8 @@ void generate() {
     stack_of_stacks *megastack = STACK(init)();
 
     //  create frame for func main
-    stack_charptr_t *frame_main = stack_charptr_init();
-    stack_charptr_push(megastack, frame_main);
+    stack_charptr_t *frame_global = stack_charptr_init();
+    stack_stack_charptr_tptr_push(megastack, frame_global);
     
     // stack_charptr_ispresent(string_stack1, "foo", strcmp);
     // char *stringus = stack_charptr_pop(string_stack1);
@@ -207,7 +257,6 @@ void generate() {
 
     // stack_charptr_free(string_stack1);
     // STACK(free)(megastack);
-
 
     generate_head();
 
@@ -275,7 +324,7 @@ void generate() {
             
             stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
 
-            char *tmp_string = malloc(sizeof(__CHAR_BIT__) * (strlen(processed) + 5));
+            char *tmp_string = malloc(__CHAR_BIT__ * (strlen(processed) + 5));
             sprintf(tmp_string, "%s$%d", processed, scope);
 
             stack_charptr_push(temp, tmp_string);
@@ -317,11 +366,11 @@ void generate() {
             break;
 
         case OP_CALL:
-            printf("CALL %s", L->act->arg1);
+            printf("CALL %s\n", L->act->arg1);
             break;
 
         case OP_CREATE_FRAME:
-            printf("CREATEFRAME");
+            printf("CREATEFRAME\n");
             break;
 
         case OP_LABEL:
@@ -335,24 +384,69 @@ void generate() {
             //keep track of variables declared and defined there. Then
             //push the new_frame to stack of stacks
             stack_charptr_t *frame_new = stack_charptr_init();
-            stack_charptr_push(megastack, frame_new);
+            stack_stack_charptr_tptr_push(megastack, frame_new);
+
+            scope = 1;
 
             break;
 
         case OP_RETURN:
+<<<<<<< HEAD
             printf("RETURN\n");
             printf("POPFRAME\n");
             break;
 
         case OP_MOVE:
             print_MOVE(L->act->result, L->act->arg1);
+=======
+            printf("POPFRAME\n");
+            stack_stack_charptr_tptr_pop(megastack);
+            scope = 0;
+            printf("RETURN\n");
+            break;
+
+        case OP_MOVE:;
+
+            char *arg1 = L->act->result;
+            char *arg2 = L->act->arg1;
+
+            if (L->act->result[0] == 'd') {
+                arg1 = assign_scope(scope, L->act->result, megastack);
+            }
+
+            if (L->act->arg1[0] == 'd') {
+                arg2 = assign_scope(scope, L->act->arg1, megastack);
+            }
+
+            print_MOVE(arg1, arg2);
+>>>>>>> 94ba489f79f31b2514003815e311929da6b4e05a
             break;
 
         case OP_INC_SCOPE:
                 scope++;
             break;
 
-        case OP_DEC_SCOPE:
+        case OP_DEC_SCOPE:;
+
+            //make a copy of current stack of variables
+            stack_of_strings *temp_stack = stack_stack_charptr_tptr_peek(megastack);
+
+                do {
+                    //copy the name of first variable on stack
+                    char *temp_string = stack_charptr_peek(temp_stack);
+
+                    //find out to what scope it belongs to
+                    int scope_pop = get_scope(temp_string);
+
+                    //if it dont belong to current scope that is being escaped
+                    //break the cycle
+                    if (scope_pop != scope) {
+                        break;
+                    }
+                    stack_charptr_pop(temp_stack); 
+
+                } while(1);
+
                 scope--;
             break;
         
