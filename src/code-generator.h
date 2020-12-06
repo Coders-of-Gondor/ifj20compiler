@@ -12,6 +12,7 @@
 #ifndef __CODE_GENERATOR_H__
 #define __CODE_GENERATOR_H__
 
+int get_scope(char *var);
 char *remove_type(char *str);
 char *conversion(char *str);
 char* set_scope(char *var, int scope, stack_charptr_t *stack);
@@ -27,7 +28,7 @@ void build_in_substr();
 void build_in_ord();
 void build_in_chr();
 
-void print_MOVE(char *arg1, char *arg2, char *frame1, char *frame2);
+void print_MOVE(char *arg1, char *arg2);
 void print_ADD(char *var, char *sym1, char *sym2);
 void print_CONCAT(char *var, char *sym1, char *sym2);
 void print_SUB(char *var, char *sym1, char *sym2);

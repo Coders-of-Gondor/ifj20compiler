@@ -28,6 +28,25 @@
 typedef stack_stack_charptr_tptr_t stack_of_stacks;
 typedef stack_charptr_t stack_of_strings;
 
+int get_scope(char *var) {
+    int length = strlen(var);
+    int occurence = 0;
+
+    for (int i = 0; i < length; i++) {
+        if (var[i] == '$')
+            occurence = i;
+    }
+    
+    char scope_part[10];
+    int k = 0;
+    for (int i = occurence+1; i < length; i++) {
+        scope_part[k] = var[i];
+        k++;
+    }
+    int scope = strtol(scope_part, NULL, 10);
+    return scope;
+}
+
 char *conversion(char *str) {
 
     int length = strlen(str);
@@ -262,6 +281,7 @@ void generate() {
             stack_charptr_push(temp, tmp_string);
 
             print_DEFINE(tmp_string);
+            free(tmp_string);
             break;
 
         case OP_AND:
@@ -320,11 +340,12 @@ void generate() {
             break;
 
         case OP_RETURN:
-            printf("RETURN");
+            printf("RETURN\n");
+            printf("POPFRAME\n");
             break;
 
         case OP_MOVE:
-            print_MOVE(L->act->result, L->act->arg1, "LF", "LF");
+            print_MOVE(L->act->result, L->act->arg1);
             break;
 
         case OP_INC_SCOPE:
