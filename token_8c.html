@@ -110,6 +110,9 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>token_get_typ
 <tr class="memitem:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a> (token_type type)</td></tr>
 <tr class="memdesc:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a true/false value depending on the token's type being a literal.  <a href="token_8c.html#adbd1a25ddaea72c6e03813b2cfb0c765">More...</a><br /></td></tr>
 <tr class="separator:adbd1a25ddaea72c6e03813b2cfb0c765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa92585b23e4f947f7d2ac947c043dbe6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a> (<a class="el" href="structtoken__t.html">token_t</a> a, <a class="el" href="structtoken__t.html">token_t</a> b)</td></tr>
+<tr class="memdesc:aa92585b23e4f947f7d2ac947c043dbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two tokens.  <a href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">More...</a><br /></td></tr>
+<tr class="separator:aa92585b23e4f947f7d2ac947c043dbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing token-related functions. </p>
@@ -120,6 +123,37 @@ Vojtěch Fiala &lt;xfiala61&gt; </dd>
 Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>09/11/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="aa92585b23e4f947f7d2ac947c043dbe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa92585b23e4f947f7d2ac947c043dbe6">&#9670;&nbsp;</a></span>cmp_token_t()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cmp_token_t </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compare two tokens. </p>
+<p>The types of the tokens are compared, not the attributes. </p><dl class="section return"><dt>Returns</dt><dd>0 if tokens are same, -1 if not. (following strcmp behaviour). </dd></dl>
+
+</div>
+</div>
 <a id="a77ae74478f8f921566716cdc5086b52d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77ae74478f8f921566716cdc5086b52d">&#9670;&nbsp;</a></span>token_init()</h2>
 
@@ -236,7 +270,7 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 5 2020 23:15:58 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Sun Dec 6 2020 15:10:21 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
