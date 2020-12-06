@@ -19,14 +19,14 @@ void print_MOVE(char *arg1, char *arg2) {
     bool occurence1 = false;
     int length = strlen(arg1);
     for (int i = 0; i < length; i++) {
-        if (arg1[i] == '#')
+        if (arg1[i] == '&')
             occurence1 = true;
     }
 
     bool occurence2 = false;
     int length2 = strlen(arg2);
     for (int i = 0; i < length2; i++) {
-        if (arg2[i] == '#')
+        if (arg2[i] == '&')
             occurence2 = true;
     }
 
@@ -230,7 +230,7 @@ void print_IDIV_ASSIGN(char *var, char *sym1) {
 void print_DEFINE(char *var) {
     char *tmp_var = remove_type(var);
 
-    if (tmp_var[0] != '#') {
+    if (tmp_var[0] != '&') {
         printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
     } else {
         printf("DEFVAR TF@%s\n", tmp_var);
@@ -472,9 +472,8 @@ void generate_head() {
 }
 
 /**
- * @brief Printing functions that prints the Input instructions
- * @description The function should be something like 'y = inputs()', so we need to track the 'y' we are assigning into
- */
+* @brief Print a build-in functions inputi(), inputf() and inputs()
+*/
 
 void build_in_input(char type) {        // type is to differentiate between inputi, inputs, inputf; *var is the var name 
     // TODO figure out how to get what frame we at (like we wanna print LF@var or GF or WTF)
@@ -483,13 +482,14 @@ void build_in_input(char type) {        // type is to differentiate between inpu
 
     switch (type) {
         case 's':
-            printf("LABEL $inputs\n");
+            printf("LABEL $inputi\n");
             printf("PUSHFRAME\n");
 
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 string\n");
+            printf("DEFVAR LF@&retval1\n"); 
+            printf("DEFVAR LF@&retval2\n");
+            printf("READ LF@&retval1 string\n");
+
+            printf("MOVE LF@&retval2 int@0\n");
 
             printf("POPFRAME\n");
             printf("RETURN\n\n");
@@ -499,24 +499,46 @@ void build_in_input(char type) {        // type is to differentiate between inpu
             printf("LABEL $inputi\n");
             printf("PUSHFRAME\n");
 
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 int\n");
+            printf("DEFVAR LF@&retval1\n"); 
+            printf("DEFVAR LF@&retval2\n");  
+            printf("READ LF@&retval1 int\n");
+            printf("DEFVAR LF@$tmp\n"); 
+            printf("TYPE LF@$tmp LF@&retval1\n");
+            printf("DEFVAR LF@$bool_result\n"); 
+            printf("JUMPIFNEQ $bad LF@$tmp string@int\n");
+            printf("MOVE LF@&retval2 int@0\n");
+            printf("JUMP $end\n");
 
+
+            printf("LABEL $bad\n");
+            printf("MOVE LF@&retval2 int@1\n");
+            printf("MOVE LF@&retval1 nil@nil\n");
+
+            printf("LABEL $end\n");
             printf("POPFRAME\n");
             printf("RETURN\n\n");
             break;
 
         case 'f':
-            printf("LABEL $inputf\n");
+            printf("LABEL $inputi\n");
             printf("PUSHFRAME\n");
 
-            printf("DEFVAR LF@$retval1\n"); 
-            printf("DEFVAR LF@$retval2\n");  
-            printf("MOVE LF@$retval2 int@0\n");
-            printf("READ LF@$retval1 int\n");
+            printf("DEFVAR LF@&retval1\n"); 
+            printf("DEFVAR LF@&retval2\n");  
+            printf("READ LF@&retval1 float\n");
+            printf("DEFVAR LF@$tmp\n"); 
+            printf("TYPE LF@$tmp LF@&retval1\n");
+            printf("DEFVAR LF@$bool_result\n"); 
+            printf("JUMPIFNEQ $bad LF@$tmp string@float\n");
+            printf("MOVE LF@&retval2 int@0\n");
+            printf("JUMP $end\n");
 
+
+            printf("LABEL $bad\n");
+            printf("MOVE LF@&retval2 int@1\n");
+            printf("MOVE LF@&retval1 nil@nil\n");
+
+            printf("LABEL $end\n");
             printf("POPFRAME\n");
             printf("RETURN\n\n");
             break;
@@ -525,53 +547,61 @@ void build_in_input(char type) {        // type is to differentiate between inpu
 }
 
 /**
- * @brief Printing function to convert float to int
- * @description The function should be something like 'x = float2int(y)'
- */
+* @brief Print a build-in function float2int()
+*/
 void build_in_float_to_int() {
 
     printf("LABEL $float2int\n");
     printf("PUSHFRAME\n");
 
-    printf("DEFVAR LF@$retval1\n");
-    printf("FLOAT2INT LF@$retval1 LF@$1\n");
+    printf("DEFVAR LF@&retval1\n");
+    printf("DEFVAR LF@$1\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
+
+    printf("FLOAT2INT LF@&retval1 LF@$1\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n\n");
 }
 
 /**
- * @brief Printing function to convert int to float
- * @description The function should be something like 'x = int2float(y)'
- */
+* @brief Print a build-in function int2float()
+*/
 void build_in_int_to_float() {
 
     printf("LABEL $int2float\n");
     printf("PUSHFRAME\n");
 
-    printf("DEFVAR LF@$retval1\n");
-    printf("INT2FLOAT LF@$retval1 LF@$1\n");
+    printf("DEFVAR LF@&retval1\n");
+    printf("DEFVAR LF@$1\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
+
+    printf("INT2FLOAT LF@&retval1 LF@$1\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n\n");
 }
 
 /**
- * @brief Printing function to get length of argument
- * @description The function should be something like 'x = len(y)'
- */
+* @brief Print a build-in function len()
+*/
 void build_in_len() { 
 
     printf("LABEL $len\n");
     printf("PUSHFRAME\n");
 
-    printf("DEFVAR LF@$retval1\n");
-    printf("STRLEN LF@$retval1 LF@$1\n");
+    printf("DEFVAR LF@&retval1\n");
+    printf("DEFVAR LF@$1\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
+    printf("STRLEN LF@&retval1 LF@$1\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n\n");
 }
 
+/**
+* @brief Print a build-in function substr()
+*/
 void build_in_substr() {
 
     printf("LABEL $substr\n");
@@ -583,10 +613,16 @@ void build_in_substr() {
     printf("DEFVAR LF@$bool_true\n");
     printf ("DEFVAR LF@$rest_of_string_length\n");
     printf("DEFVAR LF@$tmp\n");
+    printf("DEFVAR LF@$1\n");
+    printf("DEFVAR LF@$2\n");
+    printf("DEFVAR LF@$3\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
+    printf("MOVE LF@$2 LF@&arg2\n");
+    printf("MOVE LF@$3 LF@&arg3\n");
 
     // return values
-    printf("DEFVAR LF@retval\n");
-    printf("DEFVAR LF@retval_2\n");
+    printf("DEFVAR LF@&retval\n");
+    printf("DEFVAR LF@&retval2\n");
     
     // initialize some values
     printf("MOVE LF@$bool_true bool@true\n");
@@ -595,112 +631,125 @@ void build_in_substr() {
 
     // check correct value
     printf("GT LF@$result LF@$length LF@$2\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFNEQ $bad LF@$result LF@$bool_true\n");
     printf("LT LF@$result int@0 LF@$2\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFNEQ $bad LF@$result LF@$bool_true\n");
     printf("LT LF@$result int@0 LF@$3\n");
-    printf("JUMPIFNEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFNEQ $bad LF@$result LF@$bool_true\n");
 
     //  check if n wasn't too big, if thats the case, correct it
     printf("GT LF@$result LF@$3 LF@$rest_of_string_length\n");
-    printf("JUMPIFNEQ begin LF@$result LF@$bool_true\n");
+    printf("JUMPIFNEQ $begin LF@$result LF@$bool_true\n");
     printf("MOVE LF@$3 LF@$rest_of_string_length\n");
 
-    printf("LABEL begin\n");
+    printf("LABEL $begin\n");
     printf("MOVE LF@$counter_increase int@1\n");
-    printf("MOVE LF@retval string@\n");
+    printf("MOVE LF@&retval1 string@\n");
 
     printf("MOVE LF@$length int@0\n");
     printf("ADD LF@$length LF@$3 LF@$2\n");
 
-    printf("LABEL loop\n");
+    printf("LABEL $loop\n");
     printf("GETCHAR LF@$tmp LF@$1 LF@$2\n");            // getchar -> move 1 char from %1 string on postion @counter to retval
     printf("ADD LF@$2 LF@$2 LF@$counter_increase\n");   // counter = counter + 1
-    printf("CONCAT LF@retval LF@retval LF@$tmp\n");     // retval = retval+$tmp (concatenate)
+    printf("CONCAT LF@&retval1 LF@&retval1 LF@$tmp\n");     // retval = retval+$tmp (concatenate)
 
-    printf("JUMPIFNEQ loop LF@$2 LF@$length\n");        // if counter != $length, continue
-    printf("JUMP good\n");
+    printf("JUMPIFNEQ $loop LF@$2 LF@$length\n");        // if counter != $length, continue
+    printf("JUMP $good\n");
 
-    printf("LABEL bad\n");
+    printf("LABEL $bad\n");
     printf("EXIT int@1\n"); // perhaps MOVE LF@retval_2 int@1 ?
 
-    printf("LABEL good\n");
-    printf("MOVE LF@retval_2 int@0\n");
+    printf("LABEL $good\n");
+    printf("MOVE LF@&retval2 int@0\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n");
 }
 
+
+/**
+* @brief Print a build-in function ord()
+*/
 void build_in_ord() {
 
     printf("LABEL $ord\n");
     printf("PUSHFRAME\n");
 
     // define inner values
-    printf("DEFVAR LF@$retval\n");
-    printf("DEFVAR LF@$retval_2\n");
+    printf("DEFVAR LF@&retval1\n");
+    printf("DEFVAR LF@&retval2\n");
     printf("DEFVAR LF@$bool_true\n");
     printf("DEFVAR LF@$result\n");
     printf("DEFVAR LF@$length\n");
+    printf("DEFVAR LF@$1\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
+    printf("DEFVAR LF@$2\n");
+    printf("MOVE LF@$2 LF@&arg2\n");
 
     // assign values to work with
     printf("STRLEN LF@$length LF@$1\n");            // lenght = strlen(%1)
-    printf("SUB LF@$length LF@$length int@1\n");   //# lenght = length-1
+    printf("SUB LF@$length LF@$length int@1\n");   //& lenght = length-1
     printf("MOVE LF@$bool_true bool@true\n");     
 
     // compare if we were given correct args
     printf("GT LF@$result LF@$2 LF@$length\n");    // if %2 (i) > length-1, bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFEQ $bad LF@$result LF@$bool_true\n");
     printf("GT LF@$result int@0 LF@$2\n");    // if 0 > LF@%2 (i), bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFEQ $bad LF@$result LF@$bool_true\n");
 
     // do the thing already
-    printf("STRI2INT LF@$retval LF@$1 LF@$2\n");
+    printf("STRI2INT LF@&retval1 LF@$1 LF@$2\n");
 
-    printf("MOVE LF@$retval_2 int@0\n");
-    printf("JUMP end\n");
+    printf("MOVE LF@&retval2 int@0\n");
+    printf("JUMP $end\n");
 
-    printf("LABEL bad\n");
-    printf("MOVE LF@$retval_2 int@1\n");
-    printf("MOVE LF@$retval int@\n");
+    printf("LABEL $bad\n");
+    printf("MOVE LF@&retval2 int@1\n");
+    printf("MOVE LF@&retval1 int@\n");
 
-    printf("LABEL end\n");
+    printf("LABEL $end\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n");
 }
 
+/**
+* @brief Print a build-in function chr()
+*/
 void build_in_chr() {
 
     printf("LABEL $ord\n");
     printf("PUSHFRAME\n");
 
     // define inner values
-    printf("DEFVAR LF@$retval\n");
-    printf("DEFVAR LF@$retval_2\n");
+    printf("DEFVAR LF@&retval1\n");
+    printf("DEFVAR LF@&retval2\n");
     printf("DEFVAR LF@$bool_true\n");
     printf("DEFVAR LF@$result\n");
+    printf("DEFVAR LF@$1\n");
+    printf("MOVE LF@$1 LF@&arg1\n");
 
     //assign values to work with
     printf("MOVE LF@$bool_true bool@true\n");
 
     //compare if we were given correct args
     printf("GT LF@$result LF@$1 int@255\n");   // if $1 (i) > 255, bad 
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFEQ $bad LF@$result LF@$bool_true\n");
     printf("GT LF@$result int@0 LF@$1\n");    // if 0 > LF@%2 (i), bad
-    printf("JUMPIFEQ bad LF@$result LF@$bool_true\n");
+    printf("JUMPIFEQ $bad LF@$result LF@$bool_true\n");
 
     // do the thing 
-    printf("INT2CHAR LF@$retval LF@$1\n");
+    printf("INT2CHAR LF@&retval1 LF@$1\n");
 
-    printf("MOVE LF@$retval_2 int@0\n");
-    printf("JUMP end\n");
+    printf("MOVE LF@&retval2 int@0\n");
+    printf("JUMP $end\n");
 
-    printf("LABEL bad\n");
-    printf("MOVE LF@$retval_2 int@1\n");
-    printf("MOVE LF@$retval string@\n");
+    printf("LABEL $bad\n");
+    printf("MOVE LF@&retval2 int@1\n");
+    printf("MOVE LF@&retval1 string@\n");
 
-    printf("LABEL end\n");
+    printf("LABEL $end\n");
 
     printf("POPFRAME\n");
     printf("RETURN\n");

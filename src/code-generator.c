@@ -28,25 +28,6 @@
 typedef stack_stack_charptr_tptr_t stack_of_stacks;
 typedef stack_charptr_t stack_of_strings;
 
-int get_scope(char *var) {
-    int length = strlen(var);
-    int occurence = 0;
-
-    for (int i = 0; i < length; i++) {
-        if (var[i] == '$')
-            occurence = i;
-    }
-    
-    char scope_part[10];
-    int k = 0;
-    for (int i = occurence+1; i < length; i++) {
-        scope_part[k] = var[i];
-        k++;
-    }
-    int scope = strtol(scope_part, NULL, 10);
-    return scope;
-}
-
 char *conversion(char *str) {
 
     int length = strlen(str);
@@ -55,7 +36,7 @@ char *conversion(char *str) {
     strcpy(new, "");
 
     if (new == NULL) 
-        exit(99);
+        throw_internal_error();
 
     for (int i = 0; i < length; i++) {
         if (str[i] <= SPACE || str[i] == HASH || str[i] == BACKSLASH) {     // <= Space means that everything below space is to be replaced
@@ -73,12 +54,11 @@ char *remove_type(char *str) {
 
     int length = strlen(str);
     char *new = malloc(length*sizeof(char));
-    char new_float[200]; 
     double d;
     strcpy(new, "");
 
     if (new == NULL) 
-        exit(99);
+        throw_internal_error();
 
     for (int i = 1; i < length; i++) {
         new = strncat(new, &str[i], 1);     // copy string without the first letter of the former
@@ -86,10 +66,10 @@ char *remove_type(char *str) {
 
     char *buff = malloc((length+8)*sizeof(char));
     if (buff == NULL)
-        exit(99);
+        throw_internal_error();
     char *converted_str = malloc(length*sizeof(char));
         if (converted_str == NULL)
-            exit(99);
+            throw_internal_error();
 
     switch (str[0]) {
         case 's':
@@ -100,9 +80,14 @@ char *remove_type(char *str) {
         case 'f':
             free(converted_str);
             d = strtod(new, NULL);
-            sprintf(new_float, "%a", d);
+            size_t bufsz = snprintf(NULL, 0, "%a", d);
+            char *buf = malloc(bufsz + 1);
+            if (buf == NULL) {
+                throw_internal_error();
+            }
+            snprintf(buf, bufsz + 1, "%a", d);
             strcpy(buff, "float@");
-            strncat(buff, new_float, strlen(new_float));
+            strncat(buff, buf, strlen(buf));
             free(new);
 
             return buff;
@@ -187,8 +172,6 @@ char *assign_scope(int scope, char *var, stack_of_stacks *megastack){
     char *tmp_string = malloc(__CHAR_BIT__ * (strlen(var) + 5));
 
     do {
-
-
         sprintf(tmp_string, "%s$%d", var, temp_scope);
         temp_scope--;
         break;
@@ -219,7 +202,7 @@ void generate() {
 
     TAC_insert(L, OP_LABEL_FUNC, "main", NULL, NULL);
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
-    TAC_insert(L, OP_MOVE, "i5", NULL, "da");
+    TAC_insert(L, OP_MOVE, "f8.9", NULL, "da");
     TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
     TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
     TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
