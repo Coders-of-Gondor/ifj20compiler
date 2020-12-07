@@ -2,6 +2,7 @@
  * @file three-address-code.c
  * @author Vojtěch Bůbela <xbubel08>
  * @author Vojtěch Fiala <xfiala61>
+ * @author Ondřej Míchal <xmicha80>
  * @brief definition of functions that work with three adress code
  * structure. This file was inspired by c201.c file from first IAL 
  * homework, done by Vojtěch Fiala.
@@ -14,14 +15,20 @@
 #include "three-address-code.h"
 #include "error.h"
 
-void TAC_init(TACList *L) {
+TACList *TAC_new() {
+    TACList *L = malloc(sizeof(TACList));
+    if (L == NULL) {
+        return NULL;
+    }
+
     L->first = NULL;
     L->act = NULL;
+
+    return L;
 }
 
 bool TAC_create_row(TACList *L) {
     TACptr new = malloc(sizeof(struct TAC));
-
     if (new == NULL) {
         return false;
     }
@@ -59,7 +66,7 @@ bool TAC_insert(TACList *L, operator_type op_type, item arg1, item arg2, item re
     return true;
 }
 
-void TAC_delete(TACList *L) {
+void TAC_free(TACList *L) {
     TACptr temp = L->first;
 
     while(temp != NULL) {
@@ -71,6 +78,5 @@ void TAC_delete(TACList *L) {
         temp = next;
     }   
 
-    L->first = NULL;
-    L->act = NULL;
+    free(L);
 }
