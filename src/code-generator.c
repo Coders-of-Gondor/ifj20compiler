@@ -217,6 +217,11 @@ void generate() {
     TAC_insert(L, OP_MOVE, "i10", NULL, "da");
     TAC_insert(L, OP_DEC_SCOPE, NULL, NULL, NULL);
     TAC_insert(L, OP_MOVE, "i10", NULL, "da");
+    TAC_insert(L, OP_PRINT, "i10", NULL, NULL);
+    TAC_insert(L, OP_PRINT, "f3.14", NULL, NULL);
+    TAC_insert(L, OP_PRINT, "sText s mezerou", NULL, NULL);
+    TAC_insert(L, OP_PRINT, "da", NULL, NULL);
+
 
 
 
@@ -390,11 +395,11 @@ void generate() {
                 break;
 
             case OP_LABEL:
-                printf("LABEL %s:\n",L->act->arg1);
+                printf("LABEL %s:\n",L->act->result);
                 break;
 
             case OP_LABEL_FUNC:
-                printf("LABEL %s:\n",L->act->arg1);
+                printf("LABEL %s:\n",L->act->result);
 
                 //entered definition of a function -> create new frame to
                 //keep track of variables declared and defined there. Then
@@ -459,6 +464,10 @@ void generate() {
 
             case OP_JUMPIFNEQ:
                 print_JUMPIFNEQ(arg1, arg2, arg3);
+                break;
+
+            case OP_PRINT:
+                print_PRINT(arg2);   // arg2 = L->act->arg1 but w/ a scope
                 break;
 
             default:

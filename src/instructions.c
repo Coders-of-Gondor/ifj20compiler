@@ -466,6 +466,15 @@ void print_JUMPIFNEQ(char *var, char *sym1, char *sym2) {
     }
 } 
 
+void print_PRINT(char *term) {
+    char *tmp = remove_type(term);  // remove type and convert accordingly
+    if (term[0] == 'd') {
+        printf("WRITE LF@%s\n", tmp);
+    } else {
+        printf("WRITE %s\n", tmp);
+    }
+}
+
 void generate_head() {
     printf(".IFJcode20\n");
     printf("JUMP main\n\n");

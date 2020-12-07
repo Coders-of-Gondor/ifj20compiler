@@ -52,7 +52,9 @@ typedef enum operator_type {
     OP_LABEL_FUNC, ////after label comes declaration of function
     OP_JUMP,    // jump
     OP_JUMPIFEQ,  // jump if ()
-    OP_JUMPIFNEQ // jump if !()
+    OP_JUMPIFNEQ, // jump if !()
+    OP_PRINT // Special instruction to be used with print() function
+
 } operator_type;
 
 //one row of three adress code in quadruples form (from dragon book)

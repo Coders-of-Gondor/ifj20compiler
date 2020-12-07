@@ -56,6 +56,7 @@ void print_UNARY_SUB(char *var, char *sym1);
 void print_JUMP(char *var);
 void print_JUMPIFEQ(char *var, char *sym1, char *sym2);
 void print_JUMPIFNEQ(char *var, char *sym1, char *sym2);
+void print_PRINT(char *term);
 
 
 #endif
