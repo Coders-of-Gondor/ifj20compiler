@@ -107,9 +107,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4b39921a34e8069d14a68932ba31d5da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#a4b39921a34e8069d14a68932ba31d5da">symtable_row_free</a> (symtable_row_t *st_row)</td></tr>
 <tr class="memdesc:a4b39921a34e8069d14a68932ba31d5da"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_free clears and destroys an instance of symtable row  <a href="symtable_8c.html#a4b39921a34e8069d14a68932ba31d5da">More...</a><br /></td></tr>
 <tr class="separator:a4b39921a34e8069d14a68932ba31d5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55b14fc507d3ddd285ecb4ffcef1338a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#a55b14fc507d3ddd285ecb4ffcef1338a">symtable_clear_row</a> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>)</td></tr>
-<tr class="memdesc:a55b14fc507d3ddd285ecb4ffcef1338a"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_clear erases all items in a symbol table  <a href="symtable_8c.html#a55b14fc507d3ddd285ecb4ffcef1338a">More...</a><br /></td></tr>
-<tr class="separator:a55b14fc507d3ddd285ecb4ffcef1338a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e2e5b49246576708142e68199f768c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#a4e2e5b49246576708142e68199f768c2">symtable_row_clear</a> (symtable_row_t *st_row)</td></tr>
+<tr class="memdesc:a4e2e5b49246576708142e68199f768c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_clear erases all items in a symbol table row  <a href="symtable_8c.html#a4e2e5b49246576708142e68199f768c2">More...</a><br /></td></tr>
+<tr class="separator:a4e2e5b49246576708142e68199f768c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#a66baeb449a0ea5fd1fedb3d1e8ac9345">symtable_row_begin</a> (symtable_row_t *st_row)</td></tr>
 <tr class="memdesc:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_row_begin returns a new iterator aiming at the first object in a symbol table  <a href="symtable_8c.html#a66baeb449a0ea5fd1fedb3d1e8ac9345">More...</a><br /></td></tr>
 <tr class="separator:a66baeb449a0ea5fd1fedb3d1e8ac9345"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,32 +236,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
   <table class="retval">
     <tr><td class="paramname">NULL</td><td>error </td></tr>
     <tr><td class="paramname">pointer</td><td>newly created symbol </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a55b14fc507d3ddd285ecb4ffcef1338a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55b14fc507d3ddd285ecb4ffcef1338a">&#9670;&nbsp;</a></span>symtable_clear_row()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void symtable_clear_row </td>
-          <td>(</td>
-          <td class="paramtype">symtable_t *&#160;</td>
-          <td class="paramname"><em>st</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>symtable_clear erases all items in a symbol table </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">t</td><td>pointer to an instance of symtable </td></tr>
   </table>
   </dd>
 </dl>
@@ -514,6 +488,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
 
 </div>
 </div>
+<a id="a4e2e5b49246576708142e68199f768c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e2e5b49246576708142e68199f768c2">&#9670;&nbsp;</a></span>symtable_row_clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void symtable_row_clear </td>
+          <td>(</td>
+          <td class="paramtype">symtable_row_t *&#160;</td>
+          <td class="paramname"><em>st_row</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>symtable_row_clear erases all items in a symbol table row </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>pointer to a symtable row </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4b39921a34e8069d14a68932ba31d5da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4b39921a34e8069d14a68932ba31d5da">&#9670;&nbsp;</a></span>symtable_row_free()</h2>
 
@@ -624,7 +624,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 6 2020 20:10:52 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Mon Dec 7 2020 11:16:35 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

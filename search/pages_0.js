@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ifj20compiler_301',['ifj20compiler',['../index.html',1,'']]]
+  ['ifj20compiler_303',['ifj20compiler',['../index.html',1,'']]]
 ];
