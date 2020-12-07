@@ -199,7 +199,7 @@ void generate() {
 
     TAC_create_row(L);
 
-    TAC_insert(L, OP_LABEL_FUNC, "main", NULL, NULL);
+    TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "main");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
     TAC_insert(L, OP_MOVE, "f8.9", NULL, "da");
     TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
@@ -288,47 +288,47 @@ void generate() {
         switch (L->act->op) {
 
             case OP_ADD:
-                print_ADD(arg1, arg2, arg3);
+                print_instruction("ADD", arg1, arg2, arg3);
                 break;
 
             case OP_ADD_STRING:
-                print_CONCAT(arg1, arg2, arg3);
+                print_instruction("CONCAT", arg1, arg2, arg3);
                 break; 
 
             case OP_SUB:
-                print_SUB(arg1, arg2, arg3);
+                print_instruction("SUB", arg1, arg2, arg3);
                 break;
 
             case OP_MUL:
-                print_MUL(arg1, arg2, arg3);
+                print_instruction("MUL", arg1, arg2, arg3);
                 break;
 
             case OP_DIV:
-                print_DIV(arg1, arg2, arg3);
+                print_instruction("DIV", arg1, arg2, arg3);
                 break;
 
             case OP_IDIV:
-                print_IDIV(arg1, arg2, arg3);
+                print_instruction("IDIV", arg1, arg2, arg3);
                 break;
 
             case OP_ADD_ASSIGN:
-                print_ADD_ASSIGN(arg1, arg2);
+                print_arithmetic_ASSIGN("ADD", arg1, arg2);
                 break;
 
             case OP_SUB_ASSIGN:
-                print_SUB_ASSIGN(arg1,arg2);
+                print_arithmetic_ASSIGN("SUB", arg1, arg2);
                 break;
 
             case OP_MUL_ASSIGN:
-                print_MUL_ASSIGN(arg1, arg2);
+                print_arithmetic_ASSIGN("MUL", arg1, arg2);
                 break;
 
             case OP_DIV_ASSIGN:
-                print_DIV_ASSIGN(arg1, arg2);
+                print_arithmetic_ASSIGN("DIV", arg1, arg2);
                 break;
 
             case OP_IDIV_ASSIGN:
-                print_IDIV_ASSIGN(arg1, arg2);
+                print_arithmetic_ASSIGN("IDIV", arg1, arg2);
                 break;
 
             case OP_DEFINE:;
@@ -347,43 +347,37 @@ void generate() {
                 break;
 
             case OP_AND:
-                print_AND(arg1, arg2, arg3);
+                print_instruction("AND", arg1, arg2, arg3);
                 break;
 
             case OP_OR:
-                print_OR(arg1, arg2, arg3);
+                print_instruction("OR", arg1, arg2, arg3);
                 break;
 
             case OP_EQL:
-                print_EQL(arg1, arg2, arg3);
+                print_instruction("EQ", arg1, arg2, arg3);
                 break;
 
             case OP_NEQ:
                 print_NEQ(arg1, arg2, arg3);
                 break;
 
-            case OP_LSS:
-                print_LSS(arg1, arg2, arg3);
-                break;
-
             case OP_LEQ:
-                print_LEQ(arg1, arg2, arg3);
-                break;
-
             case OP_GTR:
-                print_GTR(arg1, arg2, arg3);
+                print_instruction("GT", arg1, arg2, arg3);
                 break;
 
             case OP_GEQ:
-                print_GEQ(arg1, arg2, arg3);
+            case OP_LSS:
+                print_instruction("LT", arg1, arg2, arg3);
                 break;
 
             case OP_UNARY_ADD:
-                print_UNARY_ADD(arg1, arg2);
+                print_UNARY("ADD", arg1, arg2);
                 break;
 
             case OP_UNARY_SUB:
-                print_UNARY_SUB(arg1, arg2);
+                print_UNARY("SUB", arg1, arg2);
                 break;
 
             case OP_CALL:
@@ -459,11 +453,11 @@ void generate() {
                 break;
 
             case OP_JUMPIFEQ:
-                print_JUMPIFEQ(arg1, arg2, arg3);
+                print_JUMP_instruction("JUMPIFEQ", arg1, arg2, arg3);
                 break;
 
             case OP_JUMPIFNEQ:
-                print_JUMPIFNEQ(arg1, arg2, arg3);
+                print_JUMP_instruction("JUMPIFNEQ", arg1, arg2, arg3);
                 break;
 
             case OP_PRINT:

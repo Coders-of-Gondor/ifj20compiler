@@ -51,179 +51,34 @@ void print_MOVE(char *arg1, char *arg2) {
     }
 }
 
-void print_ADD(char *var, char *sym1, char *sym2) {
-
+void print_instruction(char *instruction, char *var, char *sym1, char *sym2) {
     char *tmp_var = remove_type(var);
     char *tmp_sym1 = remove_type(sym1);
     char *tmp_sym2 = remove_type(sym2);
 
     if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("ADD LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s LF@%s LF@%s LF@%s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("ADD LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s LF@%s %s LF@%s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("ADD LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s LF@%s LF@%s %s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("ADD LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s LF@%s %s %s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
 }
 
-void print_CONCAT(char *var, char *sym1, char *sym2) {
-
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("CONCAT LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("CONCAT LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("CONCAT LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("CONCAT LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_SUB(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("SUB LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("SUB LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("SUB LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("SUB LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_MUL(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("MUL LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("MUL LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("MUL LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("MUL LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_DIV(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("DIV LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("DIV LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("DIV LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("DIV LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_IDIV(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("IDIV LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("IDIV LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("IDIV LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("IDIV LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_ADD_ASSIGN(char *var, char *sym1) {
+void print_arithmetic_ASSIGN(char *instruction, char *var, char *sym1) {
     char *tmp_var = remove_type(var);
     char *tmp_sym1 = remove_type(sym1);
 
     if (sym1[0] == 'd') {
-        printf("ADD LF@%s LF@%s LF@%s\n", tmp_var, tmp_var, tmp_sym1);
+        printf("%s LF@%s LF@%s LF@%s\n", instruction, tmp_var, tmp_var, tmp_sym1);
     }
     else if (sym1[0] != 'd') {
-        printf("ADD LF@%s LF@%s %s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-}
-
-void print_SUB_ASSIGN(char *var, char *sym1) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-
-    if (sym1[0] == 'd') {
-        printf("SUB LF@%s LF@%s LF@%s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-    else if (sym1[0] != 'd') {
-        printf("SUB LF@%s LF@%s %s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-}
-
-void print_MUL_ASSIGN(char *var, char *sym1) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-
-    if (sym1[0] == 'd') {
-        printf("MUL LF@%s LF@%s LF@%s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-    else if (sym1[0] != 'd') {
-        printf("MUL LF@%s LF@%s %s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-}
-
-void print_DIV_ASSIGN(char *var, char *sym1) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-
-    if (sym1[0] == 'd') {
-        printf("DIV LF@%s LF@%s LF@%s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-    else if (sym1[0] != 'd') {
-        printf("DIV LF@%s LF@%s %s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-}
-
-void print_IDIV_ASSIGN(char *var, char *sym1) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-
-    if (sym1[0] == 'd') {
-        printf("IDIV LF@%s LF@%s LF@%s\n", tmp_var, tmp_var, tmp_sym1);
-    }
-    else if (sym1[0] != 'd') {
-        printf("IDIV LF@%s LF@%s %s\n", tmp_var, tmp_var, tmp_sym1);
+        printf("%s LF@%s LF@%s %s\n", instruction, tmp_var, tmp_var, tmp_sym1);
     }
 }
 
@@ -234,63 +89,6 @@ void print_DEFINE(char *var) {
         printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
     } else {
         printf("DEFVAR TF@%s\n", tmp_var);
-    }
-}
-
-void print_AND(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("AND LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("AND LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("AND LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("AND LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_OR(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("OR LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("OR LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("OR LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("OR LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_EQL(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);   
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("EQL LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("EQL LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("EQL LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("EQL LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
     }
 }
 
@@ -315,110 +113,19 @@ void print_NEQ(char *var, char *sym1, char *sym2) {
     printf("NOT LF@%s LF@%s", tmp_var, tmp_var);
 }
 
-void print_LSS(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
 
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("LT LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("LT LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("LT LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("LT LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_LEQ(char *var, char *sym1, char *sym2) {
-    // x <= y => y > x
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("GT LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("GT LF@%s %s LF@%s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("GT LF@%s LF@%s %s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("GT LF@%s %s %s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-}
-
-void print_GTR(char *var, char *sym1, char *sym2) {
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("GT LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("GT LF@%s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("GT LF@%s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("GT LF@%s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-}
-
-void print_GEQ(char *var, char *sym1, char *sym2) {
-    // x >= y => y < x
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("LT LF@%s LF@%s LF@%s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("LT LF@%s %s LF@%s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("LT LF@%s LF@%s %s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("LT LF@%s %s %s\n", tmp_var, tmp_sym2, tmp_sym1);
-    }
-       
-}    
-
-void print_UNARY_ADD(char *var, char *sym1) {
+void print_UNARY(char *instruction, char *var, char *sym1) {
     // x := +y
     char *tmp_var = remove_type(var);
     char *tmp_sym1 = remove_type(sym1);
 
     if (sym1[0] == 'd') {
-        printf("ADD LF@%s int@0 LF@%s\n", tmp_var, tmp_sym1);
+        printf("%s LF@%s int@0 LF@%s\n", instruction, tmp_var, tmp_sym1);
     }
     else if (sym1[0] != 'd') {
-        printf("ADD LF@%s int@0 %s\n", tmp_var, tmp_sym1);
+        printf("%s LF@%s int@0 %s\n", instruction, tmp_var, tmp_sym1);
     }  
-}  
-
-void print_UNARY_SUB(char *var, char *sym1) {
-    // x := +y
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-
-    if (sym1[0] == 'd') {
-        printf("SUB LF@%s int@0 LF@%s\n", tmp_var, tmp_sym1);
-    }
-    else if (sym1[0] != 'd') {
-        printf("SUB LF@%s int@0 %s\n", tmp_var, tmp_sym1);
-    }  
-}  
+}
 
 void print_JUMP(char *var) {
     // JUMP label
@@ -426,45 +133,24 @@ void print_JUMP(char *var) {
     printf("JUMP %s\n", tmp_var);
 } 
 
-void print_JUMPIFEQ(char *var, char *sym1, char *sym2) {
-    // JUMPEQ label
-    char *tmp_var = remove_type(var);
+void print_JUMP_instruction(char *instruction, char *var, char *sym1, char *sym2) {
+    char *tmp_var = var;
     char *tmp_sym1 = remove_type(sym1);
     char *tmp_sym2 = remove_type(sym2);
 
     if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("JUMPIFEQ %s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s %s LF@%s LF@%s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("JUMPIFEQ %s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s %s %s LF@%s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("JUMPIFEQ %s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s %s LF@%s %s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
     else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("JUMPIFEQ %s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
+        printf("%s %s %s %s\n", instruction, tmp_var, tmp_sym1, tmp_sym2);
     }
-} 
-
-void print_JUMPIFNEQ(char *var, char *sym1, char *sym2) {
-    // JUMPNEQ label
-    char *tmp_var = remove_type(var);
-    char *tmp_sym1 = remove_type(sym1);
-    char *tmp_sym2 = remove_type(sym2);
-
-    if (sym1[0] == 'd' && sym2[0] == 'd') {
-        printf("JUMPIFNEQ %s LF@%s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] == 'd') {
-        printf("JUMPIFNEQ %s %s LF@%s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] == 'd' && sym2[0] != 'd') {
-        printf("JUMPIFNEQ %s LF@%s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-    else if (sym1[0] != 'd' && sym2[0] != 'd') {
-        printf("JUMPIFNEQ %s %s %s\n", tmp_var, tmp_sym1, tmp_sym2);
-    }
-} 
+}
 
 void print_PRINT(char *term) {
     char *tmp = remove_type(term);  // remove type and convert accordingly
