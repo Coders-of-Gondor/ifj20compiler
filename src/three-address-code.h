@@ -1,6 +1,7 @@
 /**
  * @file three-address-code.h 
  * @author Vojtěch Bůbela <xbubel08>
+ * @author Ondřej Míchal <xmicha80>
  * @brief Header file for three adress code structure
  * @details Implementace překladače imperativního jazyka IFJ20.
  * This file was inspired by c201.h file from first homework from IAL
@@ -69,10 +70,16 @@ typedef struct TACList{
 } TACList;
 
 /**
+ * @brief initalize linked list for three adress code
+ * @param L pointer to list of three adress code rows
+ */
+TACList *TAC_new();
+
+/**
  * @brief deletes linked list
  * @param L pointer to list of three adress code rows
  */
-void TAC_delete(TACList *L);
+void TAC_free(TACList *L);
 
 /**
  * @brief insert one row or three adress code
@@ -91,11 +98,5 @@ bool TAC_insert(TACList *L, operator_type op_type, item arg1, item arg2, item re
  * @return returns false if memory allocation fails
  */
 bool TAC_create_row(TACList *L);
-
-/**
- * @brief initalize linked list for three adress code
- * @param L pointer to list of three adress code rows
- */
-void TAC_init(TACList *L);
 
 #endif
