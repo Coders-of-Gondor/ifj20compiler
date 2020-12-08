@@ -38,8 +38,9 @@ typedef enum operator_type {
     OP_LEQ, // <=
     OP_GTR, // >
     OP_GEQ, // >=
-    OP_UNARY_ADD, // +
-    OP_UNARY_SUB, // - 
+    OP_UNARY_ADD, // x = y
+    OP_UNARY_SUB_FLOAT, // x = float@0 - y
+    OP_UNARY_SUB_INT, // x = int@0 - y
 
     //instructions
     OP_CALL, // jump to label
@@ -53,8 +54,7 @@ typedef enum operator_type {
     OP_JUMP,    // jump
     OP_JUMPIFEQ,  // jump if ()
     OP_JUMPIFNEQ, // jump if !()
-    OP_PRINT // Special instruction to be used with print() function
-
+    OP_PRINT, // Special instruction to be used with print() function
 } operator_type;
 
 //one row of three adress code in quadruples form (from dragon book)

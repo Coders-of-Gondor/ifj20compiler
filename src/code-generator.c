@@ -201,29 +201,13 @@ void generate() {
 
     TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "main");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
-    TAC_insert(L, OP_MOVE, "f8.9", NULL, "da");
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_INC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
-    TAC_insert(L, OP_MOVE, "i10", NULL, "da");
-    TAC_insert(L, OP_DEC_SCOPE, NULL, NULL, NULL);
-    TAC_insert(L, OP_MOVE, "i10", NULL, "da");
-    TAC_insert(L, OP_PRINT, "i10", NULL, NULL);
+    TAC_insert(L, OP_MOVE, "f5.4", NULL, "da");
     TAC_insert(L, OP_PRINT, "f3.14", NULL, NULL);
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
+    TAC_insert(L, OP_UNARY_SUB_FLOAT, "da", NULL, "db");
     TAC_insert(L, OP_PRINT, "sText s mezerou", NULL, NULL);
     TAC_insert(L, OP_PRINT, "da", NULL, NULL);
-
-
-
+    TAC_insert(L, OP_PRINT, "db", NULL, NULL);
 
     
     // start generating code
@@ -374,11 +358,15 @@ void generate() {
                 break;
 
             case OP_UNARY_ADD:
-                print_UNARY("ADD", arg1, arg2);
+                print_UNARY_ADD("MOVE", arg1, arg2);
                 break;
 
-            case OP_UNARY_SUB:
-                print_UNARY("SUB", arg1, arg2);
+            case OP_UNARY_SUB_INT:
+                print_UNARY_INT("SUB", arg1, arg2);
+                break;
+
+            case OP_UNARY_SUB_FLOAT:
+                print_UNARY_FLOAT("SUB", arg1, arg2);
                 break;
 
             case OP_CALL:
@@ -390,11 +378,16 @@ void generate() {
                 break;
 
             case OP_LABEL:
-                printf("LABEL %s:\n",L->act->result);
+                printf("LABEL $%s\n",L->act->result);
                 break;
 
             case OP_LABEL_FUNC:
-                printf("LABEL %s:\n",L->act->result);
+                printf("LABEL $%s\n",L->act->result);
+
+                if (!strcmp(L->act->result, "main")) {
+                    printf("CREATEFRAME\n");
+                    printf("PUSHFRAME\n");
+                }
 
                 //entered definition of a function -> create new frame to
                 //keep track of variables declared and defined there. Then

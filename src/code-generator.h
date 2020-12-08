@@ -8,6 +8,7 @@
  */
 
 #include "stack_stack_charptr_tptr.h"
+#include "three-adress-code.h"
 
 #ifndef __CODE_GENERATOR_H__
 #define __CODE_GENERATOR_H__
@@ -36,7 +37,9 @@ void print_JUMP(char *var);
 void print_PRINT(char *term);
 void print_NEQ(char *var, char *sym1, char *sym2);
 void print_instruction(char *instruction, char *var, char *sym1, char *sym2);
-void print_UNARY(char *instruction, char *var, char *sym1);
+void print_UNARY_FLOAT(char *instruction, char *var, char *sym1);
+void print_UNARY_INT(char *instruction, char *var, char *sym1);
+void print_UNARY_ADD(char *instruction, char *var, char *sym1);
 void print_arithmetic_ASSIGN(char *instruction, char *var, char *sym1);
 void print_JUMP_instruction(char *instruction, char *var, char *sym1, char *sym2);
 void print_arithmetic_ASSIGN(char *instruction, char *var, char *sym1);

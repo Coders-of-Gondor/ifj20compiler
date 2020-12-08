@@ -113,8 +113,33 @@ void print_NEQ(char *var, char *sym1, char *sym2) {
     printf("NOT LF@%s LF@%s", tmp_var, tmp_var);
 }
 
+void print_UNARY_ADD(char *instruction, char *var, char *sym1) {
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
 
-void print_UNARY(char *instruction, char *var, char *sym1) {
+    if (sym1[0] == 'd') {
+        printf("%s LF@%s LF@%s\n", instruction, tmp_var, tmp_sym1);
+    }
+    else if (sym1[0] != 'd') {
+        printf("%s LF@%s %s\n", instruction, tmp_var, tmp_sym1);
+    } 
+}
+
+
+void print_UNARY_FLOAT(char *instruction, char *var, char *sym1) {
+    // x := +y
+    char *tmp_var = remove_type(var);
+    char *tmp_sym1 = remove_type(sym1);
+
+    if (sym1[0] == 'd') {
+        printf("%s LF@%s float@0x0p+0 LF@%s\n", instruction, tmp_var, tmp_sym1);
+    }
+    else if (sym1[0] != 'd') {
+        printf("%s LF@%s float@0x0p+0 %s\n", instruction, tmp_var, tmp_sym1);
+    }  
+}
+
+void print_UNARY_INT(char *instruction, char *var, char *sym1) {
     // x := +y
     char *tmp_var = remove_type(var);
     char *tmp_sym1 = remove_type(sym1);
@@ -163,7 +188,7 @@ void print_PRINT(char *term) {
 
 void generate_head() {
     printf(".IFJcode20\n");
-    printf("JUMP main\n\n");
+    printf("JUMP $main\n\n");
 }
 
 /**
