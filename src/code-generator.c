@@ -31,7 +31,7 @@ typedef stack_charptr_t stack_of_strings;
 char *conversion(char *str) {
 
     int length = strlen(str);
-    char buff[5];
+    char buff[6];
     char *new = malloc((4*length+1)*sizeof(char));
     strcpy(new, "");
 
@@ -40,8 +40,8 @@ char *conversion(char *str) {
 
     for (int i = 0; i < length; i++) {
         if (str[i] <= SPACE || str[i] == HASH || str[i] == BACKSLASH) {     // <= Space means that everything below space is to be replaced
-            sprintf(buff, "\\%d", str[i]);
-            new = strncat(new, buff, 4);
+            sprintf(buff, "\\0%d", str[i]);
+            new = strncat(new, buff, 5);
         } else {
             new = strncat(new, &str[i], 1);
         }
