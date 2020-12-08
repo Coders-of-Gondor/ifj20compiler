@@ -102,48 +102,16 @@ char *remove_type(char *str) {
             strcpy(buff, "");
             strcpy(converted_str, new);
             break;
+
+        case '&':
+            return str;
+            break;
     }
     //free(new);    // TODO: fix this, segfaults if we have a string with a space(s)
     strncat(buff, converted_str, strlen(converted_str));
     free(converted_str);
     return buff;
 }
-
-// char* set_scope(char *var, int scope, stack_charptr_t *stack) {
-//     char *buff = malloc((5+strlen(var)*sizeof(char)));
-//     char append_scope[5];
-
-//     strcpy(buff, "");
-//     strncat(buff, var, strlen(var));
-//     sprintf(append_scope, "$%d", scope);
-//     strncat(buff, append_scope, strlen(append_scope));
-
-//     for (int i = scope; i > 0; i--) {
-//         if (stack_charptr_ispresent(stack, buff, strcmp)); // TODO
-//             //Do_something
-//     }
-//     return buff;
-// }
-
-// char* change_scope(char *var, int scope) {
-//     int length = strlen(var);
-//     char *buff = malloc((5 + length)*sizeof(char));
-//     strcpy(buff, "");
-//     int occurence = 0;
-//     char append_scope[5];
-//     sprintf(append_scope, "%d", scope);
-
-//     for (int i = 0; i < length; i++) {
-//         if (var[i] == '$')
-//             occurence = i;
-//     }
-    
-//     printf("%d\n", occurence);
-//     strncat(buff, var, occurence+1);
-//     strncat(buff, append_scope, strlen(append_scope));
-
-//     return buff;
-// }
 
 int get_scope(const char *var) {
     int length = strlen(var);
@@ -187,7 +155,7 @@ void generate() {
     // return;
 
     int scope = 0;
-
+    int temporary_frame;
 
     //deklarace pomocnych promenych
 
@@ -199,15 +167,41 @@ void generate() {
 
     TAC_create_row(L);
 
+    // IDIV test - ok
+    // TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "main");
+    // TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
+    // TAC_insert(L, OP_MOVE, "i2", NULL, "da");
+    // TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
+    // TAC_insert(L, OP_MOVE, "i5", NULL, "db");
+    // TAC_insert(L, OP_IDIV_ASSIGN, "db", NULL, "da");
+    // TAC_insert(L, OP_PRINT, "da", NULL, NULL);
+
+    // DIV test - ok
+    // TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "main");
+    // TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
+    // TAC_insert(L, OP_MOVE, "f3.14", NULL, "da");
+    // TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
+    // TAC_insert(L, OP_MOVE, "f3.5", NULL, "db");
+    // TAC_insert(L, OP_IDIV_ASSIGN, "db", NULL, "da");
+    // TAC_insert(L, OP_PRINT, "da", NULL, NULL);
+
+    //calling funcs with one arg
+    TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "foo");
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
+    TAC_insert(L, OP_MOVE, "&arg1", NULL, "da");
+    TAC_insert(L, OP_PRINT, "da", NULL, NULL);
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "&retval1");
+    TAC_insert(L, OP_RETURN, NULL, NULL, NULL);
+
+    //main
     TAC_insert(L, OP_LABEL_FUNC, NULL, NULL, "main");
     TAC_insert(L, OP_DEFINE, NULL, NULL, "da");
-    TAC_insert(L, OP_MOVE, "f5.4", NULL, "da");
-    TAC_insert(L, OP_PRINT, "f3.14", NULL, NULL);
-    TAC_insert(L, OP_DEFINE, NULL, NULL, "db");
-    TAC_insert(L, OP_UNARY_SUB_FLOAT, "da", NULL, "db");
-    TAC_insert(L, OP_PRINT, "sText s mezerou", NULL, NULL);
-    TAC_insert(L, OP_PRINT, "da", NULL, NULL);
-    TAC_insert(L, OP_PRINT, "db", NULL, NULL);
+    TAC_insert(L, OP_MOVE, "f3.14", NULL, "da");
+    //call func foo
+    TAC_insert(L,OP_CREATE_FRAME, NULL, NULL, NULL);
+    TAC_insert(L, OP_DEFINE, NULL, NULL, "&arg1");
+    TAC_insert(L, OP_MOVE, "da", NULL, "&arg1");
+    TAC_insert(L, OP_CALL, "foo", NULL, NULL);
 
     
     // start generating code
@@ -217,17 +211,6 @@ void generate() {
     //  create frame for func main
     stack_charptr_t *frame_global = stack_charptr_init();
     stack_stack_charptr_tptr_push(megastack, frame_global);
-    
-    // stack_charptr_ispresent(string_stack1, "foo", strcmp);
-    // char *stringus = stack_charptr_pop(string_stack1);
-    // if (!stack_charptr_ispresent(string_stack1, "foo", strcmp)) {
-        // stack_charptr_push(string_stack1, "foo");
-    // }
-
-    // STACK(push)(megastack, string_stack1);
-
-    // stack_charptr_free(string_stack1);
-    // STACK(free)(megastack);
 
     generate_head();
 
@@ -318,6 +301,10 @@ void generate() {
 
             case OP_DEFINE:;
 
+                if (L->act->result[0] == '&') {
+                    print_DEFINE(L->act->result, temporary_frame);
+                    break;
+                }
                 char *processed = L->act->result;
 
                 stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
@@ -327,7 +314,7 @@ void generate() {
 
                 stack_charptr_push(temp, tmp_string);
 
-                print_DEFINE(tmp_string);
+                print_DEFINE(tmp_string, temporary_frame);
                 free(tmp_string);
                 break;
 
@@ -375,19 +362,22 @@ void generate() {
 
             case OP_CREATE_FRAME:
                 printf("CREATEFRAME\n");
+                temporary_frame = 1;
                 break;
 
             case OP_LABEL:
-                printf("LABEL $%s\n",L->act->result);
+                printf("LABEL %s\n",L->act->result);
                 break;
 
             case OP_LABEL_FUNC:
-                printf("LABEL $%s\n",L->act->result);
+                printf("LABEL %s\n",L->act->result);
 
                 if (!strcmp(L->act->result, "main")) {
                     printf("CREATEFRAME\n");
-                    printf("PUSHFRAME\n");
                 }
+
+                printf("PUSHFRAME\n");
+                temporary_frame = 0;
 
                 //entered definition of a function -> create new frame to
                 //keep track of variables declared and defined there. Then
@@ -403,11 +393,11 @@ void generate() {
                 printf("POPFRAME\n");
                 stack_stack_charptr_tptr_pop(megastack);
                 scope = 0;
-                printf("RETURN\n");
+                printf("RETURN\n\n");
                 break;
 
             case OP_MOVE:
-                print_MOVE(arg1, arg2);
+                print_MOVE(arg1, arg2, temporary_frame);
                 break;
 
             case OP_INC_SCOPE:

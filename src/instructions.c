@@ -12,33 +12,46 @@
 #include <string.h>
 #include <stdbool.h>
 
-void print_MOVE(char *arg1, char *arg2) {
+void print_MOVE(char *arg1, char *arg2, int temporary_frame) {
     char *tmp_var = remove_type(arg1);
     char *tmp_sym1 = remove_type(arg2);
     
     bool occurence1 = false;
     int length = strlen(arg1);
     for (int i = 0; i < length; i++) {
-        if (arg1[i] == '#')
+        if (arg1[i] == '&')
             occurence1 = true;
     }
 
     bool occurence2 = false;
     int length2 = strlen(arg2);
     for (int i = 0; i < length2; i++) {
-        if (arg2[i] == '#')
+        if (arg2[i] == '&')
             occurence2 = true;
     }
 
     if (occurence1) {
-        if (arg2[0] == 'd') {
-            printf("MOVE TF@%s LF@%s\n", tmp_var, tmp_sym1); 
-        } else if (arg2[0] != 'd') {
-            printf("MOVE TF@%s %s\n", tmp_var, tmp_sym1); 
+        if (arg1[0] == '&') {
+            if (temporary_frame == 0) {
+                printf("MOVE LF@%s LF@%s\n", tmp_var, tmp_sym1); 
+            } else {
+                printf("MOVE TF@%s LF@%s\n", tmp_var, tmp_sym1); 
+            }
+        } else if (arg1[0] != 'd') {
+            if (temporary_frame == 0) {
+                 printf("MOVE LF@%s %s\n", tmp_var, tmp_sym1);
+            } else {
+                printf("MOVE TF@%s %s\n", tmp_var, tmp_sym1); 
+            }
+            
         }
     } else if (occurence2) {
-        if (arg2[0] == 'd') {
-            printf("MOVE LF@%s TF@%s\n", tmp_var, tmp_sym1); 
+        if (arg2[0] == '&') {
+            if (temporary_frame == 1) {
+                printf("MOVE LF@%s TF@%s\n", tmp_var, tmp_sym1);
+            } else {
+                printf("MOVE LF@%s LF@%s\n", tmp_var, tmp_sym1);
+            }
         } else if (arg2[0] != 'd') {
             printf("MOVE LF@%s %s\n", tmp_var, tmp_sym1);   
         }
@@ -82,13 +95,17 @@ void print_arithmetic_ASSIGN(char *instruction, char *var, char *sym1) {
     }
 }
 
-void print_DEFINE(char *var) {
+void print_DEFINE(char *var, int temporary_frame) {
     char *tmp_var = remove_type(var);
 
-    if (tmp_var[0] != '#') {
+    if (tmp_var[0] != '&') {
         printf("DEFVAR LF@%s\n", tmp_var);      // perhaps figure out the correct frame?
     } else {
-        printf("DEFVAR TF@%s\n", tmp_var);
+        if (temporary_frame == 1) {
+            printf("DEFVAR TF@%s\n", tmp_var);
+        } else {
+            printf("DEFVAR LF@%s\n", tmp_var);
+        }
     }
 }
 
@@ -188,7 +205,7 @@ void print_PRINT(char *term) {
 
 void generate_head() {
     printf(".IFJcode20\n");
-    printf("JUMP $main\n\n");
+    printf("JUMP main\n\n");
 }
 
 /**

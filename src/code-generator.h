@@ -31,8 +31,8 @@ void build_in_substr();
 void build_in_ord();
 void build_in_chr();
 
-void print_MOVE(char *arg1, char *arg2);
-void print_DEFINE(char *var);
+void print_MOVE(char *arg1, char *arg2, int temporary_frame);
+void print_DEFINE(char *var, int temporary_frame);
 void print_JUMP(char *var);
 void print_PRINT(char *term);
 void print_NEQ(char *var, char *sym1, char *sym2);
