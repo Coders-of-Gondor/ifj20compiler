@@ -256,6 +256,7 @@ void generate() {
     build_in_len();
     build_in_substr();
     build_in_ord();
+    build_in_chr();
 
     printf("\n");
    

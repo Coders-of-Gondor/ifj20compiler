@@ -414,7 +414,7 @@ void build_in_ord() {
 */
 void build_in_chr() {
 
-    printf("LABEL $ord\n");
+    printf("LABEL $chr\n");
     printf("PUSHFRAME\n");
 
     // define inner values
