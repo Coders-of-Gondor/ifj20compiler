@@ -39,8 +39,9 @@ typedef enum operator_type {
     OP_LEQ, // <=
     OP_GTR, // >
     OP_GEQ, // >=
-    OP_UNARY_ADD, // +
-    OP_UNARY_SUB, // - 
+    OP_UNARY_ADD, // x = y
+    OP_UNARY_SUB_FLOAT, // x = float@0 - y
+    OP_UNARY_SUB_INT, // x = int@0 - y
 
     // Instructions
     OP_CALL, // jump to label
