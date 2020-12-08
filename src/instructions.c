@@ -205,7 +205,8 @@ void print_PRINT(char *term) {
 
 void generate_head() {
     printf(".IFJcode20\n");
-    printf("JUMP main\n\n");
+    printf("CALL main\n");
+    printf("EXIT int@0\n\n");
 }
 
 /**
@@ -219,7 +220,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
 
     switch (type) {
         case 's':
-            printf("LABEL $inputs\n");
+            printf("LABEL inputs\n");
             printf("PUSHFRAME\n");
 
             printf("DEFVAR LF@&retval1\n"); 
@@ -233,7 +234,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
             break;
 
         case 'i':
-            printf("LABEL $inputi\n");
+            printf("LABEL inputi\n");
             printf("PUSHFRAME\n");
 
             printf("DEFVAR LF@&retval1\n"); 
@@ -257,7 +258,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
             break;
 
         case 'f':
-            printf("LABEL $inputf\n");
+            printf("LABEL inputf\n");
             printf("PUSHFRAME\n");
 
             printf("DEFVAR LF@&retval1\n"); 
@@ -288,7 +289,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
 */
 void build_in_float_to_int() {
 
-    printf("LABEL $float2int\n");
+    printf("LABEL float2int\n");
     printf("PUSHFRAME\n");
 
     printf("DEFVAR LF@&retval1\n");
@@ -306,7 +307,7 @@ void build_in_float_to_int() {
 */
 void build_in_int_to_float() {
 
-    printf("LABEL $int2float\n");
+    printf("LABEL int2float\n");
     printf("PUSHFRAME\n");
 
     printf("DEFVAR LF@&retval1\n");
@@ -324,7 +325,7 @@ void build_in_int_to_float() {
 */
 void build_in_len() { 
 
-    printf("LABEL $len\n");
+    printf("LABEL len\n");
     printf("PUSHFRAME\n");
 
     printf("DEFVAR LF@&retval1\n");
@@ -341,7 +342,7 @@ void build_in_len() {
 */
 void build_in_substr() {
 
-    printf("LABEL $substr\n");
+    printf("LABEL substr\n");
     printf("PUSHFRAME\n");
     // inner variables
     printf("DEFVAR LF@$counter_increase\n");
@@ -410,7 +411,7 @@ void build_in_substr() {
 */
 void build_in_ord() {
 
-    printf("LABEL $ord\n");
+    printf("LABEL ord\n");
     printf("PUSHFRAME\n");
 
     // define inner values
@@ -456,7 +457,7 @@ void build_in_ord() {
 */
 void build_in_chr() {
 
-    printf("LABEL $chr\n");
+    printf("LABEL chr\n");
     printf("PUSHFRAME\n");
 
     // define inner values
