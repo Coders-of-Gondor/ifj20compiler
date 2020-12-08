@@ -177,7 +177,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
 
     switch (type) {
         case 's':
-            printf("LABEL $inputi\n");
+            printf("LABEL $inputs\n");
             printf("PUSHFRAME\n");
 
             printf("DEFVAR LF@&retval1\n"); 
@@ -215,7 +215,7 @@ void build_in_input(char type) {        // type is to differentiate between inpu
             break;
 
         case 'f':
-            printf("LABEL $inputi\n");
+            printf("LABEL $inputf\n");
             printf("PUSHFRAME\n");
 
             printf("DEFVAR LF@&retval1\n"); 
