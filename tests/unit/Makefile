@@ -20,11 +20,11 @@ tests_sources = \
 	stack_charptr_tests.cpp \
 	stack_stack_charptr_tptr_tests.cpp \
 	string_lib_tests.cpp \
-	scanner_tests.cpp \
 	symtable_tests.cpp \
 	token_tests.cpp \
 	TAC_tests.cpp \
-	parser_tests.cpp
+	parser_tests.cpp \
+	scanner_tests.cpp
 
 
 tests_objects = $(tests_sources:%.cpp=$(OBJECTS_DIR)/%.o)
