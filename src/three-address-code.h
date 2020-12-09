@@ -47,6 +47,8 @@ typedef enum operator_type {
     // Instructions
     OP_CALL, // jump to label
     OP_CREATE_FRAME, // notion that function will be called
+    OP_PUSH_FRAME,
+    OP_POP_FRAME,
     OP_LABEL,  // label
     OP_RETURN, // notion that declaration of function ends
     OP_MOVE, // move arg2 to arg1
