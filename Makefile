@@ -12,7 +12,8 @@ export BUILD_DIR := $(PROJECT_DIR)/build
 
 export BIN_DIR := $(BUILD_DIR)/bin
 export OBJECTS_DIR := $(BUILD_DIR)/objects
-export TARGET:= $(BIN_DIR)/$(NAME)
+export TARGET := $(BIN_DIR)/$(NAME)
+export ASSIGNMENT_FILES := rozsireni rozdeleni dokumentace.pdf
 
 .PHONY: all run testunit test2e2 docs zip clean help
 
@@ -35,7 +36,9 @@ docs:
 
 zip:
 	@mkdir -p $(BUILD_DIR)
-	@cd src; zip $(ZIPNAME) ./*.c ./*.h ./Makefile; mv $(ZIPNAME) ../
+	@cp $(ASSIGNMENT_FILES) src/
+	@cd src; zip $(ZIPNAME) $(ASSIGNMENT_FILES) ./*.c ./*.h ./Makefile; mv $(ZIPNAME) ../
+	@cd src; rm $(ASSIGNMENT_FILES)
 
 clean:
 	@rm -f $(ZIPNAME)
