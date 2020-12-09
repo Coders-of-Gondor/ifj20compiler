@@ -80,6 +80,7 @@ $(function() {
 <div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="three-address-code_8h_source.html">three-address-code.h</a>&quot;</code><br />
 </div>
 <p><a href="global_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -102,6 +103,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a397596f327bec1a9d83e7c1514f257c5"><td class="memItemLeft" align="right" valign="top">symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a></td></tr>
 <tr class="memdesc:a397596f327bec1a9d83e7c1514f257c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decleration of a global variable tracking symbol table holding keywords.  <a href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">More...</a><br /></td></tr>
 <tr class="separator:a397596f327bec1a9d83e7c1514f257c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac216dbfc6cc5d572f0f3330a97b0839a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTACList.html">TACList</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#ac216dbfc6cc5d572f0f3330a97b0839a">tac_list</a></td></tr>
+<tr class="memdesc:ac216dbfc6cc5d572f0f3330a97b0839a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of three address code instructions.  <a href="global_8h.html#ac216dbfc6cc5d572f0f3330a97b0839a">More...</a><br /></td></tr>
+<tr class="separator:ac216dbfc6cc5d572f0f3330a97b0839a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file for global variable definitions. </p>
@@ -182,10 +186,34 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 
 </div>
 </div>
+<a id="ac216dbfc6cc5d572f0f3330a97b0839a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac216dbfc6cc5d572f0f3330a97b0839a">&#9670;&nbsp;</a></span>tac_list</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTACList.html">TACList</a>* tac_list</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>List of three address code instructions. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 9 2020 10:27:45 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Wed Dec 9 2020 10:28:06 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

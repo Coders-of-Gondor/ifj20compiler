@@ -81,26 +81,112 @@ $(function() {
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2b53205d16988314677665b0af5c8000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a2b53205d16988314677665b0af5c8000">TAC_init</a> (<a class="el" href="structTACList.html">TACList</a> *L)</td></tr>
-<tr class="memdesc:a2b53205d16988314677665b0af5c8000"><td class="mdescLeft">&#160;</td><td class="mdescRight">initalize linked list for three adress code  <a href="three-address-code_8c.html#a2b53205d16988314677665b0af5c8000">More...</a><br /></td></tr>
-<tr class="separator:a2b53205d16988314677665b0af5c8000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1464026ae054c02f8d73209ef1cafda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTACList.html">TACList</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#af1464026ae054c02f8d73209ef1cafda">TAC_new</a> ()</td></tr>
+<tr class="memdesc:af1464026ae054c02f8d73209ef1cafda"><td class="mdescLeft">&#160;</td><td class="mdescRight">initalize linked list for three adress code  <a href="three-address-code_8c.html#af1464026ae054c02f8d73209ef1cafda">More...</a><br /></td></tr>
+<tr class="separator:af1464026ae054c02f8d73209ef1cafda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c967678931c70075b4861ea7a705c37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a7c967678931c70075b4861ea7a705c37">TAC_create_row</a> (<a class="el" href="structTACList.html">TACList</a> *L)</td></tr>
 <tr class="memdesc:a7c967678931c70075b4861ea7a705c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">creates new row of three adress code and switches activity to it  <a href="three-address-code_8c.html#a7c967678931c70075b4861ea7a705c37">More...</a><br /></td></tr>
 <tr class="separator:a7c967678931c70075b4861ea7a705c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade7b1aa89292b1c5c5c96d9b0e221cfd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#ade7b1aa89292b1c5c5c96d9b0e221cfd">TAC_insert</a> (<a class="el" href="structTACList.html">TACList</a> *L, operator_type op_type, item arg1, item arg2, item result)</td></tr>
 <tr class="memdesc:ade7b1aa89292b1c5c5c96d9b0e221cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert one row or three adress code  <a href="three-address-code_8c.html#ade7b1aa89292b1c5c5c96d9b0e221cfd">More...</a><br /></td></tr>
 <tr class="separator:ade7b1aa89292b1c5c5c96d9b0e221cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0044806105eab2f584106c0423bf85a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a0044806105eab2f584106c0423bf85a7">TAC_delete</a> (<a class="el" href="structTACList.html">TACList</a> *L)</td></tr>
-<tr class="memdesc:a0044806105eab2f584106c0423bf85a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">deletes linked list  <a href="three-address-code_8c.html#a0044806105eab2f584106c0423bf85a7">More...</a><br /></td></tr>
-<tr class="separator:a0044806105eab2f584106c0423bf85a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93ce59d135d7ca43fe112f37302217b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a93ce59d135d7ca43fe112f37302217b9">TAC_free</a> (<a class="el" href="structTACList.html">TACList</a> *L)</td></tr>
+<tr class="memdesc:a93ce59d135d7ca43fe112f37302217b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">deletes linked list  <a href="three-address-code_8c.html#a93ce59d135d7ca43fe112f37302217b9">More...</a><br /></td></tr>
+<tr class="separator:a93ce59d135d7ca43fe112f37302217b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3574e690a6b14ab760c9eeaa503a4e94"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a3574e690a6b14ab760c9eeaa503a4e94">TAC_create_function_argument</a> (int arg_number)</td></tr>
+<tr class="memdesc:a3574e690a6b14ab760c9eeaa503a4e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value which will be passed to the function call.  <a href="three-address-code_8c.html#a3574e690a6b14ab760c9eeaa503a4e94">More...</a><br /></td></tr>
+<tr class="separator:a3574e690a6b14ab760c9eeaa503a4e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32d9b1a0e783a69263134dbac614362e"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a32d9b1a0e783a69263134dbac614362e">TAC_create_return_value</a> (int ret_number)</td></tr>
+<tr class="memdesc:a32d9b1a0e783a69263134dbac614362e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value which will be returned.  <a href="three-address-code_8c.html#a32d9b1a0e783a69263134dbac614362e">More...</a><br /></td></tr>
+<tr class="separator:a32d9b1a0e783a69263134dbac614362e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24ad25fbe0ccf5e3eb26ca15d23c8e8f"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a24ad25fbe0ccf5e3eb26ca15d23c8e8f">TAC_get_float</a> (double val)</td></tr>
+<tr class="memdesc:a24ad25fbe0ccf5e3eb26ca15d23c8e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the 3ac version of float64.  <a href="three-address-code_8c.html#a24ad25fbe0ccf5e3eb26ca15d23c8e8f">More...</a><br /></td></tr>
+<tr class="separator:a24ad25fbe0ccf5e3eb26ca15d23c8e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5939c90260bb486f6d6e325d8c6d230"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#af5939c90260bb486f6d6e325d8c6d230">TAC_get_int</a> (int64_t val)</td></tr>
+<tr class="memdesc:af5939c90260bb486f6d6e325d8c6d230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the 3ac version of int.  <a href="three-address-code_8c.html#af5939c90260bb486f6d6e325d8c6d230">More...</a><br /></td></tr>
+<tr class="separator:af5939c90260bb486f6d6e325d8c6d230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d6c2cb31d003bd4f77e1ffd43228a1"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a70d6c2cb31d003bd4f77e1ffd43228a1">TAC_get_string</a> (<a class="el" href="structstring.html">string</a> val)</td></tr>
+<tr class="memdesc:a70d6c2cb31d003bd4f77e1ffd43228a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the 3ac version of string.  <a href="three-address-code_8c.html#a70d6c2cb31d003bd4f77e1ffd43228a1">More...</a><br /></td></tr>
+<tr class="separator:a70d6c2cb31d003bd4f77e1ffd43228a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2831d556dfd73beae7475d4954cd7605"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a2831d556dfd73beae7475d4954cd7605">TAC_get_identifier</a> (char *val)</td></tr>
+<tr class="memdesc:a2831d556dfd73beae7475d4954cd7605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the 3ac version of identifier.  <a href="three-address-code_8c.html#a2831d556dfd73beae7475d4954cd7605">More...</a><br /></td></tr>
+<tr class="separator:a2831d556dfd73beae7475d4954cd7605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3087cde0b64653557b7fe227dc61b25c"><td class="memItemLeft" align="right" valign="top">item&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="three-address-code_8c.html#a3087cde0b64653557b7fe227dc61b25c">TAC_convert_term</a> (<a class="el" href="structtoken__t.html">token_t</a> token)</td></tr>
+<tr class="memdesc:a3087cde0b64653557b7fe227dc61b25c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert token's term to appropriate <a class="el" href="structTAC.html">TAC</a> item.  <a href="three-address-code_8c.html#a3087cde0b64653557b7fe227dc61b25c">More...</a><br /></td></tr>
+<tr class="separator:a3087cde0b64653557b7fe227dc61b25c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>definition of functions that work with three adress code structure. This file was inspired by c201.c file from first IAL homework, done by Vojtěch Fiala. </p>
 <dl class="section author"><dt>Author</dt><dd>Vojtěch Bůbela &lt;xbubel08&gt; </dd>
 <dd>
-Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
+Vojtěch Fiala &lt;xfiala61&gt; </dd>
+<dd>
+Ondřej Míchal &lt;xmicha80&gt; </dd>
+<dd>
+Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2/12/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a3087cde0b64653557b7fe227dc61b25c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3087cde0b64653557b7fe227dc61b25c">&#9670;&nbsp;</a></span>TAC_convert_term()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_convert_term </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert token's term to appropriate <a class="el" href="structTAC.html">TAC</a> item. </p>
+<dl class="section return"><dt>Returns</dt><dd>NULL if invalid token, otherwise <a class="el" href="structTAC.html">TAC</a> item. </dd></dl>
+
+</div>
+</div>
+<a id="a3574e690a6b14ab760c9eeaa503a4e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3574e690a6b14ab760c9eeaa503a4e94">&#9670;&nbsp;</a></span>TAC_create_function_argument()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_create_function_argument </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>arg_number</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the value which will be passed to the function call. </p>
+
+</div>
+</div>
+<a id="a32d9b1a0e783a69263134dbac614362e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32d9b1a0e783a69263134dbac614362e">&#9670;&nbsp;</a></span>TAC_create_return_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_create_return_value </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ret_number</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the value which will be returned. </p>
+
+</div>
+</div>
 <a id="a7c967678931c70075b4861ea7a705c37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c967678931c70075b4861ea7a705c37">&#9670;&nbsp;</a></span>TAC_create_row()</h2>
 
@@ -128,14 +214,14 @@ Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka
 
 </div>
 </div>
-<a id="a0044806105eab2f584106c0423bf85a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0044806105eab2f584106c0423bf85a7">&#9670;&nbsp;</a></span>TAC_delete()</h2>
+<a id="a93ce59d135d7ca43fe112f37302217b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93ce59d135d7ca43fe112f37302217b9">&#9670;&nbsp;</a></span>TAC_free()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void TAC_delete </td>
+          <td class="memname">void TAC_free </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structTACList.html">TACList</a> *&#160;</td>
           <td class="paramname"><em>L</em></td><td>)</td>
@@ -154,29 +240,83 @@ Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka
 
 </div>
 </div>
-<a id="a2b53205d16988314677665b0af5c8000"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b53205d16988314677665b0af5c8000">&#9670;&nbsp;</a></span>TAC_init()</h2>
+<a id="a24ad25fbe0ccf5e3eb26ca15d23c8e8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24ad25fbe0ccf5e3eb26ca15d23c8e8f">&#9670;&nbsp;</a></span>TAC_get_float()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void TAC_init </td>
+          <td class="memname">item TAC_get_float </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structTACList.html">TACList</a> *&#160;</td>
-          <td class="paramname"><em>L</em></td><td>)</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>initalize linked list for three adress code </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">L</td><td>pointer to list of three adress code rows </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Get the 3ac version of float64. </p>
+
+</div>
+</div>
+<a id="a2831d556dfd73beae7475d4954cd7605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2831d556dfd73beae7475d4954cd7605">&#9670;&nbsp;</a></span>TAC_get_identifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_get_identifier </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the 3ac version of identifier. </p>
+
+</div>
+</div>
+<a id="af5939c90260bb486f6d6e325d8c6d230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5939c90260bb486f6d6e325d8c6d230">&#9670;&nbsp;</a></span>TAC_get_int()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_get_int </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the 3ac version of int. </p>
+
+</div>
+</div>
+<a id="a70d6c2cb31d003bd4f77e1ffd43228a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d6c2cb31d003bd4f77e1ffd43228a1">&#9670;&nbsp;</a></span>TAC_get_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">item TAC_get_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstring.html">string</a>&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the 3ac version of string. </p>
 
 </div>
 </div>
@@ -239,10 +379,35 @@ Vojtěch Fiala &lt;xfiala61&gt;  Implementace překladače imperativního jazyka
 
 </div>
 </div>
+<a id="af1464026ae054c02f8d73209ef1cafda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1464026ae054c02f8d73209ef1cafda">&#9670;&nbsp;</a></span>TAC_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTACList.html">TACList</a>* TAC_new </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initalize linked list for three adress code </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">L</td><td>pointer to list of three adress code rows </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 9 2020 10:27:45 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Wed Dec 9 2020 10:28:06 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

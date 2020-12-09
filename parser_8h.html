@@ -84,6 +84,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="stack__int_8h_source.html">stack_int.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="stack__token__t_8h_source.html">stack_token_t.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="token_8h_source.html">token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="three-address-code_8h_source.html">three-address-code.h</a>&quot;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -115,8 +116,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a33ec2ec63d189bf8816896b67901a6a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a> (scanner_t *scanner_main)</td></tr>
 <tr class="memdesc:a33ec2ec63d189bf8816896b67901a6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the parser.  <a href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">More...</a><br /></td></tr>
 <tr class="separator:a33ec2ec63d189bf8816896b67901a6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f425d5c93db7da55f2bf214a3d3c7cf"><td class="memItemLeft" align="right" valign="top"><a id="a7f425d5c93db7da55f2bf214a3d3c7cf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_end</b> (int rc)</td></tr>
+<tr class="memitem:a7f425d5c93db7da55f2bf214a3d3c7cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">parser_end</a> (int rc)</td></tr>
+<tr class="memdesc:a7f425d5c93db7da55f2bf214a3d3c7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">End the parser with according return code and handle semantic checks at the end of input.  <a href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">More...</a><br /></td></tr>
 <tr class="separator:a7f425d5c93db7da55f2bf214a3d3c7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5adfb9b790a748f0343199e0b8c65edb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a> ()</td></tr>
 <tr class="memdesc:a5adfb9b790a748f0343199e0b8c65edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Below can be found the parsing functions deduced from the LL(1) table.  <a href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">More...</a><br /></td></tr>
@@ -259,6 +260,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mulop</b> (token_t
 <tr class="memitem:aa226b5294cff521c18e8be9b22262f04"><td class="memItemLeft" align="right" valign="top"><a id="aa226b5294cff521c18e8be9b22262f04"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_track_ident</b> (char *id)</td></tr>
 <tr class="separator:aa226b5294cff521c18e8be9b22262f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a879a3307e91618161b1c62ddeca931a7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a> (token_type type)</td></tr>
+<tr class="memdesc:a879a3307e91618161b1c62ddeca931a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new temporary variable.  <a href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">More...</a><br /></td></tr>
+<tr class="separator:a879a3307e91618161b1c62ddeca931a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a887cbcafed1e52e0fe0af1be71018239"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">clean_temporary_variables</a> ()</td></tr>
+<tr class="memdesc:a887cbcafed1e52e0fe0af1be71018239"><td class="mdescLeft">&#160;</td><td class="mdescRight">clean_temporary_variables cleans the stack of idents of temporary variables  <a href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">More...</a><br /></td></tr>
+<tr class="separator:a887cbcafed1e52e0fe0af1be71018239"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bf3b5bce2eee768cff1734a4769a376"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">create_label_name</a> ()</td></tr>
+<tr class="memdesc:a3bf3b5bce2eee768cff1734a4769a376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new unique label.  <a href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">More...</a><br /></td></tr>
+<tr class="separator:a3bf3b5bce2eee768cff1734a4769a376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -317,6 +327,86 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a887cbcafed1e52e0fe0af1be71018239"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a887cbcafed1e52e0fe0af1be71018239">&#9670;&nbsp;</a></span>clean_temporary_variables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void clean_temporary_variables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>clean_temporary_variables cleans the stack of idents of temporary variables </p>
+
+</div>
+</div>
+<a id="a3bf3b5bce2eee768cff1734a4769a376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bf3b5bce2eee768cff1734a4769a376">&#9670;&nbsp;</a></span>create_label_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* create_label_name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new unique label. </p>
+<dl class="section return"><dt>Returns</dt><dd>NULL on error, label on success. </dd></dl>
+
+</div>
+</div>
+<a id="a879a3307e91618161b1c62ddeca931a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a879a3307e91618161b1c62ddeca931a7">&#9670;&nbsp;</a></span>create_temporary_variable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* create_temporary_variable </td>
+          <td>(</td>
+          <td class="paramtype">token_type&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new temporary variable. </p>
+<p>Prepended with $ to counter collisions with identifiers </p><dl class="section return"><dt>Returns</dt><dd>NULL on error, temporary variable identifier on success </dd></dl>
+
+</div>
+</div>
+<a id="a7f425d5c93db7da55f2bf214a3d3c7cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f425d5c93db7da55f2bf214a3d3c7cf">&#9670;&nbsp;</a></span>parser_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parser_end </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>End the parser with according return code and handle semantic checks at the end of input. </p>
+
+</div>
+</div>
 <a id="a7ec22e874532c8b253af5e1aad8d6cb5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ec22e874532c8b253af5e1aad8d6cb5">&#9670;&nbsp;</a></span>parser_expr()</h2>
 
@@ -856,7 +946,7 @@ Ondřej Míchal &lt;xmicha80&gt;  Implementace překladače imperativního jazyk
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 9 2020 10:27:45 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Wed Dec 9 2020 10:28:06 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>

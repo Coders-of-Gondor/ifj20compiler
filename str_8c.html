@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ifj20compiler: str.h File Reference</title>
+<title>ifj20compiler: str.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,23 +67,30 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">str.h File Reference</div>  </div>
+<div class="title">str.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>hlavickovy soubor pro praci s nekonecne dlouhymi retezci  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-</div>
-<p><a href="str_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstring.html">string</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;malloc.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="str_8h_source.html">str.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6541e4b5cfbcc3d8ef48ae712ce034d2"><td class="memItemLeft" align="right" valign="top"><a id="a6541e4b5cfbcc3d8ef48ae712ce034d2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>STR_LEN_INC</b>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:a6541e4b5cfbcc3d8ef48ae712ce034d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a897a3f8660d6ffef8dd0b269d5438029"><td class="memItemLeft" align="right" valign="top"><a id="a897a3f8660d6ffef8dd0b269d5438029"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>STR_ERROR</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a897a3f8660d6ffef8dd0b269d5438029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4170e594df46a9e8a5b1c9c1e103f735"><td class="memItemLeft" align="right" valign="top"><a id="a4170e594df46a9e8a5b1c9c1e103f735"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>STR_SUCCESS</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a4170e594df46a9e8a5b1c9c1e103f735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -114,21 +121,21 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>strGetStr</b> (<a c
 <tr class="memitem:aed231c214c2a40c2dd2231ceff10d68f"><td class="memItemLeft" align="right" valign="top"><a id="aed231c214c2a40c2dd2231ceff10d68f"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>strGetLength</b> (<a class="el" href="structstring.html">string</a> *s)</td></tr>
 <tr class="separator:aed231c214c2a40c2dd2231ceff10d68f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a606135e47a4207450931cbc562457a5d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8h.html#a606135e47a4207450931cbc562457a5d">prepend</a> (char *s, const char *t)</td></tr>
-<tr class="memdesc:a606135e47a4207450931cbc562457a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional string functions working with char pointer.  <a href="str_8h.html#a606135e47a4207450931cbc562457a5d">More...</a><br /></td></tr>
+<tr class="memitem:a606135e47a4207450931cbc562457a5d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8c.html#a606135e47a4207450931cbc562457a5d">prepend</a> (char *s, const char *t)</td></tr>
+<tr class="memdesc:a606135e47a4207450931cbc562457a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional string functions working with char pointer.  <a href="str_8c.html#a606135e47a4207450931cbc562457a5d">More...</a><br /></td></tr>
 <tr class="separator:a606135e47a4207450931cbc562457a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5219cdc44c1edc7827384088df6d79e7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8h.html#a5219cdc44c1edc7827384088df6d79e7">append</a> (char *s, const char *t)</td></tr>
-<tr class="memdesc:a5219cdc44c1edc7827384088df6d79e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a string with given string.  <a href="str_8h.html#a5219cdc44c1edc7827384088df6d79e7">More...</a><br /></td></tr>
+<tr class="memitem:a5219cdc44c1edc7827384088df6d79e7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8c.html#a5219cdc44c1edc7827384088df6d79e7">append</a> (char *s, const char *t)</td></tr>
+<tr class="memdesc:a5219cdc44c1edc7827384088df6d79e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a string with given string.  <a href="str_8c.html#a5219cdc44c1edc7827384088df6d79e7">More...</a><br /></td></tr>
 <tr class="separator:a5219cdc44c1edc7827384088df6d79e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfd7622398e7313325be745b2f3ef5e9"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8h.html#acfd7622398e7313325be745b2f3ef5e9">convert_double_to_string</a> (double val)</td></tr>
-<tr class="memdesc:acfd7622398e7313325be745b2f3ef5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert double to string.  <a href="str_8h.html#acfd7622398e7313325be745b2f3ef5e9">More...</a><br /></td></tr>
+<tr class="memitem:acfd7622398e7313325be745b2f3ef5e9"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8c.html#acfd7622398e7313325be745b2f3ef5e9">convert_double_to_string</a> (double val)</td></tr>
+<tr class="memdesc:acfd7622398e7313325be745b2f3ef5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert double to string.  <a href="str_8c.html#acfd7622398e7313325be745b2f3ef5e9">More...</a><br /></td></tr>
 <tr class="separator:acfd7622398e7313325be745b2f3ef5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8h.html#abeb91603b0f1ba3e5c84755f5295bd0f">convert_double_to_hexa</a> (double val)</td></tr>
-<tr class="memdesc:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert double to string.  <a href="str_8h.html#abeb91603b0f1ba3e5c84755f5295bd0f">More...</a><br /></td></tr>
-<tr class="separator:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dca0b0eec3a520f9270cc0bbd39316c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8h.html#a3dca0b0eec3a520f9270cc0bbd39316c">convert_int_to_string</a> (int64_t val)</td></tr>
-<tr class="memdesc:a3dca0b0eec3a520f9270cc0bbd39316c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an integer value to string representation.  <a href="str_8h.html#a3dca0b0eec3a520f9270cc0bbd39316c">More...</a><br /></td></tr>
+<tr class="memitem:a3dca0b0eec3a520f9270cc0bbd39316c"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8c.html#a3dca0b0eec3a520f9270cc0bbd39316c">convert_int_to_string</a> (int64_t val)</td></tr>
+<tr class="memdesc:a3dca0b0eec3a520f9270cc0bbd39316c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an integer value to string representation.  <a href="str_8c.html#a3dca0b0eec3a520f9270cc0bbd39316c">More...</a><br /></td></tr>
 <tr class="separator:a3dca0b0eec3a520f9270cc0bbd39316c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="str_8c.html#abeb91603b0f1ba3e5c84755f5295bd0f">convert_double_to_hexa</a> (double val)</td></tr>
+<tr class="memdesc:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert double to string.  <a href="str_8c.html#abeb91603b0f1ba3e5c84755f5295bd0f">More...</a><br /></td></tr>
+<tr class="separator:abeb91603b0f1ba3e5c84755f5295bd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>hlavickovy soubor pro praci s nekonecne dlouhymi retezci </p>
@@ -255,9 +262,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>strGetLength</b> (<a c
 </div><div class="memdoc">
 
 <p>Additional string functions working with char pointer. </p>
-<dl class="section author"><dt>Author</dt><dd>Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>6/12/2020</dd></dl>
-<p>Prepend a string with given string. </p><dl class="section post"><dt>Postcondition</dt><dd>Need to free the allocated space.</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Marek Filip &lt;xfilip46&gt;  Implementace překladače imperativního jazyka IFJ20. </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>6/12/2020 </dd></dl>
 

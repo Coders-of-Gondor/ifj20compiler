@@ -78,28 +78,34 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="symtable_8h.html">symtable.h</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="scanner_8h.html">scanner.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">extern</span> symtable_t *<a class="code" href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structkeyword.html">   23</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structkeyword.html">keyword</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">char</span> lit[20];</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    token_type type;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;};</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">int</span> <a class="code" href="global_8h.html#a05a181061c42a8ef4950ad6b35135b3b">global_init</a>();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="global_8h.html#a93646c697951a585ca0f6e0405128dd1">global_free</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif // __GLOBAL_H__</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="three-address-code_8h.html">three-address-code.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> symtable_t *<a class="code" href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">extern</span> <a class="code" href="structTACList.html">TACList</a> *<a class="code" href="global_8h.html#ac216dbfc6cc5d572f0f3330a97b0839a">tac_list</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structkeyword.html">   29</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structkeyword.html">keyword</a> {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">char</span> lit[20];</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    token_type type;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">int</span> <a class="code" href="global_8h.html#a05a181061c42a8ef4950ad6b35135b3b">global_init</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="global_8h.html#a93646c697951a585ca0f6e0405128dd1">global_free</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif // __GLOBAL_H__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="asymtable_8h_html"><div class="ttname"><a href="symtable_8h.html">symtable.h</a></div></div>
-<div class="ttc" id="aglobal_8h_html_a397596f327bec1a9d83e7c1514f257c5"><div class="ttname"><a href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a></div><div class="ttdeci">symtable_t * keywords_symtable</div><div class="ttdoc">Decleration of a global variable tracking symbol table holding keywords.</div><div class="ttdef"><b>Definition:</b> global.c:17</div></div>
-<div class="ttc" id="astructkeyword_html"><div class="ttname"><a href="structkeyword.html">keyword</a></div><div class="ttdef"><b>Definition:</b> global.h:23</div></div>
-<div class="ttc" id="aglobal_8h_html_a93646c697951a585ca0f6e0405128dd1"><div class="ttname"><a href="global_8h.html#a93646c697951a585ca0f6e0405128dd1">global_free</a></div><div class="ttdeci">void global_free()</div><div class="ttdoc">Destructor of global entities.</div><div class="ttdef"><b>Definition:</b> global.c:60</div></div>
-<div class="ttc" id="aglobal_8h_html_a05a181061c42a8ef4950ad6b35135b3b"><div class="ttname"><a href="global_8h.html#a05a181061c42a8ef4950ad6b35135b3b">global_init</a></div><div class="ttdeci">int global_init()</div><div class="ttdoc">Global initialization function for various things.</div><div class="ttdef"><b>Definition:</b> global.c:19</div></div>
+<div class="ttc" id="aglobal_8h_html_a397596f327bec1a9d83e7c1514f257c5"><div class="ttname"><a href="global_8h.html#a397596f327bec1a9d83e7c1514f257c5">keywords_symtable</a></div><div class="ttdeci">symtable_t * keywords_symtable</div><div class="ttdoc">Decleration of a global variable tracking symbol table holding keywords.</div><div class="ttdef"><b>Definition:</b> global.c:18</div></div>
+<div class="ttc" id="athree-address-code_8h_html"><div class="ttname"><a href="three-address-code_8h.html">three-address-code.h</a></div><div class="ttdoc">Header file for three adress code structure.</div></div>
+<div class="ttc" id="astructkeyword_html"><div class="ttname"><a href="structkeyword.html">keyword</a></div><div class="ttdef"><b>Definition:</b> global.h:29</div></div>
+<div class="ttc" id="astructTACList_html"><div class="ttname"><a href="structTACList.html">TACList</a></div><div class="ttdef"><b>Definition:</b> three-address-code.h:69</div></div>
+<div class="ttc" id="aglobal_8h_html_a93646c697951a585ca0f6e0405128dd1"><div class="ttname"><a href="global_8h.html#a93646c697951a585ca0f6e0405128dd1">global_free</a></div><div class="ttdeci">void global_free()</div><div class="ttdoc">Destructor of global entities.</div><div class="ttdef"><b>Definition:</b> global.c:71</div></div>
+<div class="ttc" id="aglobal_8h_html_ac216dbfc6cc5d572f0f3330a97b0839a"><div class="ttname"><a href="global_8h.html#ac216dbfc6cc5d572f0f3330a97b0839a">tac_list</a></div><div class="ttdeci">TACList * tac_list</div><div class="ttdoc">List of three address code instructions.</div><div class="ttdef"><b>Definition:</b> global.c:20</div></div>
+<div class="ttc" id="aglobal_8h_html_a05a181061c42a8ef4950ad6b35135b3b"><div class="ttname"><a href="global_8h.html#a05a181061c42a8ef4950ad6b35135b3b">global_init</a></div><div class="ttdeci">int global_init()</div><div class="ttdoc">Global initialization function for various things.</div><div class="ttdef"><b>Definition:</b> global.c:22</div></div>
 <div class="ttc" id="ascanner_8h_html"><div class="ttname"><a href="scanner_8h.html">scanner.h</a></div><div class="ttdoc">File with scanner function declarations.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 9 2020 10:27:45 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
+Generated on Wed Dec 9 2020 10:28:06 for ifj20compiler by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
 </small></address>
 </body>
 </html>
