@@ -30,7 +30,7 @@ typedef stack_stack_charptr_tptr_t stack_of_stacks;
 typedef stack_charptr_t stack_of_strings;
 
 char *conversion(char *str) {
-
+    debug_entry();
     int length = strlen(str);
     char buff[6];
     char *new = malloc((4*length+1)*sizeof(char));
@@ -58,7 +58,7 @@ char *conversion(char *str) {
 }
 
 char *remove_type(char *str) {
-
+    debug_entry();
     int length = strlen(str);
     char *new = malloc(length*sizeof(char));
     double d;
@@ -110,6 +110,11 @@ char *remove_type(char *str) {
             strcpy(converted_str, new);
             break;
 
+        case 'b':
+            strcpy(buff, "bool@");
+            strcpy(converted_str, new);
+            break;
+
         case '&':
             return str;
             break;
@@ -121,6 +126,7 @@ char *remove_type(char *str) {
 }
 
 int get_scope(const char *var) {
+    debug_entry();
     int length = strlen(var);
     int occurence = 0;
 
@@ -140,16 +146,22 @@ int get_scope(const char *var) {
 }
 
 char *assign_scope(int scope, char *var, stack_of_stacks *megastack){
+    debug_entry();
 
     stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
 
     int temp_scope = scope;
-    char *tmp_string = malloc(__CHAR_BIT__ * (strlen(var) + 5));
+    char *tmp_string = malloc(sizeof(char) * (strlen(var) + 5));
 
     do {
+        if (temp_scope <= 0) {
+            sprintf(tmp_string, "%s$%d", var, scope);
+            break;
+        }
+
         sprintf(tmp_string, "%s$%d", var, temp_scope);
+
         temp_scope--;
-        break;
 
     } while (!stack_charptr_ispresent(temp, tmp_string, strcmp));
 
@@ -161,52 +173,6 @@ void generate() {
 
     int scope = 0;
     int temporary_frame;
-
-    //----- testy -----
-
-    /*
-    *IDIV test - ok
-    */
-    // TAC_insert(tac_list, OP_LABEL_FUNC, NULL, NULL, "main");
-    // TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "da");
-    // TAC_insert(tac_list, OP_MOVE, "i2", NULL, "da");
-    // TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "db");
-    // TAC_insert(tac_list, OP_MOVE, "i5", NULL, "db");
-    // TAC_insert(tac_list, OP_IDIV_ASSIGN, "db", NULL, "da");
-    // TAC_insert(tac_list, OP_PRINT, "da", NULL, NULL);
-
-    
-    /*
-    * DIV test - ok
-    */
-    // TAC_insert(tac_list, OP_LABEL_FUNC, NULL, NULL, "main");
-    // TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "da");
-    // TAC_insert(tac_list, OP_MOVE, "f3.14", NULL, "da");
-    // TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "db");
-    // TAC_insert(tac_list, OP_MOVE, "f3.5", NULL, "db");
-    // TAC_insert(tac_list, OP_DIV_ASSIGN, "db", NULL, "da");
-    // TAC_insert(tac_list, OP_PRINT, "da", NULL, NULL);
-
-    /*
-    * calling funcs with one arg
-    */
-    //TAC_insert(tac_list, OP_LABEL_FUNC, NULL, NULL, "foo");
-    //TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "da");
-    //TAC_insert(tac_list, OP_MOVE, "&arg1", NULL, "da");
-    //TAC_insert(tac_list, OP_PRINT, "da", NULL, NULL);
-    //TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "&retval1");
-    //TAC_insert(tac_list, OP_RETURN, NULL, NULL, NULL);
-
-    //main
-    //TAC_insert(tac_list, OP_LABEL_FUNC, NULL, NULL, "main");
-    //TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "da");
-    //TAC_insert(tac_list, OP_MOVE, "f3.14", NULL, "da");
-    //call func foo
-
-    //TAC_insert(tac_list,OP_CREATE_FRAME, NULL, NULL, NULL);
-    //TAC_insert(tac_list, OP_DEFINE, NULL, NULL, "&arg1");
-    //TAC_insert(tac_list, OP_MOVE, "da", NULL, "&arg1");
-    //TAC_insert(tac_list, OP_CALL, "foo", NULL, NULL);
 
     
     // start generating code
@@ -238,22 +204,35 @@ void generate() {
         char *arg2 = tac_list->act->arg1;
         char *arg3 = tac_list->act->arg2;
 
-        if (tac_list->act->result != NULL){
-            if (tac_list->act->result[0] == 'd') {
-                    arg1 = assign_scope(scope, tac_list->act->result, megastack);
-                }
-        }
+         // stack_of_strings *tempo = stack_stack_charptr_tptr_peek(megastack);
 
-        if (tac_list->act->arg1 != NULL){
-            if (tac_list->act->arg1[0] == 'd') {
-                    arg2 = assign_scope(scope, tac_list->act->arg1, megastack);
+        
+        if (tac_list->act->op != OP_DEFINE) {
+            if (tac_list->act->result != NULL && tac_list->act->result[1] != '&'){
+                // printf("%s\n", tac_list->act->result);
+                if (tac_list->act->result[0] == 'd') {
+                    if (tac_list->act->result[1] != '&') {
+                        arg1 = assign_scope(scope, tac_list->act->result, megastack);
+                    }
                 }
-        }
+            }
 
-        if (tac_list->act->arg2 != NULL){
-            if (tac_list->act->arg2[0] == 'd') {
-                    arg3 = assign_scope(scope, tac_list->act->arg2, megastack);
+            if (tac_list->act->arg1 != NULL && tac_list->act->arg1[1] != '&'){
+                // printf("%s\n", tac_list->act->arg1);
+                if (tac_list->act->arg1[0] == 'd') {
+                    if (tac_list->act->arg1[1] != '&') {
+                        arg2 = assign_scope(scope, tac_list->act->arg1, megastack);
+                    }
                 }
+            }
+
+            if (tac_list->act->arg2 != NULL && tac_list->act->arg2[1] != '&'){
+                if (tac_list->act->arg2[0] == 'd') {
+                     if (tac_list->act->arg2[1] != '&') {   
+                        arg3 = assign_scope(scope, tac_list->act->arg2, megastack);
+                    }
+                }
+            }
         }
 
         switch (tac_list->act->op) {
@@ -312,10 +291,17 @@ void generate() {
 
                 stack_of_strings *temp = stack_stack_charptr_tptr_peek(megastack);
 
-                char *tmp_string = malloc(__CHAR_BIT__ * (strlen(processed) + 5));
+
+                char *tmp_string = malloc(sizeof(char) * (strlen(processed) + 5));
                 sprintf(tmp_string, "%s$%d", processed, scope);
 
+
+
+
                 stack_charptr_push(temp, tmp_string);
+
+                // const char *pls = stack_charptr_peek(temp);
+                // printf("creating: %s\n", pls);
 
                 print_DEFINE(tmp_string, temporary_frame);
                 free(tmp_string);
@@ -338,11 +324,16 @@ void generate() {
                 break;
 
             case OP_LEQ:
+                print_instruction("GT", arg1, arg3, arg2);
+                break;
+
             case OP_GTR:
                 print_instruction("GT", arg1, arg2, arg3);
                 break;
 
             case OP_GEQ:
+                print_instruction("LT", arg1, arg3, arg2);
+                break;
             case OP_LSS:
                 print_instruction("LT", arg1, arg2, arg3);
                 break;
@@ -395,7 +386,7 @@ void generate() {
             case OP_RETURN:
                 printf("POPFRAME\n");
                 stack_stack_charptr_tptr_pop(megastack);
-                scope = 0;
+                scope--;
                 printf("RETURN\n\n");
                 break;
 
@@ -408,29 +399,33 @@ void generate() {
                 break;
 
             case OP_DEC_SCOPE:;
-
                 //make a copy of current stack of variables
                 stack_of_strings *temp_stack = stack_stack_charptr_tptr_peek(megastack);
 
                     do {
                         // copy the name of first variable on stack
-                        if(stack_charptr_isempty(temp_stack)) {
-                            break;
+                        // printf("scope at decrease: %d\n", scope);
+                        if (scope != 0) {
+                            if(stack_charptr_isempty(temp_stack))  {
+                                break;
+                            }
+
+
+                            const char *temp_string = stack_charptr_peek(temp_stack);
+
+                            //find out to what scope it belongs to
+                            int scope_pop = get_scope(temp_string);
+
+                            //if it dont belong to current scope that is being escaped
+                            //break the cycle
+                            if (scope_pop != scope) {
+                                break;
+                            }
+                        
+                            stack_charptr_pop(temp_stack);
                         }
 
-                        const char *temp_string = stack_charptr_peek(temp_stack);
-
-                        //find out to what scope it belongs to
-                        int scope_pop = get_scope(temp_string);
-
-                        //if it dont belong to current scope that is being escaped
-                        //break the cycle
-                        if (scope_pop != scope) {
-                            break;
-                        }
-                        stack_charptr_pop(temp_stack);
-
-                    } while(1);
+                    } while(1 && scope != 0);
 
                     scope--;
                 break;
@@ -449,6 +444,14 @@ void generate() {
 
             case OP_PRINT:
                 print_PRINT(arg2);   // arg2 = L->act->arg1 but w/ a scope
+                break;
+
+            case OP_PUSH_FRAME:
+                printf("PUSHFRAME\n");
+                break;
+
+            case OP_POP_FRAME:
+                printf("POPFRAME\n");
                 break;
 
             default:

@@ -15,6 +15,10 @@
 void print_MOVE(char *arg1, char *arg2, int temporary_frame) {
     char *tmp_var = remove_type(arg1);
     char *tmp_sym1 = remove_type(arg2);
+
+    // printf("frame: %d\n", temporary_frame);
+    // printf("move arg2: %s\n", tmp_sym1);
+    
     
     bool occurence1 = false;
     int length = strlen(arg1);
@@ -46,7 +50,7 @@ void print_MOVE(char *arg1, char *arg2, int temporary_frame) {
             
         }
     } else if (occurence2) {
-        if (arg2[0] == '&') {
+        if (tmp_sym1[0] == '&') {
             if (temporary_frame == 1) {
                 printf("MOVE LF@%s TF@%s\n", tmp_var, tmp_sym1);
             } else {
@@ -171,8 +175,7 @@ void print_UNARY_INT(char *instruction, char *var, char *sym1) {
 
 void print_JUMP(char *var) {
     // JUMP label
-    char *tmp_var = remove_type(var);
-    printf("JUMP %s\n", tmp_var);
+    printf("JUMP %s\n", var);
 } 
 
 void print_JUMP_instruction(char *instruction, char *var, char *sym1, char *sym2) {
