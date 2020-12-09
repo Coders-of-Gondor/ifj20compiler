@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['file_312',['file',['../structscanner.html#a0205bbea6fb00448176c1d0fb0ded2cd',1,'scanner']]],
-  ['first_5fscope_313',['first_scope',['../structsymtable.html#aed455a7674f33b718f32d297409ef667',1,'symtable']]]
+  ['file_338',['file',['../structscanner.html#a0205bbea6fb00448176c1d0fb0ded2cd',1,'scanner']]],
+  ['first_5fscope_339',['first_scope',['../structsymtable.html#aed455a7674f33b718f32d297409ef667',1,'symtable']]]
 ];

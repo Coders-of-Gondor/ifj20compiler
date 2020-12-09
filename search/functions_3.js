@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error_5fexit_241',['error_exit',['../error_8c.html#a5e71660999acb39dbfecc753e6eac3da',1,'error_exit(unsigned error_code, const char *fmt,...):&#160;error.c'],['../error_8h.html#a5e71660999acb39dbfecc753e6eac3da',1,'error_exit(unsigned error_code, const char *fmt,...):&#160;error.c']]]
+  ['debug_5flit_5fvalue_266',['debug_lit_value',['../debug_8c.html#a4e165d7e7f48374234aa44ca5d6e75a8',1,'debug_lit_value(token_t t):&#160;debug.h'],['../debug_8h.html#a4e165d7e7f48374234aa44ca5d6e75a8',1,'debug_lit_value(token_t t):&#160;debug.h']]]
 ];
