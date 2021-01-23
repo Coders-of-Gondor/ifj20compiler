@@ -89,110 +89,111 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    INT_LIT,     <span class="comment">// 42</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    FLOAT64_LIT, <span class="comment">// 42.42</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    STRING_LIT,  <span class="comment">// &quot;fourtytwo&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">// Data types</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    INT,     <span class="comment">// int</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    FLOAT64, <span class="comment">// float64</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    STRING,  <span class="comment">// string</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// Control</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    IF,   <span class="comment">// if</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ELSE, <span class="comment">// else</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    FOR,  <span class="comment">// for</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">// Functions</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    FUNC,   <span class="comment">// func</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    RETURN, <span class="comment">// return</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">// Package declaration</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    PACKAGE, <span class="comment">// package</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">// Assignment</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    DEFINE, <span class="comment">// :=</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ASSIGN, <span class="comment">// =</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// Operators</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    ADD, <span class="comment">// +</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    SUB, <span class="comment">// -</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    MUL, <span class="comment">// *</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    DIV, <span class="comment">// /</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">// UNARY Extension operators</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    ADD_ASSIGN, <span class="comment">// +=</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    SUB_ASSIGN, <span class="comment">// -=</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    MUL_ASSIGN, <span class="comment">// *=</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    DIV_ASSIGN, <span class="comment">// /=</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">// Comparators</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    AND, <span class="comment">// &amp;&amp;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    OR,  <span class="comment">// ||</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    EQL, <span class="comment">// ==</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    NEQ, <span class="comment">// !=</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    LSS, <span class="comment">// &lt;</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    LEQ, <span class="comment">// &lt;=</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    GTR, <span class="comment">// &gt;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    GEQ, <span class="comment">// &gt;=</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  Other</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    LPAREN,    <span class="comment">// (</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    LBRACE,    <span class="comment">// {</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    RPAREN,    <span class="comment">// )</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    RBRACE,    <span class="comment">// }</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    COMMA,     <span class="comment">// ,</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    SEMICOLON, <span class="comment">// ;</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">// Precedence analysis symbols</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    END_OF_INPUT, <span class="comment">// $ - used for precedence analysis</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    EXPR_SYMBOL,  <span class="comment">// E - used for precedence analysis</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">// Precedence table symbols</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    INV, <span class="comment">// x - invalid</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    RED, <span class="comment">// &gt; - reduction</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    SHF, <span class="comment">// &lt; - shift</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    EQQ, <span class="comment">// = - equals</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    UNA  <span class="comment">// &gt;|&lt; - unary</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;} token_type;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structtoken__t.html">   97</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>token {</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">   98</a></span>&#160;    token_type <a class="code" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">type</a>; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="uniontoken__t_1_1Attribute.html">   99</a></span>&#160;    <span class="keyword">union </span><a class="code" href="uniontoken__t_1_1Attribute.html">Attribute</a> {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        int64_t int_val;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">double</span> float_val;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">string</span> str_val;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">char</span> *sym_key;</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="structtoken__t.html#a63ec81fefb806c4d12c1d7024a561e12">  104</a></span>&#160;    } attribute; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;} <a class="code" href="structtoken__t.html">token_t</a>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a>(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> token_free(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, token_type type);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">int</span> ident_is_keyword(<span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;token_type get_keyword_type(<span class="keywordtype">string</span> str);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* token_get_type_string(token_type type);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a>(token_type type);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keywordtype">int</span> <a class="code" href="token_8h.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a>(<a class="code" href="structtoken__t.html">token_t</a> a, <a class="code" href="structtoken__t.html">token_t</a> b);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __TOKEN_H__</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    BOOL_LIT,    <span class="comment">// true, false</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">// Data types</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    INT,     <span class="comment">// int</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    FLOAT64, <span class="comment">// float64</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    STRING,  <span class="comment">// string</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment">// Control</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    IF,   <span class="comment">// if</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    ELSE, <span class="comment">// else</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    FOR,  <span class="comment">// for</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">// Functions</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    FUNC,   <span class="comment">// func</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    RETURN, <span class="comment">// return</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">// Package declaration</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    PACKAGE, <span class="comment">// package</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">// Assignment</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    DEFINE, <span class="comment">// :=</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    ASSIGN, <span class="comment">// =</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// Operators</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    ADD, <span class="comment">// +</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    SUB, <span class="comment">// -</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    MUL, <span class="comment">// *</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    DIV, <span class="comment">// /</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">// UNARY Extension operators</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    ADD_ASSIGN, <span class="comment">// +=</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    SUB_ASSIGN, <span class="comment">// -=</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    MUL_ASSIGN, <span class="comment">// *=</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    DIV_ASSIGN, <span class="comment">// /=</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">// Comparators</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    AND, <span class="comment">// &amp;&amp;</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    OR,  <span class="comment">// ||</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    EQL, <span class="comment">// ==</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    NEQ, <span class="comment">// !=</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    LSS, <span class="comment">// &lt;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    LEQ, <span class="comment">// &lt;=</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    GTR, <span class="comment">// &gt;</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    GEQ, <span class="comment">// &gt;=</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">//  Other</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    LPAREN,    <span class="comment">// (</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    LBRACE,    <span class="comment">// {</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    RPAREN,    <span class="comment">// )</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    RBRACE,    <span class="comment">// }</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    COMMA,     <span class="comment">// ,</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    SEMICOLON, <span class="comment">// ;</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">// Precedence analysis symbols</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    END_OF_INPUT, <span class="comment">// $ - used for precedence analysis</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    EXPR_SYMBOL,  <span class="comment">// E - used for precedence analysis</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">// Precedence table symbols</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    INV, <span class="comment">// x - invalid</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    RED, <span class="comment">// &gt; - reduction</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    SHF, <span class="comment">// &lt; - shift</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    EQQ, <span class="comment">// = - equals</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    UNA <span class="comment">// &gt;|&lt; - unary</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} token_type;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structtoken__t.html">   98</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>token {</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">   99</a></span>&#160;    token_type <a class="code" href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">type</a>; </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="uniontoken__t_1_1Attribute.html">  100</a></span>&#160;    <span class="keyword">union </span><a class="code" href="uniontoken__t_1_1Attribute.html">Attribute</a> {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        int64_t int_val;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">double</span> float_val;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">string</span> str_val;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">char</span> *sym_key;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="structtoken__t.html#a63ec81fefb806c4d12c1d7024a561e12">  105</a></span>&#160;    } attribute; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;} <a class="code" href="structtoken__t.html">token_t</a>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a>(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">void</span> token_free(<a class="code" href="structtoken__t.html">token_t</a> *t);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, <span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordtype">void</span> <a class="code" href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a>(<a class="code" href="structtoken__t.html">token_t</a> *t, token_type type);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">int</span> ident_is_keyword(<span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;token_type get_keyword_type(<span class="keywordtype">string</span> str);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* token_get_type_string(token_type type);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a>(token_type type);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">int</span> <a class="code" href="token_8h.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a>(<a class="code" href="structtoken__t.html">token_t</a> a, <a class="code" href="structtoken__t.html">token_t</a> b);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __TOKEN_H__</span></div>
 <div class="ttc" id="astr_8h_html"><div class="ttname"><a href="str_8h.html">str.h</a></div><div class="ttdoc">hlavickovy soubor pro praci s nekonecne dlouhymi retezci</div></div>
-<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:97</div></div>
-<div class="ttc" id="astructtoken__t_html_a4020c9594f08fd05a06b253bfc892430"><div class="ttname"><a href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">token_t::type</a></div><div class="ttdeci">token_type type</div><div class="ttdoc">Type of the token.</div><div class="ttdef"><b>Definition:</b> token.h:98</div></div>
+<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:98</div></div>
+<div class="ttc" id="astructtoken__t_html_a4020c9594f08fd05a06b253bfc892430"><div class="ttname"><a href="structtoken__t.html#a4020c9594f08fd05a06b253bfc892430">token_t::type</a></div><div class="ttdeci">token_type type</div><div class="ttdoc">Type of the token.</div><div class="ttdef"><b>Definition:</b> token.h:99</div></div>
 <div class="ttc" id="atoken_8h_html_a27fe9f8d6cced49e9de2a02a3bcc1013"><div class="ttname"><a href="token_8h.html#a27fe9f8d6cced49e9de2a02a3bcc1013">token_set_type</a></div><div class="ttdeci">void token_set_type(token_t *t, token_type type)</div><div class="ttdoc">token_set_type sets type for token_t *t</div><div class="ttdef"><b>Definition:</b> token.c:88</div></div>
 <div class="ttc" id="atoken_8h_html_a77ae74478f8f921566716cdc5086b52d"><div class="ttname"><a href="token_8h.html#a77ae74478f8f921566716cdc5086b52d">token_init</a></div><div class="ttdeci">void token_init(token_t *t)</div><div class="ttdoc">token_init initializes an instance of token</div><div class="ttdef"><b>Definition:</b> token.c:71</div></div>
-<div class="ttc" id="atoken_8h_html_aa92585b23e4f947f7d2ac947c043dbe6"><div class="ttname"><a href="token_8h.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a></div><div class="ttdeci">int cmp_token_t(token_t a, token_t b)</div><div class="ttdoc">Compare two tokens.</div><div class="ttdef"><b>Definition:</b> token.c:199</div></div>
-<div class="ttc" id="atoken_8h_html_adbd1a25ddaea72c6e03813b2cfb0c765"><div class="ttname"><a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a></div><div class="ttdeci">bool token_is_lit(token_type type)</div><div class="ttdoc">Return a true/false value depending on the token's type being a literal.</div><div class="ttdef"><b>Definition:</b> token.c:186</div></div>
+<div class="ttc" id="atoken_8h_html_aa92585b23e4f947f7d2ac947c043dbe6"><div class="ttname"><a href="token_8h.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a></div><div class="ttdeci">int cmp_token_t(token_t a, token_t b)</div><div class="ttdoc">Compare two tokens.</div><div class="ttdef"><b>Definition:</b> token.c:200</div></div>
+<div class="ttc" id="atoken_8h_html_adbd1a25ddaea72c6e03813b2cfb0c765"><div class="ttname"><a href="token_8h.html#adbd1a25ddaea72c6e03813b2cfb0c765">token_is_lit</a></div><div class="ttdeci">bool token_is_lit(token_type type)</div><div class="ttdoc">Return a true/false value depending on the token's type being a literal.</div><div class="ttdef"><b>Definition:</b> token.c:187</div></div>
 <div class="ttc" id="atoken_8h_html_aff7ac769bb81d9d254eeef4edc90feae"><div class="ttname"><a href="token_8h.html#aff7ac769bb81d9d254eeef4edc90feae">token_set_attribute</a></div><div class="ttdeci">void token_set_attribute(token_t *t, string str)</div><div class="ttdoc">token_set_attribute sets token attribute according to the token type</div><div class="ttdef"><b>Definition:</b> token.c:26</div></div>
-<div class="ttc" id="auniontoken__t_1_1Attribute_html"><div class="ttname"><a href="uniontoken__t_1_1Attribute.html">token_t::Attribute</a></div><div class="ttdef"><b>Definition:</b> token.h:99</div></div>
+<div class="ttc" id="auniontoken__t_1_1Attribute_html"><div class="ttname"><a href="uniontoken__t_1_1Attribute.html">token_t::Attribute</a></div><div class="ttdef"><b>Definition:</b> token.h:100</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 23 2021 23:29:34 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat Jan 23 2021 23:30:17 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

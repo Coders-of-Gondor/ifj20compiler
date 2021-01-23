@@ -82,44 +82,71 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    token_type type;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">struct </span>function_parameter *next_param;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;} <a class="code" href="structfunc__parameter__t.html">func_parameter_t</a>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *func_parameter_new();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> func_parameter_free(<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *p);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structfunc__return__t.html">   25</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>function_return {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    token_type type;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">struct </span>function_return *next_return;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;} <a class="code" href="structfunc__return__t.html">func_return_t</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<a class="code" href="structfunc__return__t.html">func_return_t</a> *func_return_new();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> func_return_free(<a class="code" href="structfunc__return__t.html">func_return_t</a> *r);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="structfunc__t.html">   34</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>function {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">string</span> id;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">int</span> num_of_parameters;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *first_parameter;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">int</span> num_of_returns;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="structfunc__return__t.html">func_return_t</a> *first_return;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;} <a class="code" href="structfunc__t.html">func_t</a>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">struct </span>function_parameter *prev_param;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} <a class="code" href="structfunc__parameter__t.html">func_parameter_t</a>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *func_parameter_new();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> func_parameter_free(<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *p);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structfunc__return__t.html">   26</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>function_return {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    token_type type;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">struct </span>function_return *next_return;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;} <a class="code" href="structfunc__return__t.html">func_return_t</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<a class="code" href="structfunc__return__t.html">func_return_t</a> *func_return_new();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> func_return_free(<a class="code" href="structfunc__return__t.html">func_return_t</a> *r);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structfunc__t.html">   38</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>function {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">string</span> id;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">int</span> num_of_parameters;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *first_parameter;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> func_init(<a class="code" href="structfunc__t.html">func_t</a> *f);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> func_free(<a class="code" href="structfunc__t.html">func_t</a> *f);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> func_set_id(<a class="code" href="structfunc__t.html">func_t</a> *f, <span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">int</span> num_of_returns;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="structfunc__return__t.html">func_return_t</a> *first_return;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;} <a class="code" href="structfunc__t.html">func_t</a>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __AST_H__</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> func_init(<a class="code" href="structfunc__t.html">func_t</a> *f);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> func_free(<a class="code" href="structfunc__t.html">func_t</a> *f);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> func_set_id(<a class="code" href="structfunc__t.html">func_t</a> *f, <span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> func_add_parameter(<a class="code" href="structfunc__t.html">func_t</a> *f, <span class="keywordtype">char</span> *<span class="keywordtype">id</span>, token_type type);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> func_add_return(<a class="code" href="structfunc__t.html">func_t</a> *f, token_type type);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structassign__t.html">   59</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>assign {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    token_type type;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">struct </span>assign *next_assign;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <a class="code" href="structassign__t.html">assign_t</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<a class="code" href="structassign__t.html">assign_t</a> *assign_new(token_type type);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> assign_free(<a class="code" href="structassign__t.html">assign_t</a> *a);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structfunc__call__t.html">   71</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>function_call {</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structfunc__call__t.html#a85063d3b55eeb32754c9b037e217bfa1">   72</a></span>&#160;    <a class="code" href="structfunc__t.html">func_t</a> <a class="code" href="structfunc__call__t.html#a85063d3b55eeb32754c9b037e217bfa1">func</a>; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structfunc__call__t.html#ab6c3c934cf4fa47c7fac997f253517f2">   74</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structfunc__call__t.html#ab6c3c934cf4fa47c7fac997f253517f2">num_of_expected_returns</a>; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structfunc__call__t.html#a117a8a6c46912b466e281508a46eeed5">   75</a></span>&#160;    <a class="code" href="structassign__t.html">assign_t</a> *<a class="code" href="structfunc__call__t.html#a117a8a6c46912b466e281508a46eeed5">first_assign</a>; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;} <a class="code" href="structfunc__call__t.html">func_call_t</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> func_call_init(<a class="code" href="structfunc__call__t.html">func_call_t</a> *fc);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> func_call_free(<a class="code" href="structfunc__call__t.html">func_call_t</a> *fc);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> func_call_add_assign(<a class="code" href="structfunc__call__t.html">func_call_t</a> *fc, token_type type);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __AST_H__</span></div>
 <div class="ttc" id="astr_8h_html"><div class="ttname"><a href="str_8h.html">str.h</a></div><div class="ttdoc">hlavickovy soubor pro praci s nekonecne dlouhymi retezci</div></div>
+<div class="ttc" id="astructassign__t_html"><div class="ttname"><a href="structassign__t.html">assign_t</a></div><div class="ttdoc">assign_t represents an assign</div><div class="ttdef"><b>Definition:</b> ast.h:59</div></div>
+<div class="ttc" id="astructfunc__call__t_html"><div class="ttname"><a href="structfunc__call__t.html">func_call_t</a></div><div class="ttdoc">func_call_t holds info used to check if a function call was valid</div><div class="ttdef"><b>Definition:</b> ast.h:71</div></div>
+<div class="ttc" id="astructfunc__call__t_html_a117a8a6c46912b466e281508a46eeed5"><div class="ttname"><a href="structfunc__call__t.html#a117a8a6c46912b466e281508a46eeed5">func_call_t::first_assign</a></div><div class="ttdeci">assign_t * first_assign</div><div class="ttdoc">first assign in the linked list of assigns</div><div class="ttdef"><b>Definition:</b> ast.h:75</div></div>
+<div class="ttc" id="astructfunc__call__t_html_a85063d3b55eeb32754c9b037e217bfa1"><div class="ttname"><a href="structfunc__call__t.html#a85063d3b55eeb32754c9b037e217bfa1">func_call_t::func</a></div><div class="ttdeci">func_t func</div><div class="ttdoc">info about the called function</div><div class="ttdef"><b>Definition:</b> ast.h:72</div></div>
+<div class="ttc" id="astructfunc__call__t_html_ab6c3c934cf4fa47c7fac997f253517f2"><div class="ttname"><a href="structfunc__call__t.html#ab6c3c934cf4fa47c7fac997f253517f2">func_call_t::num_of_expected_returns</a></div><div class="ttdeci">int num_of_expected_returns</div><div class="ttdoc">0 - zero, 1 - one, 2 - 2 and more; used to see the context of a call</div><div class="ttdef"><b>Definition:</b> ast.h:74</div></div>
 <div class="ttc" id="astructfunc__parameter__t_html"><div class="ttname"><a href="structfunc__parameter__t.html">func_parameter_t</a></div><div class="ttdef"><b>Definition:</b> ast.h:15</div></div>
-<div class="ttc" id="astructfunc__return__t_html"><div class="ttname"><a href="structfunc__return__t.html">func_return_t</a></div><div class="ttdef"><b>Definition:</b> ast.h:25</div></div>
-<div class="ttc" id="astructfunc__t_html"><div class="ttname"><a href="structfunc__t.html">func_t</a></div><div class="ttdef"><b>Definition:</b> ast.h:34</div></div>
+<div class="ttc" id="astructfunc__return__t_html"><div class="ttname"><a href="structfunc__return__t.html">func_return_t</a></div><div class="ttdef"><b>Definition:</b> ast.h:26</div></div>
+<div class="ttc" id="astructfunc__t_html"><div class="ttname"><a href="structfunc__t.html">func_t</a></div><div class="ttdoc">func_t represents a definition of a function</div><div class="ttdef"><b>Definition:</b> ast.h:38</div></div>
 <div class="ttc" id="atoken_8h_html"><div class="ttname"><a href="token_8h.html">token.h</a></div><div class="ttdoc">File with token type and functions definitons.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 23 2021 23:29:34 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat Jan 23 2021 23:30:17 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

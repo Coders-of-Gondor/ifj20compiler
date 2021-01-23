@@ -90,7 +90,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a40b668d3db38a18566b1c38172e96609"><td class="memItemLeft" align="right" valign="top"><a id="a40b668d3db38a18566b1c38172e96609"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ST_INIT_NUM_OF_BUCKETS</b>&#160;&#160;&#160;65536</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ST_INIT_NUM_OF_BUCKETS</b>&#160;&#160;&#160;128</td></tr>
 <tr class="separator:a40b668d3db38a18566b1c38172e96609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c9891a86e978df6fc5e462f70ae704e"><td class="memItemLeft" align="right" valign="top"><a id="a3c9891a86e978df6fc5e462f70ae704e"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ST_INIT_NUM_IN_BUCKET</b>&#160;&#160;&#160;16</td></tr>
@@ -158,6 +158,9 @@ symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_new<
 <tr class="memitem:afee3662d173334e3b494d5a287826e29"><td class="memItemLeft" align="right" valign="top"><a id="afee3662d173334e3b494d5a287826e29"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_add_func_param</b> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t id, token_type type)</td></tr>
 <tr class="separator:afee3662d173334e3b494d5a287826e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacc687523693a2d29cf3c687b5182f3b"><td class="memItemLeft" align="right" valign="top"><a id="aacc687523693a2d29cf3c687b5182f3b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_add_inf_func_param</b> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>)</td></tr>
+<tr class="separator:aacc687523693a2d29cf3c687b5182f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aead5331996fe68e950991f791fda81a9"><td class="memItemLeft" align="right" valign="top"><a id="aead5331996fe68e950991f791fda81a9"></a>
 <a class="el" href="structfunc__parameter__t.html">func_parameter_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_get_func_param</b> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>)</td></tr>
 <tr class="separator:aead5331996fe68e950991f791fda81a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,9 +182,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
 <tr class="memitem:a1b5f26d8103616000e320a86d56e269e"><td class="memItemLeft" align="right" valign="top"><a id="a1b5f26d8103616000e320a86d56e269e"></a>
 <a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_find</b> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
 <tr class="separator:a1b5f26d8103616000e320a86d56e269e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa035c42b0b1913a6ace7351da24d3bfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#aa035c42b0b1913a6ace7351da24d3bfe">symtable_find_curr_scope</a> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
+<tr class="memdesc:aa035c42b0b1913a6ace7351da24d3bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as symtable_find but only for current scope.  <a href="symtable_8c.html#aa035c42b0b1913a6ace7351da24d3bfe">More...</a><br /></td></tr>
+<tr class="separator:aa035c42b0b1913a6ace7351da24d3bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3bc8fff82bc0ca0537071d3d4a8a985"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__symbol__t.html">symtable_symbol_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#ad3bc8fff82bc0ca0537071d3d4a8a985">symtable_find_symbol</a> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
 <tr class="memdesc:ad3bc8fff82bc0ca0537071d3d4a8a985"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_find_symbol looks for a symbol in symbol table matching a key  <a href="symtable_8c.html#ad3bc8fff82bc0ca0537071d3d4a8a985">More...</a><br /></td></tr>
 <tr class="separator:ad3bc8fff82bc0ca0537071d3d4a8a985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c652366420f3327d3020b903a98eb37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__symbol__t.html">symtable_symbol_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#a3c652366420f3327d3020b903a98eb37">symtable_find_symbol_curr_scope</a> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
+<tr class="memdesc:a3c652366420f3327d3020b903a98eb37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as symtable_find_symbol but only for current scope.  <a href="symtable_8c.html#a3c652366420f3327d3020b903a98eb37">More...</a><br /></td></tr>
+<tr class="separator:a3c652366420f3327d3020b903a98eb37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af58346055c40e4661c5f9afed5619dd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsymtable__symbol__t.html">symtable_symbol_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="symtable_8c.html#af58346055c40e4661c5f9afed5619dd6">symtable_add_symbol</a> (symtable_t *<a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a>, symtable_key_t key)</td></tr>
 <tr class="memdesc:af58346055c40e4661c5f9afed5619dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">symtable_add_symbol adds new symbol into symbol table  <a href="symtable_8c.html#af58346055c40e4661c5f9afed5619dd6">More...</a><br /></td></tr>
 <tr class="separator:af58346055c40e4661c5f9afed5619dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -269,6 +278,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
 
 </div>
 </div>
+<a id="aa035c42b0b1913a6ace7351da24d3bfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa035c42b0b1913a6ace7351da24d3bfe">&#9670;&nbsp;</a></span>symtable_find_curr_scope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsymtable__iterator__t.html">symtable_iterator_t</a> symtable_find_curr_scope </td>
+          <td>(</td>
+          <td class="paramtype">symtable_t *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">symtable_key_t&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Same as symtable_find but only for current scope. </p>
+<p>@deatils Hacky implementation, be wary of this! </p>
+
+</div>
+</div>
 <a id="ad3bc8fff82bc0ca0537071d3d4a8a985"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3bc8fff82bc0ca0537071d3d4a8a985">&#9670;&nbsp;</a></span>symtable_find_symbol()</h2>
 
@@ -312,6 +352,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a3c652366420f3327d3020b903a98eb37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c652366420f3327d3020b903a98eb37">&#9670;&nbsp;</a></span>symtable_find_symbol_curr_scope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsymtable__symbol__t.html">symtable_symbol_t</a>* symtable_find_symbol_curr_scope </td>
+          <td>(</td>
+          <td class="paramtype">symtable_t *&#160;</td>
+          <td class="paramname"><em>st</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">symtable_key_t&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Same as symtable_find_symbol but only for current scope. </p>
+<p>@deatils Hacky implementation, be wary of this! </p>
 
 </div>
 </div>
@@ -624,7 +695,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>symtable_free</b> (sy
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 23 2021 23:29:34 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat Jan 23 2021 23:30:17 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

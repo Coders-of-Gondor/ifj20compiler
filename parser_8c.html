@@ -83,9 +83,12 @@ $(function() {
 <code>#include &quot;<a class="el" href="parser_8h_source.html">parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="scanner_8h_source.html">scanner.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="stack__charptr_8h_source.html">stack_charptr.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="stack__func__call__t_8h_source.html">stack_func_call_t.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="stack__int_8h_source.html">stack_int.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="stack__token__t_8h_source.html">stack_token_t.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="symtable_8h_source.html">symtable.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="str_8h_source.html">str.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="three-address-code_8h_source.html">three-address-code.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -119,6 +122,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_stmt</b> ()</t
 <tr class="memitem:affe6ec2ecbc7c9f00cdb39e0ff218d35"><td class="memItemLeft" align="right" valign="top"><a id="affe6ec2ecbc7c9f00cdb39e0ff218d35"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_id_first</b> (char *id)</td></tr>
 <tr class="separator:affe6ec2ecbc7c9f00cdb39e0ff218d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3464cc084b191bb5c2b7f8b7effc3b98"><td class="memItemLeft" align="right" valign="top"><a id="a3464cc084b191bb5c2b7f8b7effc3b98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_add_assign</b> (char *id, <a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:a3464cc084b191bb5c2b7f8b7effc3b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3773085fdf493df549b67d55473f7ce"><td class="memItemLeft" align="right" valign="top"><a id="af3773085fdf493df549b67d55473f7ce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_sub_assign</b> (char *id, <a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:af3773085fdf493df549b67d55473f7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69dfbe9617aca840586e36f3eb95560"><td class="memItemLeft" align="right" valign="top"><a id="af69dfbe9617aca840586e36f3eb95560"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_mul_assign</b> (char *id, <a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:af69dfbe9617aca840586e36f3eb95560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae57dc9e5eebd099985649129c81255c4"><td class="memItemLeft" align="right" valign="top"><a id="ae57dc9e5eebd099985649129c81255c4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_div_assign</b> (char *id, <a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:ae57dc9e5eebd099985649129c81255c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfe892961ba8fa52d0d84a13e82a4835"><td class="memItemLeft" align="right" valign="top"><a id="abfe892961ba8fa52d0d84a13e82a4835"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_type</b> ()</td></tr>
 <tr class="separator:abfe892961ba8fa52d0d84a13e82a4835"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,9 +152,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_params</b> ()<
 <tr class="memitem:a130dc148d4e81d6987238fd739bf2a03"><td class="memItemLeft" align="right" valign="top"><a id="a130dc148d4e81d6987238fd739bf2a03"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_param</b> ()</td></tr>
 <tr class="separator:a130dc148d4e81d6987238fd739bf2a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8686c434f9963b9568ed41b46fb72a66"><td class="memItemLeft" align="right" valign="top"><a id="a8686c434f9963b9568ed41b46fb72a66"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_param_n</b> ()</td></tr>
-<tr class="separator:a8686c434f9963b9568ed41b46fb72a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb2a1055d18f90f47a6b9c5905a4e370"><td class="memItemLeft" align="right" valign="top"><a id="afb2a1055d18f90f47a6b9c5905a4e370"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_param_n</b> (int arg_num)</td></tr>
+<tr class="separator:afb2a1055d18f90f47a6b9c5905a4e370"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b38a3c4fb7ec618bd7a1b28e7c5d689"><td class="memItemLeft" align="right" valign="top"><a id="a1b38a3c4fb7ec618bd7a1b28e7c5d689"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_r_params</b> ()</td></tr>
 <tr class="separator:a1b38a3c4fb7ec618bd7a1b28e7c5d689"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,42 +167,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_r_param_n</b> 
 <tr class="memitem:a2313e93b32f47ff0253f8012f6c57ef2"><td class="memItemLeft" align="right" valign="top"><a id="a2313e93b32f47ff0253f8012f6c57ef2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_func_call</b> (char *id)</td></tr>
 <tr class="separator:a2313e93b32f47ff0253f8012f6c57ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2c7fa75bd8035982653e6983b3a21dd"><td class="memItemLeft" align="right" valign="top"><a id="ae2c7fa75bd8035982653e6983b3a21dd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_params</b> (<a class="el" href="structfunc__parameter__t.html">func_parameter_t</a> *first_param)</td></tr>
-<tr class="separator:ae2c7fa75bd8035982653e6983b3a21dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab48d8eaa509f562e8c9d236f95db2923"><td class="memItemLeft" align="right" valign="top"><a id="ab48d8eaa509f562e8c9d236f95db2923"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_param</b> (<a class="el" href="structfunc__parameter__t.html">func_parameter_t</a> *param)</td></tr>
-<tr class="separator:ab48d8eaa509f562e8c9d236f95db2923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dd7fc2c0f35aa58e59f8ac20a3107d5"><td class="memItemLeft" align="right" valign="top"><a id="a3dd7fc2c0f35aa58e59f8ac20a3107d5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_param_n</b> (<a class="el" href="structfunc__parameter__t.html">func_parameter_t</a> *param)</td></tr>
-<tr class="separator:a3dd7fc2c0f35aa58e59f8ac20a3107d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a560959c0766f906259a2648636a8099b"><td class="memItemLeft" align="right" valign="top"><a id="a560959c0766f906259a2648636a8099b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_params</b> (<a class="el" href="structfunc__t.html">func_t</a> *func)</td></tr>
+<tr class="separator:a560959c0766f906259a2648636a8099b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c14d9c0084379305eac128f7052f1b1"><td class="memItemLeft" align="right" valign="top"><a id="a7c14d9c0084379305eac128f7052f1b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_param</b> (<a class="el" href="structfunc__t.html">func_t</a> *func)</td></tr>
+<tr class="separator:a7c14d9c0084379305eac128f7052f1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf80a1be2fe60b297a72ee29aaffcd52"><td class="memItemLeft" align="right" valign="top"><a id="abf80a1be2fe60b297a72ee29aaffcd52"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_c_param_n</b> (<a class="el" href="structfunc__t.html">func_t</a> *func)</td></tr>
+<tr class="separator:abf80a1be2fe60b297a72ee29aaffcd52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2389bf0a98a23c14705ca0554a3ea15"><td class="memItemLeft" align="right" valign="top"><a id="ae2389bf0a98a23c14705ca0554a3ea15"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_vardef</b> (char *id)</td></tr>
 <tr class="separator:ae2389bf0a98a23c14705ca0554a3ea15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9f41c9f857a7cbe69ec958dc796914f"><td class="memItemLeft" align="right" valign="top"><a id="ae9f41c9f857a7cbe69ec958dc796914f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_assign</b> (char *id)</td></tr>
-<tr class="separator:ae9f41c9f857a7cbe69ec958dc796914f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e6f58c74e1cd90cb3f9aa2ec89db354"><td class="memItemLeft" align="right" valign="top"><a id="a1e6f58c74e1cd90cb3f9aa2ec89db354"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_id_n</b> (int *num_of_ids)</td></tr>
-<tr class="separator:a1e6f58c74e1cd90cb3f9aa2ec89db354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac01210ca709e98b1c2c33c302fbbcc30"><td class="memItemLeft" align="right" valign="top"><a id="ac01210ca709e98b1c2c33c302fbbcc30"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_exprs</b> (int *num_of_exprs)</td></tr>
-<tr class="separator:ac01210ca709e98b1c2c33c302fbbcc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae02289131fe864a9eb4e5723155959f3"><td class="memItemLeft" align="right" valign="top"><a id="ae02289131fe864a9eb4e5723155959f3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_expr_n</b> (int *num_of_exprs)</td></tr>
-<tr class="separator:ae02289131fe864a9eb4e5723155959f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa2bcabbbf561e4dfd10ea9c0de2a01e"><td class="memItemLeft" align="right" valign="top"><a id="aaa2bcabbbf561e4dfd10ea9c0de2a01e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_assign</b> (char *id, <a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:aaa2bcabbbf561e4dfd10ea9c0de2a01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45104bd80ef4191e59cb10e57cb84b9b"><td class="memItemLeft" align="right" valign="top"><a id="a45104bd80ef4191e59cb10e57cb84b9b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_id_n</b> ()</td></tr>
+<tr class="separator:a45104bd80ef4191e59cb10e57cb84b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa8043d8803bb81bbc14d0bfe71332ed"><td class="memItemLeft" align="right" valign="top"><a id="afa8043d8803bb81bbc14d0bfe71332ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_exprs</b> ()</td></tr>
+<tr class="separator:afa8043d8803bb81bbc14d0bfe71332ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb6d6096c43e152bfb690650b6c48126"><td class="memItemLeft" align="right" valign="top"><a id="abb6d6096c43e152bfb690650b6c48126"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_expr_n</b> ()</td></tr>
+<tr class="separator:abb6d6096c43e152bfb690650b6c48126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1264087494924961d61230bf9746bd6"><td class="memItemLeft" align="right" valign="top"><a id="ae1264087494924961d61230bf9746bd6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optdef</b> ()</td></tr>
 <tr class="separator:ae1264087494924961d61230bf9746bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f7eaf36590c0c03f5015a50c0d6c918"><td class="memItemLeft" align="right" valign="top"><a id="a4f7eaf36590c0c03f5015a50c0d6c918"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optassign</b> ()</td></tr>
-<tr class="separator:a4f7eaf36590c0c03f5015a50c0d6c918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1602843110b6e70ea009863eaa61f637"><td class="memItemLeft" align="right" valign="top"><a id="a1602843110b6e70ea009863eaa61f637"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optassign</b> (<a class="el" href="structTACList.html">TACList</a> *my_list)</td></tr>
+<tr class="separator:a1602843110b6e70ea009863eaa61f637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5becfa20d0164db1673fac772b799dd"><td class="memItemLeft" align="right" valign="top"><a id="aa5becfa20d0164db1673fac772b799dd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_return</b> ()</td></tr>
 <tr class="separator:aa5becfa20d0164db1673fac772b799dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad26ae65e5d22b28f780f525eefd394ef"><td class="memItemLeft" align="right" valign="top"><a id="ad26ae65e5d22b28f780f525eefd394ef"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optexprs</b> (int *num_of_exprs)</td></tr>
-<tr class="separator:ad26ae65e5d22b28f780f525eefd394ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d52b0b11e961428c88b10863b566dc"><td class="memItemLeft" align="right" valign="top"><a id="aa1d52b0b11e961428c88b10863b566dc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_optexprs</b> ()</td></tr>
+<tr class="separator:aa1d52b0b11e961428c88b10863b566dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3ab82f113057e16a9b1a67789e93408"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtoken__t.html">token_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#ae3ab82f113057e16a9b1a67789e93408">prec_create_expr_symbol</a> ()</td></tr>
 <tr class="memdesc:ae3ab82f113057e16a9b1a67789e93408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the expression (E) symbol.  <a href="parser_8c.html#ae3ab82f113057e16a9b1a67789e93408">More...</a><br /></td></tr>
 <tr class="separator:ae3ab82f113057e16a9b1a67789e93408"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,6 +257,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mulop</b> (token_t
 <tr class="memitem:aa226b5294cff521c18e8be9b22262f04"><td class="memItemLeft" align="right" valign="top"><a id="aa226b5294cff521c18e8be9b22262f04"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>parser_track_ident</b> (char *id)</td></tr>
 <tr class="separator:aa226b5294cff521c18e8be9b22262f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad27ad178fe9d3eaab1419c97dfe578d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#ad27ad178fe9d3eaab1419c97dfe578d9">clean_func_calls</a> ()</td></tr>
+<tr class="memdesc:ad27ad178fe9d3eaab1419c97dfe578d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">clean_func_calls cleans the stack of function calls  <a href="parser_8c.html#ad27ad178fe9d3eaab1419c97dfe578d9">More...</a><br /></td></tr>
+<tr class="separator:ad27ad178fe9d3eaab1419c97dfe578d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a879a3307e91618161b1c62ddeca931a7"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a> (token_type type)</td></tr>
 <tr class="memdesc:a879a3307e91618161b1c62ddeca931a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new temporary variable.  <a href="parser_8c.html#a879a3307e91618161b1c62ddeca931a7">More...</a><br /></td></tr>
 <tr class="separator:a879a3307e91618161b1c62ddeca931a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -276,14 +294,14 @@ Variables</h2></td></tr>
 <tr class="memdesc:a861ba280c3f833800c5828e15453a7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">track if the eol should be required here  <a href="parser_8c.html#a861ba280c3f833800c5828e15453a7ab">More...</a><br /></td></tr>
 <tr class="separator:a861ba280c3f833800c5828e15453a7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a677412e2927df86e7f27e07ae05ca51b"><td class="memItemLeft" align="right" valign="top">symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">st</a></td></tr>
-<tr class="memdesc:a677412e2927df86e7f27e07ae05ca51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds symbol stacks for every function  <a href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">More...</a><br /></td></tr>
+<tr class="memdesc:a677412e2927df86e7f27e07ae05ca51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds symbol stacks for every function; this is the main symtable in parser  <a href="parser_8c.html#a677412e2927df86e7f27e07ae05ca51b">More...</a><br /></td></tr>
 <tr class="separator:a677412e2927df86e7f27e07ae05ca51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0369cd2e2bf3403ba57d1f2b564a22f4"><td class="memItemLeft" align="right" valign="top">symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a0369cd2e2bf3403ba57d1f2b564a22f4">st_internal_funcs</a></td></tr>
 <tr class="memdesc:a0369cd2e2bf3403ba57d1f2b564a22f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds signatures of all internal functions  <a href="parser_8c.html#a0369cd2e2bf3403ba57d1f2b564a22f4">More...</a><br /></td></tr>
 <tr class="separator:a0369cd2e2bf3403ba57d1f2b564a22f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c7ddc706b83c49e3b7eaad3314f66fc"><td class="memItemLeft" align="right" valign="top">symtable_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a4c7ddc706b83c49e3b7eaad3314f66fc">st_called_funcs</a></td></tr>
-<tr class="memdesc:a4c7ddc706b83c49e3b7eaad3314f66fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds signatures of all called functions  <a href="parser_8c.html#a4c7ddc706b83c49e3b7eaad3314f66fc">More...</a><br /></td></tr>
-<tr class="separator:a4c7ddc706b83c49e3b7eaad3314f66fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e236b5bd2e2d332db397730cbe7a83a"><td class="memItemLeft" align="right" valign="top">stack_func_call_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a4e236b5bd2e2d332db397730cbe7a83a">stack_func_calls</a></td></tr>
+<tr class="memdesc:a4e236b5bd2e2d332db397730cbe7a83a"><td class="mdescLeft">&#160;</td><td class="mdescRight">holds info about every function call  <a href="parser_8c.html#a4e236b5bd2e2d332db397730cbe7a83a">More...</a><br /></td></tr>
+<tr class="separator:a4e236b5bd2e2d332db397730cbe7a83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdc2c6e51aa60c32344e58bd22a3fc5a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#afdc2c6e51aa60c32344e58bd22a3fc5a">temp_var_cnt</a></td></tr>
 <tr class="memdesc:afdc2c6e51aa60c32344e58bd22a3fc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">temporary variable's index tracker  <a href="parser_8c.html#afdc2c6e51aa60c32344e58bd22a3fc5a">More...</a><br /></td></tr>
 <tr class="separator:afdc2c6e51aa60c32344e58bd22a3fc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,8 +311,18 @@ Variables</h2></td></tr>
 <tr class="memitem:ae17330207f7fd7c06284158de0e0d1e5"><td class="memItemLeft" align="right" valign="top">stack_charptr_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#ae17330207f7fd7c06284158de0e0d1e5">stack_temp_vars</a></td></tr>
 <tr class="memdesc:ae17330207f7fd7c06284158de0e0d1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">stack of ids of temporary variables needed for expressions  <a href="parser_8c.html#ae17330207f7fd7c06284158de0e0d1e5">More...</a><br /></td></tr>
 <tr class="separator:ae17330207f7fd7c06284158de0e0d1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace88109a5181a1d983c8f2bfa3ee0353"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><b>internal_func_names</b> []</td></tr>
-<tr class="separator:ace88109a5181a1d983c8f2bfa3ee0353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44223c87ac6beb631c09110d5a11b7bb"><td class="memItemLeft" align="right" valign="top">stack_charptr_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a44223c87ac6beb631c09110d5a11b7bb">stack_assigns</a></td></tr>
+<tr class="memdesc:a44223c87ac6beb631c09110d5a11b7bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">stack of variables where the result of an expression is saved  <a href="parser_8c.html#a44223c87ac6beb631c09110d5a11b7bb">More...</a><br /></td></tr>
+<tr class="separator:a44223c87ac6beb631c09110d5a11b7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0f33f26c36fdea0cfcd6a6ddc168ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a5b0f33f26c36fdea0cfcd6a6ddc168ea">max_func_returns</a></td></tr>
+<tr class="memdesc:a5b0f33f26c36fdea0cfcd6a6ddc168ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">max number of returns that a function call can return in an expression  <a href="parser_8c.html#a5b0f33f26c36fdea0cfcd6a6ddc168ea">More...</a><br /></td></tr>
+<tr class="separator:a5b0f33f26c36fdea0cfcd6a6ddc168ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ac2d4e5572cd6b82aaa35aa15fe977b"><td class="memItemLeft" align="right" valign="top">stack_int_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a9ac2d4e5572cd6b82aaa35aa15fe977b">stack_func_ret_types</a></td></tr>
+<tr class="memdesc:a9ac2d4e5572cd6b82aaa35aa15fe977b"><td class="mdescLeft">&#160;</td><td class="mdescRight">stack of types a function call should return in an expression  <a href="parser_8c.html#a9ac2d4e5572cd6b82aaa35aa15fe977b">More...</a><br /></td></tr>
+<tr class="separator:a9ac2d4e5572cd6b82aaa35aa15fe977b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc4ae478c1a366abb936a3175b28066"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#addc4ae478c1a366abb936a3175b28066">expr_has_sus_func_call</a></td></tr>
+<tr class="memdesc:addc4ae478c1a366abb936a3175b28066"><td class="mdescLeft">&#160;</td><td class="mdescRight">an indicator if an expression has a function call  <a href="parser_8c.html#addc4ae478c1a366abb936a3175b28066">More...</a><br /></td></tr>
+<tr class="separator:addc4ae478c1a366abb936a3175b28066"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2125ad61ec69a16afec4dc117e7917db"><td class="memItemLeft" align="right" valign="top">const token_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8c.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a> [<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>][<a class="el" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>]</td></tr>
 <tr class="memdesc:a2125ad61ec69a16afec4dc117e7917db"><td class="mdescLeft">&#160;</td><td class="mdescRight">The precetence table used for the parsing.  <a href="parser_8c.html#a2125ad61ec69a16afec4dc117e7917db">More...</a><br /></td></tr>
 <tr class="separator:a2125ad61ec69a16afec4dc117e7917db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,6 +334,25 @@ Variables</h2></td></tr>
 Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 <p>Implementace překladače imperativního jazyka IFJ20. </p><dl class="section date"><dt>Date</dt><dd>10/11/2020 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ad27ad178fe9d3eaab1419c97dfe578d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad27ad178fe9d3eaab1419c97dfe578d9">&#9670;&nbsp;</a></span>clean_func_calls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void clean_func_calls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>clean_func_calls cleans the stack of function calls </p>
+
+</div>
+</div>
 <a id="a887cbcafed1e52e0fe0af1be71018239"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a887cbcafed1e52e0fe0af1be71018239">&#9670;&nbsp;</a></span>clean_temporary_variables()</h2>
 
@@ -403,7 +450,12 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 
 <p>Start the parsing of an expression. </p>
 <p>Pass control to bottom-up.</p>
-<p>Outdated function kept from the Expression LL analysis. </p>
+<p>Outdated function kept from the Expression LL analysis. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target_type</td><td>target type of the expression; different ypes may require different handling </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -889,24 +941,20 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 
 </div>
 </div>
-<a id="ace88109a5181a1d983c8f2bfa3ee0353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace88109a5181a1d983c8f2bfa3ee0353">&#9670;&nbsp;</a></span>internal_func_names</h2>
+<a id="addc4ae478c1a366abb936a3175b28066"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc4ae478c1a366abb936a3175b28066">&#9670;&nbsp;</a></span>expr_has_sus_func_call</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* internal_func_names[]</td>
+          <td class="memname">bool expr_has_sus_func_call</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">    <span class="stringliteral">&quot;inputs&quot;</span>, <span class="stringliteral">&quot;inputi&quot;</span>, <span class="stringliteral">&quot;inputf&quot;</span>,</div>
-<div class="line">    <span class="stringliteral">&quot;print&quot;</span>,</div>
-<div class="line">    <span class="stringliteral">&quot;int2float&quot;</span>, <span class="stringliteral">&quot;float2int&quot;</span>,</div>
-<div class="line">    <span class="stringliteral">&quot;len&quot;</span>, <span class="stringliteral">&quot;substr&quot;</span>, <span class="stringliteral">&quot;ord&quot;</span>, <span class="stringliteral">&quot;chr&quot;</span></div>
-<div class="line">}</div>
-</div><!-- fragment -->
+
+<p>an indicator if an expression has a function call </p>
+
 </div>
 </div>
 <a id="af746c436353459aeb617b1d79a456170"></a>
@@ -954,6 +1002,22 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 </div><div class="memdoc">
 
 <p>next token to look at </p>
+
+</div>
+</div>
+<a id="a5b0f33f26c36fdea0cfcd6a6ddc168ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b0f33f26c36fdea0cfcd6a6ddc168ea">&#9670;&nbsp;</a></span>max_func_returns</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max_func_returns</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>max number of returns that a function call can return in an expression </p>
 
 </div>
 </div>
@@ -1047,23 +1111,7 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>holds symbol stacks for every function </p>
-
-</div>
-</div>
-<a id="a4c7ddc706b83c49e3b7eaad3314f66fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c7ddc706b83c49e3b7eaad3314f66fc">&#9670;&nbsp;</a></span>st_called_funcs</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">symtable_t* st_called_funcs</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>holds signatures of all called functions </p>
+<p>holds symbol stacks for every function; this is the main symtable in parser </p>
 
 </div>
 </div>
@@ -1080,6 +1128,54 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 </div><div class="memdoc">
 
 <p>holds signatures of all internal functions </p>
+
+</div>
+</div>
+<a id="a44223c87ac6beb631c09110d5a11b7bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44223c87ac6beb631c09110d5a11b7bb">&#9670;&nbsp;</a></span>stack_assigns</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stack_charptr_t* stack_assigns</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>stack of variables where the result of an expression is saved </p>
+
+</div>
+</div>
+<a id="a4e236b5bd2e2d332db397730cbe7a83a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e236b5bd2e2d332db397730cbe7a83a">&#9670;&nbsp;</a></span>stack_func_calls</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stack_func_call_t* stack_func_calls</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>holds info about every function call </p>
+
+</div>
+</div>
+<a id="a9ac2d4e5572cd6b82aaa35aa15fe977b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ac2d4e5572cd6b82aaa35aa15fe977b">&#9670;&nbsp;</a></span>stack_func_ret_types</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stack_int_t* stack_func_ret_types</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>stack of types a function call should return in an expression </p>
 
 </div>
 </div>
@@ -1118,7 +1214,7 @@ Ondřej Míchal &lt;xmicha80&gt;</dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 23 2021 23:29:34 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat Jan 23 2021 23:30:17 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

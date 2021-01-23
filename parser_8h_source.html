@@ -78,214 +78,228 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;ast.h&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="scanner_8h.html">scanner.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack__int_8h.html">stack_int.h</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack__token__t_8h.html">stack_token_t.h</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token_8h.html">token.h</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="three-address-code_8h.html">three-address-code.h</a>&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// stack</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">typedef</span> stack_token_t_t stack_token_t;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a>();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a>(token_type t);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a>(<span class="keywordtype">char</span> *ident_name);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a>(scanner_t *scanner_main);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">parser_end</a>(<span class="keywordtype">int</span> rc);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">/* MAIN RULES                                                               */</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack__func__call__t_8h.html">stack_func_call_t.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack__int_8h.html">stack_int.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stack__token__t_8h.html">stack_token_t.h</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="token_8h.html">token.h</a>&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="three-address-code_8h.html">three-address-code.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// stack</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">typedef</span> stack_token_t_t stack_token_t;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">typedef</span> stack_func_call_t_t stack_func_call_t;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a>();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a>(token_type t);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a>(<span class="keywordtype">char</span> *ident_name);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a>(scanner_t *scanner_main);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">parser_end</a>(<span class="keywordtype">int</span> rc);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a>();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> parser_funcs();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> parser_stmts();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> parser_stmt();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> parser_id_first();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">/* GENERAL HELP RULES                                                       */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">/* MAIN RULES                                                               */</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> parser_funcs();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> parser_stmts();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> parser_stmt();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">void</span> parser_id_first();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> parser_type();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> parser_block();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">/* STATEMENT RULES                                                          */</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">/* GENERAL HELP RULES                                                       */</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> parser_type();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">void</span> parser_block();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> parser_stmt_if();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> parser_stmt_for();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">/* FUNCTION RULES                                             */</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">/* STATEMENT RULES                                                          */</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> parser_stmt_if();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> parser_stmt_for();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span> parser_func_call(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">/* FUNCTION RULES                                             */</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// function parameters</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">void</span> parser_params();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> parser_param();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> parser_param_n();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">// return types</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keywordtype">void</span> parser_r_params();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keywordtype">void</span> parser_r_param();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> parser_r_param_n();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">// function call arguments</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">void</span> parser_c_params(<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *first_param);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">void</span> parser_c_param(<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *param);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> parser_c_param_n(<a class="code" href="structfunc__parameter__t.html">func_parameter_t</a> *param);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">/* VAR DEFINITION AND ASSIGN                                                */</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">void</span> parser_func_call(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">// function parameters</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> parser_params();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> parser_param();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">void</span> parser_param_n(<span class="keywordtype">int</span> arg_num);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">// return types</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> parser_r_params();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keywordtype">void</span> parser_r_param();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">void</span> parser_r_param_n();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">// function call arguments</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> parser_c_params(<a class="code" href="structfunc__t.html">func_t</a> *func);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">void</span> parser_c_param(<a class="code" href="structfunc__t.html">func_t</a> *func);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordtype">void</span> parser_c_param_n(<a class="code" href="structfunc__t.html">func_t</a> *func);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">void</span> parser_vardef(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> parser_assign(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> parser_id_n(<span class="keywordtype">int</span> *num_of_ids);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">void</span> parser_exprs(<span class="keywordtype">int</span> *num_of_exprs);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> parser_expr_n(<span class="keywordtype">int</span> *num_of_exprs);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">/* HELPER FOR RULES                                                         */</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">/* VAR DEFINITION AND ASSIGN                                                */</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">void</span> parser_vardef(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keywordtype">void</span> parser_assign(<span class="keywordtype">char</span>* <span class="keywordtype">id</span>, <a class="code" href="structTACList.html">TACList</a> *my_list); </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keywordtype">void</span> parser_add_assign(<span class="keywordtype">char</span>* <span class="keywordtype">id</span>, <a class="code" href="structTACList.html">TACList</a> *my_list);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordtype">void</span> parser_sub_assign(<span class="keywordtype">char</span>* <span class="keywordtype">id</span>, <a class="code" href="structTACList.html">TACList</a> *my_list);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">void</span> parser_mul_assign(<span class="keywordtype">char</span>* <span class="keywordtype">id</span>, <a class="code" href="structTACList.html">TACList</a> *my_list);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span> parser_div_assign(<span class="keywordtype">char</span>* <span class="keywordtype">id</span>, <a class="code" href="structTACList.html">TACList</a> *my_list);</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">void</span> parser_optdef();</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">void</span> parser_optassign();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">/* RETURN STATEMENT                                                         */</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">// return 10, 34</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">// return</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">// eps</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">void</span> parser_return();</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">void</span> parser_optexprs(<span class="keywordtype">int</span> *num_of_exprs);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">void</span> parser_id_n(); </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">void</span> parser_exprs();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordtype">void</span> parser_expr_n();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">/* HELPER FOR RULES                                                         */</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keywordtype">void</span> parser_optdef();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keywordtype">void</span> parser_optassign(<a class="code" href="structTACList.html">TACList</a> *my_list);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">/* RETURN STATEMENT                                                         */</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">/* EXPRESSION RULES - BOTTOM-UP PRECEDENCE ANALYSIS                         */</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">// Number of different entries row/columns in the precedence table</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">  175</a></span>&#160;<span class="preprocessor">#define PREC_TABLE_OP_COUNT 9</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> token_type <a class="code" href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a>[<a class="code" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>][<a class="code" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>];</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="keywordtype">int</span> <a class="code" href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">prec_get_table_index</a>(token_type t);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">// Macro to read the next symbol, so we don&#39;t have to write it over and over again</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#define NEXT_SYMBOL do { \</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">    if (!stack_token_t_isempty(rule_stack)) { \</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">        curr_token = stack_token_t_pop(rule_stack); \</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">        curr_symbol = curr_token.type; \</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">    } else { \</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">        debug(&quot;Empty rule stack!&quot;</span>); \</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        return false; \</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    } \</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;} while(0)</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a2e067a1a8ea5005cb451441ea4dd0b61">prec_apply_rule</a>(stack_token_t *rule_stack, stack_int_t *function_stack);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a533b2d7e7a482bf2639dff4bca0c0009">prec_rule_rparen</a>(stack_token_t *rule_stack, stack_int_t *function_stack);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a3fb23200aaaa516fb225f8662857d6db">prec_succesful_stack</a>(stack_token_t *token_stack);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#aaf9a95b07c7d5e42ba9576000ca41c79">prec_handle_symbol</a>(stack_token_t *token_stack, <a class="code" href="structtoken__t.html">token_t</a> input, <span class="keywordtype">bool</span> *stop, stack_int_t *function_stack);</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a3db7ce475c33e707980a52bf6d313945">prec_clean</a>(stack_token_t *token_stack, stack_int_t *func_stack);</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#aa2d8b05b83440e28bd8d04ae604f6509">stack_top_nonterminal</a>(stack_token_t *stack, <a class="code" href="structtoken__t.html">token_t</a> *value);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a46d56d39fd295d0642c22dbccb812906">stack_shift</a>(stack_token_t *token_stack, <a class="code" href="structtoken__t.html">token_t</a> terminal);</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#ad2c61d4501d5a8decaba330e9fe11353">stack_reduce</a>(stack_token_t *token_stack, stack_int_t *function_stack);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">  271</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">stack_find</a>(stack_token_t_t *stack, <a class="code" href="structtoken__t.html">token_t</a> val) {</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">return</span> stack_token_t_find(stack, val, <a class="code" href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a>);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="comment">// Create the expression, shift and end of input symbols.</span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#ae3ab82f113057e16a9b1a67789e93408">prec_create_expr_symbol</a>();</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#aa10601b1fd595d6107bec4ba235c3c93">prec_create_shift_symbol</a>();</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#a98ce37d31612f677f0e860976b53f598">prec_create_EOI_symbol</a>();</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">parser_expr</a>();</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a75770df3879690605e955d6a62edf19b">parser_precedence_analysis</a>();</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">// is token type relational operator</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="keywordtype">bool</span> is_relop(token_type type);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="comment">// is token type add/sub operator</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keywordtype">bool</span> is_addop(token_type type);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="comment">// is token type mul/div operator</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="keywordtype">bool</span> is_mulop(token_type type);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">/* SEMANTIC ACTIONS                                                         */</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">// return 10, 34</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">// return</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">// eps</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keywordtype">void</span> parser_return();</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keywordtype">void</span> parser_optexprs();</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">/* EXPRESSION RULES - BOTTOM-UP PRECEDENCE ANALYSIS                         */</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment">// Number of different entries row/columns in the precedence table</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">  183</a></span>&#160;<span class="preprocessor">#define PREC_TABLE_OP_COUNT 9</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> token_type <a class="code" href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a>[<a class="code" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>][<a class="code" href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a>];</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="keywordtype">int</span> <a class="code" href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">prec_get_table_index</a>(token_type t);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">// Macro to read the next symbol, so we don&#39;t have to write it over and over again</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#define NEXT_SYMBOL do { \</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">    if (!stack_token_t_isempty(rule_stack)) { \</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor">        curr_token = stack_token_t_pop(rule_stack); \</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor">        curr_symbol = curr_token.type; \</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor">        debug(&quot;Next symbol is of type %s&quot;</span>, token_get_type_string(curr_symbol)); \</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    } else { \</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        debug(&quot;Empty rule stack!&quot;); \</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        return false; \</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    } \</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;} while(0)</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a2e067a1a8ea5005cb451441ea4dd0b61">prec_apply_rule</a>(stack_token_t *rule_stack, stack_int_t *function_stack);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a533b2d7e7a482bf2639dff4bca0c0009">prec_rule_rparen</a>(stack_token_t *rule_stack, stack_int_t *function_stack);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#a3fb23200aaaa516fb225f8662857d6db">prec_succesful_stack</a>(stack_token_t *token_stack);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#aaf9a95b07c7d5e42ba9576000ca41c79">prec_handle_symbol</a>(stack_token_t *token_stack, <a class="code" href="structtoken__t.html">token_t</a> input, <span class="keywordtype">bool</span> *stop, stack_int_t *function_stack);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a3db7ce475c33e707980a52bf6d313945">prec_clean</a>(stack_token_t *token_stack, stack_int_t *func_stack);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#aa2d8b05b83440e28bd8d04ae604f6509">stack_top_nonterminal</a>(stack_token_t *stack, <a class="code" href="structtoken__t.html">token_t</a> *value);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a46d56d39fd295d0642c22dbccb812906">stack_shift</a>(stack_token_t *token_stack, <a class="code" href="structtoken__t.html">token_t</a> terminal);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="parser_8h.html#ad2c61d4501d5a8decaba330e9fe11353">stack_reduce</a>(stack_token_t *token_stack, stack_int_t *function_stack);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">  280</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">stack_find</a>(stack_token_t_t *stack, <a class="code" href="structtoken__t.html">token_t</a> val) {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordflow">return</span> stack_token_t_find(stack, val, <a class="code" href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a>);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">// Create the expression, shift and end of input symbols.</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#ae3ab82f113057e16a9b1a67789e93408">prec_create_expr_symbol</a>();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#aa10601b1fd595d6107bec4ba235c3c93">prec_create_shift_symbol</a>();</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<a class="code" href="structtoken__t.html">token_t</a> <a class="code" href="parser_8h.html#a98ce37d31612f677f0e860976b53f598">prec_create_EOI_symbol</a>();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">parser_expr</a>();</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a75770df3879690605e955d6a62edf19b">parser_precedence_analysis</a>();</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="keywordtype">void</span> parser_track_ident(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">/* THREE ADDRESS CODE GENERATION ACTIONS                                    */</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a>(token_type type);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">// is token type relational operator</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="keywordtype">bool</span> is_relop(token_type type);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment">// is token type add/sub operator</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="keywordtype">bool</span> is_addop(token_type type);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">// is token type mul/div operator</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="keywordtype">bool</span> is_mulop(token_type type);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="comment">/* SEMANTIC ACTIONS                                                         */</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="keywordtype">void</span> parser_track_ident(<span class="keywordtype">char</span> *<span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">clean_temporary_variables</a>();</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">create_label_name</a>();</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __PARSER_H__</span></div>
-<div class="ttc" id="aparser_8h_html_a2125ad61ec69a16afec4dc117e7917db"><div class="ttname"><a href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a></div><div class="ttdeci">const token_type PREC_TABLE[PREC_TABLE_OP_COUNT][PREC_TABLE_OP_COUNT]</div><div class="ttdoc">The precetence table used for the parsing.</div><div class="ttdef"><b>Definition:</b> parser.c:848</div></div>
-<div class="ttc" id="aparser_8h_html_a2e067a1a8ea5005cb451441ea4dd0b61"><div class="ttname"><a href="parser_8h.html#a2e067a1a8ea5005cb451441ea4dd0b61">prec_apply_rule</a></div><div class="ttdeci">bool prec_apply_rule(stack_token_t *rule_stack, stack_int_t *function_stack)</div><div class="ttdoc">Determine the rule validity.</div><div class="ttdef"><b>Definition:</b> parser.c:901</div></div>
-<div class="ttc" id="aparser_8h_html_a33ec2ec63d189bf8816896b67901a6a2"><div class="ttname"><a href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a></div><div class="ttdeci">void parser_start(scanner_t *scanner_main)</div><div class="ttdoc">Start the parser.</div><div class="ttdef"><b>Definition:</b> parser.c:122</div></div>
-<div class="ttc" id="aparser_8h_html_a3bf3b5bce2eee768cff1734a4769a376"><div class="ttname"><a href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">create_label_name</a></div><div class="ttdeci">char * create_label_name()</div><div class="ttdoc">Create a new unique label.</div><div class="ttdef"><b>Definition:</b> parser.c:1271</div></div>
-<div class="ttc" id="aparser_8h_html_a3db7ce475c33e707980a52bf6d313945"><div class="ttname"><a href="parser_8h.html#a3db7ce475c33e707980a52bf6d313945">prec_clean</a></div><div class="ttdeci">void prec_clean(stack_token_t *token_stack, stack_int_t *func_stack)</div><div class="ttdoc">Clean up the memory from the allocated stacks.</div><div class="ttdef"><b>Definition:</b> parser.c:1019</div></div>
-<div class="ttc" id="aparser_8h_html_a3fb23200aaaa516fb225f8662857d6db"><div class="ttname"><a href="parser_8h.html#a3fb23200aaaa516fb225f8662857d6db">prec_succesful_stack</a></div><div class="ttdeci">bool prec_succesful_stack(stack_token_t *token_stack)</div><div class="ttdoc">Determine if the precedence analysis constructed a single exprresion.</div><div class="ttdef"><b>Definition:</b> parser.c:1105</div></div>
-<div class="ttc" id="aparser_8h_html_a46d56d39fd295d0642c22dbccb812906"><div class="ttname"><a href="parser_8h.html#a46d56d39fd295d0642c22dbccb812906">stack_shift</a></div><div class="ttdeci">void stack_shift(stack_token_t *token_stack, token_t terminal)</div><div class="ttdoc">Change the top terminal to terminal+symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:789</div></div>
-<div class="ttc" id="aparser_8h_html_a533b2d7e7a482bf2639dff4bca0c0009"><div class="ttname"><a href="parser_8h.html#a533b2d7e7a482bf2639dff4bca0c0009">prec_rule_rparen</a></div><div class="ttdeci">bool prec_rule_rparen(stack_token_t *rule_stack, stack_int_t *function_stack)</div><div class="ttdoc">Helper function for handling ')' rule reduction.</div><div class="ttdef"><b>Definition:</b> parser.c:951</div></div>
-<div class="ttc" id="aparser_8h_html_a5adfb9b790a748f0343199e0b8c65edb"><div class="ttname"><a href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a></div><div class="ttdeci">void parser_prolog()</div><div class="ttdoc">Below can be found the parsing functions deduced from the LL(1) table.</div><div class="ttdef"><b>Definition:</b> parser.c:229</div></div>
-<div class="ttc" id="aparser_8h_html_a60821f7aa48ab0d8fb10a00e103cb636"><div class="ttname"><a href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">stack_find</a></div><div class="ttdeci">int stack_find(stack_token_t_t *stack, token_t val)</div><div class="ttdoc">Helper function to simplify stack_token_t_find.</div><div class="ttdef"><b>Definition:</b> parser.h:271</div></div>
-<div class="ttc" id="aparser_8h_html_a75770df3879690605e955d6a62edf19b"><div class="ttname"><a href="parser_8h.html#a75770df3879690605e955d6a62edf19b">parser_precedence_analysis</a></div><div class="ttdeci">void parser_precedence_analysis()</div><div class="ttdoc">Precedence analysis procedure that starts the parsing of expressions.</div><div class="ttdef"><b>Definition:</b> parser.c:1024</div></div>
-<div class="ttc" id="aparser_8h_html_a7ec22e874532c8b253af5e1aad8d6cb5"><div class="ttname"><a href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">parser_expr</a></div><div class="ttdeci">void parser_expr()</div><div class="ttdoc">Start the parsing of an expression.</div><div class="ttdef"><b>Definition:</b> parser.c:1176</div></div>
-<div class="ttc" id="aparser_8h_html_a7f425d5c93db7da55f2bf214a3d3c7cf"><div class="ttname"><a href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">parser_end</a></div><div class="ttdeci">void parser_end(int rc)</div><div class="ttdoc">End the parser with according return code and handle semantic checks at the end of input.</div><div class="ttdef"><b>Definition:</b> parser.c:159</div></div>
-<div class="ttc" id="aparser_8h_html_a879a3307e91618161b1c62ddeca931a7"><div class="ttname"><a href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a></div><div class="ttdeci">char * create_temporary_variable(token_type type)</div><div class="ttdoc">Create a new temporary variable.</div><div class="ttdef"><b>Definition:</b> parser.c:1237</div></div>
-<div class="ttc" id="aparser_8h_html_a887cbcafed1e52e0fe0af1be71018239"><div class="ttname"><a href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">clean_temporary_variables</a></div><div class="ttdeci">void clean_temporary_variables()</div><div class="ttdoc">clean_temporary_variables cleans the stack of idents of temporary variables</div><div class="ttdef"><b>Definition:</b> parser.c:1263</div></div>
-<div class="ttc" id="aparser_8h_html_a98ce37d31612f677f0e860976b53f598"><div class="ttname"><a href="parser_8h.html#a98ce37d31612f677f0e860976b53f598">prec_create_EOI_symbol</a></div><div class="ttdeci">token_t prec_create_EOI_symbol()</div><div class="ttdoc">Create the end of input ($) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:769</div></div>
-<div class="ttc" id="aparser_8h_html_aa10601b1fd595d6107bec4ba235c3c93"><div class="ttname"><a href="parser_8h.html#aa10601b1fd595d6107bec4ba235c3c93">prec_create_shift_symbol</a></div><div class="ttdeci">token_t prec_create_shift_symbol()</div><div class="ttdoc">Create the shift (&lt;) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:764</div></div>
-<div class="ttc" id="aparser_8h_html_aa1e8c479346c3b6db4e2e8fb0ea89588"><div class="ttname"><a href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">prec_get_table_index</a></div><div class="ttdeci">int prec_get_table_index(token_type t)</div><div class="ttdoc">Compute the index of the precedence table from the given token.</div><div class="ttdef"><b>Definition:</b> parser.c:861</div></div>
-<div class="ttc" id="aparser_8h_html_aa2d8b05b83440e28bd8d04ae604f6509"><div class="ttname"><a href="parser_8h.html#aa2d8b05b83440e28bd8d04ae604f6509">stack_top_nonterminal</a></div><div class="ttdeci">bool stack_top_nonterminal(stack_token_t *stack, token_t *value)</div><div class="ttdoc">Same as stack_token_t_peek but skip the nonterminal values.</div><div class="ttdef"><b>Definition:</b> parser.c:774</div></div>
-<div class="ttc" id="aparser_8h_html_aa3c7e1321fa936707c04048fce387c67"><div class="ttname"><a href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a></div><div class="ttdeci">void parser_match_ident(char *ident_name)</div><div class="ttdoc">Match the lookahead token against IDENT type and match the ident name.</div><div class="ttdef"><b>Definition:</b> parser.c:103</div></div>
-<div class="ttc" id="aparser_8h_html_aac0ea55ee9a986717d87b3a2703dda92"><div class="ttname"><a href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a></div><div class="ttdeci">#define PREC_TABLE_OP_COUNT</div><div class="ttdoc">Expressions are parsed using the bottom-up method.</div><div class="ttdef"><b>Definition:</b> parser.h:175</div></div>
-<div class="ttc" id="aparser_8h_html_aaf9a95b07c7d5e42ba9576000ca41c79"><div class="ttname"><a href="parser_8h.html#aaf9a95b07c7d5e42ba9576000ca41c79">prec_handle_symbol</a></div><div class="ttdeci">bool prec_handle_symbol(stack_token_t *token_stack, token_t input, bool *stop, stack_int_t *function_stack)</div><div class="ttdoc">Handle the symbol according to the precedence's algorithm.</div><div class="ttdef"><b>Definition:</b> parser.c:1111</div></div>
-<div class="ttc" id="aparser_8h_html_ad2c61d4501d5a8decaba330e9fe11353"><div class="ttname"><a href="parser_8h.html#ad2c61d4501d5a8decaba330e9fe11353">stack_reduce</a></div><div class="ttdeci">bool stack_reduce(stack_token_t *token_stack, stack_int_t *function_stack)</div><div class="ttdoc">Change the everything between the shift and top to nonterminal rule.</div><div class="ttdef"><b>Definition:</b> parser.c:811</div></div>
-<div class="ttc" id="aparser_8h_html_ae0e258eded8f8653f8cc4189d005e800"><div class="ttname"><a href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a></div><div class="ttdeci">void parser_move()</div><div class="ttdoc">Move the lookahead token.</div><div class="ttdef"><b>Definition:</b> parser.c:51</div></div>
-<div class="ttc" id="aparser_8h_html_ae3ab82f113057e16a9b1a67789e93408"><div class="ttname"><a href="parser_8h.html#ae3ab82f113057e16a9b1a67789e93408">prec_create_expr_symbol</a></div><div class="ttdeci">token_t prec_create_expr_symbol()</div><div class="ttdoc">Create the expression (E) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:759</div></div>
-<div class="ttc" id="aparser_8h_html_aed7709c3f2c8a30fbe978232fdeec281"><div class="ttname"><a href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a></div><div class="ttdeci">void parser_match(token_type t)</div><div class="ttdoc">Match the lookahead token against give token.</div><div class="ttdef"><b>Definition:</b> parser.c:76</div></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#ad27ad178fe9d3eaab1419c97dfe578d9">clean_func_calls</a>();</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">/* THREE ADDRESS CODE GENERATION ACTIONS                                    */</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="comment">/* ------------------------------------------------------------------------ */</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a>(token_type type);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="keywordtype">void</span> <a class="code" href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">clean_temporary_variables</a>();</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">create_label_name</a>();</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// __PARSER_H__</span></div>
+<div class="ttc" id="aparser_8h_html_a2125ad61ec69a16afec4dc117e7917db"><div class="ttname"><a href="parser_8h.html#a2125ad61ec69a16afec4dc117e7917db">PREC_TABLE</a></div><div class="ttdeci">const token_type PREC_TABLE[PREC_TABLE_OP_COUNT][PREC_TABLE_OP_COUNT]</div><div class="ttdoc">The precetence table used for the parsing.</div><div class="ttdef"><b>Definition:</b> parser.c:1386</div></div>
+<div class="ttc" id="aparser_8h_html_a2e067a1a8ea5005cb451441ea4dd0b61"><div class="ttname"><a href="parser_8h.html#a2e067a1a8ea5005cb451441ea4dd0b61">prec_apply_rule</a></div><div class="ttdeci">bool prec_apply_rule(stack_token_t *rule_stack, stack_int_t *function_stack)</div><div class="ttdoc">Determine the rule validity.</div><div class="ttdef"><b>Definition:</b> parser.c:1439</div></div>
+<div class="ttc" id="aparser_8h_html_a33ec2ec63d189bf8816896b67901a6a2"><div class="ttname"><a href="parser_8h.html#a33ec2ec63d189bf8816896b67901a6a2">parser_start</a></div><div class="ttdeci">void parser_start(scanner_t *scanner_main)</div><div class="ttdoc">Start the parser.</div><div class="ttdef"><b>Definition:</b> parser.c:120</div></div>
+<div class="ttc" id="aparser_8h_html_a3bf3b5bce2eee768cff1734a4769a376"><div class="ttname"><a href="parser_8h.html#a3bf3b5bce2eee768cff1734a4769a376">create_label_name</a></div><div class="ttdeci">char * create_label_name()</div><div class="ttdoc">Create a new unique label.</div><div class="ttdef"><b>Definition:</b> parser.c:2372</div></div>
+<div class="ttc" id="aparser_8h_html_a3db7ce475c33e707980a52bf6d313945"><div class="ttname"><a href="parser_8h.html#a3db7ce475c33e707980a52bf6d313945">prec_clean</a></div><div class="ttdeci">void prec_clean(stack_token_t *token_stack, stack_int_t *func_stack)</div><div class="ttdoc">Clean up the memory from the allocated stacks.</div><div class="ttdef"><b>Definition:</b> parser.c:2084</div></div>
+<div class="ttc" id="aparser_8h_html_a3fb23200aaaa516fb225f8662857d6db"><div class="ttname"><a href="parser_8h.html#a3fb23200aaaa516fb225f8662857d6db">prec_succesful_stack</a></div><div class="ttdeci">bool prec_succesful_stack(stack_token_t *token_stack)</div><div class="ttdoc">Determine if the precedence analysis constructed a single exprresion.</div><div class="ttdef"><b>Definition:</b> parser.c:2184</div></div>
+<div class="ttc" id="aparser_8h_html_a46d56d39fd295d0642c22dbccb812906"><div class="ttname"><a href="parser_8h.html#a46d56d39fd295d0642c22dbccb812906">stack_shift</a></div><div class="ttdeci">void stack_shift(stack_token_t *token_stack, token_t terminal)</div><div class="ttdoc">Change the top terminal to terminal+symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:1327</div></div>
+<div class="ttc" id="aparser_8h_html_a533b2d7e7a482bf2639dff4bca0c0009"><div class="ttname"><a href="parser_8h.html#a533b2d7e7a482bf2639dff4bca0c0009">prec_rule_rparen</a></div><div class="ttdeci">bool prec_rule_rparen(stack_token_t *rule_stack, stack_int_t *function_stack)</div><div class="ttdoc">Helper function for handling ')' rule reduction.</div><div class="ttdef"><b>Definition:</b> parser.c:1779</div></div>
+<div class="ttc" id="aparser_8h_html_a5adfb9b790a748f0343199e0b8c65edb"><div class="ttname"><a href="parser_8h.html#a5adfb9b790a748f0343199e0b8c65edb">parser_prolog</a></div><div class="ttdeci">void parser_prolog()</div><div class="ttdoc">Below can be found the parsing functions deduced from the LL(1) table.</div><div class="ttdef"><b>Definition:</b> parser.c:316</div></div>
+<div class="ttc" id="aparser_8h_html_a60821f7aa48ab0d8fb10a00e103cb636"><div class="ttname"><a href="parser_8h.html#a60821f7aa48ab0d8fb10a00e103cb636">stack_find</a></div><div class="ttdeci">int stack_find(stack_token_t_t *stack, token_t val)</div><div class="ttdoc">Helper function to simplify stack_token_t_find.</div><div class="ttdef"><b>Definition:</b> parser.h:280</div></div>
+<div class="ttc" id="aparser_8h_html_a75770df3879690605e955d6a62edf19b"><div class="ttname"><a href="parser_8h.html#a75770df3879690605e955d6a62edf19b">parser_precedence_analysis</a></div><div class="ttdeci">void parser_precedence_analysis()</div><div class="ttdoc">Precedence analysis procedure that starts the parsing of expressions.</div><div class="ttdef"><b>Definition:</b> parser.c:2090</div></div>
+<div class="ttc" id="aparser_8h_html_a7ec22e874532c8b253af5e1aad8d6cb5"><div class="ttname"><a href="parser_8h.html#a7ec22e874532c8b253af5e1aad8d6cb5">parser_expr</a></div><div class="ttdeci">void parser_expr()</div><div class="ttdoc">Start the parsing of an expression.</div><div class="ttdef"><b>Definition:</b> parser.c:2261</div></div>
+<div class="ttc" id="aparser_8h_html_a7f425d5c93db7da55f2bf214a3d3c7cf"><div class="ttname"><a href="parser_8h.html#a7f425d5c93db7da55f2bf214a3d3c7cf">parser_end</a></div><div class="ttdeci">void parser_end(int rc)</div><div class="ttdoc">End the parser with according return code and handle semantic checks at the end of input.</div><div class="ttdef"><b>Definition:</b> parser.c:215</div></div>
+<div class="ttc" id="aparser_8h_html_a879a3307e91618161b1c62ddeca931a7"><div class="ttname"><a href="parser_8h.html#a879a3307e91618161b1c62ddeca931a7">create_temporary_variable</a></div><div class="ttdeci">char * create_temporary_variable(token_type type)</div><div class="ttdoc">Create a new temporary variable.</div><div class="ttdef"><b>Definition:</b> parser.c:2333</div></div>
+<div class="ttc" id="aparser_8h_html_a887cbcafed1e52e0fe0af1be71018239"><div class="ttname"><a href="parser_8h.html#a887cbcafed1e52e0fe0af1be71018239">clean_temporary_variables</a></div><div class="ttdeci">void clean_temporary_variables()</div><div class="ttdoc">clean_temporary_variables cleans the stack of idents of temporary variables</div><div class="ttdef"><b>Definition:</b> parser.c:2364</div></div>
+<div class="ttc" id="aparser_8h_html_a98ce37d31612f677f0e860976b53f598"><div class="ttname"><a href="parser_8h.html#a98ce37d31612f677f0e860976b53f598">prec_create_EOI_symbol</a></div><div class="ttdeci">token_t prec_create_EOI_symbol()</div><div class="ttdoc">Create the end of input ($) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:1307</div></div>
+<div class="ttc" id="aparser_8h_html_aa10601b1fd595d6107bec4ba235c3c93"><div class="ttname"><a href="parser_8h.html#aa10601b1fd595d6107bec4ba235c3c93">prec_create_shift_symbol</a></div><div class="ttdeci">token_t prec_create_shift_symbol()</div><div class="ttdoc">Create the shift (&lt;) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:1302</div></div>
+<div class="ttc" id="aparser_8h_html_aa1e8c479346c3b6db4e2e8fb0ea89588"><div class="ttname"><a href="parser_8h.html#aa1e8c479346c3b6db4e2e8fb0ea89588">prec_get_table_index</a></div><div class="ttdeci">int prec_get_table_index(token_type t)</div><div class="ttdoc">Compute the index of the precedence table from the given token.</div><div class="ttdef"><b>Definition:</b> parser.c:1399</div></div>
+<div class="ttc" id="aparser_8h_html_aa2d8b05b83440e28bd8d04ae604f6509"><div class="ttname"><a href="parser_8h.html#aa2d8b05b83440e28bd8d04ae604f6509">stack_top_nonterminal</a></div><div class="ttdeci">bool stack_top_nonterminal(stack_token_t *stack, token_t *value)</div><div class="ttdoc">Same as stack_token_t_peek but skip the nonterminal values.</div><div class="ttdef"><b>Definition:</b> parser.c:1312</div></div>
+<div class="ttc" id="aparser_8h_html_aa3c7e1321fa936707c04048fce387c67"><div class="ttname"><a href="parser_8h.html#aa3c7e1321fa936707c04048fce387c67">parser_match_ident</a></div><div class="ttdeci">void parser_match_ident(char *ident_name)</div><div class="ttdoc">Match the lookahead token against IDENT type and match the ident name.</div><div class="ttdef"><b>Definition:</b> parser.c:101</div></div>
+<div class="ttc" id="aparser_8h_html_aac0ea55ee9a986717d87b3a2703dda92"><div class="ttname"><a href="parser_8h.html#aac0ea55ee9a986717d87b3a2703dda92">PREC_TABLE_OP_COUNT</a></div><div class="ttdeci">#define PREC_TABLE_OP_COUNT</div><div class="ttdoc">Expressions are parsed using the bottom-up method.</div><div class="ttdef"><b>Definition:</b> parser.h:183</div></div>
+<div class="ttc" id="aparser_8h_html_aaf9a95b07c7d5e42ba9576000ca41c79"><div class="ttname"><a href="parser_8h.html#aaf9a95b07c7d5e42ba9576000ca41c79">prec_handle_symbol</a></div><div class="ttdeci">bool prec_handle_symbol(stack_token_t *token_stack, token_t input, bool *stop, stack_int_t *function_stack)</div><div class="ttdoc">Handle the symbol according to the precedence's algorithm.</div><div class="ttdef"><b>Definition:</b> parser.c:2190</div></div>
+<div class="ttc" id="aparser_8h_html_ad27ad178fe9d3eaab1419c97dfe578d9"><div class="ttname"><a href="parser_8h.html#ad27ad178fe9d3eaab1419c97dfe578d9">clean_func_calls</a></div><div class="ttdeci">void clean_func_calls()</div><div class="ttdoc">clean_func_calls cleans the stack of function calls</div><div class="ttdef"><b>Definition:</b> parser.c:2321</div></div>
+<div class="ttc" id="aparser_8h_html_ad2c61d4501d5a8decaba330e9fe11353"><div class="ttname"><a href="parser_8h.html#ad2c61d4501d5a8decaba330e9fe11353">stack_reduce</a></div><div class="ttdeci">bool stack_reduce(stack_token_t *token_stack, stack_int_t *function_stack)</div><div class="ttdoc">Change the everything between the shift and top to nonterminal rule.</div><div class="ttdef"><b>Definition:</b> parser.c:1349</div></div>
+<div class="ttc" id="aparser_8h_html_ae0e258eded8f8653f8cc4189d005e800"><div class="ttname"><a href="parser_8h.html#ae0e258eded8f8653f8cc4189d005e800">parser_move</a></div><div class="ttdeci">void parser_move()</div><div class="ttdoc">Move the lookahead token.</div><div class="ttdef"><b>Definition:</b> parser.c:49</div></div>
+<div class="ttc" id="aparser_8h_html_ae3ab82f113057e16a9b1a67789e93408"><div class="ttname"><a href="parser_8h.html#ae3ab82f113057e16a9b1a67789e93408">prec_create_expr_symbol</a></div><div class="ttdeci">token_t prec_create_expr_symbol()</div><div class="ttdoc">Create the expression (E) symbol.</div><div class="ttdef"><b>Definition:</b> parser.c:1297</div></div>
+<div class="ttc" id="aparser_8h_html_aed7709c3f2c8a30fbe978232fdeec281"><div class="ttname"><a href="parser_8h.html#aed7709c3f2c8a30fbe978232fdeec281">parser_match</a></div><div class="ttdeci">void parser_match(token_type t)</div><div class="ttdoc">Match the lookahead token against give token.</div><div class="ttdef"><b>Definition:</b> parser.c:74</div></div>
 <div class="ttc" id="ascanner_8h_html"><div class="ttname"><a href="scanner_8h.html">scanner.h</a></div><div class="ttdoc">File with scanner function declarations.</div></div>
+<div class="ttc" id="astack__func__call__t_8h_html"><div class="ttname"><a href="stack__func__call__t_8h.html">stack_func_call_t.h</a></div><div class="ttdoc">func_call_t stack header file.</div></div>
 <div class="ttc" id="astack__int_8h_html"><div class="ttname"><a href="stack__int_8h.html">stack_int.h</a></div><div class="ttdoc">int stack header file.</div></div>
 <div class="ttc" id="astack__token__t_8h_html"><div class="ttname"><a href="stack__token__t_8h.html">stack_token_t.h</a></div><div class="ttdoc">token_t stack header file.</div></div>
-<div class="ttc" id="astructfunc__parameter__t_html"><div class="ttname"><a href="structfunc__parameter__t.html">func_parameter_t</a></div><div class="ttdef"><b>Definition:</b> ast.h:15</div></div>
-<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:97</div></div>
+<div class="ttc" id="astructTACList_html"><div class="ttname"><a href="structTACList.html">TACList</a></div><div class="ttdef"><b>Definition:</b> three-address-code.h:73</div></div>
+<div class="ttc" id="astructfunc__t_html"><div class="ttname"><a href="structfunc__t.html">func_t</a></div><div class="ttdoc">func_t represents a definition of a function</div><div class="ttdef"><b>Definition:</b> ast.h:38</div></div>
+<div class="ttc" id="astructtoken__t_html"><div class="ttname"><a href="structtoken__t.html">token_t</a></div><div class="ttdoc">Token holds information about a scanned lexem.</div><div class="ttdef"><b>Definition:</b> token.h:98</div></div>
 <div class="ttc" id="athree-address-code_8h_html"><div class="ttname"><a href="three-address-code_8h.html">three-address-code.h</a></div><div class="ttdoc">Header file for three adress code structure.</div></div>
-<div class="ttc" id="atoken_8c_html_aa92585b23e4f947f7d2ac947c043dbe6"><div class="ttname"><a href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a></div><div class="ttdeci">int cmp_token_t(token_t a, token_t b)</div><div class="ttdoc">Compare two tokens.</div><div class="ttdef"><b>Definition:</b> token.c:199</div></div>
+<div class="ttc" id="atoken_8c_html_aa92585b23e4f947f7d2ac947c043dbe6"><div class="ttname"><a href="token_8c.html#aa92585b23e4f947f7d2ac947c043dbe6">cmp_token_t</a></div><div class="ttdeci">int cmp_token_t(token_t a, token_t b)</div><div class="ttdoc">Compare two tokens.</div><div class="ttdef"><b>Definition:</b> token.c:200</div></div>
 <div class="ttc" id="atoken_8h_html"><div class="ttname"><a href="token_8h.html">token.h</a></div><div class="ttdoc">File with token type and functions definitons.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 23 2021 23:29:34 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Sat Jan 23 2021 23:30:17 for ifj20compiler by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>
